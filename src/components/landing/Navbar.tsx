@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-14 px-5">
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-12">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0">
               <img src={logo} alt="Arcanine" className="w-14 h-14" />
               <span className="text-lg font-bold tracking-tight font-display text-foreground">
                 Arcanine
@@ -48,7 +48,7 @@ const Navbar = () => {
 
           {/* Right: Get Demo + Log In + Sign Up */}
           <div className="hidden md:flex items-center gap-2">
-            <button className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200">
+            <button className="py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 px-[8px]">
               Get Demo
             </button>
             <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground border border-border/50 rounded-lg transition-colors duration-200">
