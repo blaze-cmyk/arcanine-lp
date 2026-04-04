@@ -48,14 +48,11 @@ const Navbar = () => {
 
           {/* Right: Get Demo + Log In + Sign Up */}
           <div className="hidden md:flex items-center gap-2">
-            <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200">
+            <button className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200">
               Get Demo
-              <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
             </button>
             <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground border border-border/50 rounded-lg transition-colors duration-200">
-              <User className="w-4 h-4" />
+              <LogIn className="w-4 h-4" />
               Log In
             </button>
             <button className="px-5 py-2 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-lg hover:opacity-90 transition-all duration-200">
