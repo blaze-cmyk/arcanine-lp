@@ -84,11 +84,11 @@ const Navbar = () => {
             ))}
             <div className="flex gap-2 mt-2">
               <button className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-foreground/70 border border-border rounded-lg">
-                <User className="w-4 h-4" />
-                Sign in
+                <LogIn className="w-4 h-4" />
+                Log In
               </button>
               <button className="flex-1 px-4 py-2 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-lg">
-                Get Demo
+                Sign Up
               </button>
             </div>
           </div>
