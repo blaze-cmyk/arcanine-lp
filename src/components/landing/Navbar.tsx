@@ -26,7 +26,7 @@ const Navbar = () => {
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2.5">
-              <img src={logo} alt="Arcanine" className="w-8 h-8" />
+              <img src={logo} alt="Arcanine" className="w-10 h-10" />
               <span className="text-base font-bold tracking-tight font-display text-foreground">
                 Arcanine
               </span>
