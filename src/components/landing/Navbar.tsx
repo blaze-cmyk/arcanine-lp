@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import logo from "@/assets/arcanine-logo.png";
 
 const Navbar = () => {
@@ -13,10 +13,10 @@ const Navbar = () => {
   }, []);
 
   const links = [
+    { label: "How it works", href: "#how-it-works" },
     { label: "Pricing", href: "#pricing" },
-    { label: "Resources", href: "#resources" },
-    { label: "Community", href: "#community" },
-    { label: "Download", href: "#download" },
+    { label: "Testimonials", href: "#testimonials" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   return (
@@ -29,34 +29,37 @@ const Navbar = () => {
         }`}
       >
         <div className="flex items-center justify-between h-14 px-5">
-          {/* Logo */}
-          <div className="flex items-center gap-2.5">
-            <img src={logo} alt="Arcanine" className="w-7 h-7" />
-            <span className="text-base font-bold tracking-tight font-display text-foreground">
-              Arcanine
-            </span>
+          {/* Left: Logo + Nav */}
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2.5">
+              <img src={logo} alt="Arcanine" className="w-8 h-8" />
+              <span className="text-base font-bold tracking-tight font-display text-foreground">
+                Arcanine
+              </span>
+            </div>
+
+            {/* Desktop links — next to logo */}
+            <div className="hidden md:flex items-center gap-6">
+              {links.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-200"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-7">
-            {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Desktop auth */}
-          <div className="hidden md:flex items-center gap-2">
-            <button className="px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg transition-colors duration-200">
-              SIGN IN
+          {/* Right: Sign in + Get Demo */}
+          <div className="hidden md:flex items-center gap-3">
+            <button className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200">
+              <User className="w-4 h-4" />
+              Sign in
             </button>
-            <button className="px-4 py-1.5 text-sm font-medium text-foreground bg-foreground/10 border border-border rounded-lg hover:bg-foreground/15 transition-colors duration-200">
-              SIGN UP
+            <button className="px-5 py-2 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-lg hover:opacity-90 transition-all duration-200">
+              Get Demo
             </button>
           </div>
 
@@ -76,18 +79,19 @@ const Navbar = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors py-1.5"
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-1.5"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </a>
             ))}
             <div className="flex gap-2 mt-2">
-              <button className="flex-1 px-4 py-2 text-sm font-medium text-muted-foreground border border-border rounded-lg">
-                SIGN IN
+              <button className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-foreground/70 border border-border rounded-lg">
+                <User className="w-4 h-4" />
+                Sign in
               </button>
-              <button className="flex-1 px-4 py-2 text-sm font-medium text-foreground bg-foreground/10 border border-border rounded-lg">
-                SIGN UP
+              <button className="flex-1 px-4 py-2 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-lg">
+                Get Demo
               </button>
             </div>
           </div>
