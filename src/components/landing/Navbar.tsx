@@ -24,7 +24,7 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto rounded-2xl transition-all duration-300">
         <div className="flex items-center justify-between h-14 px-5">
           {/* Left: Logo + Nav */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-12">
             <div className="flex items-center gap-2.5">
               <img src={logo} alt="Arcanine" className="w-10 h-10" />
               <span className="text-base font-bold tracking-tight font-display text-foreground">
