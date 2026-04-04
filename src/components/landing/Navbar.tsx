@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import logo from "@/assets/arcanine-logo.png";
 
 const Navbar = () => {
