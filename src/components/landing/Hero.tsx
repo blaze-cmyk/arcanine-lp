@@ -3,66 +3,30 @@ import { ArrowRight } from "lucide-react";
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden px-4 pt-32 sm:pt-40">
-      {/* Aurora glow — top center */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[600px] pointer-events-none">
-        {/* Primary orange glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-[radial-gradient(ellipse_at_top,rgba(255,106,0,0.12),transparent_60%)]" />
-        {/* Secondary warm spread */}
-        <div className="absolute top-8 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_top,rgba(255,138,42,0.08),transparent_70%)]" />
-        {/* Subtle side glows */}
-        <div className="absolute top-20 left-1/4 w-[400px] h-[250px] bg-[radial-gradient(ellipse,rgba(255,106,0,0.04),transparent_70%)] blur-2xl" />
-        <div className="absolute top-20 right-1/4 w-[400px] h-[250px] bg-[radial-gradient(ellipse,rgba(255,138,42,0.04),transparent_70%)] blur-2xl" />
-        {/* Light rays */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-[300px] bg-gradient-to-b from-primary/20 to-transparent" />
-        <div className="absolute top-0 left-[45%] w-px h-[250px] bg-gradient-to-b from-primary/10 to-transparent rotate-[8deg] origin-top" />
-        <div className="absolute top-0 left-[55%] w-px h-[250px] bg-gradient-to-b from-primary/10 to-transparent -rotate-[8deg] origin-top" />
-      </div>
-
-      {/* Grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
-        {/* Status pill */}
-        <div className="animate-slide-up inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass text-sm mb-10">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
-          </span>
-          <span className="text-muted-foreground">Markets are live</span>
-          <span className="h-3 w-px bg-border" />
-          <span className="text-muted-foreground font-mono-num text-xs">24/7</span>
-        </div>
-
         {/* Headline */}
-        <h1 className="animate-slide-up-delay-1 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-[-0.03em] leading-[0.92] mb-7">
-          Trade Faster.
+        <h1 className="animate-slide-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-[-0.03em] leading-[0.92] mb-7">
+          Trade the
           <br />
-          <span className="text-gradient">Win Smarter.</span>
+          <span className="text-gradient">next move.</span>
         </h1>
 
         {/* Subhead */}
-        <p className="animate-slide-up-delay-2 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
+        <p className="animate-slide-up-delay-1 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
           Predict price movements in seconds. Up or down — one decision,
           instant results. The fastest way to trade global markets.
         </p>
 
-        {/* Single CTA */}
-        <div className="animate-slide-up-delay-3">
+        {/* Dual CTA */}
+        <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button className="group inline-flex items-center gap-3 px-10 py-4 bg-gradient-accent text-primary-foreground font-bold text-base rounded-xl glow-orange hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(255,106,0,0.35)] transition-all duration-300">
-            Start Trading Now
+            Create Account
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
-          <p className="mt-4 text-sm text-muted-foreground animate-slide-up-delay-4">
-            No signup required · Instant demo access
-          </p>
+          <button className="inline-flex items-center gap-3 px-10 py-4 border border-border/60 text-foreground font-bold text-base rounded-xl hover:bg-muted/40 hover:scale-[1.03] transition-all duration-300">
+            Try Free Demo
+          </button>
         </div>
       </div>
 
