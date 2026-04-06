@@ -599,7 +599,7 @@ const DashboardMockup = () => {
         {/* Balance header */}
         <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
           <div className="flex items-center gap-1.5 mr-auto">
-            <img src={logo} alt="Arcanine" className="h-5 w-auto" />
+            <img src={logo} alt="Arcanine" className="h-7 w-auto" />
           </div>
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
             <div className="text-left">
