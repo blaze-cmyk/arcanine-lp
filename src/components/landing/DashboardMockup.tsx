@@ -13,8 +13,9 @@ import {
   ChevronDown,
   Pencil,
   Scissors,
-  Info,
+  ChevronRight,
 } from "lucide-react";
+import logo from "@/assets/arcanine-logo.png";
 
 /* ── Asset configs with distinct chart personalities ── */
 const ASSETS = [
@@ -302,22 +303,27 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.fillStyle = COLORS.priceLine;
+      // "Beginning of trade" label with right chevron, vertically centered
+      const labelText2 = 'Beginning of trade';
       ctx.font = "10px 'Inter', sans-serif";
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText('Beginning of trade', tradeStartX - 6, PADDING_TOP - 4);
+      const textW = ctx.measureText(labelText2).width;
+      const chevronW = 8;
+      const totalW = textW + chevronW + 4;
+      const labelY = PADDING_TOP + (height - TIME_SCALE_HEIGHT - PADDING_TOP) / 2;
 
-      // Play triangle
       ctx.fillStyle = COLORS.priceLine;
-      ctx.globalAlpha = 0.6;
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(labelText2, tradeStartX - 6 - chevronW - 2, labelY);
+
+      // Right chevron arrow
+      ctx.strokeStyle = COLORS.priceLine;
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(tradeStartX - 4, PADDING_TOP - 18);
-      ctx.lineTo(tradeStartX + 4, PADDING_TOP - 14);
-      ctx.lineTo(tradeStartX - 4, PADDING_TOP - 10);
-      ctx.closePath();
-      ctx.fill();
-      ctx.globalAlpha = 1;
+      ctx.moveTo(tradeStartX - 10, labelY - 4);
+      ctx.lineTo(tradeStartX - 6, labelY);
+      ctx.lineTo(tradeStartX - 10, labelY + 4);
+      ctx.stroke();
     }
 
     // "End of trade" preview line
@@ -527,6 +533,8 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
 /* ── Main Dashboard Mockup ── */
 const DashboardMockup = () => {
   const [activeAsset, setActiveAsset] = useState(0);
+  const [timeSeconds, setTimeSeconds] = useState(60);
+  const [investment, setInvestment] = useState(100);
   const [prices, setPrices] = useState<Record<string, number>>(
     Object.fromEntries(ASSETS.map((a) => [a.symbol, a.basePrice]))
   );
@@ -549,7 +557,21 @@ const DashboardMockup = () => {
   const bearPct = 100 - bullPct;
   const currentAsset = ASSETS[activeAsset];
   const currentPrice = prices[currentAsset.symbol];
-  const payoutAmount = (100 * currentAsset.payout / 100).toFixed(2);
+  const payoutAmount = (investment * currentAsset.payout / 100).toFixed(2);
+  const timeDisplay = `${String(Math.floor(timeSeconds / 60)).padStart(2, '0')}:${String(timeSeconds % 60).padStart(2, '0')}`;
+
+  const adjustTime = (delta: number) => {
+    setTimeSeconds(prev => {
+      const next = prev + delta;
+      if (next < 20) return 20;
+      if (next > 60) return 60;
+      return next;
+    });
+  };
+
+  const adjustInvestment = (delta: number) => {
+    setInvestment(prev => Math.max(1, prev + delta));
+  };
 
   return (
     <div className="flex h-[420px] sm:h-[480px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
@@ -580,12 +602,7 @@ const DashboardMockup = () => {
         {/* Balance header */}
         <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
           <div className="flex items-center gap-1.5 mr-auto">
-            <span
-              className="text-foreground font-bold text-sm tracking-tight"
-              style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700 }}
-            >
-              Arcanine
-            </span>
+            <img src={logo} alt="Arcanine" className="h-5 w-auto" />
           </div>
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
             <div className="text-left">
@@ -682,18 +699,14 @@ const DashboardMockup = () => {
               ))}
             </div>
 
-            {/* Connection status + pair info */}
-            <div className="absolute top-[36px] left-2 z-10 flex flex-col gap-1">
+            {/* Connection status */}
+            <div className="absolute top-[36px] left-2 z-10">
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
                 <span className="text-[8px] text-muted-foreground">
-                  {new Date().toLocaleTimeString()} UTC
+                  Connected
                 </span>
               </div>
-              <button className="flex items-center gap-1 text-primary text-[9px] font-medium w-fit">
-                <Info size={10} />
-                PAIR INFORMATION
-              </button>
             </div>
 
             {/* Canvas chart */}
@@ -726,13 +739,13 @@ const DashboardMockup = () => {
                   Time
                 </legend>
                 <div className="flex items-center gap-1">
-                  <button className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary">
+                  <button onClick={() => adjustTime(-5)} className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors">
                     <Minus size={10} />
                   </button>
                   <span className="flex-1 text-center text-[11px] font-bold font-mono-num">
-                    01:00
+                    {timeDisplay}
                   </span>
-                  <button className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary">
+                  <button onClick={() => adjustTime(5)} className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors">
                     <Plus size={10} />
                   </button>
                 </div>
@@ -746,13 +759,13 @@ const DashboardMockup = () => {
                   Investment
                 </legend>
                 <div className="flex items-center gap-1">
-                  <button className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground">
+                  <button onClick={() => adjustInvestment(-10)} className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                     <Minus size={10} />
                   </button>
                   <span className="flex-1 text-center text-[11px] font-bold font-mono-num">
-                    100 $
+                    {investment} $
                   </span>
-                  <button className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground">
+                  <button onClick={() => adjustInvestment(10)} className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                     <Plus size={10} />
                   </button>
                 </div>
@@ -766,7 +779,7 @@ const DashboardMockup = () => {
               <div className="flex justify-between text-[8px] px-1 mt-0.5">
                 <span className="text-muted-foreground">Fee ({100 - currentAsset.payout}%)</span>
                 <span className="text-muted-foreground font-mono-num">
-                  -${(100 - currentAsset.payout).toFixed(2)}
+                  -${((investment * (100 - currentAsset.payout)) / 100).toFixed(2)}
                 </span>
               </div>
             </div>
