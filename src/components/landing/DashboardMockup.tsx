@@ -721,13 +721,13 @@ const DashboardMockup = () => {
             </div>
 
             {/* UP / DOWN buttons */}
-            <div className="px-2.5 py-2 space-y-1.5 mt-auto">
-              <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-profit/15 border border-profit/30 text-profit font-bold text-sm hover:bg-profit/25 transition-all">
-                <TrendingUp size={16} />
+            <div className="px-2.5 py-1.5 space-y-1 mt-auto">
+              <button className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-md bg-profit/10 border border-profit/20 text-profit font-semibold text-[10px] transition-all">
+                <TrendingUp size={11} />
                 UP
               </button>
-              <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-loss/15 border border-loss/30 text-loss font-bold text-sm hover:bg-loss/25 transition-all">
-                <TrendingDown size={16} />
+              <button className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-md bg-loss/10 border border-loss/20 text-loss font-semibold text-[10px] transition-all">
+                <TrendingDown size={11} />
                 DOWN
               </button>
             </div>
