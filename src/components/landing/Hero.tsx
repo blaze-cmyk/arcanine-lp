@@ -3,7 +3,7 @@ import DashboardMockup from "./DashboardMockup";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-20 sm:pt-24">
+    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden px-4 pt-20 sm:pt-24">
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Headline */}
