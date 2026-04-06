@@ -12,7 +12,8 @@ const Hero = () => {
 
         {/* Subhead */}
         <p className="animate-slide-up-delay-1 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-          Trade up or down in seconds and get instant results. The fastest way to act on global markets.
+          Take a position on price direction, up or down, and see results in seconds. A simple, fast way to trade global
+          markets.
         </p>
 
         {/* Dual CTA */}
