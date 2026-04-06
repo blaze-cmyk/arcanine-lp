@@ -303,27 +303,24 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // "Beginning of trade" label with right chevron, vertically centered
-      const labelText2 = 'Beginning of trade';
-      ctx.font = "10px 'Inter', sans-serif";
-      const textW = ctx.measureText(labelText2).width;
-      const chevronW = 8;
-      const totalW = textW + chevronW + 4;
-      const labelY = PADDING_TOP + (height - TIME_SCALE_HEIGHT - PADDING_TOP) / 2;
-
+      // "Beginning of trade" label at top of line, text + play arrow vertically centered
+      const labelY2 = PADDING_TOP - 14;
       ctx.fillStyle = COLORS.priceLine;
+      ctx.font = "10px 'Inter', sans-serif";
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
-      ctx.fillText(labelText2, tradeStartX - 6 - chevronW - 2, labelY);
+      ctx.fillText('Beginning of trade', tradeStartX - 12, labelY2);
 
-      // Right chevron arrow
-      ctx.strokeStyle = COLORS.priceLine;
-      ctx.lineWidth = 1.5;
+      // Play triangle vertically centered with text
+      ctx.fillStyle = COLORS.priceLine;
+      ctx.globalAlpha = 0.6;
       ctx.beginPath();
-      ctx.moveTo(tradeStartX - 10, labelY - 4);
-      ctx.lineTo(tradeStartX - 6, labelY);
-      ctx.lineTo(tradeStartX - 10, labelY + 4);
-      ctx.stroke();
+      ctx.moveTo(tradeStartX - 8, labelY2 - 4);
+      ctx.lineTo(tradeStartX - 2, labelY2);
+      ctx.lineTo(tradeStartX - 8, labelY2 + 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
     }
 
     // "End of trade" preview line
