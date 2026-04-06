@@ -456,40 +456,6 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
         ctx.font = "10px 'JetBrains Mono', monospace";
         ctx.fillText(timeLabel, ch.x, height - TIME_SCALE_HEIGHT + 1 + timeLabelH / 2);
 
-        // OHLC tooltip
-        const c = candles[candleIdx];
-        const isGreen = c.c >= c.o;
-        const labels = [
-          { label: 'Open:', value: formatPrice(c.o) },
-          { label: 'Close:', value: formatPrice(c.c) },
-          { label: 'High:', value: formatPrice(c.h) },
-          { label: 'Low:', value: formatPrice(c.l) },
-        ];
-        const lineH = 15;
-        const boxH = labels.length * lineH + 10;
-        const boxW = 140;
-        const boxX = 46;
-        const boxY = height - TIME_SCALE_HEIGHT - boxH - 22;
-
-        ctx.fillStyle = 'rgba(15, 17, 19, 0.92)';
-        roundRect(ctx, boxX, boxY, boxW, boxH, 5);
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-        ctx.lineWidth = 0.5;
-        roundRect(ctx, boxX, boxY, boxW, boxH, 5);
-        ctx.stroke();
-
-        labels.forEach(({ label, value }, idx) => {
-          const ly = boxY + 8 + idx * lineH;
-          ctx.font = "10px 'Inter', sans-serif";
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'top';
-          ctx.fillStyle = '#6b7280';
-          ctx.fillText(label, boxX + 8, ly);
-          ctx.fillStyle = isGreen ? '#22c55e' : '#ef4444';
-          ctx.textAlign = 'right';
-          ctx.fillText(value, boxX + boxW - 8, ly);
-        });
       }
     }
   }, [assetIndex]);
