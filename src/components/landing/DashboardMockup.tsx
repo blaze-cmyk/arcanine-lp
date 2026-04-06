@@ -40,10 +40,10 @@ const COLORS = {
   priceScaleBg: '#0f1113',
   priceScaleBorder: '#1a1c24',
   timeScaleBg: '#0f1113',
-  candleGreen: '#22c55e',
-  candleRed: '#ef4444',
-  wickGreen: '#22c55e88',
-  wickRed: '#ef444488',
+  candleGreen: '#4a9e6e',
+  candleRed: '#c05555',
+  wickGreen: '#4a9e6e88',
+  wickRed: '#c0555588',
   priceLine: '#2dd4bf',
   priceLabel: '#14b8a6',
   textMuted: '#3a3f50',
@@ -577,14 +577,14 @@ const DashboardMockup = () => {
               <div
                 className="transition-all duration-700"
                 style={{
-                  background: "linear-gradient(to bottom, #ef4444, #dc2626)",
+                  background: "linear-gradient(to bottom, #c05555, #b04a4a)",
                   flexBasis: `${bearPct}%`,
                 }}
               />
               <div
                 className="transition-all duration-700"
                 style={{
-                  background: "linear-gradient(to bottom, #16a34a, #22c55e)",
+                  background: "linear-gradient(to bottom, #3d8a5a, #4a9e6e)",
                   flexBasis: `${bullPct}%`,
                 }}
               />

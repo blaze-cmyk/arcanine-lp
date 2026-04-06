@@ -47,7 +47,7 @@ const MiniChart = ({ trend }: { trend: number }) => {
       // gradient fill
       const gradient = ctx.createLinearGradient(0, 0, 0, dh);
       const isUp = points[points.length - 1] > points[0];
-      gradient.addColorStop(0, isUp ? "rgba(0,230,118,0.15)" : "rgba(255,82,82,0.15)");
+      gradient.addColorStop(0, isUp ? "rgba(74,158,110,0.15)" : "rgba(192,85,85,0.15)");
       gradient.addColorStop(1, "transparent");
 
       ctx.beginPath();
@@ -56,7 +56,7 @@ const MiniChart = ({ trend }: { trend: number }) => {
         const y = dh - (p / 100) * dh;
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
-      ctx.strokeStyle = isUp ? "#00E676" : "#FF5252";
+      ctx.strokeStyle = isUp ? "#4a9e6e" : "#c05555";
       ctx.lineWidth = 2;
       ctx.stroke();
 
@@ -73,11 +73,11 @@ const MiniChart = ({ trend }: { trend: number }) => {
       const lastY = dh - (points[points.length - 1] / 100) * dh;
       ctx.beginPath();
       ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-      ctx.fillStyle = isUp ? "#00E676" : "#FF5252";
+      ctx.fillStyle = isUp ? "#4a9e6e" : "#c05555";
       ctx.fill();
       ctx.beginPath();
       ctx.arc(lastX, lastY, 8, 0, Math.PI * 2);
-      ctx.fillStyle = isUp ? "rgba(0,230,118,0.3)" : "rgba(255,82,82,0.3)";
+      ctx.fillStyle = isUp ? "rgba(74,158,110,0.3)" : "rgba(192,85,85,0.3)";
       ctx.fill();
 
       animFrame = requestAnimationFrame(() => setTimeout(() => draw(), 150));
