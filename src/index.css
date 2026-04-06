@@ -101,15 +101,27 @@
   }
 
   .bg-gradient-accent {
+    background: #f50;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .bg-gradient-accent::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background: linear-gradient(103deg, #ffa33a 0.37%, #ff8516 15.31%, #f50 100%);
+    z-index: -1;
+    transition: opacity 0.2s ease;
+  }
+
+  .bg-gradient-accent:hover::before {
+    opacity: 0;
   }
 
   .bg-secondary-btn {
     background-color: #38312e;
-  }
-
-  .bg-gradient-accent:hover {
-    background: #f50;
   }
 
   .bg-secondary-btn:hover {
