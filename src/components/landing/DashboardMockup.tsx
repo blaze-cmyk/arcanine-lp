@@ -775,6 +775,22 @@ const DashboardMockup = () => {
                     <div className="h-full bg-loss rounded-full" style={{ width: '34%' }} />
                   </div>
                 </div>
+                {/* Trade 3 — gold winning */}
+                <div className="rounded-md bg-profit/[0.06] border border-profit/15 px-2 py-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-semibold text-foreground">GOLD</span>
+                    <span className="flex items-center gap-0.5 text-[8px] font-bold text-profit">
+                      <TrendingUp size={8} /> UP
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-[8px] text-muted-foreground font-mono-num">$75 → <span className="text-profit font-bold">+$63.75</span></span>
+                    <span className="text-[7px] text-muted-foreground font-mono-num">00:47</span>
+                  </div>
+                  <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
+                    <div className="h-full bg-profit rounded-full" style={{ width: '21%' }} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
