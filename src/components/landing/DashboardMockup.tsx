@@ -13,13 +13,14 @@ import {
   ChevronDown,
   Pencil,
   Scissors,
+  Info,
 } from "lucide-react";
 
 /* ── Asset configs with distinct chart personalities ── */
 const ASSETS = [
-  { symbol: "BTC/USD", payout: 92, basePrice: 67432.5, volatility: 80, decimals: 2, trend: 0.6 },
-  { symbol: "ETH/USD", payout: 88, basePrice: 3521.8, volatility: 25, decimals: 2, trend: -0.3 },
-  { symbol: "GOLD", payout: 85, basePrice: 2341.6, volatility: 8, decimals: 2, trend: 0.2 },
+  { symbol: "BTC/USD", payout: 92, basePrice: 67432.5, volatility: 80, decimals: 2 },
+  { symbol: "ETH/USD", payout: 88, basePrice: 3521.8, volatility: 25, decimals: 2 },
+  { symbol: "GOLD", payout: 85, basePrice: 2341.6, volatility: 8, decimals: 2 },
 ];
 
 const SIDEBAR_ITEMS = [
@@ -31,17 +32,44 @@ const SIDEBAR_ITEMS = [
   { icon: MoreHorizontal, label: "MORE" },
 ];
 
-/* ── Pre-baked candle data for each asset (visually distinct) ── */
-const CANDLE_CACHE: Record<number, { o: number; h: number; l: number; c: number }[]> = {};
+/* ── Chart constants (matching Fair Trade Exchange) ── */
+const COLORS = {
+  bg: '#0f1113',
+  gridLine: 'rgba(255, 255, 255, 0.06)',
+  priceScaleBg: '#0f1113',
+  priceScaleBorder: '#1a1c24',
+  timeScaleBg: '#0f1113',
+  candleGreen: '#22c55e',
+  candleRed: '#ef4444',
+  wickGreen: '#22c55e88',
+  wickRed: '#ef444488',
+  priceLine: '#2dd4bf',
+  priceLabel: '#14b8a6',
+  textMuted: '#3a3f50',
+  textLight: '#6b7280',
+  crosshairLine: '#252830',
+  crosshairLabel: '#1a1c24',
+  crosshairText: '#d1d5db',
+};
 
-function getCandlesForAsset(index: number) {
+const CANDLE_WIDTH_BASE = 7;
+const CANDLE_GAP = 3;
+const PRICE_SCALE_WIDTH = 75;
+const TIME_SCALE_HEIGHT = 26;
+const PADDING_TOP = 50;
+const PADDING_BOTTOM = 10;
+
+/* ── Pre-baked candle data for each asset ── */
+interface Candle { o: number; h: number; l: number; c: number; time: number }
+const CANDLE_CACHE: Record<number, Candle[]> = {};
+
+function getCandlesForAsset(index: number): Candle[] {
   if (CANDLE_CACHE[index]) return CANDLE_CACHE[index];
 
   const asset = ASSETS[index];
-  const candles: { o: number; h: number; l: number; c: number }[] = [];
+  const candles: Candle[] = [];
   let price = asset.basePrice;
 
-  // Different pattern shapes per asset
   const patterns: number[][] = [
     // BTC: rally → pullback → consolidation → breakout
     [1,1,1,0.5,1.2,-0.3,-0.8,-1,-0.5,0.2,0.1,-0.1,0.3,0.2,0.1,0,-0.1,0.2,0.5,0.8,1.2,1.5,1,-0.5,-1.2,-0.8,0.3,0.5,0.8,1,1.3,0.7,0.2,-0.3,-0.6,-0.2,0.4,0.8,1.2,1.5,2,1.8,1.2,0.5,-0.2,0.3,0.6,1,1.5,0.8,0.3,-0.4,0.2,0.5,0.9],
@@ -52,7 +80,8 @@ function getCandlesForAsset(index: number) {
   ];
 
   const pattern = patterns[index];
-  
+  const baseTime = Math.floor(Date.now() / 1000) - 55 * 60;
+
   for (let i = 0; i < 55; i++) {
     const open = price;
     const direction = pattern[i % pattern.length];
@@ -62,7 +91,7 @@ function getCandlesForAsset(index: number) {
     const wickDown = Math.abs(change) * (0.3 + Math.abs(Math.cos(i * 1.9 + index * 7)) * 0.5);
     const high = Math.max(open, close) + wickUp;
     const low = Math.min(open, close) - wickDown;
-    candles.push({ o: open, h: high, l: low, c: close });
+    candles.push({ o: open, h: high, l: low, c: close, time: baseTime + i * 60 });
     price = close;
   }
 
@@ -70,209 +99,429 @@ function getCandlesForAsset(index: number) {
   return candles;
 }
 
-/* ── Candlestick Chart (canvas) ── */
+/* ── Helpers (from Fair Trade Exchange) ── */
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r);
+  ctx.arcTo(x, y, x + r, y, r);
+  ctx.closePath();
+}
+
+function formatPrice(price: number): string {
+  if (price >= 1000) return price.toFixed(2);
+  if (price >= 1) return price.toFixed(4);
+  return price.toFixed(6);
+}
+
+function calculatePriceStep(range: number): number {
+  const raw = range / 8;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const normalized = raw / mag;
+  if (normalized <= 1) return mag;
+  if (normalized <= 2) return 2 * mag;
+  if (normalized <= 5) return 5 * mag;
+  return 10 * mag;
+}
+
+function calculateTimeStep(candleStep: number): number {
+  const pixelsPerLabel = 80;
+  return Math.max(1, Math.round(pixelsPerLabel / candleStep));
+}
+
+/* ── Candlestick Chart (canvas — ported from Fair Trade Exchange) ── */
 const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const crosshairRef = useRef<{ x: number; y: number } | null>(null);
+  const animRef = useRef<number>(0);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
-    const dpr = 2;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 2;
     const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+    const width = rect.width;
+    const height = rect.height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
     ctx.scale(dpr, dpr);
-    const w = rect.width;
-    const h = rect.height;
 
-    const asset = ASSETS[assetIndex];
     const candles = getCandlesForAsset(assetIndex);
+    const step = CANDLE_WIDTH_BASE + CANDLE_GAP;
+    const candleW = CANDLE_WIDTH_BASE;
+    const chartWidth = width - PRICE_SCALE_WIDTH;
 
-    const candleW = 7;
-    const gap = 3;
-    const step = candleW + gap;
-    const chartW = w - 65;
-    const chartH = h - 22;
-    const padTop = 16;
+    // Calculate visible range
+    const totalWidth = candles.length * step;
+    const effectiveOffset = totalWidth - chartWidth + step * 8;
+    const startIdx = Math.max(0, Math.floor(effectiveOffset / step) - 2);
+    const endIdx = Math.min(candles.length - 1, Math.ceil((effectiveOffset + chartWidth) / step) + 2);
 
-    let minP = Infinity, maxP = -Infinity;
-    candles.forEach((c) => {
-      if (c.l < minP) minP = c.l;
-      if (c.h > maxP) maxP = c.h;
-    });
-    const padding = (maxP - minP) * 0.08;
-    minP -= padding;
-    maxP += padding;
+    // Price range
+    let minPrice = Infinity, maxPrice = -Infinity;
+    for (let i = startIdx; i <= endIdx && i < candles.length; i++) {
+      if (candles[i].l < minPrice) minPrice = candles[i].l;
+      if (candles[i].h > maxPrice) maxPrice = candles[i].h;
+    }
+    const padding = (maxPrice - minPrice) * 0.06;
+    minPrice -= padding;
+    maxPrice += padding;
 
-    const priceToY = (p: number) =>
-      padTop + (chartH - padTop) * (1 - (p - minP) / (maxP - minP));
+    const priceToY = (p: number) => {
+      const chartH = height - TIME_SCALE_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
+      return PADDING_TOP + chartH * (1 - (p - minPrice) / (maxPrice - minPrice));
+    };
+
+    const yToPrice = (y: number) => {
+      const chartH = height - TIME_SCALE_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
+      return minPrice + (1 - (y - PADDING_TOP) / chartH) * (maxPrice - minPrice);
+    };
 
     // Background
-    ctx.fillStyle = "#0f1113";
-    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, width, height);
 
     // Grid lines
-    ctx.strokeStyle = "rgba(255,255,255,0.04)";
+    const priceRange = maxPrice - minPrice;
+    const priceStep = calculatePriceStep(priceRange);
+    const firstPrice = Math.ceil(minPrice / priceStep) * priceStep;
+
+    ctx.strokeStyle = COLORS.gridLine;
     ctx.lineWidth = 0.5;
-    const range = maxP - minP;
-    const gridSteps = 6;
-    const priceStep = range / gridSteps;
-    for (let i = 1; i < gridSteps; i++) {
-      const p = minP + i * priceStep;
+    ctx.setLineDash([]);
+
+    for (let p = firstPrice; p <= maxPrice; p += priceStep) {
       const y = priceToY(p);
+      if (y < PADDING_TOP || y > height - TIME_SCALE_HEIGHT) continue;
       ctx.beginPath();
       ctx.moveTo(0, y);
-      ctx.lineTo(chartW, y);
+      ctx.lineTo(chartWidth, y);
       ctx.stroke();
     }
 
     // Vertical grid
-    ctx.strokeStyle = "rgba(255,255,255,0.03)";
-    const startX = chartW - candles.length * step;
-    for (let i = 5; i < candles.length; i += 10) {
-      const x = startX + i * step + step / 2;
+    const timeStep = calculateTimeStep(step);
+    for (let i = startIdx; i <= endIdx; i++) {
+      if (i % timeStep !== 0) continue;
+      const x = (i * step) - effectiveOffset + step / 2;
+      if (x < 0 || x > chartWidth) continue;
       ctx.beginPath();
-      ctx.moveTo(x, padTop);
-      ctx.lineTo(x, chartH);
+      ctx.moveTo(x, PADDING_TOP);
+      ctx.lineTo(x, height - TIME_SCALE_HEIGHT);
       ctx.stroke();
     }
 
-    // Volume bars (subtle, at bottom)
-    candles.forEach((c, i) => {
-      const x = startX + i * step + step / 2;
-      const isGreen = c.c >= c.o;
-      const vol = Math.abs(c.c - c.o) / asset.volatility;
-      const volH = vol * 25 + 3;
-      ctx.fillStyle = isGreen ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)";
-      ctx.fillRect(x - candleW / 2, chartH - volH, candleW, volH);
-    });
-
     // Draw candles
-    candles.forEach((c, i) => {
-      const x = startX + i * step + step / 2;
-      const isGreen = c.c >= c.o;
-      const color = isGreen ? "#22c55e" : "#ef4444";
-      const wickColor = isGreen ? "rgba(34,197,94,0.6)" : "rgba(239,68,68,0.6)";
+    for (let i = startIdx; i <= endIdx && i < candles.length; i++) {
+      const candle = candles[i];
+      const x = (i * step) - effectiveOffset;
+      const centerX = x + step / 2;
+      if (centerX < -candleW * 2 || centerX > chartWidth + candleW * 2) continue;
+
+      const isGreen = candle.c >= candle.o;
+      const openY = priceToY(candle.o);
+      const closeY = priceToY(candle.c);
+      const highY = priceToY(candle.h);
+      const lowY = priceToY(candle.l);
 
       // Wick
-      ctx.strokeStyle = wickColor;
+      ctx.strokeStyle = isGreen ? COLORS.wickGreen : COLORS.wickRed;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(x, priceToY(c.h));
-      ctx.lineTo(x, priceToY(c.l));
+      ctx.moveTo(centerX, highY);
+      ctx.lineTo(centerX, lowY);
       ctx.stroke();
 
       // Body
-      const bodyTop = priceToY(Math.max(c.o, c.c));
-      const bodyBot = priceToY(Math.min(c.o, c.c));
-      const bodyH = Math.max(1.5, bodyBot - bodyTop);
-      
-      // Subtle gradient on candle bodies
-      if (bodyH > 3) {
-        const grad = ctx.createLinearGradient(0, bodyTop, 0, bodyTop + bodyH);
-        if (isGreen) {
-          grad.addColorStop(0, "#2ade6a");
-          grad.addColorStop(1, "#1a9e48");
-        } else {
-          grad.addColorStop(0, "#ff5555");
-          grad.addColorStop(1, "#cc3333");
-        }
-        ctx.fillStyle = grad;
-      } else {
-        ctx.fillStyle = color;
-      }
-      ctx.fillRect(x - candleW / 2, bodyTop, candleW, bodyH);
-    });
+      const bodyTop = Math.min(openY, closeY);
+      const bodyHeight = Math.max(1, Math.abs(closeY - openY));
+      ctx.fillStyle = isGreen ? COLORS.candleGreen : COLORS.candleRed;
+      ctx.fillRect(Math.round(centerX - candleW / 2), Math.round(bodyTop), Math.round(candleW), Math.round(bodyHeight));
 
-    // Moving average line (EMA-like)
-    ctx.strokeStyle = "rgba(99,102,241,0.4)";
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    let ema = candles[0].c;
-    const emaAlpha = 0.15;
-    candles.forEach((c, i) => {
-      ema = ema * (1 - emaAlpha) + c.c * emaAlpha;
-      const x = startX + i * step + step / 2;
-      const y = priceToY(ema);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
+      // Live timer badge on last candle
+      if (i === candles.length - 1) {
+        const livePriceY = priceToY(candle.c);
+        const badgeW2 = 40, badgeH2 = 16;
+        const badgeX2 = chartWidth - badgeW2 - 6;
+        const timerY2 = livePriceY - badgeH2 - 8;
+        ctx.fillStyle = 'rgba(30, 35, 48, 0.95)';
+        roundRect(ctx, badgeX2, timerY2, badgeW2, badgeH2, 4);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 0.5;
+        roundRect(ctx, badgeX2, timerY2, badgeW2, badgeH2, 4);
+        ctx.stroke();
+        ctx.fillStyle = '#d1d5db';
+        ctx.font = "9px 'JetBrains Mono', monospace";
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('00:34', badgeX2 + badgeW2 / 2, timerY2 + badgeH2 / 2);
+      }
+    }
 
     // Current price line
     const lastPrice = candles[candles.length - 1].c;
     const priceY = priceToY(lastPrice);
-    ctx.setLineDash([4, 3]);
-    ctx.strokeStyle = "#2dd4bf";
+    ctx.strokeStyle = COLORS.priceLine;
     ctx.lineWidth = 1;
+    ctx.setLineDash([6, 4]);
     ctx.beginPath();
     ctx.moveTo(0, priceY);
-    ctx.lineTo(chartW, priceY);
+    ctx.lineTo(chartWidth, priceY);
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Price label on right
-    ctx.fillStyle = "#14b8a6";
-    const labelH = 18;
-    ctx.fillRect(chartW, priceY - labelH / 2, 65, labelH);
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 10px 'JetBrains Mono', monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(lastPrice.toFixed(asset.decimals), chartW + 32, priceY);
+    // Arrow on price line pointing to scale
+    ctx.fillStyle = COLORS.priceLine;
+    ctx.beginPath();
+    ctx.moveTo(chartWidth - 6, priceY - 4);
+    ctx.lineTo(chartWidth, priceY);
+    ctx.lineTo(chartWidth - 6, priceY + 4);
+    ctx.closePath();
+    ctx.fill();
 
-    // Price scale labels
-    ctx.fillStyle = "#3a3f50";
-    ctx.font = "9px 'JetBrains Mono', monospace";
-    ctx.textAlign = "right";
-    for (let i = 1; i < gridSteps; i++) {
-      const p = minP + i * priceStep;
+    // "Beginning of trade" preview line
+    const tradeStartIdx = candles.length - 1;
+    const tradeStartX = (tradeStartIdx * step) - effectiveOffset + step / 2;
+    if (tradeStartX > 0 && tradeStartX < chartWidth) {
+      ctx.strokeStyle = COLORS.priceLine;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo(tradeStartX, PADDING_TOP);
+      ctx.lineTo(tradeStartX, height - TIME_SCALE_HEIGHT);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = COLORS.priceLine;
+      ctx.font = "10px 'Inter', sans-serif";
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('Beginning of trade', tradeStartX - 6, PADDING_TOP - 4);
+
+      // Play triangle
+      ctx.fillStyle = COLORS.priceLine;
+      ctx.globalAlpha = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(tradeStartX - 4, PADDING_TOP - 18);
+      ctx.lineTo(tradeStartX + 4, PADDING_TOP - 14);
+      ctx.lineTo(tradeStartX - 4, PADDING_TOP - 10);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    // "End of trade" preview line
+    const tradeEndX = tradeStartX + step * 10;
+    if (tradeEndX > 0 && tradeEndX < chartWidth + 50) {
+      ctx.strokeStyle = 'rgba(160, 170, 190, 0.35)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.moveTo(tradeEndX, PADDING_TOP);
+      ctx.lineTo(tradeEndX, height - TIME_SCALE_HEIGHT);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(160, 170, 190, 0.5)';
+      ctx.font = "10px 'Inter', sans-serif";
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('End of trade', tradeEndX + 6, PADDING_TOP - 4);
+
+      // Stop square
+      ctx.fillStyle = 'rgba(160, 170, 190, 0.4)';
+      ctx.fillRect(tradeEndX - 4, PADDING_TOP - 17, 8, 8);
+    }
+
+    // Price scale
+    ctx.fillStyle = COLORS.priceScaleBg;
+    ctx.fillRect(chartWidth, 0, PRICE_SCALE_WIDTH, height);
+    ctx.strokeStyle = COLORS.priceScaleBorder;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(chartWidth, 0);
+    ctx.lineTo(chartWidth, height);
+    ctx.stroke();
+
+    ctx.fillStyle = COLORS.textMuted;
+    ctx.font = "10px 'JetBrains Mono', monospace";
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (let p = firstPrice; p <= maxPrice; p += priceStep) {
       const y = priceToY(p);
-      if (Math.abs(y - priceY) > 16) {
-        ctx.fillText(p.toFixed(asset.decimals), w - 4, y + 3);
+      if (y < PADDING_TOP || y > height - TIME_SCALE_HEIGHT) continue;
+      if (Math.abs(y - priceY) > 18) {
+        ctx.fillText(formatPrice(p), width - 8, y);
       }
     }
 
+    // Current price label on scale
+    const labelText = formatPrice(lastPrice);
+    const labelH = 22;
+    ctx.fillStyle = COLORS.priceLabel;
+    roundRect(ctx, chartWidth + 1, priceY - labelH / 2, PRICE_SCALE_WIDTH - 2, labelH, 4);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.font = "bold 11px 'JetBrains Mono', monospace";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(labelText, chartWidth + PRICE_SCALE_WIDTH / 2, priceY);
+
     // Time scale
-    ctx.fillStyle = "#0f1113";
-    ctx.fillRect(0, chartH, w, 22);
-    ctx.fillStyle = "#3a3f50";
-    ctx.font = "9px 'JetBrains Mono', monospace";
-    ctx.textAlign = "center";
-    const baseHour = [14, 9, 16][assetIndex];
-    for (let i = 5; i < candles.length; i += 10) {
-      const x = startX + i * step + step / 2;
-      const h2 = (baseHour + Math.floor(i / 4)) % 24;
-      const m2 = (i * 7 + 15) % 60;
-      ctx.fillText(
-        `${String(h2).padStart(2, "0")}:${String(m2).padStart(2, "0")}`,
-        x,
-        chartH + 14
-      );
+    ctx.fillStyle = COLORS.timeScaleBg;
+    ctx.fillRect(0, height - TIME_SCALE_HEIGHT, width, TIME_SCALE_HEIGHT);
+    ctx.strokeStyle = COLORS.priceScaleBorder;
+    ctx.beginPath();
+    ctx.moveTo(0, height - TIME_SCALE_HEIGHT);
+    ctx.lineTo(width, height - TIME_SCALE_HEIGHT);
+    ctx.stroke();
+
+    ctx.fillStyle = COLORS.textMuted;
+    ctx.font = "10px 'JetBrains Mono', monospace";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (let i = startIdx; i <= endIdx; i++) {
+      if (i % timeStep !== 0 || i >= candles.length) continue;
+      const x = (i * step) - effectiveOffset + step / 2;
+      if (x < 20 || x > chartWidth - 20) continue;
+      const date = new Date(candles[i].time * 1000);
+      const label = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+      ctx.fillText(label, x, height - TIME_SCALE_HEIGHT / 2);
     }
 
     // Glow dot at current price
-    const dotX = startX + (candles.length - 1) * step + step / 2;
+    const dotX = ((candles.length - 1) * step) - effectiveOffset + step / 2;
     ctx.beginPath();
     ctx.arc(dotX, priceY, 3.5, 0, Math.PI * 2);
-    ctx.fillStyle = "#2dd4bf";
+    ctx.fillStyle = COLORS.priceLine;
     ctx.fill();
     ctx.beginPath();
     ctx.arc(dotX, priceY, 8, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(45,212,191,0.15)";
     ctx.fill();
-    ctx.beginPath();
-    ctx.arc(dotX, priceY, 14, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(45,212,191,0.06)";
-    ctx.fill();
+
+    // Crosshair
+    const ch = crosshairRef.current;
+    if (ch && ch.x < chartWidth && ch.y < height - TIME_SCALE_HEIGHT && ch.y > PADDING_TOP) {
+      ctx.strokeStyle = COLORS.crosshairLine;
+      ctx.lineWidth = 0.5;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(ch.x, PADDING_TOP);
+      ctx.lineTo(ch.x, height - TIME_SCALE_HEIGHT);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, ch.y);
+      ctx.lineTo(chartWidth, ch.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Price label on crosshair
+      const crossPrice = yToPrice(ch.y);
+      const crossLabel = formatPrice(crossPrice);
+      const crossLabelH = 20;
+      ctx.fillStyle = COLORS.crosshairLabel;
+      roundRect(ctx, chartWidth + 1, ch.y - crossLabelH / 2, PRICE_SCALE_WIDTH - 2, crossLabelH, 3);
+      ctx.fill();
+      ctx.fillStyle = COLORS.crosshairText;
+      ctx.font = "10px 'JetBrains Mono', monospace";
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(crossLabel, chartWidth + PRICE_SCALE_WIDTH / 2, ch.y);
+
+      // Time label on crosshair
+      const candleIdx = Math.round((ch.x + effectiveOffset) / step);
+      if (candleIdx >= 0 && candleIdx < candles.length) {
+        const date = new Date(candles[candleIdx].time * 1000);
+        const timeLabel = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        const timeLabelW = 48;
+        const timeLabelH = 18;
+        ctx.fillStyle = COLORS.crosshairLabel;
+        roundRect(ctx, ch.x - timeLabelW / 2, height - TIME_SCALE_HEIGHT + 1, timeLabelW, timeLabelH, 3);
+        ctx.fill();
+        ctx.fillStyle = COLORS.crosshairText;
+        ctx.font = "10px 'JetBrains Mono', monospace";
+        ctx.fillText(timeLabel, ch.x, height - TIME_SCALE_HEIGHT + 1 + timeLabelH / 2);
+
+        // OHLC tooltip
+        const c = candles[candleIdx];
+        const isGreen = c.c >= c.o;
+        const labels = [
+          { label: 'Open:', value: formatPrice(c.o) },
+          { label: 'Close:', value: formatPrice(c.c) },
+          { label: 'High:', value: formatPrice(c.h) },
+          { label: 'Low:', value: formatPrice(c.l) },
+        ];
+        const lineH = 15;
+        const boxH = labels.length * lineH + 10;
+        const boxW = 140;
+        const boxX = 46;
+        const boxY = height - TIME_SCALE_HEIGHT - boxH - 22;
+
+        ctx.fillStyle = 'rgba(15, 17, 19, 0.92)';
+        roundRect(ctx, boxX, boxY, boxW, boxH, 5);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 0.5;
+        roundRect(ctx, boxX, boxY, boxW, boxH, 5);
+        ctx.stroke();
+
+        labels.forEach(({ label, value }, idx) => {
+          const ly = boxY + 8 + idx * lineH;
+          ctx.font = "10px 'Inter', sans-serif";
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'top';
+          ctx.fillStyle = '#6b7280';
+          ctx.fillText(label, boxX + 8, ly);
+          ctx.fillStyle = isGreen ? '#22c55e' : '#ef4444';
+          ctx.textAlign = 'right';
+          ctx.fillText(value, boxX + boxW - 8, ly);
+        });
+      }
+    }
   }, [assetIndex]);
 
   useEffect(() => {
-    draw();
+    const loop = () => {
+      draw();
+      animRef.current = requestAnimationFrame(loop);
+    };
+    animRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animRef.current);
   }, [draw]);
 
-  return <canvas ref={canvasRef} className="w-full h-full" />;
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const chartWidth = rect.width - PRICE_SCALE_WIDTH;
+    crosshairRef.current = x < chartWidth ? { x, y } : null;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    crosshairRef.current = null;
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="w-full h-full"
+      style={{ display: 'block', cursor: 'crosshair' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    />
+  );
 };
 
 /* ── Main Dashboard Mockup ── */
@@ -433,12 +682,18 @@ const DashboardMockup = () => {
               ))}
             </div>
 
-            {/* Connection status */}
-            <div className="absolute top-[36px] left-2 z-10 flex items-center gap-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
-              <span className="text-[8px] text-muted-foreground">
-                {new Date().toLocaleTimeString()} UTC
-              </span>
+            {/* Connection status + pair info */}
+            <div className="absolute top-[36px] left-2 z-10 flex flex-col gap-1">
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
+                <span className="text-[8px] text-muted-foreground">
+                  {new Date().toLocaleTimeString()} UTC
+                </span>
+              </div>
+              <button className="flex items-center gap-1 text-primary text-[9px] font-medium w-fit">
+                <Info size={10} />
+                PAIR INFORMATION
+              </button>
             </div>
 
             {/* Canvas chart */}
