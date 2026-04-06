@@ -30,7 +30,7 @@ const Hero = () => {
       </div>
 
       {/* Dashboard preview with ambient glow */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto mt-20 animate-slide-up-delay-4">
+      <div className="relative z-10 w-full max-w-6xl mx-auto mt-20 animate-slide-up-delay-4">
         {/* Ambient glow behind the preview */}
         <div className="absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.06),transparent_60%)] blur-3xl pointer-events-none" />
         <div className="absolute -inset-4 rounded-3xl bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
