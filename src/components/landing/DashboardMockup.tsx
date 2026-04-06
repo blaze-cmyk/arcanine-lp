@@ -13,8 +13,9 @@ import {
   ChevronDown,
   Pencil,
   Scissors,
-  Info,
+  ChevronRight,
 } from "lucide-react";
+import logo from "@/assets/arcanine-logo.png";
 
 /* ── Asset configs with distinct chart personalities ── */
 const ASSETS = [
