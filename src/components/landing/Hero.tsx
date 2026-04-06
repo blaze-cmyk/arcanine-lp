@@ -23,7 +23,7 @@ const Hero = () => {
             Create Account
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
-          <button className="inline-flex items-center gap-3 px-10 py-4 border border-border/60 text-foreground font-bold text-base rounded-xl hover:bg-muted/40 hover:scale-[1.03] transition-all duration-300">
+          <button className="inline-flex items-center gap-3 px-10 py-4 bg-secondary-btn text-foreground font-bold text-base rounded-xl hover:opacity-90 hover:scale-[1.03] transition-all duration-300">
             Try Free Demo
           </button>
         </div>
