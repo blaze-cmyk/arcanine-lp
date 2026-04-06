@@ -47,7 +47,7 @@ const MiniChart = ({ trend }: { trend: number }) => {
       // gradient fill
       const gradient = ctx.createLinearGradient(0, 0, 0, dh);
       const isUp = points[points.length - 1] > points[0];
-      gradient.addColorStop(0, isUp ? "rgba(0,230,118,0.15)" : "rgba(255,82,82,0.15)");
+      gradient.addColorStop(0, isUp ? "rgba(74,158,110,0.15)" : "rgba(192,85,85,0.15)");
       gradient.addColorStop(1, "transparent");
 
       ctx.beginPath();
