@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   TrendingUp,
   TrendingDown,
@@ -8,26 +8,20 @@ import {
   Trophy,
   Store,
   MoreHorizontal,
-  Bell,
   Plus,
   Minus,
   ChevronDown,
   Pencil,
   Scissors,
 } from "lucide-react";
+import logo from "@/assets/arcanine-logo.png";
 
 /* ── Static data ── */
 const ASSETS = [
-  { symbol: "BTC/USD", payout: 92 },
-  { symbol: "ETH/USD", payout: 88 },
-  { symbol: "GOLD", payout: 85 },
+  { symbol: "BTC/USD", payout: 92, basePrice: 67432.5, volatility: 80, decimals: 2 },
+  { symbol: "ETH/USD", payout: 88, basePrice: 3521.8, volatility: 25, decimals: 2 },
+  { symbol: "GOLD", payout: 85, basePrice: 2341.6, volatility: 12, decimals: 2 },
 ];
-
-const BASE_PRICES: Record<string, number> = {
-  "BTC/USD": 67432.5,
-  "ETH/USD": 3521.8,
-  GOLD: 2341.6,
-};
 
 const SIDEBAR_ITEMS = [
   { icon: BarChart3, label: "TRADE", active: true },
@@ -38,11 +32,32 @@ const SIDEBAR_ITEMS = [
   { icon: MoreHorizontal, label: "MORE" },
 ];
 
+/* ── Generate candle data for an asset ── */
+function generateCandles(basePrice: number, volatility: number, seed: number) {
+  const candles: { o: number; h: number; l: number; c: number }[] = [];
+  let price = basePrice;
+  // Use seed to create different but deterministic-feeling patterns
+  const pseudoRandom = (i: number) => {
+    const x = Math.sin(seed * 9301 + i * 49297 + 233280) * 0.5 + 0.5;
+    return x;
+  };
+  for (let i = 0; i < 55; i++) {
+    const open = price;
+    const change = (pseudoRandom(i) - 0.48) * volatility;
+    const close = open + change;
+    const high = Math.max(open, close) + pseudoRandom(i + 100) * (volatility * 0.5);
+    const low = Math.min(open, close) - pseudoRandom(i + 200) * (volatility * 0.5);
+    candles.push({ o: open, h: high, l: low, c: close });
+    price = close;
+  }
+  return candles;
+}
+
 /* ── Candlestick Chart (canvas) ── */
-const CandlestickChart = () => {
+const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
+  const draw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
@@ -54,27 +69,16 @@ const CandlestickChart = () => {
     const w = rect.width;
     const h = rect.height;
 
-    // Generate realistic candle data
-    const candles: { o: number; h: number; l: number; c: number }[] = [];
-    let price = 67400;
-    for (let i = 0; i < 55; i++) {
-      const open = price;
-      const change = (Math.random() - 0.48) * 80;
-      const close = open + change;
-      const high = Math.max(open, close) + Math.random() * 40;
-      const low = Math.min(open, close) - Math.random() * 40;
-      candles.push({ o: open, h: high, l: low, c: close });
-      price = close;
-    }
+    const asset = ASSETS[assetIndex];
+    const candles = generateCandles(asset.basePrice, asset.volatility, assetIndex + 1);
 
     const candleW = 7;
     const gap = 3;
     const step = candleW + gap;
-    const chartW = w - 65; // price scale width
-    const chartH = h - 22; // time scale height
+    const chartW = w - 65;
+    const chartH = h - 22;
     const padTop = 16;
 
-    // Price range
     let minP = Infinity, maxP = -Infinity;
     candles.forEach((c) => {
       if (c.l < minP) minP = c.l;
@@ -111,7 +115,6 @@ const CandlestickChart = () => {
       const color = isGreen ? "#22c55e" : "#ef4444";
       const wickColor = isGreen ? "rgba(34,197,94,0.5)" : "rgba(239,68,68,0.5)";
 
-      // Wick
       ctx.strokeStyle = wickColor;
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -119,7 +122,6 @@ const CandlestickChart = () => {
       ctx.lineTo(x, priceToY(c.l));
       ctx.stroke();
 
-      // Body
       const bodyTop = priceToY(Math.max(c.o, c.c));
       const bodyBot = priceToY(Math.min(c.o, c.c));
       const bodyH = Math.max(1, bodyBot - bodyTop);
@@ -147,7 +149,7 @@ const CandlestickChart = () => {
     ctx.font = "bold 10px 'JetBrains Mono', monospace";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(lastPrice.toFixed(2), chartW + 32, priceY);
+    ctx.fillText(lastPrice.toFixed(asset.decimals), chartW + 32, priceY);
 
     // Price scale labels
     ctx.fillStyle = "#3a3f50";
@@ -166,10 +168,11 @@ const CandlestickChart = () => {
     ctx.fillStyle = "#3a3f50";
     ctx.font = "9px 'JetBrains Mono', monospace";
     ctx.textAlign = "center";
+    const baseHour = 9 + assetIndex * 3;
     for (let i = 5; i < candles.length; i += 10) {
       const x = startX + i * step + step / 2;
-      const h2 = Math.floor(Math.random() * 24);
-      const m2 = Math.floor(Math.random() * 60);
+      const h2 = (baseHour + Math.floor(i / 4)) % 24;
+      const m2 = (i * 7) % 60;
       ctx.fillText(
         `${String(h2).padStart(2, "0")}:${String(m2).padStart(2, "0")}`,
         x,
@@ -187,7 +190,11 @@ const CandlestickChart = () => {
     ctx.arc(dotX, priceY, 8, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(45,212,191,0.2)";
     ctx.fill();
-  }, []);
+  }, [assetIndex]);
+
+  useEffect(() => {
+    draw();
+  }, [draw]);
 
   return <canvas ref={canvasRef} className="w-full h-full" />;
 };
@@ -195,7 +202,9 @@ const CandlestickChart = () => {
 /* ── Main Dashboard Mockup ── */
 const DashboardMockup = () => {
   const [activeAsset, setActiveAsset] = useState(0);
-  const [prices, setPrices] = useState(BASE_PRICES);
+  const [prices, setPrices] = useState<Record<string, number>>(
+    Object.fromEntries(ASSETS.map((a) => [a.symbol, a.basePrice]))
+  );
   const [bullPct, setBullPct] = useState(62);
 
   // Tick prices
@@ -214,6 +223,9 @@ const DashboardMockup = () => {
   }, []);
 
   const bearPct = 100 - bullPct;
+  const currentAsset = ASSETS[activeAsset];
+  const currentPrice = prices[currentAsset.symbol];
+  const payoutAmount = (100 * currentAsset.payout / 100).toFixed(2);
 
   return (
     <div className="flex h-[420px] sm:h-[480px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
@@ -243,21 +255,13 @@ const DashboardMockup = () => {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Balance header */}
         <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
-          <div className="flex items-center gap-2 mr-auto">
-            <div className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center">
-              <span className="text-primary font-bold text-[10px]">A</span>
-            </div>
+          <div className="flex items-center gap-1 mr-auto">
+            <img src={logo} alt="Arcanine" className="w-7 h-7" />
             <span
               className="text-foreground font-bold text-xs tracking-wider hidden sm:block"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800 }}
             >
               ARCANINE
-            </span>
-          </div>
-          <div className="relative text-muted-foreground">
-            <Bell size={16} />
-            <span className="absolute -top-1 -right-1.5 w-3.5 h-3.5 bg-destructive rounded-full text-[7px] font-bold flex items-center justify-center text-destructive-foreground">
-              5
             </span>
           </div>
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
@@ -363,9 +367,9 @@ const DashboardMockup = () => {
               </span>
             </div>
 
-            {/* Canvas chart */}
+            {/* Canvas chart — re-renders on asset change */}
             <div className="w-full h-full">
-              <CandlestickChart />
+              <CandlestickChart assetIndex={activeAsset} />
             </div>
           </div>
 
@@ -375,14 +379,14 @@ const DashboardMockup = () => {
             <div className="px-2.5 py-2 border-b border-border">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-foreground text-[10px]">
-                  {ASSETS[activeAsset].symbol}
+                  {currentAsset.symbol}
                 </span>
                 <span className="text-primary text-[10px] font-bold">
-                  {ASSETS[activeAsset].payout}%
+                  {currentAsset.payout}%
                 </span>
               </div>
               <div className="font-mono-num text-lg font-bold mt-0.5">
-                ${prices[ASSETS[activeAsset].symbol]?.toFixed(2)}
+                ${currentPrice?.toFixed(currentAsset.decimals)}
               </div>
             </div>
 
@@ -424,17 +428,16 @@ const DashboardMockup = () => {
                   </button>
                 </div>
               </fieldset>
-              {/* Payout info */}
               <div className="flex justify-between text-[8px] mt-1.5 px-1">
                 <span className="text-muted-foreground">Payout</span>
                 <span className="text-profit font-bold font-mono-num">
-                  +$90.00
+                  +${payoutAmount}
                 </span>
               </div>
               <div className="flex justify-between text-[8px] px-1 mt-0.5">
-                <span className="text-muted-foreground">Fee (10%)</span>
+                <span className="text-muted-foreground">Fee ({100 - currentAsset.payout}%)</span>
                 <span className="text-muted-foreground font-mono-num">
-                  -$10.00
+                  -${(100 - currentAsset.payout).toFixed(2)}
                 </span>
               </div>
             </div>
