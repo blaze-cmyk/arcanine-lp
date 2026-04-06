@@ -13,8 +13,8 @@ const Hero = () => {
 
         {/* Subhead */}
         <p className="animate-slide-up-delay-1 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-          Predict price movements in seconds. Up or down — one decision,
-          instant results. The fastest way to trade global markets.
+          Predict price movements in seconds. Up or down — one decision, instant results. The fastest way to trade
+          global markets.
         </p>
 
         {/* Dual CTA */}
@@ -30,7 +30,7 @@ const Hero = () => {
       </div>
 
       {/* Dashboard preview with ambient glow */}
-      <div className="relative z-10 w-full mx-auto mt-20 animate-slide-up-delay-4">
+      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 animate-slide-up-delay-4">
         {/* Ambient glow behind the preview */}
         <div className="absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.06),transparent_60%)] blur-3xl pointer-events-none" />
         <div className="absolute -inset-4 rounded-3xl bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
