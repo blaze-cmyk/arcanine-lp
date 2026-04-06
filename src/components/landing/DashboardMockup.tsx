@@ -519,7 +519,7 @@ const DashboardMockup = () => {
   };
 
   return (
-    <div className="flex h-[420px] sm:h-[480px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
+    <div className="flex h-[500px] sm:h-[560px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
       {/* Sidebar */}
       <div className="hidden sm:flex w-[52px] flex-col items-center py-3 bg-card border-r border-border flex-shrink-0">
         {SIDEBAR_ITEMS.map((item) => {
