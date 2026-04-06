@@ -2,6 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import {
   TrendingUp,
   TrendingDown,
+  BarChart3,
+  HelpCircle,
+  User,
+  Trophy,
+  Store,
+  MoreHorizontal,
+  Bell,
   Plus,
   Minus,
   ChevronDown,
@@ -22,13 +29,17 @@ const BASE_PRICES: Record<string, number> = {
   GOLD: 2341.6,
 };
 
-/* ── Skeleton block ── */
-const Skel = ({ className }: { className?: string }) => (
-  <div className={`bg-[#1a1a22] rounded ${className ?? ""}`} />
-);
+const SIDEBAR_ITEMS = [
+  { icon: BarChart3, label: "TRADE", active: true },
+  { icon: HelpCircle, label: "SUPPORT" },
+  { icon: User, label: "ACCOUNT" },
+  { icon: Trophy, label: "TOURNEYS" },
+  { icon: Store, label: "MARKET" },
+  { icon: MoreHorizontal, label: "MORE" },
+];
 
 /* ── Candlestick Chart (canvas) ── */
-const CandlestickChart = ({ seed }: { seed: number }) => {
+const CandlestickChart = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -43,21 +54,15 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     const w = rect.width;
     const h = rect.height;
 
-    // Seeded random for consistent per-asset charts
-    let s = seed;
-    const rand = () => {
-      s = (s * 16807 + 0) % 2147483647;
-      return (s & 0x7fffffff) / 0x7fffffff;
-    };
-
+    // Generate realistic candle data
     const candles: { o: number; h: number; l: number; c: number }[] = [];
-    let price = seed;
+    let price = 67400;
     for (let i = 0; i < 55; i++) {
       const open = price;
-      const change = (rand() - 0.48) * (price * 0.002);
+      const change = (Math.random() - 0.48) * 80;
       const close = open + change;
-      const high = Math.max(open, close) + rand() * (price * 0.0006);
-      const low = Math.min(open, close) - rand() * (price * 0.0006);
+      const high = Math.max(open, close) + Math.random() * 40;
+      const low = Math.min(open, close) - Math.random() * 40;
       candles.push({ o: open, h: high, l: low, c: close });
       price = close;
     }
@@ -65,10 +70,11 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     const candleW = 7;
     const gap = 3;
     const step = candleW + gap;
-    const chartW = w - 65;
-    const chartH = h - 22;
+    const chartW = w - 65; // price scale width
+    const chartH = h - 22; // time scale height
     const padTop = 16;
 
+    // Price range
     let minP = Infinity, maxP = -Infinity;
     candles.forEach((c) => {
       if (c.l < minP) minP = c.l;
@@ -81,9 +87,11 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     const priceToY = (p: number) =>
       padTop + (chartH - padTop) * (1 - (p - minP) / (maxP - minP));
 
+    // Background
     ctx.fillStyle = "#0f1113";
     ctx.fillRect(0, 0, w, h);
 
+    // Grid lines
     ctx.strokeStyle = "rgba(255,255,255,0.06)";
     ctx.lineWidth = 0.5;
     const priceStep = Math.ceil((maxP - minP) / 6);
@@ -95,6 +103,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
       ctx.stroke();
     }
 
+    // Draw candles
     const startX = chartW - candles.length * step;
     candles.forEach((c, i) => {
       const x = startX + i * step + step / 2;
@@ -102,6 +111,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
       const color = isGreen ? "#22c55e" : "#ef4444";
       const wickColor = isGreen ? "rgba(34,197,94,0.5)" : "rgba(239,68,68,0.5)";
 
+      // Wick
       ctx.strokeStyle = wickColor;
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -109,6 +119,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
       ctx.lineTo(x, priceToY(c.l));
       ctx.stroke();
 
+      // Body
       const bodyTop = priceToY(Math.max(c.o, c.c));
       const bodyBot = priceToY(Math.min(c.o, c.c));
       const bodyH = Math.max(1, bodyBot - bodyTop);
@@ -116,6 +127,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
       ctx.fillRect(x - candleW / 2, bodyTop, candleW, bodyH);
     });
 
+    // Current price line
     const lastPrice = candles[candles.length - 1].c;
     const priceY = priceToY(lastPrice);
     ctx.setLineDash([4, 3]);
@@ -127,6 +139,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     ctx.stroke();
     ctx.setLineDash([]);
 
+    // Price label on right
     ctx.fillStyle = "#14b8a6";
     const labelH = 18;
     ctx.fillRect(chartW, priceY - labelH / 2, 65, labelH);
@@ -136,6 +149,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     ctx.textBaseline = "middle";
     ctx.fillText(lastPrice.toFixed(2), chartW + 32, priceY);
 
+    // Price scale labels
     ctx.fillStyle = "#3a3f50";
     ctx.font = "9px 'JetBrains Mono', monospace";
     ctx.textAlign = "right";
@@ -146,6 +160,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
       }
     }
 
+    // Time scale
     ctx.fillStyle = "#0f1113";
     ctx.fillRect(0, chartH, w, 22);
     ctx.fillStyle = "#3a3f50";
@@ -153,8 +168,8 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     ctx.textAlign = "center";
     for (let i = 5; i < candles.length; i += 10) {
       const x = startX + i * step + step / 2;
-      const h2 = Math.floor(rand() * 24);
-      const m2 = Math.floor(rand() * 60);
+      const h2 = Math.floor(Math.random() * 24);
+      const m2 = Math.floor(Math.random() * 60);
       ctx.fillText(
         `${String(h2).padStart(2, "0")}:${String(m2).padStart(2, "0")}`,
         x,
@@ -162,6 +177,7 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
       );
     }
 
+    // Glow dot at current price
     const dotX = startX + (candles.length - 1) * step + step / 2;
     ctx.beginPath();
     ctx.arc(dotX, priceY, 3.5, 0, Math.PI * 2);
@@ -171,16 +187,9 @@ const CandlestickChart = ({ seed }: { seed: number }) => {
     ctx.arc(dotX, priceY, 8, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(45,212,191,0.2)";
     ctx.fill();
-  }, [seed]);
+  }, []);
 
   return <canvas ref={canvasRef} className="w-full h-full" />;
-};
-
-/* ── Chart seeds per asset ── */
-const CHART_SEEDS: Record<string, number> = {
-  "BTC/USD": 67400,
-  "ETH/USD": 3520,
-  GOLD: 2340,
 };
 
 /* ── Main Dashboard Mockup ── */
@@ -189,6 +198,7 @@ const DashboardMockup = () => {
   const [prices, setPrices] = useState(BASE_PRICES);
   const [bullPct, setBullPct] = useState(62);
 
+  // Tick prices
   useEffect(() => {
     const interval = setInterval(() => {
       setPrices((prev) => {
@@ -207,27 +217,64 @@ const DashboardMockup = () => {
 
   return (
     <div className="flex h-[420px] sm:h-[480px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
-      {/* Sidebar — skeleton placeholders */}
-      <div className="hidden sm:flex w-[52px] flex-col items-center py-3 gap-2 bg-card border-r border-border flex-shrink-0">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex flex-col items-center gap-1">
-            <Skel className="w-7 h-7 rounded-lg" />
-            <Skel className="w-6 h-1.5 rounded-sm" />
-          </div>
-        ))}
+      {/* Sidebar */}
+      <div className="hidden sm:flex w-[52px] flex-col items-center py-3 bg-card border-r border-border flex-shrink-0">
+        {SIDEBAR_ITEMS.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={item.label}
+              className={`flex flex-col items-center justify-center w-10 h-10 rounded-lg mb-0.5 transition-colors ${
+                item.active
+                  ? "bg-primary/15 text-primary"
+                  : "text-muted-foreground"
+              }`}
+            >
+              <Icon size={16} strokeWidth={item.active ? 2.2 : 1.6} />
+              <span className="text-[7px] mt-0.5 font-medium tracking-wide">
+                {item.label}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Balance header — skeleton */}
+        {/* Balance header */}
         <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
           <div className="flex items-center gap-2 mr-auto">
-            <Skel className="w-7 h-7 rounded-full" />
-            <Skel className="w-16 h-3.5 rounded hidden sm:block" />
+            <div className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center">
+              <span className="text-primary font-bold text-[10px]">A</span>
+            </div>
+            <span
+              className="text-foreground font-bold text-xs tracking-wider hidden sm:block"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800 }}
+            >
+              ARCANINE
+            </span>
           </div>
-          <Skel className="w-5 h-5 rounded" />
-          <Skel className="w-24 h-8 rounded-md" />
-          <Skel className="hidden sm:block w-20 h-7 rounded-md" />
+          <div className="relative text-muted-foreground">
+            <Bell size={16} />
+            <span className="absolute -top-1 -right-1.5 w-3.5 h-3.5 bg-destructive rounded-full text-[7px] font-bold flex items-center justify-center text-destructive-foreground">
+              5
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
+            <div className="text-left">
+              <div className="text-[7px] text-primary font-bold uppercase tracking-wider">
+                DEMO ACCOUNT
+              </div>
+              <div className="text-[11px] font-bold text-foreground font-mono-num">
+                $10,000.00
+              </div>
+            </div>
+            <ChevronDown size={10} className="text-muted-foreground" />
+          </div>
+          <button className="hidden sm:flex items-center gap-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-[10px] px-3 py-1.5 rounded-md transition-colors">
+            <Plus size={12} strokeWidth={3} />
+            Deposit
+          </button>
         </div>
 
         {/* Chart area */}
@@ -316,9 +363,9 @@ const DashboardMockup = () => {
               </span>
             </div>
 
-            {/* Canvas chart — re-renders on asset change */}
+            {/* Canvas chart */}
             <div className="w-full h-full">
-              <CandlestickChart seed={CHART_SEEDS[ASSETS[activeAsset].symbol]} />
+              <CandlestickChart />
             </div>
           </div>
 
@@ -377,6 +424,7 @@ const DashboardMockup = () => {
                   </button>
                 </div>
               </fieldset>
+              {/* Payout info */}
               <div className="flex justify-between text-[8px] mt-1.5 px-1">
                 <span className="text-muted-foreground">Payout</span>
                 <span className="text-profit font-bold font-mono-num">
@@ -391,17 +439,15 @@ const DashboardMockup = () => {
               </div>
             </div>
 
-            {/* UP / DOWN buttons — premium style */}
+            {/* UP / DOWN buttons */}
             <div className="px-2.5 py-2 space-y-1.5 mt-auto">
-              <button className="group w-full relative flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-sm transition-all duration-300 overflow-hidden bg-gradient-to-r from-[#00C853] to-[#00E676] text-[#0a1a0f] shadow-[0_0_20px_rgba(0,200,83,0.15)] hover:shadow-[0_0_30px_rgba(0,200,83,0.3)] hover:scale-[1.02]">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                <TrendingUp size={16} className="relative z-10" />
-                <span className="relative z-10 tracking-wider">UP</span>
+              <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-profit/15 border border-profit/30 text-profit font-bold text-sm hover:bg-profit/25 transition-all">
+                <TrendingUp size={16} />
+                UP
               </button>
-              <button className="group w-full relative flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-sm transition-all duration-300 overflow-hidden bg-gradient-to-r from-[#FF3B3B] to-[#FF5252] text-[#1a0a0a] shadow-[0_0_20px_rgba(255,59,59,0.15)] hover:shadow-[0_0_30px_rgba(255,59,59,0.3)] hover:scale-[1.02]">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                <TrendingDown size={16} className="relative z-10" />
-                <span className="relative z-10 tracking-wider">DOWN</span>
+              <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-loss/15 border border-loss/30 text-loss font-bold text-sm hover:bg-loss/25 transition-all">
+                <TrendingDown size={16} />
+                DOWN
               </button>
             </div>
 
