@@ -47,7 +47,7 @@ const Navbar = () => {
           {/* Right: Get Demo + Log In + Sign Up */}
           <div className="hidden md:flex items-center gap-2">
             <button className="py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 px-[8px]">
-              Get Demo
+              Demo Account
             </button>
             <button className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-foreground/80 hover:text-foreground bg-secondary-btn rounded-xl transition-colors duration-200">
               <LogIn className="w-4 h-4" />
