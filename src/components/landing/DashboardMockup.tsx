@@ -528,6 +528,8 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
 /* ── Main Dashboard Mockup ── */
 const DashboardMockup = () => {
   const [activeAsset, setActiveAsset] = useState(0);
+  const [timeSeconds, setTimeSeconds] = useState(60);
+  const [investment, setInvestment] = useState(100);
   const [prices, setPrices] = useState<Record<string, number>>(
     Object.fromEntries(ASSETS.map((a) => [a.symbol, a.basePrice]))
   );
