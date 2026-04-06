@@ -699,15 +699,6 @@ const DashboardMockup = () => {
               ))}
             </div>
 
-            {/* Connection status */}
-            <div className="absolute top-[36px] left-2 z-10">
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
-                <span className="text-[8px] text-muted-foreground">
-                  Connected
-                </span>
-              </div>
-            </div>
 
             {/* Canvas chart */}
             <div className="w-full h-full">
