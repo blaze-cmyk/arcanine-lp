@@ -552,7 +552,21 @@ const DashboardMockup = () => {
   const bearPct = 100 - bullPct;
   const currentAsset = ASSETS[activeAsset];
   const currentPrice = prices[currentAsset.symbol];
-  const payoutAmount = (100 * currentAsset.payout / 100).toFixed(2);
+  const payoutAmount = (investment * currentAsset.payout / 100).toFixed(2);
+  const timeDisplay = `${String(Math.floor(timeSeconds / 60)).padStart(2, '0')}:${String(timeSeconds % 60).padStart(2, '0')}`;
+
+  const adjustTime = (delta: number) => {
+    setTimeSeconds(prev => {
+      const next = prev + delta;
+      if (next < 20) return 20;
+      if (next > 60) return 60;
+      return next;
+    });
+  };
+
+  const adjustInvestment = (delta: number) => {
+    setInvestment(prev => Math.max(1, prev + delta));
+  };
 
   return (
     <div className="flex h-[420px] sm:h-[480px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
