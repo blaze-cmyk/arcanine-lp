@@ -1,5 +1,4 @@
 import DashboardMockup from "./DashboardMockup";
-import DashboardMockup from "./DashboardMockup";
 
 const Hero = () => {
   return (
