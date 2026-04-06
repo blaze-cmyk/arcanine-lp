@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Satoshi', 'system-ui', 'sans-serif'],
-        display: ['Clash Display', 'system-ui', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
