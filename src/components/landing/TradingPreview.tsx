@@ -56,7 +56,7 @@ const MiniChart = ({ trend }: { trend: number }) => {
         const y = dh - (p / 100) * dh;
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
-      ctx.strokeStyle = isUp ? "#00E676" : "#FF5252";
+      ctx.strokeStyle = isUp ? "#4a9e6e" : "#c05555";
       ctx.lineWidth = 2;
       ctx.stroke();
 
