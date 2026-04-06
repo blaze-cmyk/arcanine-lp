@@ -759,13 +759,13 @@ const DashboardMockup = () => {
                   Investment
                 </legend>
                 <div className="flex items-center gap-1">
-                  <button className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground">
+                  <button onClick={() => adjustInvestment(-10)} className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                     <Minus size={10} />
                   </button>
                   <span className="flex-1 text-center text-[11px] font-bold font-mono-num">
-                    100 $
+                    {investment} $
                   </span>
-                  <button className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground">
+                  <button onClick={() => adjustInvestment(10)} className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                     <Plus size={10} />
                   </button>
                 </div>
@@ -779,7 +779,7 @@ const DashboardMockup = () => {
               <div className="flex justify-between text-[8px] px-1 mt-0.5">
                 <span className="text-muted-foreground">Fee ({100 - currentAsset.payout}%)</span>
                 <span className="text-muted-foreground font-mono-num">
-                  -${(100 - currentAsset.payout).toFixed(2)}
+                  -${((investment * (100 - currentAsset.payout)) / 100).toFixed(2)}
                 </span>
               </div>
             </div>
