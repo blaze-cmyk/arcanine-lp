@@ -694,18 +694,14 @@ const DashboardMockup = () => {
               ))}
             </div>
 
-            {/* Connection status + pair info */}
-            <div className="absolute top-[36px] left-2 z-10 flex flex-col gap-1">
+            {/* Connection status */}
+            <div className="absolute top-[36px] left-2 z-10">
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
                 <span className="text-[8px] text-muted-foreground">
-                  {new Date().toLocaleTimeString()} UTC
+                  Connected
                 </span>
               </div>
-              <button className="flex items-center gap-1 text-primary text-[9px] font-medium w-fit">
-                <Info size={10} />
-                PAIR INFORMATION
-              </button>
             </div>
 
             {/* Canvas chart */}
