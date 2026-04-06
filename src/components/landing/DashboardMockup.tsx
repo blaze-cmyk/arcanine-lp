@@ -597,12 +597,7 @@ const DashboardMockup = () => {
         {/* Balance header */}
         <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
           <div className="flex items-center gap-1.5 mr-auto">
-            <span
-              className="text-foreground font-bold text-sm tracking-tight"
-              style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700 }}
-            >
-              Arcanine
-            </span>
+            <img src={logo} alt="Arcanine" className="h-5 w-auto" />
           </div>
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
             <div className="text-left">
