@@ -739,13 +739,13 @@ const DashboardMockup = () => {
                   Time
                 </legend>
                 <div className="flex items-center gap-1">
-                  <button className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary">
+                  <button onClick={() => adjustTime(-5)} className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors">
                     <Minus size={10} />
                   </button>
                   <span className="flex-1 text-center text-[11px] font-bold font-mono-num">
-                    01:00
+                    {timeDisplay}
                   </span>
-                  <button className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary">
+                  <button onClick={() => adjustTime(5)} className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors">
                     <Plus size={10} />
                   </button>
                 </div>
