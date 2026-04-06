@@ -49,11 +49,11 @@ const Navbar = () => {
             <button className="py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 px-[8px]">
               Demo Account
             </button>
-            <button className="inline-flex items-center gap-2 px-2 py-2.5 text-sm font-medium text-foreground bg-secondary-btn rounded-xl transition-colors duration-200">
+            <button className="inline-flex items-center gap-2 px-2.5 py-2.5 text-sm font-medium text-foreground bg-secondary-btn rounded-xl transition-colors duration-200">
               <LogIn className="w-4 h-4" />
               Log In
             </button>
-            <button className="px-2 py-2.5 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-xl transition-colors duration-200">
+            <button className="px-2.5 py-2.5 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-xl transition-colors duration-200">
               Sign Up
             </button>
           </div>
