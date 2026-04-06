@@ -560,7 +560,7 @@ const DashboardMockup = () => {
             </div>
             <ChevronDown size={10} className="text-muted-foreground" />
           </div>
-          <button className="hidden sm:flex items-center gap-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-[10px] px-3 py-1.5 rounded-md transition-colors">
+          <button className="hidden sm:flex items-center gap-1 bg-gradient-accent hover:opacity-90 text-primary-foreground font-bold text-[10px] px-3 py-1.5 rounded-md transition-colors">
             <Plus size={12} strokeWidth={3} />
             Deposit
           </button>
