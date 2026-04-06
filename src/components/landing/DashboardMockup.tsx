@@ -742,8 +742,39 @@ const DashboardMockup = () => {
                   Orders
                 </button>
               </div>
-              <div className="px-2.5 py-2 text-center text-[9px] text-muted-foreground">
-                No active trades
+              <div className="px-2 py-1.5 space-y-1">
+                {/* Trade 1 — winning */}
+                <div className="rounded-md bg-profit/[0.06] border border-profit/15 px-2 py-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-semibold text-foreground">BTC/USD</span>
+                    <span className="flex items-center gap-0.5 text-[8px] font-bold text-profit">
+                      <TrendingUp size={8} /> UP
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-[8px] text-muted-foreground font-mono-num">$50 → <span className="text-profit font-bold">+$46.00</span></span>
+                    <span className="text-[7px] text-muted-foreground font-mono-num">00:23</span>
+                  </div>
+                  <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
+                    <div className="h-full bg-profit rounded-full" style={{ width: '62%' }} />
+                  </div>
+                </div>
+                {/* Trade 2 — losing */}
+                <div className="rounded-md bg-loss/[0.06] border border-loss/15 px-2 py-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-semibold text-foreground">ETH/USD</span>
+                    <span className="flex items-center gap-0.5 text-[8px] font-bold text-loss">
+                      <TrendingDown size={8} /> DOWN
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-[8px] text-muted-foreground font-mono-num">$100 → <span className="text-loss font-bold">-$100</span></span>
+                    <span className="text-[7px] text-muted-foreground font-mono-num">00:41</span>
+                  </div>
+                  <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
+                    <div className="h-full bg-loss rounded-full" style={{ width: '34%' }} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
