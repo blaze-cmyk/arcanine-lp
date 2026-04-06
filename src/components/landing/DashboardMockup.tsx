@@ -753,7 +753,6 @@ const DashboardMockup = () => {
                   </div>
                   <div className="flex items-center justify-between mt-1">
                     <span className="text-[8px] text-muted-foreground font-mono-num">$50 → <span className="text-profit font-bold">+$46.00</span></span>
-                    <span className="text-[7px] text-muted-foreground font-mono-num">00:23</span>
                   </div>
                   <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
                     <div className="h-full bg-profit rounded-full" style={{ width: '62%' }} />
@@ -769,7 +768,6 @@ const DashboardMockup = () => {
                   </div>
                   <div className="flex items-center justify-between mt-1">
                     <span className="text-[8px] text-muted-foreground font-mono-num">$100 → <span className="text-loss font-bold">-$100</span></span>
-                    <span className="text-[7px] text-muted-foreground font-mono-num">00:41</span>
                   </div>
                   <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
                     <div className="h-full bg-loss rounded-full" style={{ width: '34%' }} />
@@ -785,7 +783,6 @@ const DashboardMockup = () => {
                   </div>
                   <div className="flex items-center justify-between mt-1">
                     <span className="text-[8px] text-muted-foreground font-mono-num">$75 → <span className="text-profit font-bold">+$63.75</span></span>
-                    <span className="text-[7px] text-muted-foreground font-mono-num">00:47</span>
                   </div>
                   <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
                     <div className="h-full bg-profit rounded-full" style={{ width: '21%' }} />
