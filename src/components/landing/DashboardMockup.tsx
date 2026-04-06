@@ -35,22 +35,22 @@ const SIDEBAR_ITEMS = [
 
 /* ── Chart constants (matching Fair Trade Exchange) ── */
 const COLORS = {
-  bg: '#0f1113',
-  gridLine: 'rgba(255, 255, 255, 0.06)',
-  priceScaleBg: '#0f1113',
-  priceScaleBorder: '#1a1c24',
-  timeScaleBg: '#0f1113',
-  candleGreen: '#4a9e6e',
-  candleRed: '#c05555',
-  wickGreen: '#4a9e6e88',
-  wickRed: '#c0555588',
-  priceLine: '#2dd4bf',
-  priceLabel: '#14b8a6',
-  textMuted: '#3a3f50',
-  textLight: '#6b7280',
-  crosshairLine: '#252830',
-  crosshairLabel: '#1a1c24',
-  crosshairText: '#d1d5db',
+  bg: "#0f1113",
+  gridLine: "rgba(255, 255, 255, 0.06)",
+  priceScaleBg: "#0f1113",
+  priceScaleBorder: "#1a1c24",
+  timeScaleBg: "#0f1113",
+  candleGreen: "#4a9e6e",
+  candleRed: "#c05555",
+  wickGreen: "#4a9e6e88",
+  wickRed: "#c0555588",
+  priceLine: "#2dd4bf",
+  priceLabel: "#14b8a6",
+  textMuted: "#3a3f50",
+  textLight: "#6b7280",
+  crosshairLine: "#252830",
+  crosshairLabel: "#1a1c24",
+  crosshairText: "#d1d5db",
 };
 
 const CANDLE_WIDTH_BASE = 7;
@@ -61,7 +61,13 @@ const PADDING_TOP = 50;
 const PADDING_BOTTOM = 10;
 
 /* ── Pre-baked candle data for each asset ── */
-interface Candle { o: number; h: number; l: number; c: number; time: number }
+interface Candle {
+  o: number;
+  h: number;
+  l: number;
+  c: number;
+  time: number;
+}
 const CANDLE_CACHE: Record<number, Candle[]> = {};
 
 function getCandlesForAsset(index: number): Candle[] {
@@ -73,11 +79,23 @@ function getCandlesForAsset(index: number): Candle[] {
 
   const patterns: number[][] = [
     // BTC: rally → pullback → consolidation → breakout
-    [1,1,1,0.5,1.2,-0.3,-0.8,-1,-0.5,0.2,0.1,-0.1,0.3,0.2,0.1,0,-0.1,0.2,0.5,0.8,1.2,1.5,1,-0.5,-1.2,-0.8,0.3,0.5,0.8,1,1.3,0.7,0.2,-0.3,-0.6,-0.2,0.4,0.8,1.2,1.5,2,1.8,1.2,0.5,-0.2,0.3,0.6,1,1.5,0.8,0.3,-0.4,0.2,0.5,0.9],
+    [
+      1, 1, 1, 0.5, 1.2, -0.3, -0.8, -1, -0.5, 0.2, 0.1, -0.1, 0.3, 0.2, 0.1, 0, -0.1, 0.2, 0.5, 0.8, 1.2, 1.5, 1, -0.5,
+      -1.2, -0.8, 0.3, 0.5, 0.8, 1, 1.3, 0.7, 0.2, -0.3, -0.6, -0.2, 0.4, 0.8, 1.2, 1.5, 2, 1.8, 1.2, 0.5, -0.2, 0.3,
+      0.6, 1, 1.5, 0.8, 0.3, -0.4, 0.2, 0.5, 0.9,
+    ],
     // ETH: choppy downtrend with dead cat bounces
-    [-0.5,-0.8,-1.2,-0.3,0.8,1.2,0.5,-0.6,-1,-1.5,-0.8,0.3,0.6,0.2,-0.4,-0.9,-1.3,-1.6,-0.5,0.9,1.5,1,0.2,-0.8,-1.2,-0.6,-0.2,0.1,-0.5,-0.8,-1.1,-0.3,0.5,0.8,0.3,-0.4,-0.7,-1,-1.4,-0.6,0.2,0.7,1.1,0.4,-0.3,-0.8,-1.2,-0.5,0.1,0.4,0.2,-0.3,-0.6,-0.9,-0.4],
+    [
+      -0.5, -0.8, -1.2, -0.3, 0.8, 1.2, 0.5, -0.6, -1, -1.5, -0.8, 0.3, 0.6, 0.2, -0.4, -0.9, -1.3, -1.6, -0.5, 0.9,
+      1.5, 1, 0.2, -0.8, -1.2, -0.6, -0.2, 0.1, -0.5, -0.8, -1.1, -0.3, 0.5, 0.8, 0.3, -0.4, -0.7, -1, -1.4, -0.6, 0.2,
+      0.7, 1.1, 0.4, -0.3, -0.8, -1.2, -0.5, 0.1, 0.4, 0.2, -0.3, -0.6, -0.9, -0.4,
+    ],
     // GOLD: slow steady uptrend, tight range
-    [0.2,0.1,0.3,0.2,0.1,0.15,0.25,0.1,-0.05,0.1,0.2,0.3,0.15,0.1,0.05,0.2,0.1,-0.1,-0.15,0.05,0.15,0.2,0.25,0.3,0.2,0.1,0.15,0.2,0.1,0.05,0.15,0.2,0.25,0.1,0.05,-0.05,0.1,0.2,0.15,0.1,0.25,0.3,0.2,0.1,0.15,0.2,0.05,0.1,0.15,0.2,0.1,0.05,0.15,0.2,0.25],
+    [
+      0.2, 0.1, 0.3, 0.2, 0.1, 0.15, 0.25, 0.1, -0.05, 0.1, 0.2, 0.3, 0.15, 0.1, 0.05, 0.2, 0.1, -0.1, -0.15, 0.05,
+      0.15, 0.2, 0.25, 0.3, 0.2, 0.1, 0.15, 0.2, 0.1, 0.05, 0.15, 0.2, 0.25, 0.1, 0.05, -0.05, 0.1, 0.2, 0.15, 0.1,
+      0.25, 0.3, 0.2, 0.1, 0.15, 0.2, 0.05, 0.1, 0.15, 0.2, 0.1, 0.05, 0.15, 0.2, 0.25,
+    ],
   ];
 
   const pattern = patterns[index];
@@ -168,7 +186,8 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     const endIdx = Math.min(candles.length - 1, Math.ceil((effectiveOffset + chartWidth) / step) + 2);
 
     // Price range
-    let minPrice = Infinity, maxPrice = -Infinity;
+    let minPrice = Infinity,
+      maxPrice = -Infinity;
     for (let i = startIdx; i <= endIdx && i < candles.length; i++) {
       if (candles[i].l < minPrice) minPrice = candles[i].l;
       if (candles[i].h > maxPrice) maxPrice = candles[i].h;
@@ -213,7 +232,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     const timeStep = calculateTimeStep(step);
     for (let i = startIdx; i <= endIdx; i++) {
       if (i % timeStep !== 0) continue;
-      const x = (i * step) - effectiveOffset + step / 2;
+      const x = i * step - effectiveOffset + step / 2;
       if (x < 0 || x > chartWidth) continue;
       ctx.beginPath();
       ctx.moveTo(x, PADDING_TOP);
@@ -224,7 +243,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     // Draw candles
     for (let i = startIdx; i <= endIdx && i < candles.length; i++) {
       const candle = candles[i];
-      const x = (i * step) - effectiveOffset;
+      const x = i * step - effectiveOffset;
       const centerX = x + step / 2;
       if (centerX < -candleW * 2 || centerX > chartWidth + candleW * 2) continue;
 
@@ -251,21 +270,22 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       // Live timer badge on last candle
       if (i === candles.length - 1) {
         const livePriceY = priceToY(candle.c);
-        const badgeW2 = 40, badgeH2 = 16;
+        const badgeW2 = 40,
+          badgeH2 = 16;
         const badgeX2 = chartWidth - badgeW2 - 6;
         const timerY2 = livePriceY - badgeH2 - 8;
-        ctx.fillStyle = 'rgba(30, 35, 48, 0.95)';
+        ctx.fillStyle = "rgba(30, 35, 48, 0.95)";
         roundRect(ctx, badgeX2, timerY2, badgeW2, badgeH2, 4);
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.strokeStyle = "rgba(255,255,255,0.08)";
         ctx.lineWidth = 0.5;
         roundRect(ctx, badgeX2, timerY2, badgeW2, badgeH2, 4);
         ctx.stroke();
-        ctx.fillStyle = '#d1d5db';
+        ctx.fillStyle = "#d1d5db";
         ctx.font = "9px 'JetBrains Mono', monospace";
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('00:34', badgeX2 + badgeW2 / 2, timerY2 + badgeH2 / 2);
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("00:34", badgeX2 + badgeW2 / 2, timerY2 + badgeH2 / 2);
       }
     }
 
@@ -292,7 +312,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
 
     // "Beginning of trade" preview line
     const tradeStartIdx = candles.length - 1;
-    const tradeStartX = (tradeStartIdx * step) - effectiveOffset + step / 2;
+    const tradeStartX = tradeStartIdx * step - effectiveOffset + step / 2;
     if (tradeStartX > 0 && tradeStartX < chartWidth) {
       ctx.strokeStyle = COLORS.priceLine;
       ctx.lineWidth = 1;
@@ -302,13 +322,12 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.lineTo(tradeStartX, height - TIME_SCALE_HEIGHT);
       ctx.stroke();
       ctx.setLineDash([]);
-
     }
 
     // "End of trade" preview line
     const tradeEndX = tradeStartX + step * 10;
     if (tradeEndX > 0 && tradeEndX < chartWidth + 50) {
-      ctx.strokeStyle = 'rgba(160, 170, 190, 0.35)';
+      ctx.strokeStyle = "rgba(160, 170, 190, 0.35)";
       ctx.lineWidth = 1;
       ctx.setLineDash([]);
       ctx.beginPath();
@@ -316,14 +335,14 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.lineTo(tradeEndX, height - TIME_SCALE_HEIGHT);
       ctx.stroke();
 
-      ctx.fillStyle = 'rgba(160, 170, 190, 0.5)';
+      ctx.fillStyle = "rgba(160, 170, 190, 0.5)";
       ctx.font = "10px 'Inter', sans-serif";
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText('End of trade', tradeEndX + 6, PADDING_TOP - 4);
+      ctx.textAlign = "left";
+      ctx.textBaseline = "bottom";
+      ctx.fillText("End of trade", tradeEndX + 6, PADDING_TOP - 4);
 
       // Stop square
-      ctx.fillStyle = 'rgba(160, 170, 190, 0.4)';
+      ctx.fillStyle = "rgba(160, 170, 190, 0.4)";
       ctx.fillRect(tradeEndX - 4, PADDING_TOP - 17, 8, 8);
     }
 
@@ -340,8 +359,8 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
 
     ctx.fillStyle = COLORS.textMuted;
     ctx.font = "10px 'JetBrains Mono', monospace";
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
     for (let p = firstPrice; p <= maxPrice; p += priceStep) {
       const y = priceToY(p);
       if (y < PADDING_TOP || y > height - TIME_SCALE_HEIGHT) continue;
@@ -356,10 +375,10 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.fillStyle = COLORS.priceLabel;
     roundRect(ctx, chartWidth + 1, priceY - labelH / 2, PRICE_SCALE_WIDTH - 2, labelH, 4);
     ctx.fill();
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = "#ffffff";
     ctx.font = "bold 11px 'JetBrains Mono', monospace";
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     ctx.fillText(labelText, chartWidth + PRICE_SCALE_WIDTH / 2, priceY);
 
     // Time scale
@@ -373,19 +392,19 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
 
     ctx.fillStyle = COLORS.textMuted;
     ctx.font = "10px 'JetBrains Mono', monospace";
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     for (let i = startIdx; i <= endIdx; i++) {
       if (i % timeStep !== 0 || i >= candles.length) continue;
-      const x = (i * step) - effectiveOffset + step / 2;
+      const x = i * step - effectiveOffset + step / 2;
       if (x < 20 || x > chartWidth - 20) continue;
       const date = new Date(candles[i].time * 1000);
-      const label = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+      const label = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
       ctx.fillText(label, x, height - TIME_SCALE_HEIGHT / 2);
     }
 
     // Glow dot at current price
-    const dotX = ((candles.length - 1) * step) - effectiveOffset + step / 2;
+    const dotX = (candles.length - 1) * step - effectiveOffset + step / 2;
     ctx.beginPath();
     ctx.arc(dotX, priceY, 3.5, 0, Math.PI * 2);
     ctx.fillStyle = COLORS.priceLine;
@@ -420,15 +439,15 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.fill();
       ctx.fillStyle = COLORS.crosshairText;
       ctx.font = "10px 'JetBrains Mono', monospace";
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
       ctx.fillText(crossLabel, chartWidth + PRICE_SCALE_WIDTH / 2, ch.y);
 
       // Time label on crosshair
       const candleIdx = Math.round((ch.x + effectiveOffset) / step);
       if (candleIdx >= 0 && candleIdx < candles.length) {
         const date = new Date(candles[candleIdx].time * 1000);
-        const timeLabel = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        const timeLabel = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
         const timeLabelW = 48;
         const timeLabelH = 18;
         ctx.fillStyle = COLORS.crosshairLabel;
@@ -437,7 +456,6 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
         ctx.fillStyle = COLORS.crosshairText;
         ctx.font = "10px 'JetBrains Mono', monospace";
         ctx.fillText(timeLabel, ch.x, height - TIME_SCALE_HEIGHT + 1 + timeLabelH / 2);
-
       }
     }
   }, [assetIndex]);
@@ -468,7 +486,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     <canvas
       ref={canvasRef}
       className="w-full h-full"
-      style={{ display: 'block', cursor: 'crosshair' }}
+      style={{ display: "block", cursor: "crosshair" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     />
@@ -481,7 +499,7 @@ const DashboardMockup = () => {
   const [timeSeconds, setTimeSeconds] = useState(60);
   const [investment, setInvestment] = useState(100);
   const [prices, setPrices] = useState<Record<string, number>>(
-    Object.fromEntries(ASSETS.map((a) => [a.symbol, a.basePrice]))
+    Object.fromEntries(ASSETS.map((a) => [a.symbol, a.basePrice])),
   );
   const [bullPct, setBullPct] = useState(62);
 
@@ -502,11 +520,11 @@ const DashboardMockup = () => {
   const bearPct = 100 - bullPct;
   const currentAsset = ASSETS[activeAsset];
   const currentPrice = prices[currentAsset.symbol];
-  const payoutAmount = (investment * currentAsset.payout / 100).toFixed(2);
-  const timeDisplay = `${String(Math.floor(timeSeconds / 60)).padStart(2, '0')}:${String(timeSeconds % 60).padStart(2, '0')}`;
+  const payoutAmount = ((investment * currentAsset.payout) / 100).toFixed(2);
+  const timeDisplay = `${String(Math.floor(timeSeconds / 60)).padStart(2, "0")}:${String(timeSeconds % 60).padStart(2, "0")}`;
 
   const adjustTime = (delta: number) => {
-    setTimeSeconds(prev => {
+    setTimeSeconds((prev) => {
       const next = prev + delta;
       if (next < 20) return 20;
       if (next > 60) return 60;
@@ -515,7 +533,7 @@ const DashboardMockup = () => {
   };
 
   const adjustInvestment = (delta: number) => {
-    setInvestment(prev => Math.max(1, prev + delta));
+    setInvestment((prev) => Math.max(1, prev + delta));
   };
 
   return (
@@ -528,15 +546,11 @@ const DashboardMockup = () => {
             <div
               key={item.label}
               className={`flex flex-col items-center justify-center w-10 h-10 rounded-lg mb-0.5 transition-colors ${
-                item.active
-                  ? "bg-primary/15 text-primary"
-                  : "text-muted-foreground"
+                item.active ? "bg-primary/15 text-primary" : "text-muted-foreground"
               }`}
             >
               <Icon size={16} strokeWidth={item.active ? 2.2 : 1.6} />
-              <span className="text-[7px] mt-0.5 font-medium tracking-wide">
-                {item.label}
-              </span>
+              <span className="text-[7px] mt-0.5 font-medium tracking-wide">{item.label}</span>
             </div>
           );
         })}
@@ -551,12 +565,8 @@ const DashboardMockup = () => {
           </div>
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
             <div className="text-left">
-              <div className="text-[7px] text-primary font-bold uppercase tracking-wider">
-                DEMO ACCOUNT
-              </div>
-              <div className="text-[11px] font-bold text-foreground font-mono-num">
-                $10,000.00
-              </div>
+              <div className="text-[7px] text-primary font-bold uppercase tracking-wider">DEMO ACCOUNT</div>
+              <div className="text-[11px] font-bold text-foreground font-mono-num">$10,000.00</div>
             </div>
             <ChevronDown size={10} className="text-muted-foreground" />
           </div>
@@ -570,9 +580,7 @@ const DashboardMockup = () => {
         <div className="flex-1 flex min-h-0">
           {/* Probability bar */}
           <div className="hidden sm:flex flex-col items-center justify-between h-full py-2 w-5 flex-shrink-0 bg-[#0f1113]">
-            <span className="text-[9px] font-bold text-loss font-mono-num">
-              {bearPct}%
-            </span>
+            <span className="text-[9px] font-bold text-loss font-mono-num">{bearPct}%</span>
             <div className="flex-1 w-[3px] rounded-full overflow-hidden flex flex-col my-1">
               <div
                 className="transition-all duration-700"
@@ -589,9 +597,7 @@ const DashboardMockup = () => {
                 }}
               />
             </div>
-            <span className="text-[9px] font-bold text-profit font-mono-num">
-              {bullPct}%
-            </span>
+            <span className="text-[9px] font-bold text-profit font-mono-num">{bullPct}%</span>
           </div>
 
           {/* Chart + tabs */}
@@ -612,13 +618,7 @@ const DashboardMockup = () => {
                   }`}
                 >
                   <span>{asset.symbol}</span>
-                  <span
-                    className={`text-[9px] ${
-                      asset.payout >= 90
-                        ? "text-primary"
-                        : "text-muted-foreground"
-                    }`}
-                  >
+                  <span className={`text-[9px] ${asset.payout >= 90 ? "text-primary" : "text-muted-foreground"}`}>
                     {asset.payout}%
                   </span>
                 </button>
@@ -644,7 +644,6 @@ const DashboardMockup = () => {
               ))}
             </div>
 
-
             {/* Canvas chart */}
             <div className="w-full h-full">
               <CandlestickChart assetIndex={activeAsset} />
@@ -656,12 +655,8 @@ const DashboardMockup = () => {
             {/* Pair info */}
             <div className="px-2.5 py-2 border-b border-border">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-foreground text-[10px]">
-                  {currentAsset.symbol}
-                </span>
-                <span className="text-primary text-[10px] font-bold">
-                  {currentAsset.payout}%
-                </span>
+                <span className="font-semibold text-foreground text-[10px]">{currentAsset.symbol}</span>
+                <span className="text-primary text-[10px] font-bold">{currentAsset.payout}%</span>
               </div>
               <div className="font-mono-num text-lg font-bold mt-0.5">
                 ${currentPrice?.toFixed(currentAsset.decimals)}
@@ -671,17 +666,19 @@ const DashboardMockup = () => {
             {/* Time selector */}
             <div className="px-2.5 py-2 border-b border-border">
               <fieldset className="border border-border rounded-md px-2 pb-1.5 pt-0">
-                <legend className="text-[8px] text-muted-foreground px-0.5">
-                  Time
-                </legend>
+                <legend className="text-[8px] text-muted-foreground px-0.5">Time</legend>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => adjustTime(-5)} className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors">
+                  <button
+                    onClick={() => adjustTime(-5)}
+                    className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors"
+                  >
                     <Minus size={10} />
                   </button>
-                  <span className="flex-1 text-center text-[11px] font-bold font-mono-num">
-                    {timeDisplay}
-                  </span>
-                  <button onClick={() => adjustTime(5)} className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors">
+                  <span className="flex-1 text-center text-[11px] font-bold font-mono-num">{timeDisplay}</span>
+                  <button
+                    onClick={() => adjustTime(5)}
+                    className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors"
+                  >
                     <Plus size={10} />
                   </button>
                 </div>
@@ -691,26 +688,26 @@ const DashboardMockup = () => {
             {/* Investment */}
             <div className="px-2.5 py-2 border-b border-border">
               <fieldset className="border border-border rounded-md px-2 pb-1.5 pt-0">
-                <legend className="text-[8px] text-muted-foreground px-0.5">
-                  Investment
-                </legend>
+                <legend className="text-[8px] text-muted-foreground px-0.5">Investment</legend>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => adjustInvestment(-10)} className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                  <button
+                    onClick={() => adjustInvestment(-10)}
+                    className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     <Minus size={10} />
                   </button>
-                  <span className="flex-1 text-center text-[11px] font-bold font-mono-num">
-                    {investment} $
-                  </span>
-                  <button onClick={() => adjustInvestment(10)} className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="flex-1 text-center text-[11px] font-bold font-mono-num">{investment} $</span>
+                  <button
+                    onClick={() => adjustInvestment(10)}
+                    className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     <Plus size={10} />
                   </button>
                 </div>
               </fieldset>
               <div className="flex justify-between text-[8px] mt-1.5 px-1">
                 <span className="text-muted-foreground">Payout</span>
-                <span className="text-profit font-bold font-mono-num">
-                  +${payoutAmount}
-                </span>
+                <span className="text-profit font-bold font-mono-num">+${payoutAmount}</span>
               </div>
               <div className="flex justify-between text-[8px] px-1 mt-0.5">
                 <span className="text-muted-foreground">Fee ({100 - currentAsset.payout}%)</span>
@@ -724,11 +721,11 @@ const DashboardMockup = () => {
             <div className="px-2.5 py-2.5 flex gap-1.5 mt-auto">
               <button className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md bg-profit/10 border border-profit/20 text-profit font-semibold text-[10px] transition-all">
                 <TrendingUp size={11} />
-                UP
+                Up
               </button>
               <button className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md bg-loss/10 border border-loss/20 text-loss font-semibold text-[10px] transition-all">
                 <TrendingDown size={11} />
-                DOWN
+                Down
               </button>
             </div>
 
@@ -738,9 +735,7 @@ const DashboardMockup = () => {
                 <button className="flex-1 py-1.5 text-[9px] font-bold text-primary border-b-2 border-primary">
                   Trades
                 </button>
-                <button className="flex-1 py-1.5 text-[9px] font-bold text-muted-foreground">
-                  Orders
-                </button>
+                <button className="flex-1 py-1.5 text-[9px] font-bold text-muted-foreground">Orders</button>
               </div>
               <div className="px-2 py-1.5 space-y-1.5 flex-1">
                 {/* Trade 1 — BTC winning */}
