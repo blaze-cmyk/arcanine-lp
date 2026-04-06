@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import DashboardMockup from "./DashboardMockup";
 import DashboardMockup from "./DashboardMockup";
 
 const Hero = () => {
