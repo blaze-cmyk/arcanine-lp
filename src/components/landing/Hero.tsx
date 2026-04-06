@@ -7,13 +7,12 @@ const Hero = () => {
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Headline */}
         <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-7">
-          Trade the <span className="text-gradient">next move.</span>
+          Trade the next market move
         </h1>
 
         {/* Subhead */}
         <p className="animate-slide-up-delay-1 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-          Predict price movements in seconds. Up or down — one decision, instant results. The fastest way to trade
-          global markets.
+          Trade up or down in seconds and get instant results. The fastest way to act on global markets.
         </p>
 
         {/* Dual CTA */}
