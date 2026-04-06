@@ -108,6 +108,14 @@
     background-color: #38312e;
   }
 
+  .bg-gradient-accent:hover {
+    background: #f50;
+  }
+
+  .bg-secondary-btn:hover {
+    background-color: #453d39;
+  }
+
   .font-mono-num {
     font-family: 'JetBrains Mono', monospace;
     font-variant-numeric: tabular-nums;

@@ -18,10 +18,10 @@ const Hero = () => {
 
         {/* Dual CTA */}
         <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button className="inline-flex items-center px-7 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
+          <button className="inline-flex items-center px-8 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
             Create an account
           </button>
-          <button className="inline-flex items-center px-7 py-3 bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
+          <button className="inline-flex items-center px-8 py-3 bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
             Try free demo
           </button>
         </div>
