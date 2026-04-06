@@ -742,50 +742,84 @@ const DashboardMockup = () => {
                   Orders
                 </button>
               </div>
-              <div className="px-2 py-1.5 space-y-1 flex-1">
-                {/* Trade 1 — winning */}
-                <div className="rounded-md bg-profit/[0.06] border border-profit/15 px-2 py-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-semibold text-foreground">BTC/USD</span>
-                    <span className="flex items-center gap-0.5 text-[8px] font-bold text-profit">
-                      <TrendingUp size={8} /> UP
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-[8px] text-muted-foreground font-mono-num">$50 → <span className="text-profit font-bold">+$46.00</span></span>
-                  </div>
-                  <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
-                    <div className="h-full bg-profit rounded-full" style={{ width: '62%' }} />
-                  </div>
-                </div>
-                {/* Trade 2 — losing */}
-                <div className="rounded-md bg-loss/[0.06] border border-loss/15 px-2 py-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-semibold text-foreground">ETH/USD</span>
-                    <span className="flex items-center gap-0.5 text-[8px] font-bold text-loss">
-                      <TrendingDown size={8} /> DOWN
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-[8px] text-muted-foreground font-mono-num">$100 → <span className="text-loss font-bold">-$100</span></span>
-                  </div>
-                  <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
-                    <div className="h-full bg-loss rounded-full" style={{ width: '34%' }} />
+              <div className="px-2 py-1.5 space-y-1.5 flex-1">
+                {/* Trade 1 — BTC winning */}
+                <div className="rounded-lg bg-profit/[0.06] border border-profit/15 px-2.5 py-2 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 h-full w-[62%] bg-profit/[0.04]" />
+                  <div className="relative flex items-center gap-2">
+                    {/* Circular timer */}
+                    <div className="flex-shrink-0">
+                      <svg width="28" height="28" viewBox="0 0 28 28" className="rotate-[-90deg]">
+                        <circle cx="14" cy="14" r="11" fill="none" stroke="hsl(var(--muted))" strokeWidth="2" />
+                        <circle cx="14" cy="14" r="11" fill="none" stroke="hsl(var(--profit))" strokeWidth="2"
+                          strokeDasharray={`${2 * Math.PI * 11 * 0.62} ${2 * Math.PI * 11}`} strokeLinecap="round" />
+                      </svg>
+                      <span className="absolute top-[9px] left-[11px] text-[6px] font-mono-num font-bold text-profit">23s</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-bold text-foreground">BTC/USD</span>
+                        <span className="flex items-center gap-0.5 text-[7px] font-bold text-profit bg-profit/10 px-1.5 py-0.5 rounded">
+                          <TrendingUp size={7} /> UP
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-0.5">
+                        <span className="text-[8px] text-muted-foreground font-mono-num">$50.00</span>
+                        <span className="text-[8px] text-profit font-bold font-mono-num">+$46.00</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                {/* Trade 3 — gold winning */}
-                <div className="rounded-md bg-profit/[0.06] border border-profit/15 px-2 py-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-semibold text-foreground">GOLD</span>
-                    <span className="flex items-center gap-0.5 text-[8px] font-bold text-profit">
-                      <TrendingUp size={8} /> UP
-                    </span>
+                {/* Trade 2 — ETH losing */}
+                <div className="rounded-lg bg-loss/[0.06] border border-loss/15 px-2.5 py-2 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 h-full w-[34%] bg-loss/[0.04]" />
+                  <div className="relative flex items-center gap-2">
+                    <div className="flex-shrink-0">
+                      <svg width="28" height="28" viewBox="0 0 28 28" className="rotate-[-90deg]">
+                        <circle cx="14" cy="14" r="11" fill="none" stroke="hsl(var(--muted))" strokeWidth="2" />
+                        <circle cx="14" cy="14" r="11" fill="none" stroke="hsl(var(--loss))" strokeWidth="2"
+                          strokeDasharray={`${2 * Math.PI * 11 * 0.34} ${2 * Math.PI * 11}`} strokeLinecap="round" />
+                      </svg>
+                      <span className="absolute top-[9px] left-[11px] text-[6px] font-mono-num font-bold text-loss">41s</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-bold text-foreground">ETH/USD</span>
+                        <span className="flex items-center gap-0.5 text-[7px] font-bold text-loss bg-loss/10 px-1.5 py-0.5 rounded">
+                          <TrendingDown size={7} /> DOWN
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-0.5">
+                        <span className="text-[8px] text-muted-foreground font-mono-num">$100.00</span>
+                        <span className="text-[8px] text-loss font-bold font-mono-num">-$100.00</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-[8px] text-muted-foreground font-mono-num">$75 → <span className="text-profit font-bold">+$63.75</span></span>
-                  </div>
-                  <div className="mt-1 h-[3px] rounded-full bg-muted overflow-hidden">
-                    <div className="h-full bg-profit rounded-full" style={{ width: '21%' }} />
+                </div>
+                {/* Trade 3 — GOLD winning */}
+                <div className="rounded-lg bg-profit/[0.06] border border-profit/15 px-2.5 py-2 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 h-full w-[21%] bg-profit/[0.04]" />
+                  <div className="relative flex items-center gap-2">
+                    <div className="flex-shrink-0">
+                      <svg width="28" height="28" viewBox="0 0 28 28" className="rotate-[-90deg]">
+                        <circle cx="14" cy="14" r="11" fill="none" stroke="hsl(var(--muted))" strokeWidth="2" />
+                        <circle cx="14" cy="14" r="11" fill="none" stroke="hsl(var(--profit))" strokeWidth="2"
+                          strokeDasharray={`${2 * Math.PI * 11 * 0.21} ${2 * Math.PI * 11}`} strokeLinecap="round" />
+                      </svg>
+                      <span className="absolute top-[9px] left-[11px] text-[6px] font-mono-num font-bold text-profit">47s</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-bold text-foreground">GOLD</span>
+                        <span className="flex items-center gap-0.5 text-[7px] font-bold text-profit bg-profit/10 px-1.5 py-0.5 rounded">
+                          <TrendingUp size={7} /> UP
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-0.5">
+                        <span className="text-[8px] text-muted-foreground font-mono-num">$75.00</span>
+                        <span className="text-[8px] text-profit font-bold font-mono-num">+$63.75</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
