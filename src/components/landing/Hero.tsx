@@ -7,7 +7,7 @@ const Hero = () => {
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Headline */}
         <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-7">
-          Trade the next market move
+          Predict the next market move
         </h1>
 
         {/* Subhead */}
