@@ -20,16 +20,14 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="relative z-50 pt-3 max-w-8xl mx-auto">
+    <nav className="relative z-50 pt-3 mx-auto">
       <div className="rounded-2xl transition-all duration-300">
         <div className="flex items-center justify-between h-14 px-5">
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-12">
             <div className="flex items-center gap-0">
               <img src={logo} alt="Arcanine" className="w-14 h-14" />
-              <span className="text-lg font-bold tracking-tight font-display text-foreground">
-                Arcanine
-              </span>
+              <span className="text-lg font-bold tracking-tight font-display text-foreground">Arcanine</span>
             </div>
 
             {/* Desktop links — next to logo */}
@@ -61,10 +59,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile toggle */}
-          <button
-            className="md:hidden text-foreground"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
+          <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
