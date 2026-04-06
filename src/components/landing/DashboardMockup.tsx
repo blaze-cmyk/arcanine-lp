@@ -733,7 +733,7 @@ const DashboardMockup = () => {
             </div>
 
             {/* Trades / Orders tabs */}
-            <div className="border-t border-border mt-auto">
+            <div className="border-t border-border mt-auto flex-1 flex flex-col">
               <div className="flex">
                 <button className="flex-1 py-1.5 text-[9px] font-bold text-primary border-b-2 border-primary">
                   Trades
@@ -742,7 +742,7 @@ const DashboardMockup = () => {
                   Orders
                 </button>
               </div>
-              <div className="px-2 py-1.5 space-y-1">
+              <div className="px-2 py-1.5 space-y-1 flex-1">
                 {/* Trade 1 — winning */}
                 <div className="rounded-md bg-profit/[0.06] border border-profit/15 px-2 py-1.5">
                   <div className="flex items-center justify-between">
