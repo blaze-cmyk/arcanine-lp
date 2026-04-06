@@ -3,8 +3,10 @@ import Hero from "@/components/landing/Hero";
 
 const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden">
-    <Navbar />
-    <Hero />
+    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <Navbar />
+      <Hero />
+    </div>
   </div>
 );
 
