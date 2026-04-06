@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import DashboardMockup from "./DashboardMockup";
 
 const Hero = () => {
@@ -17,12 +18,13 @@ const Hero = () => {
         </p>
 
         {/* Dual CTA */}
-        <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button className="inline-flex items-center px-7 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
-            Create Account
+        <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button className="group inline-flex items-center gap-3 px-10 py-4 bg-gradient-accent text-primary-foreground font-bold text-base rounded-xl glow-orange hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(255,106,0,0.35)] transition-all duration-300">
+            Create an account
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
-          <button className="inline-flex items-center px-7 py-3 bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
-            Try Free Demo
+          <button className="inline-flex items-center gap-3 px-10 py-4 bg-secondary-btn text-foreground font-bold text-base rounded-xl hover:opacity-90 hover:scale-[1.03] transition-all duration-300">
+            Try free demo
           </button>
         </div>
       </div>
