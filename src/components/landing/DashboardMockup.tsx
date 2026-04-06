@@ -14,13 +14,12 @@ import {
   Pencil,
   Scissors,
 } from "lucide-react";
-import logo from "@/assets/arcanine-logo.png";
 
-/* ── Static data ── */
+/* ── Asset configs with distinct chart personalities ── */
 const ASSETS = [
-  { symbol: "BTC/USD", payout: 92, basePrice: 67432.5, volatility: 80, decimals: 2 },
-  { symbol: "ETH/USD", payout: 88, basePrice: 3521.8, volatility: 25, decimals: 2 },
-  { symbol: "GOLD", payout: 85, basePrice: 2341.6, volatility: 12, decimals: 2 },
+  { symbol: "BTC/USD", payout: 92, basePrice: 67432.5, volatility: 80, decimals: 2, trend: 0.6 },
+  { symbol: "ETH/USD", payout: 88, basePrice: 3521.8, volatility: 25, decimals: 2, trend: -0.3 },
+  { symbol: "GOLD", payout: 85, basePrice: 2341.6, volatility: 8, decimals: 2, trend: 0.2 },
 ];
 
 const SIDEBAR_ITEMS = [
@@ -32,24 +31,42 @@ const SIDEBAR_ITEMS = [
   { icon: MoreHorizontal, label: "MORE" },
 ];
 
-/* ── Generate candle data for an asset ── */
-function generateCandles(basePrice: number, volatility: number, seed: number) {
+/* ── Pre-baked candle data for each asset (visually distinct) ── */
+const CANDLE_CACHE: Record<number, { o: number; h: number; l: number; c: number }[]> = {};
+
+function getCandlesForAsset(index: number) {
+  if (CANDLE_CACHE[index]) return CANDLE_CACHE[index];
+
+  const asset = ASSETS[index];
   const candles: { o: number; h: number; l: number; c: number }[] = [];
-  let price = basePrice;
-  // Use seed to create different but deterministic-feeling patterns
-  const pseudoRandom = (i: number) => {
-    const x = Math.sin(seed * 9301 + i * 49297 + 233280) * 0.5 + 0.5;
-    return x;
-  };
+  let price = asset.basePrice;
+
+  // Different pattern shapes per asset
+  const patterns: number[][] = [
+    // BTC: rally → pullback → consolidation → breakout
+    [1,1,1,0.5,1.2,-0.3,-0.8,-1,-0.5,0.2,0.1,-0.1,0.3,0.2,0.1,0,-0.1,0.2,0.5,0.8,1.2,1.5,1,-0.5,-1.2,-0.8,0.3,0.5,0.8,1,1.3,0.7,0.2,-0.3,-0.6,-0.2,0.4,0.8,1.2,1.5,2,1.8,1.2,0.5,-0.2,0.3,0.6,1,1.5,0.8,0.3,-0.4,0.2,0.5,0.9],
+    // ETH: choppy downtrend with dead cat bounces
+    [-0.5,-0.8,-1.2,-0.3,0.8,1.2,0.5,-0.6,-1,-1.5,-0.8,0.3,0.6,0.2,-0.4,-0.9,-1.3,-1.6,-0.5,0.9,1.5,1,0.2,-0.8,-1.2,-0.6,-0.2,0.1,-0.5,-0.8,-1.1,-0.3,0.5,0.8,0.3,-0.4,-0.7,-1,-1.4,-0.6,0.2,0.7,1.1,0.4,-0.3,-0.8,-1.2,-0.5,0.1,0.4,0.2,-0.3,-0.6,-0.9,-0.4],
+    // GOLD: slow steady uptrend, tight range
+    [0.2,0.1,0.3,0.2,0.1,0.15,0.25,0.1,-0.05,0.1,0.2,0.3,0.15,0.1,0.05,0.2,0.1,-0.1,-0.15,0.05,0.15,0.2,0.25,0.3,0.2,0.1,0.15,0.2,0.1,0.05,0.15,0.2,0.25,0.1,0.05,-0.05,0.1,0.2,0.15,0.1,0.25,0.3,0.2,0.1,0.15,0.2,0.05,0.1,0.15,0.2,0.1,0.05,0.15,0.2,0.25],
+  ];
+
+  const pattern = patterns[index];
+  
   for (let i = 0; i < 55; i++) {
     const open = price;
-    const change = (pseudoRandom(i) - 0.48) * volatility;
+    const direction = pattern[i % pattern.length];
+    const change = direction * asset.volatility * (0.6 + Math.sin(i * 1.7 + index * 5) * 0.4);
     const close = open + change;
-    const high = Math.max(open, close) + pseudoRandom(i + 100) * (volatility * 0.5);
-    const low = Math.min(open, close) - pseudoRandom(i + 200) * (volatility * 0.5);
+    const wickUp = Math.abs(change) * (0.3 + Math.abs(Math.sin(i * 2.3 + index * 3)) * 0.5);
+    const wickDown = Math.abs(change) * (0.3 + Math.abs(Math.cos(i * 1.9 + index * 7)) * 0.5);
+    const high = Math.max(open, close) + wickUp;
+    const low = Math.min(open, close) - wickDown;
     candles.push({ o: open, h: high, l: low, c: close });
     price = close;
   }
+
+  CANDLE_CACHE[index] = candles;
   return candles;
 }
 
@@ -70,7 +87,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     const h = rect.height;
 
     const asset = ASSETS[assetIndex];
-    const candles = generateCandles(asset.basePrice, asset.volatility, assetIndex + 1);
+    const candles = getCandlesForAsset(assetIndex);
 
     const candleW = 7;
     const gap = 3;
@@ -96,10 +113,13 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.fillRect(0, 0, w, h);
 
     // Grid lines
-    ctx.strokeStyle = "rgba(255,255,255,0.06)";
+    ctx.strokeStyle = "rgba(255,255,255,0.04)";
     ctx.lineWidth = 0.5;
-    const priceStep = Math.ceil((maxP - minP) / 6);
-    for (let p = Math.ceil(minP); p < maxP; p += priceStep) {
+    const range = maxP - minP;
+    const gridSteps = 6;
+    const priceStep = range / gridSteps;
+    for (let i = 1; i < gridSteps; i++) {
+      const p = minP + i * priceStep;
       const y = priceToY(p);
       ctx.beginPath();
       ctx.moveTo(0, y);
@@ -107,14 +127,35 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.stroke();
     }
 
-    // Draw candles
+    // Vertical grid
+    ctx.strokeStyle = "rgba(255,255,255,0.03)";
     const startX = chartW - candles.length * step;
+    for (let i = 5; i < candles.length; i += 10) {
+      const x = startX + i * step + step / 2;
+      ctx.beginPath();
+      ctx.moveTo(x, padTop);
+      ctx.lineTo(x, chartH);
+      ctx.stroke();
+    }
+
+    // Volume bars (subtle, at bottom)
+    candles.forEach((c, i) => {
+      const x = startX + i * step + step / 2;
+      const isGreen = c.c >= c.o;
+      const vol = Math.abs(c.c - c.o) / asset.volatility;
+      const volH = vol * 25 + 3;
+      ctx.fillStyle = isGreen ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)";
+      ctx.fillRect(x - candleW / 2, chartH - volH, candleW, volH);
+    });
+
+    // Draw candles
     candles.forEach((c, i) => {
       const x = startX + i * step + step / 2;
       const isGreen = c.c >= c.o;
       const color = isGreen ? "#22c55e" : "#ef4444";
-      const wickColor = isGreen ? "rgba(34,197,94,0.5)" : "rgba(239,68,68,0.5)";
+      const wickColor = isGreen ? "rgba(34,197,94,0.6)" : "rgba(239,68,68,0.6)";
 
+      // Wick
       ctx.strokeStyle = wickColor;
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -122,12 +163,42 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.lineTo(x, priceToY(c.l));
       ctx.stroke();
 
+      // Body
       const bodyTop = priceToY(Math.max(c.o, c.c));
       const bodyBot = priceToY(Math.min(c.o, c.c));
-      const bodyH = Math.max(1, bodyBot - bodyTop);
-      ctx.fillStyle = color;
+      const bodyH = Math.max(1.5, bodyBot - bodyTop);
+      
+      // Subtle gradient on candle bodies
+      if (bodyH > 3) {
+        const grad = ctx.createLinearGradient(0, bodyTop, 0, bodyTop + bodyH);
+        if (isGreen) {
+          grad.addColorStop(0, "#2ade6a");
+          grad.addColorStop(1, "#1a9e48");
+        } else {
+          grad.addColorStop(0, "#ff5555");
+          grad.addColorStop(1, "#cc3333");
+        }
+        ctx.fillStyle = grad;
+      } else {
+        ctx.fillStyle = color;
+      }
       ctx.fillRect(x - candleW / 2, bodyTop, candleW, bodyH);
     });
+
+    // Moving average line (EMA-like)
+    ctx.strokeStyle = "rgba(99,102,241,0.4)";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    let ema = candles[0].c;
+    const emaAlpha = 0.15;
+    candles.forEach((c, i) => {
+      ema = ema * (1 - emaAlpha) + c.c * emaAlpha;
+      const x = startX + i * step + step / 2;
+      const y = priceToY(ema);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
 
     // Current price line
     const lastPrice = candles[candles.length - 1].c;
@@ -155,10 +226,11 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.fillStyle = "#3a3f50";
     ctx.font = "9px 'JetBrains Mono', monospace";
     ctx.textAlign = "right";
-    for (let p = Math.ceil(minP); p < maxP; p += priceStep) {
+    for (let i = 1; i < gridSteps; i++) {
+      const p = minP + i * priceStep;
       const y = priceToY(p);
-      if (Math.abs(y - priceY) > 14) {
-        ctx.fillText(p.toFixed(0), w - 4, y + 3);
+      if (Math.abs(y - priceY) > 16) {
+        ctx.fillText(p.toFixed(asset.decimals), w - 4, y + 3);
       }
     }
 
@@ -168,11 +240,11 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.fillStyle = "#3a3f50";
     ctx.font = "9px 'JetBrains Mono', monospace";
     ctx.textAlign = "center";
-    const baseHour = 9 + assetIndex * 3;
+    const baseHour = [14, 9, 16][assetIndex];
     for (let i = 5; i < candles.length; i += 10) {
       const x = startX + i * step + step / 2;
       const h2 = (baseHour + Math.floor(i / 4)) % 24;
-      const m2 = (i * 7) % 60;
+      const m2 = (i * 7 + 15) % 60;
       ctx.fillText(
         `${String(h2).padStart(2, "0")}:${String(m2).padStart(2, "0")}`,
         x,
@@ -188,7 +260,11 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.fill();
     ctx.beginPath();
     ctx.arc(dotX, priceY, 8, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(45,212,191,0.2)";
+    ctx.fillStyle = "rgba(45,212,191,0.15)";
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(dotX, priceY, 14, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(45,212,191,0.06)";
     ctx.fill();
   }, [assetIndex]);
 
@@ -207,7 +283,6 @@ const DashboardMockup = () => {
   );
   const [bullPct, setBullPct] = useState(62);
 
-  // Tick prices
   useEffect(() => {
     const interval = setInterval(() => {
       setPrices((prev) => {
@@ -255,13 +330,12 @@ const DashboardMockup = () => {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Balance header */}
         <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
-          <div className="flex items-center gap-1 mr-auto">
-            <img src={logo} alt="Arcanine" className="w-7 h-7" />
+          <div className="flex items-center gap-1.5 mr-auto">
             <span
-              className="text-foreground font-bold text-xs tracking-wider hidden sm:block"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800 }}
+              className="text-foreground font-bold text-sm tracking-tight"
+              style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700 }}
             >
-              ARCANINE
+              Arcanine
             </span>
           </div>
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
@@ -361,13 +435,13 @@ const DashboardMockup = () => {
 
             {/* Connection status */}
             <div className="absolute top-[36px] left-2 z-10 flex items-center gap-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-profit" />
+              <div className="w-1.5 h-1.5 rounded-full bg-profit animate-pulse" />
               <span className="text-[8px] text-muted-foreground">
                 {new Date().toLocaleTimeString()} UTC
               </span>
             </div>
 
-            {/* Canvas chart — re-renders on asset change */}
+            {/* Canvas chart */}
             <div className="w-full h-full">
               <CandlestickChart assetIndex={activeAsset} />
             </div>
