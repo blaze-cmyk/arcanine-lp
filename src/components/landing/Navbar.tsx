@@ -20,7 +20,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="relative z-50 pt-3 max-w-8xl mx-auto">
+    <nav className="relative z-50 pt-3 max-w-8xl mx-auto px-4 sm:px-6">
       <div className="rounded-2xl transition-all duration-300">
         <div className="flex items-center justify-between h-14 px-5">
           {/* Left: Logo + Nav */}
