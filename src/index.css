@@ -101,7 +101,11 @@
   }
 
   .bg-gradient-accent {
-    background: linear-gradient(135deg, #FF6A00 0%, #FF8A2A 100%);
+    background: linear-gradient(103deg, #ffa33a 0.37%, #ff8516 15.31%, #f50 100%);
+  }
+
+  .bg-secondary-btn {
+    background-color: #38312e;
   }
 
   .font-mono-num {
