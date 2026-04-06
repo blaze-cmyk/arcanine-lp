@@ -577,14 +577,14 @@ const DashboardMockup = () => {
               <div
                 className="transition-all duration-700"
                 style={{
-                  background: "linear-gradient(to bottom, #ef4444, #dc2626)",
+                  background: "linear-gradient(to bottom, #c05555, #b04a4a)",
                   flexBasis: `${bearPct}%`,
                 }}
               />
               <div
                 className="transition-all duration-700"
                 style={{
-                  background: "linear-gradient(to bottom, #16a34a, #22c55e)",
+                  background: "linear-gradient(to bottom, #3d8a5a, #4a9e6e)",
                   flexBasis: `${bullPct}%`,
                 }}
               />

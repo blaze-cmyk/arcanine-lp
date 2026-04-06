@@ -76,11 +76,11 @@
   }
 
   .glow-green {
-    box-shadow: 0 0 20px hsl(152 100% 39% / 0.3), 0 0 60px hsl(152 100% 39% / 0.1);
+    box-shadow: 0 0 20px hsl(160 45% 50% / 0.25), 0 0 60px hsl(160 45% 50% / 0.08);
   }
 
   .glow-red {
-    box-shadow: 0 0 20px hsl(0 100% 62% / 0.3), 0 0 60px hsl(0 100% 62% / 0.1);
+    box-shadow: 0 0 20px hsl(0 55% 55% / 0.25), 0 0 60px hsl(0 55% 55% / 0.08);
   }
 
   .glass {
