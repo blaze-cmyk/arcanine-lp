@@ -62,7 +62,7 @@ const FairnessLogic = () => {
                   "linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)",
               }}
             >
-              Transparent Deposit,
+              Transparent Deposit
               <br />
               Fast Withdrawal
             </h2>
