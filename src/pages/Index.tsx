@@ -19,7 +19,6 @@ const Index = () => (
     <DemoCTA />
     <Footer />
   </div>
-  </div>
 );
 
 export default Index;
