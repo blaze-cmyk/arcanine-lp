@@ -87,30 +87,12 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
             }
           }
 
-          const showGlow = phase === "done" && distFromTarget === 0;
-
           return (
             <div
               key={i}
-              className="flex items-center justify-center shrink-0 relative"
+              className="flex items-center justify-center shrink-0"
               style={{ height: digitHeight }}
             >
-              {showGlow && (
-                <>
-                  <div
-                    className="absolute inset-x-0 top-0 h-1/3 pointer-events-none z-10 transition-opacity duration-700"
-                    style={{
-                      background: "radial-gradient(ellipse 80% 100% at 50% 0%, rgba(232,169,74,0.25) 0%, transparent 70%)",
-                    }}
-                  />
-                  <div
-                    className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none z-10 transition-opacity duration-700"
-                    style={{
-                      background: "radial-gradient(ellipse 80% 100% at 50% 100%, rgba(232,169,74,0.25) 0%, transparent 70%)",
-                    }}
-                  />
-                </>
-              )}
               <span
                 className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
               >
