@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Plus, Minus } from "lucide-react";
+
 const faqs = [
   {
     question: "What is binary options trading?",
@@ -26,31 +29,56 @@ const faqs = [
   },
 ];
 
+const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-b border-border">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-6 text-left group"
+      >
+        <span className="text-lg font-medium text-foreground pr-8">{question}</span>
+        <span className="text-muted-foreground flex-shrink-0 transition-transform duration-200">
+          {open ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+        </span>
+      </button>
+      <div
+        className="overflow-hidden transition-all duration-300 ease-in-out"
+        style={{
+          maxHeight: open ? 200 : 0,
+          opacity: open ? 1 : 0,
+        }}
+      >
+        <p className="text-base text-muted-foreground leading-relaxed pb-6">
+          {answer}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const FAQ = () => (
   <section className="py-24 px-4 sm:px-6">
-    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12 md:gap-20">
-      {/* Left column */}
-      <div>
-        <h2 className="text-3xl sm:text-4xl font-display leading-tight">
-          Frequently <span className="italic font-normal text-muted-foreground">asked</span>
-          <br />
-          questions
+    <div className="max-w-3xl mx-auto">
+      {/* Header — centered */}
+      <div className="text-center mb-14">
+        <span className="inline-block text-xs font-medium tracking-wider uppercase text-muted-foreground border border-border rounded-full px-4 py-1.5 mb-5">
+          FAQ
+        </span>
+        <h2 className="text-4xl sm:text-5xl font-display leading-tight mb-4">
+          Frequently asked questions
         </h2>
-        <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
-          <span className="text-primary hover:underline cursor-pointer">Contact us</span> via
-          support if you have any more questions.
+        <p className="text-base text-muted-foreground">
+          Haven't found what you're looking for?{" "}
+          <span className="text-primary hover:underline cursor-pointer">Contact us.</span>
         </p>
       </div>
 
-      {/* Right column — FAQ list */}
-      <div className="flex flex-col divide-y divide-border">
+      {/* Accordion list */}
+      <div>
         {faqs.map((faq, i) => (
-          <div key={i} className="py-6 first:pt-0">
-            <h3 className="text-base font-medium text-foreground mb-2">{faq.question}</h3>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {faq.answer}
-            </p>
-          </div>
+          <FAQItem key={i} question={faq.question} answer={faq.answer} />
         ))}
       </div>
     </div>
