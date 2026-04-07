@@ -93,11 +93,11 @@ const Features = () => (
               {/* Interactive visual */}
               <div className="flex-1 relative z-[1]">{visual}</div>
 
-              {/* Shadow fade above text — creates depth */}
+              {/* Shadow fade above text — creates depth like Huly */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-[120px] pointer-events-none z-[2]"
+                className="absolute bottom-0 left-0 right-0 h-[140px] pointer-events-none z-[2]"
                 style={{
-                  background: "linear-gradient(to bottom, transparent 0%, hsl(var(--card)) 65%)",
+                  background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.85) 100%)",
                 }}
               />
 
