@@ -10,9 +10,9 @@ const TradeInSecondsVisual = () => {
       setCountdown(30);
       intervalRef.current = setInterval(() => {
         setCountdown((prev) => {
-          if (prev <= 1) {
+          if (prev <= 6) {
             if (intervalRef.current) clearInterval(intervalRef.current);
-            return 0;
+            return 5;
           }
           return prev - 1;
         });
@@ -26,8 +26,23 @@ const TradeInSecondsVisual = () => {
     };
   }, [hovered]);
 
-  const progress = hovered ? (30 - countdown) / 30 : 0;
-  const settled = countdown === 0 && hovered;
+  const progress = hovered ? (30 - countdown) / 25 : 0;
+  const settled = countdown === 5 && hovered;
+
+  const candles = [
+    { o: 60, c: 45, h: 65, l: 40 },
+    { o: 45, c: 55, h: 60, l: 42 },
+    { o: 55, c: 50, h: 58, l: 46 },
+    { o: 50, c: 62, h: 66, l: 48 },
+    { o: 62, c: 58, h: 68, l: 55 },
+    { o: 58, c: 70, h: 74, l: 56 },
+    { o: 70, c: 65, h: 75, l: 62 },
+    { o: 65, c: 72, h: 78, l: 63 },
+    { o: 72, c: 68, h: 76, l: 66 },
+    { o: 68, c: 78, h: 82, l: 66 },
+    { o: 78, c: 74, h: 80, l: 70 },
+    { o: 74, c: 82, h: 86, l: 72 },
+  ];
 
   return (
     <div
@@ -35,6 +50,27 @@ const TradeInSecondsVisual = () => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Candlestick chart background */}
+      <svg
+        viewBox="0 0 240 100"
+        className="absolute inset-0 w-full h-full opacity-20"
+        preserveAspectRatio="none"
+      >
+        {candles.map((c, i) => {
+          const x = 10 + i * 19;
+          const green = c.c > c.o;
+          const color = green ? "hsl(160, 45%, 50%)" : "hsl(0, 55%, 55%)";
+          const bodyTop = Math.min(c.o, c.c);
+          const bodyBot = Math.max(c.o, c.c);
+          return (
+            <g key={i}>
+              <line x1={x} x2={x} y1={100 - c.h} y2={100 - c.l} stroke={color} strokeWidth="1" opacity="0.6" />
+              <rect x={x - 4} y={100 - bodyBot} width="8" height={Math.max(bodyBot - bodyTop, 1)} fill={color} rx="1" />
+            </g>
+          );
+        })}
+      </svg>
+
       {/* Central timer */}
       <div className="relative z-10 flex flex-col items-center">
         <div className="relative">
