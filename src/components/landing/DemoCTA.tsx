@@ -129,9 +129,11 @@ const DemoCTA = () => {
           />
 
           {/* Dollar sign */}
-          <span className="text-[80px] sm:text-[104px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] mr-1 sm:mr-2 relative z-10">
-            $
-          </span>
+          <div className="h-[200px] sm:h-[240px] flex items-center relative z-10 mr-1 sm:mr-2">
+            <span className="text-[80px] sm:text-[104px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
+              $
+            </span>
+          </div>
 
           {/* Reels */}
           <div className="flex gap-0 relative z-10">
