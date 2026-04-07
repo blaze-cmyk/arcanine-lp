@@ -26,7 +26,6 @@ const TradeInSecondsVisual = () => {
     };
   }, [hovered]);
 
-  const progress = hovered ? (30 - countdown) / 30 : 0;
   const settled = countdown === 0 && hovered;
 
   // Mini candlestick data
