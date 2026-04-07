@@ -38,15 +38,14 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
       <div className="absolute inset-x-0 top-0 h-[72px] sm:h-[88px] bg-gradient-to-b from-[#111115] via-[#111115]/80 to-transparent z-20 pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-[72px] sm:h-[88px] bg-gradient-to-t from-[#111115] via-[#111115]/80 to-transparent z-20 pointer-events-none" />
 
-      {/* Digit strip */}
+      {/* Digit strip — padded so active digit sits in vertical center */}
       <div
         className="flex flex-col items-center"
         style={{
+          paddingTop: `calc(50% - ${digitHeight / 2}px)`,
           transform:
             phase === "idle"
               ? "translateY(0px)"
-              : phase === "spinning"
-              ? `translateY(-${totalTravel}px)`
               : `translateY(-${totalTravel}px)`,
           transition:
             phase === "spinning"
