@@ -62,11 +62,11 @@ const LiveWins = () => {
   }, []);
 
   return (
-    <section className="relative mt-8 py-6 overflow-hidden border-y border-border/20">
+    <section className="relative mt-8 pt-8 pb-6 overflow-hidden border-y border-border/20">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {wins.map((win, index) => (
             <div
               key={win.id}
