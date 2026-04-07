@@ -37,6 +37,34 @@ const REVIEWS = [
     rating: 4,
     profit: "+$3,100",
   },
+  {
+    name: "Daniel M.",
+    avatar: "🐉",
+    text: "Withdrawals are instant. No hidden fees, no delays. Best platform I've used in 5 years of trading.",
+    rating: 5,
+    profit: "+$7,600",
+  },
+  {
+    name: "Lina W.",
+    avatar: "🦁",
+    text: "The $1 minimum trade let me test strategies without burning my account. Now I trade with confidence.",
+    rating: 5,
+    profit: "+$2,300",
+  },
+  {
+    name: "Raj P.",
+    avatar: "🐻",
+    text: "Available in my country when most platforms aren't. Support team responds within minutes.",
+    rating: 4,
+    profit: "+$5,800",
+  },
+  {
+    name: "Emma S.",
+    avatar: "🦈",
+    text: "Clean UI, fast execution, and the payout percentages are genuinely competitive. Highly recommend.",
+    rating: 5,
+    profit: "+$4,500",
+  },
 ];
 
 const AnimatedNumber = ({
