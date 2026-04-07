@@ -2,11 +2,31 @@ import { useState } from "react";
 
 const ClearDecisionsVisual = () => {
   const [picked, setPicked] = useState<"up" | "down" | null>(null);
+
   return (
     <div
       className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer select-none overflow-hidden"
       onMouseLeave={() => setPicked(null)}
     >
+      {/* Subtle dot grid background */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: "radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)",
+          backgroundSize: "16px 16px",
+        }}
+      />
+
+      {/* Soft radial glow that reacts to pick */}
+      <div
+        className="absolute inset-0 transition-opacity duration-500"
+        style={{
+          opacity: picked ? 0.5 : 0,
+          background: picked === "up"
+            ? "radial-gradient(ellipse 60% 50% at 35% 50%, hsl(var(--profit) / 0.08) 0%, transparent 70%)"
+            : "radial-gradient(ellipse 60% 50% at 65% 50%, hsl(var(--loss) / 0.08) 0%, transparent 70%)",
+        }}
+      />
 
       {/* Live price tag */}
       <div className="relative z-10 mb-5">
