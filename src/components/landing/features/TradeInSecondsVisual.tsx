@@ -139,7 +139,7 @@ const TradeInSecondsVisual = () => {
         <span className="text-[10px] font-mono text-muted-foreground">BTC/USD</span>
         <span
           className="block text-xs font-mono font-bold transition-colors duration-300"
-          style={{ color: settled ? "hsl(var(--profit))" : "hsl(var(--foreground))" }}
+          style={{ color: "hsl(var(--foreground))" }}
         >
           $67,432.50
         </span>
