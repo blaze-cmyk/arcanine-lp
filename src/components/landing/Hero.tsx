@@ -2,14 +2,11 @@ import DashboardMockup from "./DashboardMockup";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start pt-20 sm:pt-24">
+    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-20 sm:pt-24">
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Headline */}
-        <h1
-          className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-7 bg-clip-text text-transparent"
-          style={{ backgroundImage: "linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)" }}
-        >
+        <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-7 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           Predict the next market move
         </h1>
 
@@ -31,7 +28,7 @@ const Hero = () => {
       </div>
 
       {/* Dashboard preview with ambient glow */}
-      <div className="relative z-10 w-full mx-auto max-w-7xl mt-20 animate-slide-up-delay-4">
+      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 animate-slide-up-delay-4">
         {/* Ambient glow behind the preview */}
         <div className="absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.06),transparent_60%)] blur-3xl pointer-events-none" />
         <div className="absolute -inset-4 rounded-3xl bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
