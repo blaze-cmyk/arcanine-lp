@@ -27,6 +27,21 @@ const faqs = [
     answer:
       "We use bank-grade encryption and segregated client accounts to ensure your funds are always protected. Our platform is fully regulated and undergoes regular third-party security audits.",
   },
+  {
+    question: "What is the minimum deposit amount?",
+    answer:
+      "The minimum deposit varies by payment method but starts as low as $10. This makes it accessible for beginners who want to start small and gradually increase their trading activity.",
+  },
+  {
+    question: "Can I practice without risking real money?",
+    answer:
+      "Yes! We offer a fully-featured demo account preloaded with $10,000 in virtual funds. You can practice trading strategies, explore the platform, and build confidence before switching to a real account.",
+  },
+  {
+    question: "What trading timeframes are available?",
+    answer:
+      "We support a variety of expiry times ranging from 60 seconds to several hours. This flexibility lets you choose timeframes that match your trading style, whether you prefer quick scalps or longer positions.",
+  },
 ];
 
 const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
@@ -60,7 +75,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 
 const FAQ = () => (
   <section className="py-24 px-4 sm:px-6">
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       {/* Header — centered */}
       <div className="text-center mb-14">
         <span className="inline-block text-xs font-medium tracking-wider uppercase text-muted-foreground border border-border rounded-full px-4 py-1.5 mb-5">
