@@ -39,7 +39,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ width: 120, height: containerH }}
+      style={{ width: 80, height: containerH }}
     >
       {/* Top fade */}
       <div
@@ -92,7 +92,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
               style={{ height: digitHeight }}
             >
               <span
-                className={`text-[130px] sm:text-[160px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
+                className={`text-[90px] sm:text-[110px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
               >
                 {d}
               </span>
@@ -106,7 +106,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
 
 /** Thin vertical separator between reels */
 const ReelSeparator = () => (
-  <div className="flex flex-col items-center justify-center h-[400px] w-[1px] relative z-10">
+  <div className="flex flex-col items-center justify-center h-[260px] w-[1px] relative z-10">
     <div
       className="w-full h-full"
       style={{
@@ -172,8 +172,8 @@ const DemoCTA = () => {
             className="absolute left-0 right-0 z-10 pointer-events-none"
             style={{
               top: "50%",
-              transform: "translateY(-60px)",
-              height: 180,
+              transform: "translateY(-40px)",
+              height: 120,
               borderTop: "1px solid rgba(255,255,255,0.04)",
               borderBottom: "1px solid rgba(255,255,255,0.04)",
               background: "rgba(255,255,255,0.015)",
@@ -181,8 +181,8 @@ const DemoCTA = () => {
           />
 
           {/* Dollar sign */}
-          <div className="flex items-center relative z-10 mr-2" style={{ height: 400 }}>
-            <span className="text-[130px] sm:text-[160px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
+          <div className="flex items-center relative z-10 mr-2" style={{ height: 260 }}>
+            <span className="text-[90px] sm:text-[110px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
               $
             </span>
           </div>
@@ -197,7 +197,7 @@ const DemoCTA = () => {
                   </div>
                 ))
               : targets.map((_, i) => (
-                  <div key={i} style={{ width: 120, height: 400 }} />
+                  <div key={i} style={{ width: 80, height: 260 }} />
                 ))}
           </div>
         </div>
