@@ -10,9 +10,9 @@ const TradeInSecondsVisual = () => {
       setCountdown(30);
       intervalRef.current = setInterval(() => {
         setCountdown((prev) => {
-          if (prev <= 6) {
+          if (prev <= 1) {
             if (intervalRef.current) clearInterval(intervalRef.current);
-            return 5;
+            return 0;
           }
           return prev - 1;
         });
@@ -26,9 +26,10 @@ const TradeInSecondsVisual = () => {
     };
   }, [hovered]);
 
-  const progress = hovered ? (30 - countdown) / 25 : 0;
-  const settled = countdown === 5 && hovered;
+  const progress = hovered ? (30 - countdown) / 30 : 0;
+  const settled = countdown === 0 && hovered;
 
+  // Mini candlestick data
   const candles = [
     { o: 60, c: 45, h: 65, l: 40 },
     { o: 45, c: 55, h: 60, l: 42 },
@@ -74,29 +75,29 @@ const TradeInSecondsVisual = () => {
       {/* Central timer */}
       <div className="relative z-10 flex flex-col items-center">
         <div className="relative">
-          <svg width="72" height="72" viewBox="0 0 72 72">
+          <svg width="90" height="90" viewBox="0 0 90 90">
             <circle
-              cx="36" cy="36" r="30"
+              cx="45" cy="45" r="38"
               fill="none"
               stroke="hsl(var(--border))"
-              strokeWidth="2"
-              opacity="0.3"
+              strokeWidth="2.5"
+              opacity="0.4"
             />
             <circle
-              cx="36" cy="36" r="30"
+              cx="45" cy="45" r="38"
               fill="none"
               stroke={settled ? "hsl(var(--profit))" : "hsl(var(--primary))"}
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
-              strokeDasharray={2 * Math.PI * 30}
-              strokeDashoffset={2 * Math.PI * 30 * (1 - progress)}
-              transform="rotate(-90 36 36)"
+              strokeDasharray={2 * Math.PI * 38}
+              strokeDashoffset={2 * Math.PI * 38 * (1 - progress)}
+              transform="rotate(-90 45 45)"
               style={{ transition: settled ? "stroke 0.3s" : "stroke-dashoffset 0.06s linear, stroke 0.3s" }}
             />
           </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span
-              className="font-display text-xl font-bold transition-colors duration-300"
+              className="font-display text-2xl font-bold transition-colors duration-300"
               style={{ color: settled ? "hsl(var(--profit))" : "hsl(var(--foreground))" }}
             >
               {settled ? "✓" : `0:${String(countdown).padStart(2, "0")}`}
@@ -104,9 +105,9 @@ const TradeInSecondsVisual = () => {
           </div>
         </div>
 
-        {/* Status label */}
+        {/* Trade status bar */}
         <div
-          className="mt-3 rounded-lg px-3.5 py-1 flex items-center gap-1.5 transition-all duration-300"
+          className="mt-3 rounded-lg px-4 py-1.5 flex items-center gap-2 transition-all duration-300"
           style={{
             background: settled
               ? "hsl(var(--profit) / 0.1)"
@@ -142,9 +143,28 @@ const TradeInSecondsVisual = () => {
                 : "hsl(var(--muted-foreground))",
             }}
           >
-            {settled ? "Settled" : hovered ? "Executing..." : "Ready"}
+            {settled ? "Trade settled" : hovered ? "Executing..." : "Ready"}
           </span>
         </div>
+      </div>
+
+      {/* Floating price tag */}
+      <div
+        className="absolute top-4 right-4 rounded-lg px-2.5 py-1 transition-all duration-500"
+        style={{
+          background: "hsl(var(--card))",
+          border: "1px solid hsl(var(--border) / 0.4)",
+          opacity: hovered ? 1 : 0.4,
+          transform: hovered ? "translateY(0)" : "translateY(4px)",
+        }}
+      >
+        <span className="text-[10px] font-mono text-muted-foreground">BTC/USD</span>
+        <span
+          className="block text-xs font-mono font-bold transition-colors duration-300"
+          style={{ color: settled ? "hsl(var(--profit))" : "hsl(var(--foreground))" }}
+        >
+          $67,432.50
+        </span>
       </div>
     </div>
   );
