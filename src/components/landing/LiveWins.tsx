@@ -80,7 +80,7 @@ const LiveWins = () => {
       <div className="relative max-w-6xl mx-auto mt-5 pb-1">
         {/* Live Wins pill badge — floating above cards */}
         <div className="absolute -top-3 left-0 z-20">
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card border border-border/50 shadow-lg shadow-black/20">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-card border border-border/50 shadow-lg shadow-black/20">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
