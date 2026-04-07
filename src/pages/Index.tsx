@@ -3,6 +3,7 @@ import Hero from "@/components/landing/Hero";
 import LiveWins from "@/components/landing/LiveWins";
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
+import Stats from "@/components/landing/Stats";
 import DemoCTA from "@/components/landing/DemoCTA";
 
 import Footer from "@/components/landing/Footer";
@@ -15,6 +16,7 @@ const Index = () => (
     </div>
     <LiveWins />
     <Features />
+    <Stats />
     <FAQ />
     <DemoCTA />
     <Footer />
