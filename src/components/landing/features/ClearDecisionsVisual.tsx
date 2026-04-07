@@ -2,39 +2,11 @@ import { useState } from "react";
 
 const ClearDecisionsVisual = () => {
   const [picked, setPicked] = useState<"up" | "down" | null>(null);
-
-  // Mini price line
-  const points = [40, 38, 42, 44, 41, 46, 48, 45, 50, 52, 49, 54, 56, 53, 58, 60, 57, 62, 64, 61];
-  const pathD = points
-    .map((y, i) => `${i === 0 ? "M" : "L"} ${i * 12} ${80 - y}`)
-    .join(" ");
-
   return (
     <div
       className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer select-none overflow-hidden"
       onMouseLeave={() => setPicked(null)}
     >
-      {/* Price line background */}
-      <svg
-        viewBox="0 0 228 80"
-        className="absolute inset-0 w-full h-full"
-        preserveAspectRatio="none"
-        style={{ opacity: 0.15 }}
-      >
-        <defs>
-          <linearGradient id="line-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={picked === "down" ? "hsl(0, 55%, 55%)" : "hsl(160, 45%, 50%)"} stopOpacity="0.4" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
-        <path d={pathD + " L 228 80 L 0 80 Z"} fill="url(#line-grad)" />
-        <path
-          d={pathD}
-          fill="none"
-          stroke={picked === "down" ? "hsl(0, 55%, 55%)" : "hsl(160, 45%, 50%)"}
-          strokeWidth="2"
-        />
-      </svg>
 
       {/* Live price tag */}
       <div className="relative z-10 mb-5">
