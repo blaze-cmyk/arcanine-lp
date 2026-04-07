@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Pause } from "lucide-react";
 import { faker } from "@faker-js/faker";
 
 interface Win {
