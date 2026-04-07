@@ -167,18 +167,6 @@ const DemoCTA = () => {
             }}
           />
 
-          {/* Horizontal highlight line across center */}
-          <div
-            className="absolute left-0 right-0 z-10 pointer-events-none"
-            style={{
-              top: "50%",
-              transform: "translateY(-40px)",
-              height: 120,
-              borderTop: "1px solid rgba(255,255,255,0.04)",
-              borderBottom: "1px solid rgba(255,255,255,0.04)",
-              background: "rgba(255,255,255,0.015)",
-            }}
-          />
 
           {/* Dollar sign */}
           <div className="flex items-center relative z-10 mr-2" style={{ height: 260 }}>
