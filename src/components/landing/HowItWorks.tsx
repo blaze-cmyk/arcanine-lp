@@ -170,7 +170,9 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
+    <section ref={ref} className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
+      {/* Ambient blob */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,106,0,0.04) 0%, transparent 70%)" }} />
       <div className="max-w-6xl mx-auto relative">
         {/* Header */}
         <div

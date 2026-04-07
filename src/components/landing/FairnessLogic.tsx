@@ -44,7 +44,7 @@ const FairnessLogic = () => {
   }, []);
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
+    <section ref={ref} className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left — text block, left-aligned */}

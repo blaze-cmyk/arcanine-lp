@@ -206,7 +206,9 @@ const Stats = () => {
   }, []);
 
   return (
-    <section className="py-24 px-4 sm:px-6" ref={ref} id="testimonials">
+    <section className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden" ref={ref} id="testimonials">
+      {/* Warm golden glow */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(232,169,74,0.05) 0%, transparent 65%)" }} />
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div
