@@ -28,7 +28,7 @@ const faqs = [
 
 const FAQ = () => (
   <section className="py-24 px-4 sm:px-6">
-    <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12 md:gap-20">
+    <div className="max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12 md:gap-20 justify-between">
       {/* Left column */}
       <div>
         <h2 className="text-3xl sm:text-4xl font-display leading-tight">
