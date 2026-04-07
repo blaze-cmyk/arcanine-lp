@@ -123,7 +123,6 @@ const TradeInSecondsVisual = () => {
           >
             {hovered ? "Executing..." : "Ready"}
           </span>
-          </span>
         </div>
       </div>
 
