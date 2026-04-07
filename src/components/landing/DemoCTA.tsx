@@ -32,24 +32,27 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
   const digitHeight = 120; // px per digit
   const totalTravel = (strip.length - 1) * digitHeight;
 
+  // Container height and centering offset
+  const containerHeight = { base: 200, sm: 240 };
+  // Center offset = (containerH - digitH) / 2
+  const centerOffset = (containerHeight.sm - digitHeight) / 2; // 60px on sm
+
   return (
     <div className="relative w-[70px] sm:w-[88px] h-[200px] sm:h-[240px] overflow-hidden">
       {/* Top/bottom fade masks */}
       <div className="absolute inset-x-0 top-0 h-[72px] sm:h-[88px] bg-gradient-to-b from-[#111115] via-[#111115]/80 to-transparent z-20 pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-[72px] sm:h-[88px] bg-gradient-to-t from-[#111115] via-[#111115]/80 to-transparent z-20 pointer-events-none" />
 
-      {/* Digit strip — padded so active digit sits in vertical center */}
+      {/* Digit strip — offset so active digit is vertically centered */}
       <div
-        className="flex flex-col items-center"
+        className="flex flex-col items-center absolute left-0 right-0"
         style={{
-          paddingTop: `calc(50% - ${digitHeight / 2}px)`,
-          transform:
-            phase === "idle"
-              ? "translateY(0px)"
-              : `translateY(-${totalTravel}px)`,
+          top: phase === "idle"
+            ? `${centerOffset}px`
+            : `${centerOffset - totalTravel}px`,
           transition:
             phase === "spinning"
-              ? "transform 1.4s cubic-bezier(0.23, 1, 0.32, 1)"
+              ? "top 1.4s cubic-bezier(0.23, 1, 0.32, 1)"
               : "none",
         }}
       >
