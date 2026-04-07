@@ -152,7 +152,9 @@ const DemoCTA = () => {
           className="relative flex items-center rounded-2xl px-4 sm:px-8 mb-12 overflow-hidden"
           style={{
             background: "#0B0B0E",
-            border: "none",
+            boxShadow:
+              "inset 0 2px 30px rgba(0,0,0,0.7), inset 0 -2px 15px rgba(0,0,0,0.5), 0 0 80px rgba(200,140,40,0.05), 0 4px 40px rgba(0,0,0,0.4)",
+            border: "1px solid rgba(255,255,255,0.06)",
           }}
         >
           {/* Warm ambient glow */}
