@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { CircleCheck } from "lucide-react";
 
 const TradeInSecondsVisual = () => {
   const [hovered, setHovered] = useState(false);
