@@ -97,16 +97,15 @@ const TradeInSecondsVisual = () => {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             {settled ? (
-              <svg width="34" height="34" viewBox="0 0 34 34" fill="none" className="drop-shadow-[0_0_8px_hsl(var(--profit)/0.4)]">
-                <circle cx="17" cy="17" r="15" fill="hsl(var(--profit) / 0.12)" stroke="hsl(var(--profit))" strokeWidth="1.5" />
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none" className="drop-shadow-[0_0_10px_hsl(var(--profit)/0.5)]">
                 <path
-                  d="M11 17.5L15 21.5L23 13"
+                  d="M9 17.5L15 23.5L25 11"
                   stroke="hsl(var(--profit))"
-                  strokeWidth="2.5"
+                  strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   style={{
-                    strokeDasharray: 22,
+                    strokeDasharray: 28,
                     strokeDashoffset: 0,
                     animation: "checkDraw 0.4s ease-out forwards",
                   }}
