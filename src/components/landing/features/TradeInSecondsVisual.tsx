@@ -26,7 +26,8 @@ const TradeInSecondsVisual = () => {
     };
   }, [hovered]);
 
-  
+  const settled = countdown === 0 && hovered;
+
 
   // Mini candlestick data
   const candles = [
