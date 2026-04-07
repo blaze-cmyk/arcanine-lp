@@ -73,8 +73,8 @@ const TradeInSecondsVisual = () => {
 
       {/* Central timer */}
       <div className="relative z-10 flex flex-col items-center">
-        <div className="relative">
-          <svg width="90" height="90" viewBox="0 0 90 90">
+        <div className="relative w-[90px] h-[90px] flex items-center justify-center">
+          <svg width="90" height="90" viewBox="0 0 90 90" className="absolute inset-0">
             <circle
               cx="45" cy="45" r="38"
               fill="none"
@@ -82,43 +82,13 @@ const TradeInSecondsVisual = () => {
               strokeWidth="2.5"
               opacity="0.4"
             />
-            <circle
-              cx="45" cy="45" r="38"
-              fill="none"
-              stroke={settled ? "hsl(var(--profit))" : "hsl(var(--primary))"}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeDasharray={2 * Math.PI * 38}
-              strokeDashoffset={2 * Math.PI * 38 * (1 - progress)}
-              transform="rotate(-90 45 45)"
-              style={{ transition: settled ? "stroke 0.3s" : "stroke-dashoffset 0.06s linear, stroke 0.3s" }}
-            />
           </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            {settled ? (
-              <svg width="42" height="42" viewBox="0 0 34 34" fill="none" className="drop-shadow-[0_0_10px_hsl(var(--profit)/0.5)]">
-                <path
-                  d="M9 17.5L15 23.5L25 11"
-                  stroke="hsl(var(--profit))"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{
-                    strokeDasharray: 28,
-                    strokeDashoffset: 0,
-                    animation: "checkDraw 0.4s ease-out forwards",
-                  }}
-                />
-              </svg>
-            ) : (
-              <span
-                className="font-display text-2xl font-bold transition-colors duration-300"
-                style={{ color: "hsl(var(--foreground))" }}
-              >
-                {`0:${String(countdown).padStart(2, "0")}`}
-              </span>
-            )}
-          </div>
+          <span
+            className="font-display text-2xl font-bold transition-colors duration-300"
+            style={{ color: "hsl(var(--foreground))" }}
+          >
+            {`0:${String(countdown).padStart(2, "0")}`}
+          </span>
         </div>
 
         {/* Trade status bar */}
