@@ -28,16 +28,6 @@ const TradeInSecondsVisual = () => {
 
   const settled = countdown === 0 && hovered;
 
-  // Smooth price line
-  const points = [40, 42, 38, 44, 39, 43, 37, 42, 38, 45, 41, 47, 43, 48, 44, 50, 46, 52, 48, 50];
-  const pathD = points
-    .map((y, i) => {
-      const x = (i / (points.length - 1)) * 260;
-      const yPos = 70 - y * 0.9;
-      return `${i === 0 ? "M" : "L"}${x},${yPos}`;
-    })
-    .join(" ");
-  const areaD = pathD + " L260,70 L0,70 Z";
 
   return (
     <div
@@ -45,19 +35,6 @@ const TradeInSecondsVisual = () => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Chart background — always visible, subtle */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-4">
-        <svg viewBox="0 0 260 70" className="w-full h-[55%] opacity-25" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="tisFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--profit))" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="hsl(var(--profit))" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path d={areaD} fill="url(#tisFill)" />
-          <path d={pathD} fill="none" stroke="hsl(var(--profit))" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      </div>
 
       {/* Central content */}
       <div className="relative z-10 flex flex-col items-center">
