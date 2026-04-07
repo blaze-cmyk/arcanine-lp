@@ -14,8 +14,20 @@ interface Win {
 const AVATARS = ["🐺", "🦊", "🐯", "🦅", "🐉", "🦁", "🐻", "🦈", "🐍", "🦇", "🐗", "🦉"];
 const ASSETS = ["BTC/USD", "ETH/USD", "GOLD", "EUR/USD", "GBP/JPY", "AAPL", "TSLA", "SOL/USD"];
 const NAMES = [
-  "alex_t", "markW", "proTrader", "luna99", "quickWin", "rizz_k", "novaX",
-  "hidden", "aceHigh", "deltaFx", "ironJaw", "pixelDev", "zenith", "blaze7",
+  "alex_t",
+  "markW",
+  "proTrader",
+  "luna99",
+  "quickWin",
+  "rizz_k",
+  "novaX",
+  "hidden",
+  "aceHigh",
+  "deltaFx",
+  "ironJaw",
+  "pixelDev",
+  "zenith",
+  "blaze7",
 ];
 const COLORS = [
   "from-emerald-500/20 to-emerald-500/5",
@@ -27,7 +39,7 @@ const COLORS = [
 ];
 
 const randomAmount = () => {
-  const amounts = [0.50, 1.20, 2.00, 5.00, 8.37, 10.00, 14.50, 26.72, 50.00, 0.76, 3.40, 6.45, 0.14, 0.40, 1.10, 2.06, 0.17];
+  const amounts = [0.5, 1.2, 2.0, 5.0, 8.37, 10.0, 14.5, 26.72, 50.0, 0.76, 3.4, 6.45, 0.14, 0.4, 1.1, 2.06, 0.17];
   return `$${amounts[Math.floor(Math.random() * amounts.length)].toFixed(2)}`;
 };
 
@@ -53,8 +65,8 @@ const LiveWins = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWins(prev => {
-        const updated = prev.map(w => ({ ...w, isNew: false }));
+      setWins((prev) => {
+        const updated = prev.map((w) => ({ ...w, isNew: false }));
         return [generateWin(true), ...updated.slice(0, 7)];
       });
     }, 2500);
@@ -65,7 +77,7 @@ const LiveWins = () => {
     <section className="relative mt-8 pb-6 overflow-hidden border-y border-border/20">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto pt-5 pb-1">
+      <div className="relative max-w-6xl mx-auto mt-5 pb-1">
         {/* Live Wins pill badge — floating above cards */}
         <div className="absolute -top-3 left-0 z-20">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card border border-border/50 shadow-lg shadow-black/20">
@@ -82,16 +94,18 @@ const LiveWins = () => {
         {/* Right fade */}
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div
+          className="flex gap-3 overflow-x-auto scrollbar-hide"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           {wins.map((win, index) => (
             <div
               key={win.id}
               ref={index === 0 ? firstCardRef : undefined}
               className={`relative flex-shrink-0 w-[140px] rounded-xl bg-gradient-to-b ${win.color} border border-border/30 p-3 backdrop-blur-sm transition-all duration-300 ${
-                win.isNew ? 'animate-live-win-enter' : ''
+                win.isNew ? "animate-live-win-enter" : ""
               }`}
             >
-
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-7 h-7 rounded-lg bg-muted/60 flex items-center justify-center text-sm">
                   {win.avatar}
