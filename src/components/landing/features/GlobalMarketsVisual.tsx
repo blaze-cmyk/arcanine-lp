@@ -24,6 +24,7 @@ const assets = [
     up: false,
     spark: [50, 48, 49, 46, 47, 44, 45, 42, 43, 40, 41, 38],
     payout: "85%",
+  },
 ];
 
 const MiniSparkline = ({ data, color }: { data: number[]; color: string }) => {
