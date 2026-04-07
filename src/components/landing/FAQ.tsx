@@ -66,7 +66,7 @@ const FAQ = () => (
         <span className="inline-block text-xs font-medium tracking-wider uppercase text-muted-foreground border border-border rounded-full px-4 py-1.5 mb-5">
           FAQ
         </span>
-        <h2 className="text-4xl sm:text-5xl font-display leading-tight mb-4">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           Frequently asked questions
         </h2>
         <p className="text-base text-muted-foreground">
