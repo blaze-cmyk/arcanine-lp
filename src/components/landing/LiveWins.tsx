@@ -80,11 +80,7 @@ const LiveWins = () => {
   }, []);
 
   return (
-    <section
-      className="relative mt-12 pb-6 overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <section className="relative mt-12 pb-6 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto mt-5 pb-1">
@@ -99,7 +95,7 @@ const LiveWins = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
               </span>
             )}
-            <span className="text-xs font-semibold text-foreground">{paused ? "Paused" : "Live Wins"}</span>
+            <span className="text-xs font-semibold text-foreground">Live Wins</span>
           </div>
         </div>
 
