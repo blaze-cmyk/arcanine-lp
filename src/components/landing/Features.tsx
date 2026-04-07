@@ -50,8 +50,10 @@ const Features = () => (
 
             {/* Text content */}
             <div className="p-6">
-              <h3 className="text-lg font-bold mb-1.5">{title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+              <p className="text-sm leading-relaxed">
+                <span className="font-bold">{title}.</span>{" "}
+                <span className="text-muted-foreground">{description}</span>
+              </p>
             </div>
           </div>
         ))}
