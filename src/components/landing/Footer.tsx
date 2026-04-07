@@ -1,131 +1,155 @@
 import logo from "@/assets/arcanine-logo.png";
 
-const footerLinks = {
-  Platform: [
-    { label: "Web Terminal", href: "#" },
-    { label: "Demo Account", href: "#" },
-    { label: "Asset Index", href: "#" },
-    { label: "Trading Rules", href: "#" },
-  ],
-  Company: [
-    { label: "About Us", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Contact", href: "#" },
-    { label: "Blog", href: "#" },
-  ],
-  Legal: [
-    { label: "Terms of Service", href: "#" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Cookie Policy", href: "#" },
-    { label: "AML Policy", href: "#" },
-  ],
-  Support: [
-    { label: "Help Center", href: "#" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Live Chat", href: "#" },
-    { label: "Status", href: "#" },
-  ],
-};
+const quickMenu = [
+  { label: "How it Works", href: "#how-it-works" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Reviews", href: "#testimonials" },
+  { label: "Affiliate Program", href: "#" },
+  { label: "FAQs", href: "#faq" },
+  { label: "Support", href: "#" },
+];
+
+const information = [
+  { label: "Terms & Conditions", href: "#" },
+  { label: "Privacy Policy", href: "#" },
+  { label: "Cookie Policy", href: "#" },
+  { label: "AML Policy", href: "#" },
+];
 
 const Footer = () => (
-  <footer className="border-t border-border bg-background">
+  <footer className="bg-background">
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
-      {/* Main footer grid */}
-      <div className="py-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10 lg:gap-12">
+      {/* Top section: Logo + Links */}
+      <div className="py-16 grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 md:gap-20">
         {/* Brand column */}
-        <div className="col-span-2 sm:col-span-3 lg:col-span-1 mb-4 lg:mb-0">
-          <div className="flex items-center gap-1 mb-4">
+        <div>
+          <div className="flex items-center gap-1 mb-6">
             <img src={logo} alt="Arcanine" className="w-10 h-10" />
             <span className="text-base font-bold tracking-tight font-display text-foreground">
               Arcanine
             </span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-[260px]">
-            Trade smarter with real-time charts, instant execution, and a platform built for precision.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-[300px] mb-6">
+            The premier binary options trading platform. Trade smarter with real-time charts and instant execution.
           </p>
-
-          {/* Social icons */}
-          <div className="flex gap-3 mt-6">
-            {["twitter", "discord", "telegram", "github"].map((social) => (
-              <a
-                key={social}
-                href="#"
-                className="w-9 h-9 rounded-lg bg-muted/50 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
-              >
-                <SocialIcon name={social} />
-              </a>
-            ))}
-          </div>
+          <p className="text-xs text-muted-foreground/60">
+            © {new Date().getFullYear()} Arcanine. All rights reserved.
+          </p>
         </div>
 
-        {/* Link columns */}
-        {Object.entries(footerLinks).map(([title, links]) => (
-          <div key={title}>
-            <h4 className="text-sm font-semibold text-foreground mb-4">
-              {title}
-            </h4>
-            <ul className="space-y-2.5">
-              {links.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {/* Quick Menu */}
+        <div>
+          <h4 className="text-sm font-semibold text-foreground mb-5">Quick Menu</h4>
+          <ul className="space-y-3">
+            {quickMenu.map((link) => (
+              <li key={link.label}>
+                <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Information */}
+        <div>
+          <h4 className="text-sm font-semibold text-foreground mb-5">Information</h4>
+          <ul className="space-y-3">
+            {information.map((link) => (
+              <li key={link.label}>
+                <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-border" />
+
+      {/* Accepted Payments */}
+      <div className="py-8">
+        <p className="text-xs font-semibold tracking-widest text-muted-foreground/60 uppercase mb-5">
+          Accepted Payments
+        </p>
+        <div className="flex flex-wrap gap-3">
+          {[
+            { name: "Visa", bg: "#1A1F71", text: "VISA", textColor: "#FFFFFF" },
+            { name: "Mastercard", bg: "#1A1A2E", icon: "mc" },
+            { name: "Discover", bg: "#FF6000", text: "DISCOVER", textColor: "#FFFFFF" },
+            { name: "Apple Pay", bg: "#000000", text: "Pay", textColor: "#FFFFFF", prefix: "" },
+            { name: "Google Pay", bg: "#1A1A2E", text: "G Pay", textColor: "#FFFFFF" },
+            { name: "PayPal", bg: "#003087", text: "PayPal", textColor: "#009CDE" },
+          ].map((method) => (
+            <div
+              key={method.name}
+              className="w-[52px] h-[34px] rounded-md flex items-center justify-center border border-white/5"
+              style={{ background: method.bg }}
+              title={method.name}
+            >
+              {method.icon === "mc" ? (
+                <div className="flex -space-x-1.5">
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#EB001B]" />
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#F79E1B] opacity-80" />
+                </div>
+              ) : (
+                <span
+                  className="text-[9px] font-bold leading-none"
+                  style={{ color: method.textColor }}
+                >
+                  {method.prefix !== undefined ? `${method.prefix}${method.text}` : method.text}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-border" />
+
+      {/* Risk Disclaimers */}
+      <div className="py-10 space-y-6">
+        <div>
+          <p className="text-xs text-muted-foreground/70 leading-relaxed">
+            <span className="font-bold text-muted-foreground">SIMULATED TRADING ENVIRONMENT:</span>{" "}
+            Arcanine operates using simulated trading accounts with virtual funds. All challenge phases and funded accounts utilize demo environments that mirror real prediction market conditions. No actual capital is deployed on prediction market platforms during your trading activities. Hypothetical or simulated performance results have certain inherent limitations. Unlike an actual performance record, simulated results do not represent actual trading.
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-muted-foreground/70 leading-relaxed">
+            <span className="font-bold text-muted-foreground">Risk Disclosure:</span>{" "}
+            Trading prediction markets involves substantial risk of loss and is not suitable for everyone. Past performance is not indicative of future results. You should not risk money that you cannot afford to lose.{" "}
+            <span className="font-bold text-muted-foreground">No Guarantee of Profit:</span>{" "}
+            There is no guarantee that you will earn any money using our platform. The testimonials and examples used are exceptional results and do not reflect the typical participant's experience.{" "}
+            <span className="font-bold text-muted-foreground">Not Financial Advice:</span>{" "}
+            Arcanine does not provide investment advice, financial planning services, or recommendations regarding the purchase or sale of any financial instruments.
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-muted-foreground/70 leading-relaxed">
+            <span className="font-bold text-muted-foreground">Eligibility & Compliance:</span>{" "}
+            Our services are available only to individuals who are 18 years of age or older, not residents of restricted jurisdictions, and in compliance with all applicable local laws and regulations. Arcanine maintains strict AML and KYC procedures; all traders must complete identity verification before receiving payouts.{" "}
+            <span className="font-bold text-muted-foreground">Limitation of Liability:</span>{" "}
+            To the maximum extent permitted by applicable law, Arcanine shall not be liable for any indirect, incidental, special, consequential, or punitive damages.
+          </p>
+        </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-border py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Arcanine. All rights reserved.
-        </p>
-        <div className="flex items-center gap-6">
-          <span className="text-xs text-muted-foreground">
-            18+ only. Trade responsibly.
-          </span>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[hsl(var(--profit))] animate-pulse" />
-            <span className="text-xs text-muted-foreground">All systems operational</span>
-          </div>
+      <div className="border-t border-border py-6">
+        <div className="flex items-center gap-4 text-xs text-muted-foreground/50">
+          <span>Not a Deposit</span>
+          <span>|</span>
+          <span>Not FDIC Insured</span>
+          <span>|</span>
+          <span>May Lose Value</span>
         </div>
       </div>
     </div>
   </footer>
 );
-
-const SocialIcon = ({ name }: { name: string }) => {
-  const icons: Record<string, JSX.Element> = {
-    twitter: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
-        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
-      </svg>
-    ),
-    discord: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0m6 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0" />
-        <path d="M15.5 17c0 1 1.5 3 2 3 1.5 0 2.833-1.667 3.5-3 .667-1.333.5-5.833-1.5-11.5-1.457-1.015-3-1.34-4.5-1.5l-1 2.5" />
-        <path d="M8.5 17c0 1-1.5 3-2 3-1.5 0-2.833-1.667-3.5-3-.667-1.333-.5-5.833 1.5-11.5C5.957 4.485 7.5 4.16 9 4l1 2.5" />
-      </svg>
-    ),
-    telegram: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m15 10-4 4 6 6 4-16-18 7 4 2 2 6 3-4" />
-      </svg>
-    ),
-    github: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-      </svg>
-    ),
-  };
-  return icons[name] || null;
-};
 
 export default Footer;
