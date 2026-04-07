@@ -34,7 +34,7 @@ const ClearDecisionsVisual = () => {
   // Mini sparkline points
   const sparkBase = [40, 38, 42, 39, 41, 37, 40, 38, 43, 41, 39, 42, 40];
   const sparkPoints = sparkBase.map((y, i) => {
-    const shift = picked === "up" ? -i * 0.8 : picked === "down" ? i * 0.8 : 0;
+    const shift = 0;
     return { x: i * 22, y: y + shift };
   });
   const sparkD = sparkPoints.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
