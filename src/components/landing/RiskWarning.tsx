@@ -1,7 +1,7 @@
 import { AlertTriangle } from "lucide-react";
 
 const RiskWarning = () => (
-  <section className="py-12 px-4 sm:px-6 border-t border-border">
+  <section className="py-12 px-4 sm:px-6">
     <div className="max-w-6xl mx-auto">
       <div className="flex gap-4 items-start rounded-xl bg-card/50 border border-border p-6 sm:p-8">
         <div className="flex-shrink-0 mt-0.5">
