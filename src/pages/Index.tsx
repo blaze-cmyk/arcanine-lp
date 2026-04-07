@@ -4,7 +4,7 @@ import LiveWins from "@/components/landing/LiveWins";
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
 import DemoCTA from "@/components/landing/DemoCTA";
-import RiskWarning from "@/components/landing/RiskWarning";
+
 import Footer from "@/components/landing/Footer";
 
 const Index = () => (
@@ -18,7 +18,7 @@ const Index = () => (
     <FAQ />
     <DemoCTA />
     <Footer />
-    <RiskWarning />
+  </div>
   </div>
 );
 
