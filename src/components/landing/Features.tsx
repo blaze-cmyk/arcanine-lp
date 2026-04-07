@@ -57,8 +57,7 @@ const Features = () => (
                 isSmall ? "md:col-span-2" : "md:col-span-3"
               }`}
               style={{
-                background:
-                  "linear-gradient(180deg, hsl(var(--foreground) / 0.04) 0%, hsl(var(--background) / 0.95) 100%)",
+                background: "hsl(var(--card))",
               }}
             >
               {/* Interactive visual */}

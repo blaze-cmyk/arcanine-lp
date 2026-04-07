@@ -25,14 +25,6 @@ const assets = [
     spark: [50, 48, 49, 46, 47, 44, 45, 42, 43, 40, 41, 38],
     payout: "85%",
   },
-  {
-    name: "AAPL",
-    price: "189.72",
-    change: "+1.05%",
-    up: true,
-    spark: [35, 36, 38, 37, 40, 42, 41, 44, 43, 46, 45, 48],
-    payout: "90%",
-  },
 ];
 
 const MiniSparkline = ({ data, color }: { data: number[]; color: string }) => {
