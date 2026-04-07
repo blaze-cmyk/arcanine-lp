@@ -86,7 +86,7 @@ const LiveWins = () => {
       <div className="relative max-w-6xl mx-auto mt-5 pb-1">
         {/* Live Wins pill badge */}
         <div className="absolute -top-3 left-0 z-20">
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-secondary-btn border border-border/50 shadow-lg shadow-black/20">
+          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-secondary-btn border border-border/50 shadow-lg shadow-black/20">
             <span className="relative flex h-3.5 w-3.5 items-center justify-center">
               {paused ? (
                 <Pause size={12} className="text-muted-foreground" fill="currentColor" />
