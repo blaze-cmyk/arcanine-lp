@@ -3,6 +3,7 @@ import Hero from "@/components/landing/Hero";
 import LiveWins from "@/components/landing/LiveWins";
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
+import DemoCTA from "@/components/landing/DemoCTA";
 
 const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden">
@@ -13,6 +14,7 @@ const Index = () => (
     <LiveWins />
     <Features />
     <FAQ />
+    <DemoCTA />
   </div>
 );
 
