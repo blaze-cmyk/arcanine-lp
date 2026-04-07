@@ -17,8 +17,8 @@ const Index = () => (
     <Features />
     <FAQ />
     <DemoCTA />
-    <RiskWarning />
     <Footer />
+    <RiskWarning />
   </div>
 );
 
