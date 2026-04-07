@@ -11,10 +11,10 @@ const ClearPayoutsVisual = () => {
     >
       {/* Trade receipt card */}
       <div
-        className="w-full max-w-[280px] rounded-xl overflow-hidden transition-all duration-500"
+        className="w-full max-w-[280px] rounded-xl overflow-hidden"
         style={{
-          background: "hsl(var(--background))",
-          border: `1px solid hsl(var(--border) / 0.4)`,
+          background: "rgba(255, 255, 255, 0.06)",
+          border: "1px solid hsl(var(--border) / 0.4)",
         }}
       >
         {/* Header */}
@@ -58,7 +58,7 @@ const ClearPayoutsVisual = () => {
           {/* Divider */}
           <div className="w-full h-px" style={{ background: "hsl(var(--border) / 0.3)" }} />
 
-          {/* Payout — the reveal */}
+          {/* Payout */}
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-muted-foreground">Potential Payout</span>
             <span
@@ -71,16 +71,20 @@ const ClearPayoutsVisual = () => {
             </span>
           </div>
 
-          {/* Fee row */}
-          <div
-            className="flex items-center justify-between transition-all duration-500"
-            style={{
-              opacity: hovered ? 1 : 0,
-              transform: hovered ? "translateY(0)" : "translateY(4px)",
-            }}
-          >
-            <span className="text-[10px] text-muted-foreground">Platform fee</span>
-            <span className="text-[10px] font-mono text-muted-foreground">$0.00</span>
+          {/* Fee row — always takes space, just fades in */}
+          <div className="flex items-center justify-between">
+            <span
+              className="text-[10px] text-muted-foreground transition-opacity duration-500"
+              style={{ opacity: hovered ? 1 : 0 }}
+            >
+              Platform fee
+            </span>
+            <span
+              className="text-[10px] font-mono text-muted-foreground transition-opacity duration-500"
+              style={{ opacity: hovered ? 1 : 0 }}
+            >
+              $0.00
+            </span>
           </div>
         </div>
 
