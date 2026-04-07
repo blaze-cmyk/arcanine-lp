@@ -111,25 +111,14 @@ const FairnessLogic = () => {
                       backdropFilter: "blur(12px)",
                     }}
                   >
-                    {method.logo && (
-                      <img
-                        src={method.logo}
-                        alt={method.label}
-                        className="h-7 w-auto object-contain"
-                        style={{
-                          filter: method.invert ? "invert(1) brightness(0.8)" : "none",
-                        }}
-                      />
-                    )}
-                    {method.text ? (
-                      <span className="text-base font-bold text-foreground/90 tracking-tight">
-                        {method.text}
-                      </span>
-                    ) : (
-                      <span className="text-sm font-medium text-foreground/70">
-                        {method.label}
-                      </span>
-                    )}
+                    <img
+                      src={method.logo}
+                      alt={method.label}
+                      className="h-7 w-auto object-contain"
+                    />
+                    <span className="text-sm font-medium text-foreground/70">
+                      {method.label}
+                    </span>
                   </div>
                 </div>
               );
