@@ -39,7 +39,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ width: 80, height: containerH }}
+      style={{ width: 110, height: containerH }}
     >
       {/* Top fade */}
       <div
@@ -92,7 +92,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
               style={{ height: digitHeight }}
             >
               <span
-                className={`text-[90px] sm:text-[110px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
+                className={`text-[110px] sm:text-[130px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
               >
                 {d}
               </span>
@@ -149,7 +149,7 @@ const DemoCTA = () => {
         {/* Slot machine container */}
         <div
           ref={ref}
-          className="relative flex items-center rounded-2xl px-4 sm:px-8 mb-12 overflow-hidden"
+          className="relative flex items-center rounded-3xl px-6 sm:px-10 mb-12 overflow-hidden"
           style={{
             background: "#0B0B0E",
             boxShadow:
@@ -169,7 +169,7 @@ const DemoCTA = () => {
 
           {/* Dollar sign */}
           <div className="flex items-center relative z-10 mr-2" style={{ height: 260 }}>
-            <span className="text-[90px] sm:text-[110px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
+            <span className="text-[110px] sm:text-[130px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
               $
             </span>
           </div>
@@ -184,7 +184,7 @@ const DemoCTA = () => {
                   </div>
                 ))
               : targets.map((_, i) => (
-                  <div key={i} style={{ width: 80, height: 260 }} />
+                  <div key={i} style={{ width: 110, height: 260 }} />
                 ))}
           </div>
         </div>
