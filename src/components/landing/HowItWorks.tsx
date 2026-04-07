@@ -214,14 +214,40 @@ const HowItWorks = () => {
               }}
             >
               <div
-                className="rounded-2xl overflow-hidden h-full"
+                className="relative rounded-2xl overflow-hidden h-full"
                 style={{
                   background: "hsl(var(--card))",
                   border: "1px solid hsl(var(--border) / 0.5)",
                 }}
               >
+                {/* Gradient blob layer */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: [
+                      "radial-gradient(ellipse 70% 55% at 70% 8%, hsl(24 100% 50% / 0.15) 0%, transparent 65%)",
+                      "radial-gradient(ellipse 60% 50% at 30% 12%, hsl(160 50% 45% / 0.10) 0%, transparent 60%), radial-gradient(ellipse 45% 40% at 75% 25%, hsl(24 100% 50% / 0.08) 0%, transparent 55%)",
+                      "radial-gradient(ellipse 65% 55% at 50% 8%, hsl(160 50% 45% / 0.12) 0%, transparent 60%)",
+                    ][i],
+                  }}
+                />
+
+                {/* Vignette for depth */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse 85% 75% at 50% 40%, transparent 35%, hsl(var(--card) / 0.7) 100%)",
+                  }}
+                />
+
+                {/* Noise texture */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
+                  style={{ filter: "url(#hiw-noise)", width: "100%", height: "100%" }}
+                />
+
                 {/* Number + Title */}
-                <div className="flex items-center gap-3 px-6 pt-6 pb-4">
+                <div className="relative z-[1] flex items-center gap-3 px-6 pt-6 pb-4">
                   <span
                     className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 font-display"
                     style={{
@@ -235,10 +261,10 @@ const HowItWorks = () => {
                 </div>
 
                 {/* Visual area */}
-                <div className="px-4">{visual}</div>
+                <div className="relative z-[1] px-4">{visual}</div>
 
                 {/* Description */}
-                <div className="px-6 pb-6 pt-4">
+                <div className="relative z-[1] px-6 pb-6 pt-4">
                   <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
                 </div>
               </div>
