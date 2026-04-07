@@ -1,28 +1,25 @@
-import featureSpeed from "@/assets/feature-speed.jpg";
-import featurePayouts from "@/assets/feature-payouts.jpg";
-import featureDecisions from "@/assets/feature-decisions.jpg";
-import featureGlobal from "@/assets/feature-global.jpg";
+import { Zap, Eye, BarChart3, Shield } from "lucide-react";
 
 const features = [
   {
+    icon: Zap,
     title: "Trade in seconds",
     description: "Results resolve quickly, without waiting or complexity.",
-    image: featureSpeed,
   },
   {
+    icon: Eye,
     title: "Crystal-clear payouts",
     description: "Know exactly what you stand to earn before you commit. No hidden fees, no surprises.",
-    image: featurePayouts,
   },
   {
+    icon: Shield,
     title: "Clear decisions",
     description: "A straightforward up-or-down system, without unnecessary tools.",
-    image: featureDecisions,
   },
   {
+    icon: BarChart3,
     title: "Global markets",
     description: "Trade across assets, anytime, from anywhere.",
-    image: featureGlobal,
   },
 ];
 
@@ -40,7 +37,7 @@ const Features = () => (
 
       {/* Asymmetric Grid — small/large, large/small */}
       <div className="grid md:grid-cols-5 gap-5">
-        {features.map(({ title, description, image }, index) => {
+        {features.map(({ icon: Icon, title, description }, index) => {
           const isSmall = index === 0 || index === 3;
           return (
             <div
@@ -52,17 +49,8 @@ const Features = () => (
                 background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(11,11,14,0.95) 100%)',
               }}
             >
-              {/* Feature image */}
-              <div className="flex-1 overflow-hidden">
-                <img
-                  src={image}
-                  alt={title}
-                  loading="lazy"
-                  width={800}
-                  height={512}
-                  className="w-full h-full object-cover opacity-70"
-                />
-              </div>
+              {/* Empty space for future image/video */}
+              <div className="flex-1" />
 
               {/* Text pinned to bottom */}
               <div className="p-6 max-w-md">
