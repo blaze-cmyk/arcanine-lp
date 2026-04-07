@@ -140,7 +140,7 @@ const DemoCTA = () => {
   return (
     <section className="py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-16 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
+        <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-[-0.02em] leading-[1] mb-16 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           Trade live charts with
           <br />
           virtual funds
