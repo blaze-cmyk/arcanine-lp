@@ -5,10 +5,10 @@ import GlobalMarketsVisual from "./features/GlobalMarketsVisual";
 
 // Mesh gradient configs per card for variety
 const meshGradients = [
-  "radial-gradient(ellipse 60% 50% at 70% 20%, hsl(24 100% 50% / 0.07) 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 60% at 30% 30%, hsl(160 45% 50% / 0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 60%, hsl(24 100% 50% / 0.04) 0%, transparent 70%)",
-  "radial-gradient(ellipse 60% 50% at 50% 25%, hsl(220 60% 50% / 0.06) 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 50% at 60% 30%, hsl(24 100% 50% / 0.05) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 50%, hsl(160 45% 50% / 0.04) 0%, transparent 70%)",
+  "radial-gradient(ellipse 60% 50% at 70% 20%, hsl(24 100% 50% / 0.12) 0%, transparent 70%)",
+  "radial-gradient(ellipse 50% 60% at 30% 30%, hsl(160 45% 50% / 0.1) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 60%, hsl(24 100% 50% / 0.06) 0%, transparent 70%)",
+  "radial-gradient(ellipse 60% 50% at 50% 25%, hsl(220 60% 50% / 0.1) 0%, transparent 70%)",
+  "radial-gradient(ellipse 50% 50% at 60% 30%, hsl(24 100% 50% / 0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 50%, hsl(160 45% 50% / 0.07) 0%, transparent 70%)",
 ];
 
 const features = [
