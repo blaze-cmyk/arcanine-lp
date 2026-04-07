@@ -36,27 +36,32 @@ const Features = () => (
         </p>
       </div>
 
-      {/* 2x2 Grid */}
-      <div className="grid md:grid-cols-2 gap-5">
-        {features.map(({ icon: Icon, title, description }) => (
-          <div
-            key={title}
-            className="glass rounded-2xl border border-border/40 overflow-hidden group hover:border-primary/20 transition-all duration-300"
-          >
-            {/* Preview / Illustration area */}
-            <div className="w-full aspect-[16/9] bg-muted/30 flex items-center justify-center border-b border-border/30">
-              <Icon className="w-10 h-10 text-muted-foreground/40" />
-            </div>
+      {/* Asymmetric Grid — small/large, large/small */}
+      <div className="grid md:grid-cols-5 gap-5">
+        {features.map(({ icon: Icon, title, description }, index) => {
+          const isSmall = index === 0 || index === 3;
+          return (
+            <div
+              key={title}
+              className={`glass rounded-2xl border border-border/40 overflow-hidden group hover:border-primary/20 transition-all duration-300 ${
+                isSmall ? "md:col-span-2" : "md:col-span-3"
+              }`}
+            >
+              {/* Preview / Illustration area */}
+              <div className="w-full aspect-[16/9] bg-muted/30 flex items-center justify-center border-b border-border/30">
+                <Icon className="w-10 h-10 text-muted-foreground/40" />
+              </div>
 
-            {/* Text content */}
-            <div className="p-6">
-              <p className="text-base leading-relaxed text-muted-foreground">
-                <span className="font-medium text-foreground">{title}.</span>{" "}
-                {description}
-              </p>
+              {/* Text content */}
+              <div className="p-6">
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  <span className="font-medium text-foreground">{title}.</span>{" "}
+                  {description}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
