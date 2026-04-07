@@ -206,7 +206,7 @@ const Stats = () => {
   }, []);
 
   return (
-    <section className="py-24 px-4 sm:px-6" ref={ref} id="testimonials">
+    <section className="py-32 sm:py-40 px-4 sm:px-6" ref={ref} id="testimonials">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div
