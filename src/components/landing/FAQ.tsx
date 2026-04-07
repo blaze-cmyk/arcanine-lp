@@ -74,7 +74,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 };
 
 const FAQ = () => (
-  <section className="py-24 px-4 sm:px-6">
+  <section className="py-24 sm:py-32 px-4 sm:px-6">
     <div className="max-w-4xl mx-auto">
       {/* Header — centered */}
       <div className="text-center mb-14">
