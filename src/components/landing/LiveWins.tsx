@@ -80,7 +80,7 @@ const LiveWins = () => {
   }, []);
 
   return (
-    <section className="relative mt-8 pb-8 overflow-hidden">
+    <section className="relative mt-12 pb-6 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto mt-5 pb-1">
