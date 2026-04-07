@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Pause } from "lucide-react";
 import { faker } from "@faker-js/faker";
 
 interface Win {
@@ -57,13 +57,19 @@ const initialWins = Array.from({ length: 8 }, () => generateWin());
 
 const LiveWins = () => {
   const [wins, setWins] = useState<Win[]>(initialWins);
+  const [paused, setPaused] = useState(false);
   const firstCardRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (pausedRef.current) return;
       setWins((prev) => {
         const updated = prev.map((w) => ({ ...w, isNew: false }));
-        // Release the name of the card being removed
         if (updated.length > 7) {
           usedNames.delete(updated[7].user);
         }
@@ -74,18 +80,26 @@ const LiveWins = () => {
   }, []);
 
   return (
-    <section className="relative mt-12 pb-6 overflow-hidden">
+    <section
+      className="relative mt-12 pb-6 overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto mt-5 pb-1">
-        {/* Live Wins pill badge — floating above cards */}
+        {/* Live Wins pill badge */}
         <div className="absolute -top-3 left-0 z-20">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-secondary-btn border border-border/50 shadow-lg shadow-black/20">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
-            </span>
-            <span className="text-xs font-semibold text-foreground">Live Wins</span>
+            {paused ? (
+              <Pause size={10} className="text-muted-foreground" />
+            ) : (
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
+              </span>
+            )}
+            <span className="text-xs font-semibold text-foreground">{paused ? "Paused" : "Live Wins"}</span>
           </div>
         </div>
 
