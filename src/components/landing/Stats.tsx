@@ -70,7 +70,7 @@ const AnimatedNumber = ({
   const formatted = value >= 1000 ? display.toLocaleString("en-US") : String(display);
 
   return (
-    <span className="text-5xl sm:text-6xl md:text-7xl font-bold font-display leading-none tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] font-mono-num select-none">
+    <span className="text-5xl sm:text-6xl md:text-7xl font-bold font-display leading-none tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] select-none tabular-nums">
       {prefix}{formatted}{suffix}
     </span>
   );
