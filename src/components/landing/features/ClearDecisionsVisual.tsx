@@ -2,13 +2,6 @@ import { useState } from "react";
 
 const ClearDecisionsVisual = () => {
   const [picked, setPicked] = useState<"up" | "down" | null>(null);
-
-  // Mini price line
-  const points = [40, 38, 42, 44, 41, 46, 48, 45, 50, 52, 49, 54, 56, 53, 58, 60, 57, 62, 64, 61];
-  const pathD = points
-    .map((y, i) => `${i === 0 ? "M" : "L"} ${i * 12} ${80 - y}`)
-    .join(" ");
-
   return (
     <div
       className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer select-none overflow-hidden"
