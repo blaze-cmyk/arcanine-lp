@@ -5,35 +5,23 @@ import phonepeLogo from "@/assets/payments/phonepe.png";
 import netbankingLogo from "@/assets/payments/netbanking.png";
 import bitcoinLogo from "@/assets/payments/bitcoin.png";
 
-const METHODS: { label: string; logo?: string; text?: string; textStyle?: string }[] = [
-  {
-    label: "Net Banking",
-    logo: netbankingLogo,
-  },
-  {
-    label: "GPay · UPI",
-    text: "GPay",
-    textStyle: "text-xl font-bold tracking-tight",
-    logo: upiLogo,
-  },
-  {
-    label: "UPI",
-    logo: upiLogo,
-  },
-  {
-    label: "PhonePe · UPI",
-    logo: phonepeLogo,
-    text: "UPI",
-  },
-  {
-    label: "Crypto Methods",
-    logo: bitcoinLogo,
-  },
-  {
-    label: "AstroPay",
-    text: "AstroPay",
-    textStyle: "text-xl font-bold tracking-tight",
-  },
+const METHODS = [
+  { label: "Net Banking", logo: netbankingLogo, invert: true },
+  { label: "GPay", text: "GPay", logo: upiLogo },
+  { label: "UPI", logo: upiLogo },
+  { label: "PhonePe", logo: phonepeLogo },
+  { label: "Crypto", logo: bitcoinLogo },
+  { label: "AstroPay", text: "AstroPay" },
+];
+
+/* Staggered positions for floating pills — intentionally asymmetric */
+const POSITIONS = [
+  { top: "4%", left: "8%", delay: 0, float: 0 },
+  { top: "2%", left: "52%", delay: 150, float: 1 },
+  { top: "36%", left: "0%", delay: 300, float: 2 },
+  { top: "34%", left: "58%", delay: 100, float: 0 },
+  { top: "68%", left: "12%", delay: 250, float: 1 },
+  { top: "66%", left: "48%", delay: 200, float: 2 },
 ];
 
 const FairnessLogic = () => {
@@ -50,105 +38,131 @@ const FairnessLogic = () => {
           obs.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
   return (
-    <section ref={ref} className="relative py-24 px-4 sm:px-6 overflow-hidden">
-
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* Heading */}
-        <div
-          className="text-center mb-14 transition-all duration-700"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(30px)",
-          }}
-        >
-          <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1.1] mb-4 bg-clip-text text-transparent"
+    <section ref={ref} className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+          {/* Left — text block, left-aligned */}
+          <div
+            className="transition-all duration-700"
             style={{
-              backgroundImage:
-                "linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(30px)",
             }}
           >
-            Transparent Deposit,{" "}
-            <br className="hidden sm:block" />
-            Fast Withdrawal
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">
-            Transfer safely via familiar payment methods
-          </p>
-        </div>
-
-        {/* Payment grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {METHODS.map((method, i) => (
-            <div
-              key={method.label}
-              className="group relative rounded-2xl h-[88px] flex items-center justify-center gap-3 transition-all duration-700 cursor-default"
+            <span
+              className="inline-block text-xs font-medium tracking-wider uppercase text-primary mb-5 px-3 py-1 rounded-full"
               style={{
-                background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(20px)",
-                transitionDelay: `${200 + i * 80}ms`,
+                background: "rgba(255,106,0,0.08)",
+                border: "1px solid rgba(255,106,0,0.15)",
               }}
             >
-              {/* Hover glow */}
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at 50% 100%, rgba(255,106,0,0.06) 0%, transparent 70%)",
-                }}
-              />
+              Deposits & Withdrawals
+            </span>
 
-              {method.logo && (
-                <img
-                  src={method.logo}
-                  alt={method.label}
-                  className="h-8 w-auto object-contain"
-                  style={{ filter: method.logo === netbankingLogo ? "invert(1) brightness(0.8)" : "none" }}
-                />
-              )}
-              {method.text && (
-                <span className={`text-foreground/90 ${method.textStyle || "text-base font-semibold"}`}>
-                  {method.text}
-                </span>
-              )}
-              {!method.text && !method.logo && (
-                <span className="text-base font-semibold text-foreground/90">{method.label}</span>
-              )}
-            </div>
-          ))}
-        </div>
+            <h2
+              className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold tracking-[-0.02em] leading-[1.08] mb-5 bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)",
+              }}
+            >
+              Transparent Deposit,
+              <br />
+              Fast Withdrawal
+            </h2>
 
-        {/* CTA */}
-        <div
-          className="flex justify-center mt-12 transition-all duration-700"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transitionDelay: "800ms",
-          }}
-        >
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold bg-gradient-accent text-primary-foreground transition-all duration-200 hover:shadow-lg"
-            style={{
-              boxShadow: "0 0 30px rgba(255,106,0,0.2)",
-            }}
-          >
-            Start Trading
-            <ArrowRight size={16} />
-          </a>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-md">
+              Transfer safely via familiar payment methods.
+              Deposits are instant, withdrawals land in minutes — not days.
+            </p>
+
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gradient-accent text-primary-foreground transition-all duration-200 hover:shadow-lg"
+              style={{ boxShadow: "0 0 30px rgba(255,106,0,0.2)" }}
+            >
+              Start Trading
+              <ArrowRight size={16} />
+            </a>
+          </div>
+
+          {/* Right — floating payment pills */}
+          <div className="relative h-[340px] sm:h-[380px]">
+            {METHODS.map((method, i) => {
+              const pos = POSITIONS[i];
+              return (
+                <div
+                  key={method.label}
+                  className="absolute transition-all duration-700"
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.9)",
+                    transitionDelay: `${300 + pos.delay}ms`,
+                    animation: visible
+                      ? `floatPill${pos.float} 6s ease-in-out ${pos.delay + 800}ms infinite`
+                      : "none",
+                  }}
+                >
+                  <div
+                    className="flex items-center gap-3 px-5 py-3.5 rounded-2xl cursor-default select-none whitespace-nowrap"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(12px)",
+                    }}
+                  >
+                    {method.logo && (
+                      <img
+                        src={method.logo}
+                        alt={method.label}
+                        className="h-7 w-auto object-contain"
+                        style={{
+                          filter: method.invert ? "invert(1) brightness(0.8)" : "none",
+                        }}
+                      />
+                    )}
+                    {method.text ? (
+                      <span className="text-base font-bold text-foreground/90 tracking-tight">
+                        {method.text}
+                      </span>
+                    ) : (
+                      <span className="text-sm font-medium text-foreground/70">
+                        {method.label}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
+
+      {/* Float keyframes */}
+      <style>{`
+        @keyframes floatPill0 {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes floatPill1 {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-14px); }
+        }
+        @keyframes floatPill2 {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+      `}</style>
     </section>
   );
 };
