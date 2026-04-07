@@ -75,13 +75,15 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
         {strip.map((d, i) => {
           // After animation, highlight target and dim adjacent
           const distFromTarget = phase === "done" ? Math.abs(i - targetIndex) : -1;
-          let colorClass = "text-[#3a3530]/50";
+          let colorClass =
+            "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-30";
           if (phase === "done") {
             if (distFromTarget === 0) {
               colorClass =
-                "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]";
+                "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-100";
             } else if (distFromTarget === 1) {
-              colorClass = "text-[#5a4a30]/40";
+              colorClass =
+                "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-40";
             }
           }
 
