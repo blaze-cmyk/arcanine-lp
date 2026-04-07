@@ -46,7 +46,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
         className="absolute inset-x-0 top-0 z-20 pointer-events-none"
         style={{
           height: 90,
-          background: "linear-gradient(to bottom, #111115 20%, transparent 100%)",
+          background: "linear-gradient(to bottom, #0B0B0E 20%, transparent 100%)",
         }}
       />
       {/* Bottom fade */}
@@ -54,7 +54,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
         className="absolute inset-x-0 bottom-0 z-20 pointer-events-none"
         style={{
           height: 90,
-          background: "linear-gradient(to top, #111115 20%, transparent 100%)",
+          background: "linear-gradient(to top, #0B0B0E 20%, transparent 100%)",
         }}
       />
 
@@ -151,11 +151,8 @@ const DemoCTA = () => {
           ref={ref}
           className="relative flex items-center rounded-2xl px-4 sm:px-8 mb-12 overflow-hidden"
           style={{
-            background:
-              "linear-gradient(180deg, #18181C 0%, #111115 40%, #0D0D10 100%)",
-            boxShadow:
-              "inset 0 2px 30px rgba(0,0,0,0.7), inset 0 -2px 15px rgba(0,0,0,0.5), 0 0 80px rgba(200,140,40,0.05), 0 4px 40px rgba(0,0,0,0.4)",
-            border: "1px solid rgba(255,255,255,0.04)",
+            background: "#0B0B0E",
+            border: "none",
           }}
         >
           {/* Warm ambient glow */}
