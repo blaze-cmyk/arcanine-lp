@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
 import upiLogo from "@/assets/payments/upi.png";
 import phonepeLogo from "@/assets/payments/phonepe.png";
 import netbankingLogo from "@/assets/payments/netbanking.png";
@@ -16,12 +15,12 @@ const METHODS = [
 
 /* Staggered positions for floating pills — intentionally asymmetric */
 const POSITIONS = [
-  { top: "4%", left: "8%", delay: 0, float: 0 },
-  { top: "2%", left: "52%", delay: 150, float: 1 },
-  { top: "36%", left: "0%", delay: 300, float: 2 },
-  { top: "34%", left: "58%", delay: 100, float: 0 },
-  { top: "68%", left: "12%", delay: 250, float: 1 },
-  { top: "66%", left: "48%", delay: 200, float: 2 },
+  { top: "12%", left: "8%", delay: 0, float: 0 },
+  { top: "10%", left: "52%", delay: 150, float: 1 },
+  { top: "42%", left: "0%", delay: 300, float: 2 },
+  { top: "40%", left: "58%", delay: 100, float: 0 },
+  { top: "72%", left: "12%", delay: 250, float: 1 },
+  { top: "70%", left: "48%", delay: 200, float: 2 },
 ];
 
 const FairnessLogic = () => {
@@ -56,16 +55,6 @@ const FairnessLogic = () => {
               transform: visible ? "translateY(0)" : "translateY(30px)",
             }}
           >
-            <span
-              className="inline-block text-xs font-medium tracking-wider uppercase text-primary mb-5 px-3 py-1 rounded-full"
-              style={{
-                background: "rgba(255,106,0,0.08)",
-                border: "1px solid rgba(255,106,0,0.15)",
-              }}
-            >
-              Deposits & Withdrawals
-            </span>
-
             <h2
               className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold tracking-[-0.02em] leading-[1.08] mb-5 bg-clip-text text-transparent"
               style={{
@@ -85,11 +74,10 @@ const FairnessLogic = () => {
 
             <a
               href="#"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-gradient-accent text-primary-foreground transition-all duration-200 hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-accent text-primary-foreground transition-all duration-200 hover:shadow-lg"
               style={{ boxShadow: "0 0 30px rgba(255,106,0,0.2)" }}
             >
               Start Trading
-              <ArrowRight size={16} />
             </a>
           </div>
 
