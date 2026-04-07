@@ -21,7 +21,7 @@ const Hero = () => {
           <button className="inline-flex items-center px-6 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
             Create an account
           </button>
-          <button className="inline-flex items-center px-7 py-3.5 bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
+          <button className="inline-flex items-center px-7 py-[0.8125rem] bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
             Try free demo
           </button>
         </div>
