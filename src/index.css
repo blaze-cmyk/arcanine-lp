@@ -189,3 +189,8 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
+
+@keyframes checkDraw {
+  from { stroke-dashoffset: 22; }
+  to { stroke-dashoffset: 0; }
+}
