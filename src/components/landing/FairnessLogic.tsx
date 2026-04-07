@@ -5,12 +5,12 @@ import netbankingLogo from "@/assets/payments/netbanking.png";
 import bitcoinLogo from "@/assets/payments/bitcoin.png";
 
 const METHODS = [
-  { label: "Net Banking", logo: netbankingLogo, invert: true },
-  { label: "GPay", text: "GPay", logo: upiLogo },
   { label: "UPI", logo: upiLogo },
-  { label: "PhonePe", logo: phonepeLogo },
+  { label: "Visa / Mastercard", text: "VISA" },
   { label: "Crypto", logo: bitcoinLogo },
+  { label: "Skrill", text: "Skrill" },
   { label: "AstroPay", text: "AstroPay" },
+  { label: "Bank Transfer", logo: netbankingLogo, invert: true },
 ];
 
 /* Staggered positions for floating pills — intentionally asymmetric */
