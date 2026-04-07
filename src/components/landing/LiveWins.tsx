@@ -104,6 +104,8 @@ const LiveWins = () => {
 
         <div
           className="flex gap-3 overflow-x-hidden"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
         >
           {wins.map((win, index) => (
             <div
