@@ -221,7 +221,7 @@ const HowItWorks = () => {
                 {/* Number + Title */}
                 <div className="flex items-center gap-3 px-6 pt-6 pb-4">
                   <span
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 font-mono"
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 font-display"
                     style={{
                       background: "hsl(var(--primary))",
                       color: "hsl(var(--primary-foreground))",
