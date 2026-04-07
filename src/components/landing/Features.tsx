@@ -3,8 +3,8 @@ import { Zap, Eye, BarChart3, Shield } from "lucide-react";
 const features = [
   {
     icon: Zap,
-    title: "Instant execution",
-    description: "Place trades in milliseconds with zero lag. Every click counts when markets move fast.",
+    title: "Trade in seconds",
+    description: "Results resolve quickly, without waiting or complexity.",
   },
   {
     icon: Eye,
@@ -12,14 +12,14 @@ const features = [
     description: "Know exactly what you stand to earn before you commit. No hidden fees, no surprises.",
   },
   {
-    icon: BarChart3,
-    title: "Live market data",
-    description: "Real-time price feeds across forex, crypto, and commodities — always accurate, always current.",
+    icon: Shield,
+    title: "Clear decisions",
+    description: "A straightforward up-or-down system, without unnecessary tools.",
   },
   {
-    icon: Shield,
-    title: "Effortless decisions",
-    description: "A distraction-free interface that helps you focus on what matters: your next move.",
+    icon: BarChart3,
+    title: "Global markets",
+    description: "Trade across assets, anytime, from anywhere.",
   },
 ];
 
