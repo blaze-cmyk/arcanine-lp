@@ -8,7 +8,7 @@ const items = [
 ];
 
 const TrustStrip = () => (
-  <section className="py-12 border-y border-border/30">
+  <section className="py-12">
     <div className="max-w-5xl mx-auto px-4">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {items.map(({ icon: Icon, text }) => (

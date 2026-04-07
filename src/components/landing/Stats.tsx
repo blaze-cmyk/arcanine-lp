@@ -252,8 +252,6 @@ const Stats = () => {
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="w-full h-px mb-16" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)" }} />
 
         {/* Reviews grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
