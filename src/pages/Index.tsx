@@ -17,6 +17,7 @@ const Index = () => (
     </div>
     <LiveWins />
     <Features />
+    <FairnessLogic />
     <Stats />
     <FAQ />
     <DemoCTA />
