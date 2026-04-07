@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { TrendingUp } from "lucide-react";
+import { faker } from "@faker-js/faker";
 
 interface Win {
   id: number;
@@ -13,11 +14,6 @@ interface Win {
 
 const AVATARS = ["🐺", "🦊", "🐯", "🦅", "🐉", "🦁", "🐻", "🦈", "🐍", "🦇", "🐗", "🦉"];
 const ASSETS = ["BTC/USD", "ETH/USD", "GOLD", "EUR/USD", "GBP/JPY", "AAPL", "TSLA", "SOL/USD"];
-const NAMES = [
-  "alex_t", "markW", "proTrader", "luna99", "quickWin", "rizz_k", "novaX", "hidden",
-  "aceHigh", "deltaFx", "ironJaw", "pixelDev", "zenith", "blaze7", "cryptoK", "shadow9",
-  "vyper", "neonFx", "storm_z", "rogue1",
-];
 const COLORS = [
   "from-emerald-500/20 to-emerald-500/5",
   "from-cyan-500/20 to-cyan-500/5",
@@ -35,22 +31,20 @@ const randomAmount = () => {
 let idCounter = 0;
 const usedNames = new Set<string>();
 
+const generateUniqueName = (): string => {
+  let name: string;
+  do {
+    name = faker.internet.username().slice(0, 10).toLowerCase();
+  } while (usedNames.has(name));
+  usedNames.add(name);
+  return name;
+};
+
 const generateWin = (isNew = false): Win => {
   idCounter++;
-  // Pick a unique name not currently displayed
-  let name: string;
-  const available = NAMES.filter((n) => !usedNames.has(n));
-  if (available.length > 0) {
-    name = available[Math.floor(Math.random() * available.length)];
-  } else {
-    // Fallback: clear and pick fresh
-    usedNames.clear();
-    name = NAMES[Math.floor(Math.random() * NAMES.length)];
-  }
-  usedNames.add(name);
   return {
     id: idCounter,
-    user: name,
+    user: generateUniqueName(),
     avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)],
     amount: randomAmount(),
     asset: ASSETS[Math.floor(Math.random() * ASSETS.length)],
