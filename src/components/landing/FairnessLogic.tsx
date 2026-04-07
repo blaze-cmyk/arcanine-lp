@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import upiLogo from "@/assets/payments/upi.png";
-import bitcoinLogo from "@/assets/payments/bitcoin.png";
-import visaLogo from "@/assets/payments/visa.png";
-import skrillLogo from "@/assets/payments/skrill.png";
-import mastercardLogo from "@/assets/payments/mastercard.png";
 import phonepeLogo from "@/assets/payments/phonepe.png";
+import netbankingLogo from "@/assets/payments/netbanking.png";
+import bitcoinLogo from "@/assets/payments/bitcoin.png";
 
 const METHODS = [
+  { label: "Net Banking", logo: netbankingLogo, invert: true },
+  { label: "GPay", text: "GPay", logo: upiLogo },
   { label: "UPI", logo: upiLogo },
-  { label: "Visa", logo: visaLogo },
-  { label: "Crypto", logo: bitcoinLogo },
-  { label: "Skrill", logo: skrillLogo },
-  { label: "Mastercard", logo: mastercardLogo },
   { label: "PhonePe", logo: phonepeLogo },
+  { label: "Crypto", logo: bitcoinLogo },
+  { label: "AstroPay", text: "AstroPay" },
 ];
 
 /* Staggered positions for floating pills — intentionally asymmetric */
@@ -111,14 +109,25 @@ const FairnessLogic = () => {
                       backdropFilter: "blur(12px)",
                     }}
                   >
-                    <img
-                      src={method.logo}
-                      alt={method.label}
-                      className="h-7 w-auto object-contain"
-                    />
-                    <span className="text-sm font-medium text-foreground/70">
-                      {method.label}
-                    </span>
+                    {method.logo && (
+                      <img
+                        src={method.logo}
+                        alt={method.label}
+                        className="h-7 w-auto object-contain"
+                        style={{
+                          filter: method.invert ? "invert(1) brightness(0.8)" : "none",
+                        }}
+                      />
+                    )}
+                    {method.text ? (
+                      <span className="text-base font-bold text-foreground/90 tracking-tight">
+                        {method.text}
+                      </span>
+                    ) : (
+                      <span className="text-sm font-medium text-foreground/70">
+                        {method.label}
+                      </span>
+                    )}
                   </div>
                 </div>
               );
