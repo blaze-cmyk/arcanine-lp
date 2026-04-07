@@ -162,6 +162,18 @@
   }
 }
 
+@keyframes live-win-enter {
+  0% { opacity: 0; transform: translateX(-20px) scale(0.95); }
+  40% { opacity: 1; transform: translateX(0) scale(1); }
+  50% { box-shadow: 0 0 16px hsl(160 45% 50% / 0.4), inset 0 0 12px hsl(160 45% 50% / 0.1); border-color: hsl(160 45% 50% / 0.5); }
+  70% { box-shadow: 0 0 8px hsl(160 45% 50% / 0.2), inset 0 0 6px hsl(160 45% 50% / 0.05); border-color: hsl(160 45% 50% / 0.3); }
+  100% { box-shadow: none; border-color: transparent; }
+}
+
+.animate-live-win-enter {
+  animation: live-win-enter 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @keyframes slide-up {
   0% { opacity: 0; transform: translateY(40px); }
   100% { opacity: 1; transform: translateY(0); }

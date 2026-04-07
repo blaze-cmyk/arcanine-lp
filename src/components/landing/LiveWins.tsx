@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { TrendingUp } from "lucide-react";
 
 interface Win {
@@ -8,6 +8,7 @@ interface Win {
   amount: string;
   asset: string;
   color: string;
+  isNew: boolean;
 }
 
 const AVATARS = ["🐺", "🦊", "🐯", "🦅", "🐉", "🦁", "🐻", "🦈", "🐍", "🦇", "🐗", "🦉"];
@@ -31,7 +32,7 @@ const randomAmount = () => {
 };
 
 let idCounter = 0;
-const generateWin = (): Win => {
+const generateWin = (isNew = false): Win => {
   idCounter++;
   return {
     id: idCounter,
@@ -40,6 +41,7 @@ const generateWin = (): Win => {
     amount: randomAmount(),
     asset: ASSETS[Math.floor(Math.random() * ASSETS.length)],
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    isNew,
   };
 };
 
@@ -47,25 +49,43 @@ const initialWins = Array.from({ length: 8 }, () => generateWin());
 
 const LiveWins = () => {
   const [wins, setWins] = useState<Win[]>(initialWins);
+  const firstCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWins(prev => [generateWin(), ...prev.slice(0, 7)]);
+      setWins(prev => {
+        const updated = prev.map(w => ({ ...w, isNew: false }));
+        return [generateWin(true), ...updated.slice(0, 7)];
+      });
     }, 2500);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative py-6 overflow-hidden border-y border-border/20">
+    <section className="relative mt-8 py-6 overflow-hidden border-y border-border/20">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex gap-3 overflow-x-auto scrollbar-hide">
-          {wins.map((win) => (
+          {wins.map((win, index) => (
             <div
               key={win.id}
-              className={`flex-shrink-0 w-[140px] rounded-xl bg-gradient-to-b ${win.color} border border-border/30 p-3 backdrop-blur-sm transition-all duration-300`}
+              ref={index === 0 ? firstCardRef : undefined}
+              className={`relative flex-shrink-0 w-[140px] rounded-xl bg-gradient-to-b ${win.color} border border-border/30 p-3 backdrop-blur-sm transition-all duration-300 ${
+                win.isNew ? 'animate-live-win-enter' : ''
+              }`}
             >
+              {/* Live Wins badge on first element */}
+              {index === 0 && (
+                <div className="absolute -top-2.5 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-background/90 border border-border/40 backdrop-blur-sm z-10">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-profit" />
+                  </span>
+                  <span className="text-[9px] font-semibold text-profit uppercase tracking-wider">Live Wins</span>
+                </div>
+              )}
+
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-7 h-7 rounded-lg bg-muted/60 flex items-center justify-center text-sm">
                   {win.avatar}
