@@ -68,6 +68,14 @@
 }
 
 @layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .glow-orange {
     box-shadow: 0 0 30px rgba(255, 106, 0, 0.25), 0 0 80px rgba(255, 106, 0, 0.08);
   }
