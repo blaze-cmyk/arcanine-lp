@@ -6,6 +6,8 @@ const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden">
     <div className="max-w-8xl mx-auto px-4 sm:px-6">
       <Navbar />
+    </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6">
       <Hero />
     </div>
     <LiveWins />
