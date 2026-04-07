@@ -28,11 +28,10 @@ const Features = () => (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-          Designed for speed and clarity
-        </h2>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4">Designed for speed and clarity</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
-          Arcanine provides a trading experience with fast execution, transparent payouts, and effortless decision-making.
+          Arcanine provides a trading experience with fast execution, transparent payouts, and effortless
+          decision-making.
         </p>
       </div>
 
@@ -55,8 +54,7 @@ const Features = () => (
               {/* Text content */}
               <div className="p-6">
                 <p className="text-base leading-relaxed text-muted-foreground">
-                  <span className="font-medium text-foreground">{title}.</span>{" "}
-                  {description}
+                  <span className="font-medium text-foreground">{title}.</span> {description}
                 </p>
               </div>
             </div>
