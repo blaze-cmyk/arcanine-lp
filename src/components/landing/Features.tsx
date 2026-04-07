@@ -78,7 +78,7 @@ const Features = () => (
                 background: "hsl(var(--card))",
               }}
             >
-              {/* Mesh gradient layer */}
+              {/* Mesh gradient layer — gives visual area a subtle glow */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: meshGradients[index] }}
@@ -93,16 +93,14 @@ const Features = () => (
               {/* Interactive visual */}
               <div className="flex-1 relative z-[1]">{visual}</div>
 
-              {/* Shadow fade above text — creates depth like Huly */}
+              {/* Text area with shadow depth — darker band with inset shadow on top */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-[140px] pointer-events-none z-[2]"
+                className="relative z-[3] p-6 max-w-md"
                 style={{
-                  background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.85) 100%)",
+                  background: "linear-gradient(to bottom, rgba(8,8,10,0.85) 0%, rgba(8,8,10,0.95) 100%)",
+                  boxShadow: "0 -20px 40px 0 rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.04)",
                 }}
-              />
-
-              {/* Text pinned to bottom */}
-              <div className="p-6 max-w-md relative z-[3]">
+              >
                 <p className="text-base leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground">{title}.</span> {description}
                 </p>
