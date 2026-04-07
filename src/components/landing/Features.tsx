@@ -42,17 +42,14 @@ const Features = () => (
           return (
             <div
               key={title}
-              className={`glass rounded-2xl border border-border/40 overflow-hidden group hover:border-primary/20 transition-all duration-300 ${
+              className={`relative rounded-2xl border border-border/40 overflow-hidden flex flex-col justify-end h-[260px] ${
                 isSmall ? "md:col-span-2" : "md:col-span-3"
               }`}
+              style={{
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(11,11,14,0.95) 100%)',
+              }}
             >
-              {/* Preview / Illustration area */}
-              <div className="w-full aspect-[16/9] bg-muted/30 flex items-center justify-center border-b border-border/30">
-                <Icon className="w-10 h-10 text-muted-foreground/40" />
-              </div>
-
-              {/* Text content */}
-              <div className="p-6">
+              <div className="p-6 max-w-xs">
                 <p className="text-base leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground">{title}.</span> {description}
                 </p>
