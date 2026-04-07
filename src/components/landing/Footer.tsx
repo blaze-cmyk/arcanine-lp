@@ -17,7 +17,7 @@ const information = [
 ];
 
 const Footer = () => (
-  <footer className="bg-background">
+  <footer className="bg-background border-t border-border">
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
       {/* Top section: Logo + Links */}
       <div className="py-16 grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 md:gap-20">
