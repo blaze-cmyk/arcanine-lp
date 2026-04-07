@@ -171,7 +171,7 @@ const Stats = () => {
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 mb-16">
+        <div className="flex flex-wrap justify-evenly gap-8 mb-16">
           {STATS.map((stat, i) => (
             <div
               key={stat.label}
