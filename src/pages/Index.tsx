@@ -1,5 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import LiveWins from "@/components/landing/LiveWins";
 
 const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden">
@@ -7,6 +8,7 @@ const Index = () => (
       <Navbar />
       <Hero />
     </div>
+    <LiveWins />
   </div>
 );
 
