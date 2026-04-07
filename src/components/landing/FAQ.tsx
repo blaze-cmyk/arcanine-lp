@@ -47,7 +47,7 @@ const FAQ = () => (
         {faqs.map((faq, i) => (
           <div key={i} className="py-6 first:pt-0">
             <h3 className="text-sm font-medium text-foreground mb-2">{faq.question}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               {faq.answer}
             </p>
           </div>
