@@ -42,13 +42,17 @@ const Features = () => (
           return (
             <div
               key={title}
-              className={`relative rounded-2xl border border-border/40 overflow-hidden flex flex-col justify-end h-[260px] ${
+              className={`relative rounded-2xl border border-border/40 overflow-hidden flex flex-col h-[320px] ${
                 isSmall ? "md:col-span-2" : "md:col-span-3"
               }`}
               style={{
                 background: 'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(11,11,14,0.95) 100%)',
               }}
             >
+              {/* Empty space for future image/video */}
+              <div className="flex-1" />
+
+              {/* Text pinned to bottom */}
               <div className="p-6 max-w-xs">
                 <p className="text-base leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground">{title}.</span> {description}
