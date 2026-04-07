@@ -5,10 +5,10 @@ import GlobalMarketsVisual from "./features/GlobalMarketsVisual";
 
 // Mesh gradient configs per card for variety
 const meshGradients = [
-  "radial-gradient(ellipse 60% 50% at 70% 20%, hsl(24 100% 50% / 0.07) 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 60% at 30% 30%, hsl(160 45% 50% / 0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 60%, hsl(24 100% 50% / 0.04) 0%, transparent 70%)",
-  "radial-gradient(ellipse 60% 50% at 50% 25%, hsl(220 60% 50% / 0.06) 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 50% at 60% 30%, hsl(24 100% 50% / 0.05) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 50%, hsl(160 45% 50% / 0.04) 0%, transparent 70%)",
+  "radial-gradient(ellipse 60% 50% at 70% 20%, hsl(24 100% 50% / 0.12) 0%, transparent 70%)",
+  "radial-gradient(ellipse 50% 60% at 30% 30%, hsl(160 45% 50% / 0.1) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 60%, hsl(24 100% 50% / 0.06) 0%, transparent 70%)",
+  "radial-gradient(ellipse 60% 50% at 50% 25%, hsl(220 60% 50% / 0.1) 0%, transparent 70%)",
+  "radial-gradient(ellipse 50% 50% at 60% 30%, hsl(24 100% 50% / 0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 50%, hsl(160 45% 50% / 0.07) 0%, transparent 70%)",
 ];
 
 const features = [
@@ -75,10 +75,10 @@ const Features = () => (
                 isSmall ? "md:col-span-2" : "md:col-span-3"
               }`}
               style={{
-                background: "hsl(var(--card))",
+                background: "linear-gradient(180deg, rgba(30,30,36,1) 0%, rgba(18,18,22,1) 100%)",
               }}
             >
-              {/* Mesh gradient layer */}
+              {/* Mesh gradient layer — gives visual area a subtle glow */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: meshGradients[index] }}
@@ -93,16 +93,14 @@ const Features = () => (
               {/* Interactive visual */}
               <div className="flex-1 relative z-[1]">{visual}</div>
 
-              {/* Shadow fade above text — creates depth */}
+              {/* Text area with shadow depth — darker band with inset shadow on top */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-[120px] pointer-events-none z-[2]"
+                className="relative z-[3] p-6 max-w-md"
                 style={{
-                  background: "linear-gradient(to bottom, transparent 0%, hsl(var(--card)) 65%)",
+                  background: "linear-gradient(to bottom, rgba(8,8,10,0.85) 0%, rgba(8,8,10,0.95) 100%)",
+                  boxShadow: "0 -20px 40px 0 rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.04)",
                 }}
-              />
-
-              {/* Text pinned to bottom */}
-              <div className="p-6 max-w-md relative z-[3]">
+              >
                 <p className="text-base leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground">{title}.</span> {description}
                 </p>
