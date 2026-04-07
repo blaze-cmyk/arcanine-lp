@@ -62,10 +62,19 @@ const LiveWins = () => {
   }, []);
 
   return (
-    <section className="relative mt-8 pt-8 pb-6 overflow-hidden border-y border-border/20">
+    <section className="relative mt-8 pb-6 overflow-hidden border-y border-border/20">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
+        {/* Live Wins label */}
+        <div className="flex items-center gap-1.5 py-3">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-profit" />
+          </span>
+          <span className="text-[10px] font-semibold text-profit uppercase tracking-wider">Live Wins</span>
+        </div>
+
         <div className="flex gap-3 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {wins.map((win, index) => (
             <div
@@ -75,16 +84,6 @@ const LiveWins = () => {
                 win.isNew ? 'animate-live-win-enter' : ''
               }`}
             >
-              {/* Live Wins badge on first element */}
-              {index === 0 && (
-                <div className="absolute -top-2.5 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-background/90 border border-border/40 backdrop-blur-sm z-10">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-profit" />
-                  </span>
-                  <span className="text-[9px] font-semibold text-profit uppercase tracking-wider">Live Wins</span>
-                </div>
-              )}
 
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-7 h-7 rounded-lg bg-muted/60 flex items-center justify-center text-sm">
