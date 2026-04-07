@@ -82,7 +82,7 @@ const FairnessLogic = () => {
           </div>
 
           {/* Right — floating payment pills */}
-          <div className="relative h-[340px] sm:h-[380px]">
+          <div className="relative h-[340px] sm:h-[380px] lg:ml-auto lg:w-[92%]">
             {METHODS.map((method, i) => {
               const pos = POSITIONS[i];
               return (
