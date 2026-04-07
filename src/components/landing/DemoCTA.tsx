@@ -106,9 +106,9 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
 
 /** Thin vertical separator between reels */
 const ReelSeparator = () => (
-  <div className="flex flex-col items-center justify-center h-[260px] w-[1px] relative z-10">
+  <div className="flex items-center justify-center w-[1px] mx-1" style={{ height: 260 }}>
     <div
-      className="w-full h-full"
+      className="w-full h-3/5"
       style={{
         background:
           "linear-gradient(to bottom, transparent 10%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.06) 70%, transparent 90%)",
@@ -192,11 +192,7 @@ const DemoCTA = () => {
             {isVisible
               ? targets.map((digit, i) => (
                   <div key={i} className="flex items-center">
-                    {i === 2 && (
-                      <div className="flex items-center justify-center" style={{ height: 260 }}>
-                        <span className="text-[90px] sm:text-[110px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">,</span>
-                      </div>
-                    )}
+                    {i > 0 && <ReelSeparator />}
                     <SlotReel target={digit} delay={i * 250} />
                   </div>
                 ))
