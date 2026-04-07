@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import upiLogo from "@/assets/payments/upi.png";
-import phonepeLogo from "@/assets/payments/phonepe.png";
-import netbankingLogo from "@/assets/payments/netbanking.png";
 import bitcoinLogo from "@/assets/payments/bitcoin.png";
+import visaLogo from "@/assets/payments/visa.png";
+import skrillLogo from "@/assets/payments/skrill.png";
+import mastercardLogo from "@/assets/payments/mastercard.png";
+import phonepeLogo from "@/assets/payments/phonepe.png";
 
 const METHODS = [
   { label: "UPI", logo: upiLogo },
-  { label: "Visa / Mastercard", text: "VISA" },
+  { label: "Visa", logo: visaLogo },
   { label: "Crypto", logo: bitcoinLogo },
-  { label: "Skrill", text: "Skrill" },
-  { label: "AstroPay", text: "AstroPay" },
-  { label: "Bank Transfer", logo: netbankingLogo, invert: true },
+  { label: "Skrill", logo: skrillLogo },
+  { label: "Mastercard", logo: mastercardLogo },
+  { label: "PhonePe", logo: phonepeLogo },
 ];
 
 /* Staggered positions for floating pills — intentionally asymmetric */
