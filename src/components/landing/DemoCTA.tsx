@@ -29,17 +29,17 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
     return digits;
   }, [target]);
 
-  const digitHeight = 120;
+  const digitHeight = 140;
   const targetIndex = strip.length - 2;
   const totalTravel = targetIndex * digitHeight;
 
-  const containerH = 260;
+  const containerH = 300;
   const centerOffset = (containerH - digitHeight) / 2;
 
   return (
     <div
       className="relative overflow-hidden"
-      style={{ width: 110, height: containerH }}
+      style={{ width: 120, height: containerH }}
     >
       {/* Top fade */}
       <div
@@ -92,7 +92,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
               style={{ height: digitHeight }}
             >
               <span
-                className={`text-[110px] sm:text-[130px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
+                className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}
               >
                 {d}
               </span>
@@ -106,7 +106,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
 
 /** Thin vertical separator between reels */
 const ReelSeparator = () => (
-  <div className="flex items-center justify-center w-[1px] mx-1" style={{ height: 260 }}>
+  <div className="flex items-center justify-center w-[1px] mx-0" style={{ height: 300 }}>
     <div
       className="w-full h-3/5"
       style={{
@@ -168,8 +168,8 @@ const DemoCTA = () => {
 
 
           {/* Dollar sign */}
-          <div className="flex items-center relative z-10 mr-2" style={{ height: 260 }}>
-            <span className="text-[110px] sm:text-[130px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
+          <div className="flex items-center relative z-10 mr-1" style={{ height: 300 }}>
+            <span className="text-[130px] sm:text-[150px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">
               $
             </span>
           </div>
@@ -184,7 +184,7 @@ const DemoCTA = () => {
                   </div>
                 ))
               : targets.map((_, i) => (
-                  <div key={i} style={{ width: 110, height: 260 }} />
+                  <div key={i} style={{ width: 120, height: 300 }} />
                 ))}
           </div>
         </div>
