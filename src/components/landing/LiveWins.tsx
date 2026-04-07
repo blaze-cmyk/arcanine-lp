@@ -79,7 +79,7 @@ const LiveWins = () => {
 
       <div className="relative max-w-7xl mx-auto mt-5 pb-1 px-4 sm:px-6">
         {/* Live Wins pill badge — floating above cards */}
-        <div className="absolute -top-4 left-0 z-20">
+        <div className="absolute -top-4 left-4 sm:left-6 z-20">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-secondary-btn border border-border/50 shadow-lg shadow-black/20">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
@@ -90,7 +90,7 @@ const LiveWins = () => {
         </div>
 
         {/* Right fade */}
-        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-4 sm:right-6 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
         <div
           className="flex gap-3 overflow-x-auto scrollbar-hide"
