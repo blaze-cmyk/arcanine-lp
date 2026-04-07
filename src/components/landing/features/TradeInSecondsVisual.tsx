@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { CircleCheck } from "lucide-react";
 
 const TradeInSecondsVisual = () => {
   const [hovered, setHovered] = useState(false);
@@ -16,7 +17,7 @@ const TradeInSecondsVisual = () => {
           }
           return prev - 1;
         });
-      }, 60);
+      }, 30);
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
       setCountdown(30);
@@ -96,12 +97,21 @@ const TradeInSecondsVisual = () => {
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span
-              className="font-display text-2xl font-bold transition-colors duration-300"
-              style={{ color: settled ? "hsl(var(--profit))" : "hsl(var(--foreground))" }}
-            >
-              {settled ? "✓" : `0:${String(countdown).padStart(2, "0")}`}
-            </span>
+            {settled ? (
+              <CircleCheck
+                size={32}
+                className="animate-[scale-in_0.3s_ease-out]"
+                style={{ color: "hsl(var(--profit))" }}
+                strokeWidth={2}
+              />
+            ) : (
+              <span
+                className="font-display text-2xl font-bold transition-colors duration-300"
+                style={{ color: "hsl(var(--foreground))" }}
+              >
+                {`0:${String(countdown).padStart(2, "0")}`}
+              </span>
+            )}
           </div>
         </div>
 
