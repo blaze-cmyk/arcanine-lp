@@ -35,7 +35,7 @@ const features = [
 ];
 
 const Features = () => (
-  <section className="py-24 px-4">
+  <section className="py-32 sm:py-40 px-4">
     {/* SVG noise filter — defined once, used by all cards */}
     <svg className="absolute w-0 h-0" aria-hidden="true">
       <defs>
