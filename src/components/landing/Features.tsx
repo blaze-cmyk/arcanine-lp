@@ -28,7 +28,7 @@ const Features = () => (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-4">Designed for speed and clarity</h2>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>Designed for speed and clarity</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
           Arcanine provides a trading experience with fast execution, transparent payouts, and effortless
           decision-making.
