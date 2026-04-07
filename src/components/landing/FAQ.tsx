@@ -1,10 +1,3 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 const faqs = [
   {
     question: "What is binary options trading?",
@@ -49,19 +42,17 @@ const FAQ = () => (
         </p>
       </div>
 
-      {/* Right column — Accordion FAQ */}
-      <Accordion type="single" collapsible className="w-full">
+      {/* Right column — FAQ list */}
+      <div className="flex flex-col divide-y divide-border">
         {faqs.map((faq, i) => (
-          <AccordionItem key={i} value={`faq-${i}`} className="border-border">
-            <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5">
-              {faq.question}
-            </AccordionTrigger>
-            <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5">
+          <div key={i} className="py-6 first:pt-0">
+            <h3 className="text-sm font-medium text-foreground mb-2">{faq.question}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               {faq.answer}
-            </AccordionContent>
-          </AccordionItem>
+            </p>
+          </div>
         ))}
-      </Accordion>
+      </div>
     </div>
   </section>
 );
