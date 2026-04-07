@@ -69,6 +69,10 @@ const LiveWins = () => {
     const interval = setInterval(() => {
       setWins((prev) => {
         const updated = prev.map((w) => ({ ...w, isNew: false }));
+        // Release the name of the card being removed
+        if (updated.length > 7) {
+          usedNames.delete(updated[7].user);
+        }
         return [generateWin(true), ...updated.slice(0, 7)];
       });
     }, 2500);
