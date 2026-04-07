@@ -237,7 +237,7 @@ const DemoCTA = () => {
         </div>
 
         {/* CTA Button */}
-        <button className="px-10 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all">
+        <button className="inline-flex items-center px-10 py-3.5 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
           Try demo account
         </button>
       </div>
