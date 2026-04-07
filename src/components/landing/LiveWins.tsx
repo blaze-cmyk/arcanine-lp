@@ -57,13 +57,19 @@ const initialWins = Array.from({ length: 8 }, () => generateWin());
 
 const LiveWins = () => {
   const [wins, setWins] = useState<Win[]>(initialWins);
+  const [paused, setPaused] = useState(false);
   const firstCardRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (pausedRef.current) return;
       setWins((prev) => {
         const updated = prev.map((w) => ({ ...w, isNew: false }));
-        // Release the name of the card being removed
         if (updated.length > 7) {
           usedNames.delete(updated[7].user);
         }
