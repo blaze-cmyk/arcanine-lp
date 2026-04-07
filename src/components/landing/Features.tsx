@@ -53,7 +53,7 @@ const Features = () => (
               <div className="flex-1" />
 
               {/* Text pinned to bottom */}
-              <div className="p-6 max-w-sm">
+              <div className="p-6 max-w-md">
                 <p className="text-base leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground">{title}.</span> {description}
                 </p>
