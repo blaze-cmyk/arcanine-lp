@@ -192,7 +192,11 @@ const DemoCTA = () => {
             {isVisible
               ? targets.map((digit, i) => (
                   <div key={i} className="flex items-center">
-                    {i > 0 && <ReelSeparator />}
+                    {i === 2 && (
+                      <div className="flex items-center justify-center" style={{ height: 260 }}>
+                        <span className="text-[90px] sm:text-[110px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">,</span>
+                      </div>
+                    )}
                     <SlotReel target={digit} delay={i * 250} />
                   </div>
                 ))
