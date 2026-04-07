@@ -29,14 +29,12 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
     return digits;
   }, [target]);
 
-  const digitHeight = 180;
-  // We want to land so the target digit (strip.length - 2) is centered
+  const digitHeight = 120;
   const targetIndex = strip.length - 2;
   const totalTravel = targetIndex * digitHeight;
 
-  // Container shows 3 digits: prev, current, next = 3 * digitHeight but we clip to look nice
-  const containerH = 400;
-  const centerOffset = (containerH - digitHeight) / 2; // 80px
+  const containerH = 260;
+  const centerOffset = (containerH - digitHeight) / 2;
 
   return (
     <div
