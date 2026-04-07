@@ -87,12 +87,12 @@ const LiveWins = () => {
         {/* Live Wins pill badge */}
         <div className="absolute -top-3 left-0 z-20">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-secondary-btn border border-border/50 shadow-lg shadow-black/20">
-            <span className="relative flex h-2 w-2 items-center justify-center">
+            <span className="relative flex h-3.5 w-3.5 items-center justify-center">
               {paused ? (
-                <Pause size={8} className="text-muted-foreground" fill="currentColor" />
+                <Pause size={12} className="text-muted-foreground" fill="currentColor" />
               ) : (
                 <>
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
+                  <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-profit opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
                 </>
               )}
