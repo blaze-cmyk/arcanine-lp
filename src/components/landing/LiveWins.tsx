@@ -100,7 +100,7 @@ const LiveWins = () => {
             <div
               key={win.id}
               ref={index === 0 ? firstCardRef : undefined}
-              className={`relative flex-shrink-0 w-[140px] rounded-xl bg-gradient-to-b ${win.color} border border-border/30 p-3 backdrop-blur-sm transition-all duration-300 ${
+              className={`relative flex-shrink-0 w-[140px] rounded-xl bg-gradient-to-b ${win.color} p-3 backdrop-blur-sm transition-all duration-300 ${
                 win.isNew ? "animate-live-win-enter" : ""
               }`}
             >
