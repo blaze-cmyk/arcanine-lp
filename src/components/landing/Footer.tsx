@@ -2,18 +2,18 @@ import logo from "@/assets/arcanine-logo.png";
 
 const quickMenu = [
   { label: "How it Works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Reviews", href: "#testimonials" },
-  { label: "Affiliate Program", href: "#" },
+  { label: "Asset Index", href: "#" },
+  { label: "Trading Terminal", href: "#" },
+  { label: "Demo Account", href: "#" },
   { label: "FAQs", href: "#faq" },
   { label: "Support", href: "#" },
 ];
 
 const information = [
-  { label: "Terms & Conditions", href: "#" },
+  { label: "Terms of Service", href: "#" },
   { label: "Privacy Policy", href: "#" },
-  { label: "Cookie Policy", href: "#" },
-  { label: "AML Policy", href: "#" },
+  { label: "AML & KYC Policy", href: "#" },
+  { label: "Responsible Trading", href: "#" },
 ];
 
 const Footer = () => (
@@ -30,7 +30,7 @@ const Footer = () => (
             </span>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-[300px] mb-6">
-            The premier binary options trading platform. Trade smarter with real-time charts and instant execution.
+            A next-generation binary options platform built for speed, transparency, and precision trading across global markets.
           </p>
           <p className="text-xs text-muted-foreground/60">
             © {new Date().getFullYear()} Arcanine. All rights reserved.
@@ -79,9 +79,9 @@ const Footer = () => (
             { name: "Visa", bg: "#1A1F71", text: "VISA", textColor: "#FFFFFF" },
             { name: "Mastercard", bg: "#1A1A2E", icon: "mc" },
             { name: "Discover", bg: "#FF6000", text: "DISCOVER", textColor: "#FFFFFF" },
-            { name: "Apple Pay", bg: "#000000", text: "Pay", textColor: "#FFFFFF", prefix: "" },
+            { name: "Apple Pay", bg: "#000000", text: "Pay", textColor: "#FFFFFF" },
             { name: "Google Pay", bg: "#1A1A2E", text: "G Pay", textColor: "#FFFFFF" },
-            { name: "PayPal", bg: "#003087", text: "PayPal", textColor: "#009CDE" },
+            { name: "Bitcoin", bg: "#F7931A", text: "₿", textColor: "#FFFFFF" },
           ].map((method) => (
             <div
               key={method.name}
@@ -99,7 +99,7 @@ const Footer = () => (
                   className="text-[9px] font-bold leading-none"
                   style={{ color: method.textColor }}
                 >
-                  {method.prefix !== undefined ? `${method.prefix}${method.text}` : method.text}
+                  {method.text}
                 </span>
               )}
             </div>
@@ -114,26 +114,26 @@ const Footer = () => (
       <div className="py-10 space-y-6">
         <div>
           <p className="text-xs text-muted-foreground/70 leading-relaxed">
-            <span className="font-bold text-muted-foreground">SIMULATED TRADING ENVIRONMENT:</span>{" "}
-            Arcanine operates using simulated trading accounts with virtual funds. All challenge phases and funded accounts utilize demo environments that mirror real prediction market conditions. No actual capital is deployed on prediction market platforms during your trading activities. Hypothetical or simulated performance results have certain inherent limitations. Unlike an actual performance record, simulated results do not represent actual trading.
+            <span className="font-bold text-muted-foreground">HIGH RISK INVESTMENT WARNING:</span>{" "}
+            Binary options trading involves significant risk and may not be suitable for all investors. The value of your positions can fluctuate rapidly, and you may lose the entirety of your invested capital. Before engaging in binary options trading, carefully assess your financial situation, experience level, and willingness to accept risk. Only trade with funds you can afford to lose entirely. Demo account performance does not guarantee future results in live trading.
           </p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground/70 leading-relaxed">
             <span className="font-bold text-muted-foreground">Risk Disclosure:</span>{" "}
-            Trading prediction markets involves substantial risk of loss and is not suitable for everyone. Past performance is not indicative of future results. You should not risk money that you cannot afford to lose.{" "}
+            Binary options are complex financial instruments. Prices are derived from underlying assets including forex pairs, commodities, indices, and cryptocurrencies. Market volatility can cause rapid and unpredictable price movements.{" "}
             <span className="font-bold text-muted-foreground">No Guarantee of Profit:</span>{" "}
-            There is no guarantee that you will earn any money using our platform. The testimonials and examples used are exceptional results and do not reflect the typical participant's experience.{" "}
+            There is no assurance that any strategy or approach will generate profits. Historical returns shown on the platform are for illustrative purposes only.{" "}
             <span className="font-bold text-muted-foreground">Not Financial Advice:</span>{" "}
-            Arcanine does not provide investment advice, financial planning services, or recommendations regarding the purchase or sale of any financial instruments.
+            Content provided on this platform is for educational and informational purposes only and should not be construed as financial, investment, or tax advice.
           </p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground/70 leading-relaxed">
             <span className="font-bold text-muted-foreground">Eligibility & Compliance:</span>{" "}
-            Our services are available only to individuals who are 18 years of age or older, not residents of restricted jurisdictions, and in compliance with all applicable local laws and regulations. Arcanine maintains strict AML and KYC procedures; all traders must complete identity verification before receiving payouts.{" "}
+            Services are restricted to users 18 years or older who are not residents of jurisdictions where binary options trading is prohibited. Arcanine enforces strict anti-money laundering (AML) and know-your-customer (KYC) protocols. Identity verification is required before processing any withdrawal.{" "}
             <span className="font-bold text-muted-foreground">Limitation of Liability:</span>{" "}
-            To the maximum extent permitted by applicable law, Arcanine shall not be liable for any indirect, incidental, special, consequential, or punitive damages.
+            Arcanine shall not be liable for any direct, indirect, incidental, or consequential losses arising from the use of our platform, including but not limited to trading losses, data inaccuracies, or service interruptions.
           </p>
         </div>
       </div>
@@ -141,11 +141,11 @@ const Footer = () => (
       {/* Bottom bar */}
       <div className="border-t border-border py-6">
         <div className="flex items-center gap-4 text-xs text-muted-foreground/50">
-          <span>Not a Deposit</span>
+          <span>High Risk Product</span>
           <span>|</span>
-          <span>Not FDIC Insured</span>
+          <span>Capital at Risk</span>
           <span>|</span>
-          <span>May Lose Value</span>
+          <span>18+ Only</span>
         </div>
       </div>
     </div>
