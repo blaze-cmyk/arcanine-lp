@@ -3,6 +3,7 @@ import Hero from "@/components/landing/Hero";
 import LiveWins from "@/components/landing/LiveWins";
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
+import FairnessLogic from "@/components/landing/FairnessLogic";
 import Stats from "@/components/landing/Stats";
 import DemoCTA from "@/components/landing/DemoCTA";
 
@@ -16,6 +17,7 @@ const Index = () => (
     </div>
     <LiveWins />
     <Features />
+    <FairnessLogic />
     <Stats />
     <FAQ />
     <DemoCTA />
