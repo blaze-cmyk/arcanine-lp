@@ -75,7 +75,7 @@ const Features = () => (
                 isSmall ? "md:col-span-2" : "md:col-span-3"
               }`}
               style={{
-                background: "hsl(var(--card))",
+                background: "linear-gradient(180deg, rgba(30,30,36,1) 0%, rgba(18,18,22,1) 100%)",
               }}
             >
               {/* Mesh gradient layer — gives visual area a subtle glow */}
