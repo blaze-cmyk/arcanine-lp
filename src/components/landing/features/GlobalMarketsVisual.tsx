@@ -6,7 +6,6 @@ const assets = [
     price: "67,432",
     change: "+2.41%",
     up: true,
-    spark: [30, 34, 32, 38, 36, 42, 40, 46, 44, 50, 48, 54],
     payout: "92%",
   },
   {
@@ -14,7 +13,6 @@ const assets = [
     price: "1.0847",
     change: "+0.12%",
     up: true,
-    spark: [40, 42, 41, 44, 43, 45, 44, 46, 45, 47, 46, 48],
     payout: "88%",
   },
   {
@@ -22,31 +20,9 @@ const assets = [
     price: "2,342.8",
     change: "-0.31%",
     up: false,
-    spark: [50, 48, 49, 46, 47, 44, 45, 42, 43, 40, 41, 38],
     payout: "85%",
   },
 ];
-
-const MiniSparkline = ({ data, color }: { data: number[]; color: string }) => {
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const range = max - min || 1;
-  const w = 60;
-  const h = 24;
-  const pathD = data
-    .map((v, i) => {
-      const x = (i / (data.length - 1)) * w;
-      const y = h - ((v - min) / range) * h;
-      return `${i === 0 ? "M" : "L"} ${x} ${y}`;
-    })
-    .join(" ");
-
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="shrink-0">
-      <path d={pathD} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-};
 
 const GlobalMarketsVisual = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
@@ -78,12 +54,6 @@ const GlobalMarketsVisual = () => {
               <span className="text-[10px] font-mono text-muted-foreground">${asset.price}</span>
             </div>
 
-            {/* Sparkline */}
-            <MiniSparkline
-              data={asset.spark}
-              color={asset.up ? "hsl(160, 45%, 50%)" : "hsl(0, 55%, 55%)"}
-            />
-
             {/* Change */}
             <span
               className="text-[10px] font-mono font-semibold min-w-[48px] text-right"
@@ -92,7 +62,7 @@ const GlobalMarketsVisual = () => {
               {asset.change}
             </span>
 
-            {/* Payout badge — appears on hover */}
+            {/* Payout badge */}
             <div
               className="rounded-md px-1.5 py-0.5 text-[9px] font-bold transition-all duration-300"
               style={{
