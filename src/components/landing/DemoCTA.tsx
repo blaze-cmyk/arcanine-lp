@@ -40,11 +40,11 @@ const SlotDigit = ({ target, delay }: { target: number; delay: number }) => {
       <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-card to-transparent z-10" />
 
       <div className="flex flex-col items-center transition-transform duration-100 ease-out">
-        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-mono">
+        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-['Space_Mono']">
           {DIGITS[prevDigit]}
         </span>
         <span
-          className={`text-7xl sm:text-9xl font-bold leading-none h-[60px] sm:h-[74px] flex items-center font-mono transition-colors duration-300 ${
+          className={`text-7xl sm:text-9xl font-bold leading-none h-[60px] sm:h-[74px] flex items-center font-['Space_Mono'] transition-colors duration-300 ${
             isDone
               ? "text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)]"
               : "text-muted-foreground/50"
@@ -52,7 +52,7 @@ const SlotDigit = ({ target, delay }: { target: number; delay: number }) => {
         >
           {DIGITS[displayDigit]}
         </span>
-        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-mono">
+        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-['Space_Mono']">
           {DIGITS[nextDigit]}
         </span>
       </div>
@@ -93,7 +93,7 @@ const DemoCTA = () => {
           className="relative flex items-center gap-2 sm:gap-3 rounded-2xl bg-card border border-border px-8 sm:px-10 py-8 mb-12"
         >
           {/* Dollar sign */}
-          <span className="text-7xl sm:text-9xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)] mr-1">
+          <span className="text-7xl sm:text-9xl font-bold font-['Space_Mono'] text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)] mr-1">
             $
           </span>
           {isVisible &&
