@@ -1,121 +1,109 @@
-import { Users, Globe, BarChart3, DollarSign, TrendingUp, Zap } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-const Stats = () => (
-  <section className="py-24 px-4 sm:px-6">
-    <div className="max-w-5xl mx-auto">
-      <h2
-        className="text-4xl sm:text-5xl font-bold tracking-[-0.02em] leading-[1] mb-14 text-center bg-clip-text text-transparent"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)",
-        }}
-      >
-        Traders worldwide trust Arcanine
-      </h2>
+const STATS = [
+  { value: 50000, suffix: "+", label: "Active traders", prefix: "" },
+  { value: 130, suffix: "+", label: "Countries", prefix: "" },
+  { value: 140, suffix: "+", label: "Trading assets", prefix: "" },
+  { value: 2, suffix: "M+", label: "Monthly payouts", prefix: "$" },
+];
 
-      {/* Bento grid */}
-      <div className="grid grid-cols-4 grid-rows-2 gap-3 sm:gap-4 auto-rows-[180px]">
-        
-        {/* Active traders — large card, spans 2 cols */}
-        <div
-          className="col-span-2 row-span-1 relative rounded-2xl p-8 overflow-hidden group"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(255,106,0,0.06) 0%, transparent 70%)" }} />
-          <Users className="w-16 h-16 text-muted-foreground/20 mb-4" strokeWidth={1} />
-          <div className="flex items-baseline gap-3">
-            <span className="text-4xl sm:text-5xl font-bold tracking-tight" style={{ backgroundImage: "linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>50K+</span>
-          </div>
-          <p className="text-sm text-muted-foreground mt-1.5">Active traders</p>
-        </div>
+const AnimatedNumber = ({
+  value,
+  prefix,
+  suffix,
+  duration = 2000,
+  trigger,
+}: {
+  value: number;
+  prefix: string;
+  suffix: string;
+  duration?: number;
+  trigger: boolean;
+}) => {
+  const [display, setDisplay] = useState(0);
 
-        {/* Min trade */}
-        <div
-          className="col-span-1 row-span-1 relative rounded-2xl p-6 overflow-hidden group"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,106,0,0.06) 0%, transparent 70%)" }} />
-          <DollarSign className="w-10 h-10 text-muted-foreground/20 mb-3" strokeWidth={1.2} />
-          <span className="text-3xl sm:text-4xl font-bold tracking-tight block" style={{ backgroundImage: "linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>$1</span>
-          <p className="text-sm text-muted-foreground mt-1">Minimum trade</p>
-        </div>
+  useEffect(() => {
+    if (!trigger) return;
+    let start = 0;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      start = Math.round(eased * value);
+      setDisplay(start);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [trigger, value, duration]);
 
-        {/* Min deposit */}
-        <div
-          className="col-span-1 row-span-1 relative rounded-2xl p-6 overflow-hidden group"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,106,0,0.06) 0%, transparent 70%)" }} />
-          <Zap className="w-10 h-10 text-muted-foreground/20 mb-3" strokeWidth={1.2} />
-          <span className="text-3xl sm:text-4xl font-bold tracking-tight block" style={{ backgroundImage: "linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>$10</span>
-          <p className="text-sm text-muted-foreground mt-1">Minimum deposit</p>
-        </div>
+  const formatted =
+    value >= 1000
+      ? display.toLocaleString("en-US")
+      : String(display);
 
-        {/* Countries */}
-        <div
-          className="col-span-1 row-span-1 relative rounded-2xl p-6 overflow-hidden group"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,106,0,0.06) 0%, transparent 70%)" }} />
-          <Globe className="w-10 h-10 text-muted-foreground/20 mb-3" strokeWidth={1.2} />
-          <span className="text-3xl sm:text-4xl font-bold tracking-tight block" style={{ backgroundImage: "linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>130+</span>
-          <p className="text-sm text-muted-foreground mt-1">Countries</p>
-        </div>
+  return (
+    <span
+      className="text-5xl sm:text-6xl md:text-7xl font-bold font-display leading-none tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] font-mono-num"
+    >
+      {prefix}
+      {formatted}
+      {suffix}
+    </span>
+  );
+};
 
-        {/* Trading assets */}
-        <div
-          className="col-span-1 row-span-1 relative rounded-2xl p-6 overflow-hidden group"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,106,0,0.06) 0%, transparent 70%)" }} />
-          <BarChart3 className="w-10 h-10 text-muted-foreground/20 mb-3" strokeWidth={1.2} />
-          <span className="text-3xl sm:text-4xl font-bold tracking-tight block" style={{ backgroundImage: "linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>140+</span>
-          <p className="text-sm text-muted-foreground mt-1">Trading assets</p>
-        </div>
+const Stats = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
-        {/* Monthly payouts — large card, spans 2 cols */}
-        <div
-          className="col-span-2 row-span-1 relative rounded-2xl p-8 overflow-hidden group"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 70% 60%, rgba(255,106,0,0.06) 0%, transparent 70%)" }} />
-          <TrendingUp className="w-16 h-16 text-muted-foreground/20 mb-4" strokeWidth={1} />
-          <div className="flex items-baseline gap-3">
-            <span className="text-4xl sm:text-5xl font-bold tracking-tight" style={{ backgroundImage: "linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>$2M+</span>
-          </div>
-          <p className="text-sm text-muted-foreground mt-1.5">Monthly payouts</p>
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section className="py-20 px-4 sm:px-6" ref={ref}>
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+          {STATS.map((stat, i) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center text-center gap-2 transition-all duration-700"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(30px)",
+                transitionDelay: `${i * 120}ms`,
+              }}
+            >
+              <AnimatedNumber
+                value={stat.value}
+                prefix={stat.prefix}
+                suffix={stat.suffix}
+                trigger={visible}
+                duration={2000 + i * 200}
+              />
+              <p className="text-sm text-muted-foreground tracking-wide uppercase">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* CTA */}
-      <div className="flex justify-center mt-14">
-        <button className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
-          Join us
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="ml-1">
-            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Stats;
