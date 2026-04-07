@@ -1,57 +1,38 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import upiLogo from "@/assets/payments/upi.png";
+import phonepeLogo from "@/assets/payments/phonepe.png";
+import netbankingLogo from "@/assets/payments/netbanking.png";
+import bitcoinLogo from "@/assets/payments/bitcoin.png";
 
-const METHODS = [
+const METHODS: { label: string; logo?: string; text?: string; textStyle?: string }[] = [
   {
     label: "Net Banking",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect x="6" y="8" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M14 4L6 8h16L14 4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M10 12v6M14 12v6M18 12v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
+    logo: netbankingLogo,
   },
   {
-    label: "GPay / UPI",
-    icon: (
-      <span className="text-lg font-bold tracking-tight" style={{ color: "#fff" }}>
-        G<span style={{ color: "#4285F4" }}>P</span>ay
-      </span>
-    ),
+    label: "GPay · UPI",
+    text: "GPay",
+    textStyle: "text-xl font-bold tracking-tight",
+    logo: upiLogo,
   },
   {
     label: "UPI",
-    icon: (
-      <span className="text-xl font-extrabold tracking-tighter text-foreground">
-        UPI
-      </span>
-    ),
+    logo: upiLogo,
   },
   {
-    label: "PhonePe UPI",
-    icon: (
-      <span className="text-base font-bold text-foreground tracking-tight">
-        PhonePe
-      </span>
-    ),
+    label: "PhonePe · UPI",
+    logo: phonepeLogo,
+    text: "UPI",
   },
   {
     label: "Crypto Methods",
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-        <circle cx="13" cy="13" r="11" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M13 7v2m0 8v2m-4-8h2.5a1.5 1.5 0 010 3H10m0 0h3.5a1.5 1.5 0 010 3H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
+    logo: bitcoinLogo,
   },
   {
     label: "AstroPay",
-    icon: (
-      <span className="text-base font-bold text-foreground tracking-tight">
-        AstroPay
-      </span>
-    ),
+    text: "AstroPay",
+    textStyle: "text-xl font-bold tracking-tight",
   },
 ];
 
@@ -116,7 +97,7 @@ const FairnessLogic = () => {
           {METHODS.map((method, i) => (
             <div
               key={method.label}
-              className="group relative rounded-2xl h-24 flex items-center justify-center transition-all duration-700 cursor-default"
+              className="group relative rounded-2xl h-[88px] flex items-center justify-center gap-3 transition-all duration-700 cursor-default"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%)",
@@ -134,10 +115,23 @@ const FairnessLogic = () => {
                     "radial-gradient(ellipse at 50% 100%, rgba(255,106,0,0.06) 0%, transparent 70%)",
                 }}
               />
-              <div className="flex items-center gap-3 text-foreground/80">
-                <span className="text-foreground/60">{method.icon}</span>
-                <span className="text-sm font-medium">{method.label}</span>
-              </div>
+
+              {method.logo && (
+                <img
+                  src={method.logo}
+                  alt={method.label}
+                  className="h-8 w-auto object-contain"
+                  style={{ filter: method.logo === netbankingLogo ? "invert(1) brightness(0.8)" : "none" }}
+                />
+              )}
+              {method.text && (
+                <span className={`text-foreground/90 ${method.textStyle || "text-base font-semibold"}`}>
+                  {method.text}
+                </span>
+              )}
+              {!method.text && !method.logo && (
+                <span className="text-base font-semibold text-foreground/90">{method.label}</span>
+              )}
             </div>
           ))}
         </div>
