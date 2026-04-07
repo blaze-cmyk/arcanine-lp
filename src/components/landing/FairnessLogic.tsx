@@ -58,14 +58,6 @@ const FairnessLogic = () => {
 
   return (
     <section ref={ref} className="relative py-24 px-4 sm:px-6 overflow-hidden">
-      {/* Subtle top glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,106,0,0.06) 0%, transparent 70%)",
-        }}
-      />
 
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Heading */}
