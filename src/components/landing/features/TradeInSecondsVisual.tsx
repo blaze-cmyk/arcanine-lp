@@ -96,11 +96,15 @@ const TradeInSecondsVisual = () => {
         <div
           className="mt-3 rounded-lg px-4 py-1.5 flex items-center gap-2 transition-all duration-300"
           style={{
-            background: hovered
+            background: settled
+              ? "hsl(var(--profit) / 0.1)"
+              : hovered
               ? "hsl(var(--primary) / 0.08)"
               : "hsl(var(--muted) / 0.5)",
             border: `1px solid ${
-              hovered
+              settled
+                ? "hsl(var(--profit) / 0.25)"
+                : hovered
                 ? "hsl(var(--primary) / 0.2)"
                 : "hsl(var(--border) / 0.3)"
             }`,
@@ -109,7 +113,9 @@ const TradeInSecondsVisual = () => {
           <div
             className="w-1.5 h-1.5 rounded-full transition-colors duration-300"
             style={{
-              background: hovered
+              background: settled
+                ? "hsl(var(--profit))"
+                : hovered
                 ? "hsl(var(--primary))"
                 : "hsl(var(--muted-foreground))",
             }}
@@ -117,12 +123,14 @@ const TradeInSecondsVisual = () => {
           <span
             className="text-[10px] font-semibold uppercase tracking-wider transition-colors duration-300"
             style={{
-              color: hovered
+              color: settled
+                ? "hsl(var(--profit))"
+                : hovered
                 ? "hsl(var(--primary))"
                 : "hsl(var(--muted-foreground))",
             }}
           >
-            {hovered ? "Executing..." : "Ready"}
+            {settled ? "Trade settled" : hovered ? "Executing..." : "Ready"}
           </span>
         </div>
       </div>
