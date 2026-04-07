@@ -7,6 +7,7 @@ import FairnessLogic from "@/components/landing/FairnessLogic";
 import Stats from "@/components/landing/Stats";
 import DemoCTA from "@/components/landing/DemoCTA";
 
+import HowItWorks from "@/components/landing/HowItWorks";
 import Footer from "@/components/landing/Footer";
 
 const Index = () => (
@@ -17,6 +18,7 @@ const Index = () => (
     </div>
     <LiveWins />
     <Features />
+    <HowItWorks />
     <FairnessLogic />
     <Stats />
     <FAQ />
