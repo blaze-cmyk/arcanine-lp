@@ -34,17 +34,17 @@ const SlotDigit = ({ target, delay }: { target: number; delay: number }) => {
   const nextDigit = (displayDigit + 1) % 10;
 
   return (
-    <div className="relative h-[120px] sm:h-[140px] w-[52px] sm:w-[64px] overflow-hidden">
+    <div className="relative h-[180px] sm:h-[220px] w-[72px] sm:w-[90px] overflow-hidden">
       {/* Fade overlays */}
-      <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-card to-transparent z-10" />
-      <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-card to-transparent z-10" />
+      <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-card to-transparent z-10" />
+      <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-card to-transparent z-10" />
 
       <div className="flex flex-col items-center transition-transform duration-100 ease-out">
-        <span className="text-5xl sm:text-7xl font-bold text-muted-foreground/30 leading-none h-[40px] sm:h-[46px] flex items-center font-mono">
+        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-mono">
           {DIGITS[prevDigit]}
         </span>
         <span
-          className={`text-5xl sm:text-7xl font-bold leading-none h-[40px] sm:h-[48px] flex items-center font-mono transition-colors duration-300 ${
+          className={`text-7xl sm:text-9xl font-bold leading-none h-[60px] sm:h-[74px] flex items-center font-mono transition-colors duration-300 ${
             isDone
               ? "text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)]"
               : "text-muted-foreground/50"
@@ -52,7 +52,7 @@ const SlotDigit = ({ target, delay }: { target: number; delay: number }) => {
         >
           {DIGITS[displayDigit]}
         </span>
-        <span className="text-5xl sm:text-7xl font-bold text-muted-foreground/30 leading-none h-[40px] sm:h-[46px] flex items-center font-mono">
+        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-mono">
           {DIGITS[nextDigit]}
         </span>
       </div>
@@ -79,9 +79,9 @@ const DemoCTA = () => {
   }, []);
 
   return (
-    <section className="py-24 px-4 sm:px-6">
+    <section className="py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display leading-tight mb-12">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-display leading-tight mb-16">
           Trade live charts with
           <br />
           virtual funds
@@ -90,10 +90,10 @@ const DemoCTA = () => {
         {/* Slot machine */}
         <div
           ref={ref}
-          className="relative flex items-center gap-1 sm:gap-2 rounded-2xl bg-card border border-border px-6 py-6 mb-10"
+          className="relative flex items-center gap-2 sm:gap-3 rounded-2xl bg-card border border-border px-8 sm:px-10 py-8 mb-12"
         >
           {/* Dollar sign */}
-          <span className="text-5xl sm:text-7xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)] mr-1">
+          <span className="text-7xl sm:text-9xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)] mr-1">
             $
           </span>
           {isVisible &&
@@ -104,24 +104,24 @@ const DemoCTA = () => {
             TARGET.map((_, i) => (
               <div
                 key={i}
-                className="h-[120px] sm:h-[140px] w-[52px] sm:w-[64px]"
+                className="h-[180px] sm:h-[220px] w-[72px] sm:w-[90px]"
               />
             ))}
         </div>
 
         {/* Bullet points */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-10 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 mb-12 text-base text-muted-foreground">
+          <div className="flex items-center gap-2.5">
+            <div className="w-5 h-5 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center flex-shrink-0">
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
                 <path d="M2 5L4.5 7.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             $10,000 preloaded in your demo account
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <div className="flex items-center gap-2.5">
+            <div className="w-5 h-5 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center flex-shrink-0">
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
                 <path d="M2 5L4.5 7.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
@@ -130,7 +130,7 @@ const DemoCTA = () => {
         </div>
 
         {/* CTA Button */}
-        <button className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all">
+        <button className="px-10 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-base hover:brightness-110 transition-all">
           Try demo account
         </button>
       </div>
