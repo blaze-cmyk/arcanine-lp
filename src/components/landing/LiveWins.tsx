@@ -65,15 +65,22 @@ const LiveWins = () => {
     <section className="relative mt-8 pb-6 overflow-hidden border-y border-border/20">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto">
-        {/* Live Wins label */}
-        <div className="flex items-center gap-1.5 py-3">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-profit" />
-          </span>
-          <span className="text-[10px] font-semibold text-profit uppercase tracking-wider">Live Wins</span>
+      <div className="relative max-w-6xl mx-auto pt-5 pb-1">
+        {/* Live Wins pill badge — floating above cards */}
+        <div className="absolute -top-3 left-0 z-20">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card border border-border/50 shadow-lg shadow-black/20">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-profit" />
+            </span>
+            <span className="text-xs font-semibold text-foreground">Live Wins</span>
+          </div>
         </div>
+
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
         <div className="flex gap-3 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {wins.map((win, index) => (
