@@ -82,15 +82,23 @@ const Features = () => (
                 background: "hsl(var(--card))",
               }}
             >
-              {/* Mesh gradient layer */}
+              {/* Gradient blob layer — dramatic ambient glow */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: meshGradients[index] }}
               />
 
-              {/* Noise texture overlay */}
+              {/* Secondary vignette — darken edges for depth */}
               <div
-                className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay"
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse 80% 70% at 50% 40%, transparent 40%, hsl(var(--card) / 0.7) 100%)",
+                }}
+              />
+
+              {/* Noise texture overlay — heavier for grain/texture */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
                 style={{ filter: "url(#feature-noise)", width: "100%", height: "100%" }}
               />
 
