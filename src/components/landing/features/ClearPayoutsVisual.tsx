@@ -14,7 +14,7 @@ const ClearPayoutsVisual = () => {
         className="w-full max-w-[280px] rounded-xl overflow-hidden transition-all duration-500"
         style={{
           background: "hsl(var(--background))",
-          border: `1px solid ${hovered ? "hsl(var(--primary) / 0.3)" : "hsl(var(--border) / 0.4)"}`,
+          border: `1px solid hsl(var(--border) / 0.4)`,
         }}
       >
         {/* Header */}
@@ -65,10 +65,9 @@ const ClearPayoutsVisual = () => {
               className="text-sm font-mono font-bold transition-all duration-500"
               style={{
                 color: hovered ? "hsl(var(--profit))" : "hsl(var(--foreground))",
-                transform: hovered ? "scale(1.08)" : "scale(1)",
               }}
             >
-              {hovered ? "+$185.00" : "$—"}
+              $185.00
             </span>
           </div>
 
