@@ -1,60 +1,79 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
-const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const TARGET = [1, 0, 0, 0, 0]; // $10000
-
-const SlotDigit = ({ target, delay }: { target: number; delay: number }) => {
-  const [currentOffset, setCurrentOffset] = useState(0);
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [isDone, setIsDone] = useState(false);
+/**
+ * Each reel is a vertical strip of 0-9 digits that translates upward
+ * to land on the target digit — like a real mechanical counter.
+ */
+const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
+  const [phase, setPhase] = useState<"idle" | "spinning" | "done">("idle");
 
   useEffect(() => {
-    const startTimer = setTimeout(() => {
-      setIsSpinning(true);
-      // Spin through multiple cycles then land on target
-      const totalSteps = 20 + target; // spin a few rounds
-      let step = 0;
-      const interval = setInterval(() => {
-        step++;
-        setCurrentOffset(step);
-        if (step >= totalSteps) {
-          clearInterval(interval);
-          setIsSpinning(false);
-          setIsDone(true);
-        }
-      }, 60);
-      return () => clearInterval(interval);
-    }, delay);
-    return () => clearTimeout(startTimer);
-  }, [target, delay]);
+    const t1 = setTimeout(() => setPhase("spinning"), delay);
+    // Total spin duration: 1.2s + stagger
+    const t2 = setTimeout(() => setPhase("done"), delay + 1400);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [delay, target]);
 
-  const displayDigit = isDone ? target : currentOffset % 10;
-  // Show adjacent digits for the slot effect
-  const prevDigit = (displayDigit + 9) % 10;
-  const nextDigit = (displayDigit + 1) % 10;
+  // Build a strip: several full 0-9 cycles then end at target
+  const strip = useMemo(() => {
+    const cycles = 3; // full rotations before landing
+    const digits: number[] = [];
+    for (let c = 0; c < cycles; c++) {
+      for (let d = 0; d <= 9; d++) digits.push(d);
+    }
+    // Add final partial cycle ending on target
+    for (let d = 0; d <= target; d++) digits.push(d);
+    return digits;
+  }, [target]);
+
+  const digitHeight = 120; // px per digit
+  const totalTravel = (strip.length - 1) * digitHeight;
 
   return (
-    <div className="relative h-[180px] sm:h-[220px] w-[72px] sm:w-[90px] overflow-hidden">
-      {/* Fade overlays */}
-      <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-card to-transparent z-10" />
-      <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-card to-transparent z-10" />
+    <div className="relative w-[70px] sm:w-[88px] h-[200px] sm:h-[240px] overflow-hidden">
+      {/* Top/bottom fade masks */}
+      <div className="absolute inset-x-0 top-0 h-[72px] sm:h-[88px] bg-gradient-to-b from-[#111115] via-[#111115]/80 to-transparent z-20 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-[72px] sm:h-[88px] bg-gradient-to-t from-[#111115] via-[#111115]/80 to-transparent z-20 pointer-events-none" />
 
-      <div className="flex flex-col items-center transition-transform duration-100 ease-out">
-        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-display">
-          {DIGITS[prevDigit]}
-        </span>
-        <span
-          className={`text-7xl sm:text-9xl font-bold leading-none h-[60px] sm:h-[74px] flex items-center font-display transition-colors duration-300 ${
-            isDone
-              ? "text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)]"
-              : "text-muted-foreground/50"
-          }`}
-        >
-          {DIGITS[displayDigit]}
-        </span>
-        <span className="text-7xl sm:text-9xl font-bold text-muted-foreground/30 leading-none h-[60px] sm:h-[73px] flex items-center font-display">
-          {DIGITS[nextDigit]}
-        </span>
+      {/* Digit strip */}
+      <div
+        className="flex flex-col items-center"
+        style={{
+          transform:
+            phase === "idle"
+              ? "translateY(0px)"
+              : phase === "spinning"
+              ? `translateY(-${totalTravel}px)`
+              : `translateY(-${totalTravel}px)`,
+          transition:
+            phase === "spinning"
+              ? "transform 1.4s cubic-bezier(0.23, 1, 0.32, 1)"
+              : "none",
+        }}
+      >
+        {strip.map((d, i) => {
+          const isTarget = phase === "done" && i === strip.length - 1;
+          return (
+            <div
+              key={i}
+              className="flex items-center justify-center shrink-0"
+              style={{ height: digitHeight }}
+            >
+              <span
+                className={`text-[80px] sm:text-[104px] font-bold font-display leading-none select-none transition-all duration-500 ${
+                  isTarget
+                    ? "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]"
+                    : "text-[#3a3530]/60"
+                }`}
+              >
+                {d}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -78,6 +97,8 @@ const DemoCTA = () => {
     return () => observer.disconnect();
   }, []);
 
+  const targets = [1, 0, 0, 0, 0];
+
   return (
     <section className="py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
@@ -87,26 +108,44 @@ const DemoCTA = () => {
           virtual funds
         </h2>
 
-        {/* Slot machine */}
+        {/* Slot machine container */}
         <div
           ref={ref}
-          className="relative flex items-center gap-2 sm:gap-3 rounded-2xl bg-card border border-border px-8 sm:px-10 py-8 mb-12"
+          className="relative flex items-center rounded-2xl px-6 sm:px-10 py-4 mb-12 overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, #151518 0%, #111115 40%, #0E0E11 100%)",
+            boxShadow:
+              "inset 0 2px 20px rgba(0,0,0,0.6), inset 0 -1px 10px rgba(0,0,0,0.4), 0 0 60px rgba(200,140,40,0.06)",
+          }}
         >
+          {/* Warm ambient glow behind digits */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(200,140,40,0.07) 0%, transparent 70%)",
+            }}
+          />
+
           {/* Dollar sign */}
-          <span className="text-7xl sm:text-9xl font-bold font-display text-transparent bg-clip-text bg-gradient-to-b from-[hsl(35,90%,60%)] to-[hsl(24,100%,45%)] mr-1">
+          <span className="text-[80px] sm:text-[104px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] mr-1 sm:mr-2 relative z-10">
             $
           </span>
-          {isVisible &&
-            TARGET.map((digit, i) => (
-              <SlotDigit key={i} target={digit} delay={i * 200} />
-            ))}
-          {!isVisible &&
-            TARGET.map((_, i) => (
-              <div
-                key={i}
-                className="h-[180px] sm:h-[220px] w-[72px] sm:w-[90px]"
-              />
-            ))}
+
+          {/* Reels */}
+          <div className="flex gap-0 relative z-10">
+            {isVisible
+              ? targets.map((digit, i) => (
+                  <SlotReel key={i} target={digit} delay={i * 250} />
+                ))
+              : targets.map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-[70px] sm:w-[88px] h-[200px] sm:h-[240px]"
+                  />
+                ))}
+          </div>
         </div>
 
         {/* Bullet points */}
@@ -114,7 +153,13 @@ const DemoCTA = () => {
           <div className="flex items-center gap-2.5">
             <div className="w-5 h-5 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center flex-shrink-0">
               <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.5 7.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 5L4.5 7.5L8 3"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             $10,000 preloaded in your demo account
@@ -122,7 +167,13 @@ const DemoCTA = () => {
           <div className="flex items-center gap-2.5">
             <div className="w-5 h-5 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center flex-shrink-0">
               <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.5 7.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 5L4.5 7.5L8 3"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             Unlimited balance refills at any time
