@@ -54,32 +54,44 @@ const FairnessLogic = () => {
             border: "1px solid hsl(var(--border) / 0.5)",
           }}
         >
-          {/* Dot grid noise pattern — top left quadrant */}
-          <div className="absolute inset-0 pointer-events-none">
-            <svg width="100%" height="100%" className="absolute inset-0">
+          {/* Fractal noise texture with color gradient fade */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <svg width="0" height="0" className="absolute">
               <defs>
-                <pattern id="depositDotGrid" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
-                  <circle cx="1" cy="1" r="0.8" fill="hsl(var(--foreground))" opacity="0.12" />
-                </pattern>
-                <radialGradient id="depositDotFade" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
-                  gradientTransform="translate(0,0) scale(600,500)">
-                  <stop offset="0%" stopOpacity="1" stopColor="white" />
-                  <stop offset="60%" stopOpacity="0.3" stopColor="white" />
-                  <stop offset="100%" stopOpacity="0" stopColor="white" />
-                </radialGradient>
-                <mask id="depositDotMask">
-                  <rect width="100%" height="100%" fill="url(#depositDotFade)" />
-                </mask>
+                <filter id="depositNoise">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise" />
+                  <feColorMatrix type="saturate" values="0" in="noise" result="mono" />
+                </filter>
               </defs>
-              <rect width="100%" height="100%" fill="url(#depositDotGrid)" mask="url(#depositDotMask)" />
             </svg>
+            {/* Noise layer masked to top-left with radial fade */}
+            <div
+              className="absolute inset-0 opacity-[0.07] mix-blend-soft-light"
+              style={{
+                filter: "url(#depositNoise)",
+                maskImage: "radial-gradient(ellipse 90% 80% at 15% 20%, black 0%, transparent 70%)",
+                WebkitMaskImage: "radial-gradient(ellipse 90% 80% at 15% 20%, black 0%, transparent 70%)",
+              }}
+            />
           </div>
 
-          {/* Subtle top-left ambient glow */}
+          {/* Colored gradient blobs */}
           <div
-            className="absolute top-0 left-0 w-[500px] h-[400px] pointer-events-none"
+            className="absolute -top-20 -left-20 w-[600px] h-[500px] pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse at 0% 0%, hsl(var(--primary) / 0.04) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse at 20% 30%, hsl(var(--primary) / 0.08) 0%, transparent 60%)",
+            }}
+          />
+          <div
+            className="absolute -top-10 left-[10%] w-[400px] h-[350px] pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at 40% 20%, hsl(25 100% 55% / 0.05) 0%, transparent 65%)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 right-0 w-[500px] h-[400px] pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse at 80% 80%, hsl(var(--primary) / 0.03) 0%, transparent 60%)",
             }}
           />
 
@@ -87,7 +99,7 @@ const FairnessLogic = () => {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, hsl(var(--card) / 0.6) 100%)",
+              background: "radial-gradient(ellipse 85% 80% at 50% 50%, transparent 40%, hsl(var(--card) / 0.7) 100%)",
             }}
           />
 
