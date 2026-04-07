@@ -14,20 +14,9 @@ interface Win {
 const AVATARS = ["🐺", "🦊", "🐯", "🦅", "🐉", "🦁", "🐻", "🦈", "🐍", "🦇", "🐗", "🦉"];
 const ASSETS = ["BTC/USD", "ETH/USD", "GOLD", "EUR/USD", "GBP/JPY", "AAPL", "TSLA", "SOL/USD"];
 const NAMES = [
-  "alex_t",
-  "markW",
-  "proTrader",
-  "luna99",
-  "quickWin",
-  "rizz_k",
-  "novaX",
-  "hidden",
-  "aceHigh",
-  "deltaFx",
-  "ironJaw",
-  "pixelDev",
-  "zenith",
-  "blaze7",
+  "alex_t", "markW", "proTrader", "luna99", "quickWin", "rizz_k", "novaX", "hidden",
+  "aceHigh", "deltaFx", "ironJaw", "pixelDev", "zenith", "blaze7", "cryptoK", "shadow9",
+  "vyper", "neonFx", "storm_z", "rogue1",
 ];
 const COLORS = [
   "from-emerald-500/20 to-emerald-500/5",
@@ -44,11 +33,24 @@ const randomAmount = () => {
 };
 
 let idCounter = 0;
+const usedNames = new Set<string>();
+
 const generateWin = (isNew = false): Win => {
   idCounter++;
+  // Pick a unique name not currently displayed
+  let name: string;
+  const available = NAMES.filter((n) => !usedNames.has(n));
+  if (available.length > 0) {
+    name = available[Math.floor(Math.random() * available.length)];
+  } else {
+    // Fallback: clear and pick fresh
+    usedNames.clear();
+    name = NAMES[Math.floor(Math.random() * NAMES.length)];
+  }
+  usedNames.add(name);
   return {
     id: idCounter,
-    user: NAMES[Math.floor(Math.random() * NAMES.length)],
+    user: name,
     avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)],
     amount: randomAmount(),
     asset: ASSETS[Math.floor(Math.random() * ASSETS.length)],
@@ -67,6 +69,10 @@ const LiveWins = () => {
     const interval = setInterval(() => {
       setWins((prev) => {
         const updated = prev.map((w) => ({ ...w, isNew: false }));
+        // Release the name of the card being removed
+        if (updated.length > 7) {
+          usedNames.delete(updated[7].user);
+        }
         return [generateWin(true), ...updated.slice(0, 7)];
       });
     }, 2500);
