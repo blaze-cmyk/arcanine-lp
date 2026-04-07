@@ -3,12 +3,6 @@ import DashboardMockup from "./DashboardMockup";
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-20 sm:pt-24">
-      {/* Background atmosphere blobs */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 70% 15%, rgba(255,106,0,0.06) 0%, transparent 60%)" }} />
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 50% at 20% 80%, rgba(100,100,255,0.03) 0%, transparent 60%)" }} />
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,106,0,0.02) 0%, transparent 50%)" }} />
-      </div>
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Headline */}
