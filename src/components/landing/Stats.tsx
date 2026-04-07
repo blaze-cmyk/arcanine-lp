@@ -65,6 +65,34 @@ const REVIEWS = [
     rating: 5,
     profit: "+$4,500",
   },
+  {
+    name: "Carlos V.",
+    avatar: "🐲",
+    text: "Switched from Binomo last month. The charting tools here are leagues ahead. Already up $3k.",
+    rating: 5,
+    profit: "+$3,400",
+  },
+  {
+    name: "Aisha N.",
+    avatar: "🦋",
+    text: "Love the copy-trading feature. I follow top traders and consistently earn passive income.",
+    rating: 5,
+    profit: "+$6,200",
+  },
+  {
+    name: "Tom H.",
+    avatar: "🐺",
+    text: "The mobile app is just as fast as desktop. I trade on my commute and it never lags.",
+    rating: 4,
+    profit: "+$1,900",
+  },
+  {
+    name: "Yuki S.",
+    avatar: "🦊",
+    text: "24/7 crypto trading with up to 95% payouts. Nothing else comes close in this space.",
+    rating: 5,
+    profit: "+$8,100",
+  },
 ];
 
 const AnimatedNumber = ({
