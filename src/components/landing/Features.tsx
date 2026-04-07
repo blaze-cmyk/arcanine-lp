@@ -3,12 +3,16 @@ import ClearPayoutsVisual from "./features/ClearPayoutsVisual";
 import ClearDecisionsVisual from "./features/ClearDecisionsVisual";
 import GlobalMarketsVisual from "./features/GlobalMarketsVisual";
 
-// Mesh gradient configs per card for variety
+// Dramatic gradient blob configs — warm glows with depth, inspired by Huly
 const meshGradients = [
-  "radial-gradient(ellipse 60% 50% at 70% 20%, hsl(24 100% 50% / 0.07) 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 60% at 30% 30%, hsl(160 45% 50% / 0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 60%, hsl(24 100% 50% / 0.04) 0%, transparent 70%)",
-  "radial-gradient(ellipse 60% 50% at 50% 25%, hsl(220 60% 50% / 0.06) 0%, transparent 70%)",
-  "radial-gradient(ellipse 50% 50% at 60% 30%, hsl(24 100% 50% / 0.05) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 50%, hsl(160 45% 50% / 0.04) 0%, transparent 70%)",
+  // Card 1: Strong orange glow top-right
+  "radial-gradient(ellipse 70% 55% at 75% 10%, hsl(24 100% 50% / 0.18) 0%, hsl(24 100% 40% / 0.06) 40%, transparent 70%)",
+  // Card 2: Dual glow — teal + warm accent
+  "radial-gradient(ellipse 60% 50% at 25% 15%, hsl(160 50% 45% / 0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 45% at 80% 20%, hsl(24 100% 50% / 0.10) 0%, transparent 60%)",
+  // Card 3: Cool blue-purple center glow
+  "radial-gradient(ellipse 65% 55% at 55% 12%, hsl(240 50% 55% / 0.14) 0%, hsl(260 40% 40% / 0.05) 45%, transparent 70%)",
+  // Card 4: Deep orange vignette-style
+  "radial-gradient(ellipse 80% 60% at 50% 5%, hsl(24 100% 50% / 0.16) 0%, hsl(24 80% 30% / 0.04) 50%, transparent 75%), radial-gradient(ellipse 40% 40% at 15% 60%, hsl(280 40% 45% / 0.06) 0%, transparent 60%)",
 ];
 
 const features = [
@@ -78,15 +82,23 @@ const Features = () => (
                 background: "hsl(var(--card))",
               }}
             >
-              {/* Mesh gradient layer */}
+              {/* Gradient blob layer — dramatic ambient glow */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: meshGradients[index] }}
               />
 
-              {/* Noise texture overlay */}
+              {/* Secondary vignette — darken edges for depth */}
               <div
-                className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay"
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse 80% 70% at 50% 40%, transparent 40%, hsl(var(--card) / 0.7) 100%)",
+                }}
+              />
+
+              {/* Noise texture overlay — heavier for grain/texture */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
                 style={{ filter: "url(#feature-noise)", width: "100%", height: "100%" }}
               />
 
