@@ -45,7 +45,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
       <div
         className="absolute inset-x-0 top-0 z-20 pointer-events-none"
         style={{
-          height: 130,
+          height: 90,
           background: "linear-gradient(to bottom, #111115 20%, transparent 100%)",
         }}
       />
@@ -53,7 +53,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
       <div
         className="absolute inset-x-0 bottom-0 z-20 pointer-events-none"
         style={{
-          height: 130,
+          height: 90,
           background: "linear-gradient(to top, #111115 20%, transparent 100%)",
         }}
       />
