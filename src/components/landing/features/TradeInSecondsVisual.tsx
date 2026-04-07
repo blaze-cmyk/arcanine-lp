@@ -17,7 +17,7 @@ const TradeInSecondsVisual = () => {
           }
           return prev - 1;
         });
-      }, 60);
+      }, 30);
     } else {
       if (intervalRef.current) clearInterval(intervalRef.current);
       setCountdown(30);
