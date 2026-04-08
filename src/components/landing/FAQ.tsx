@@ -18,7 +18,7 @@ const FAQItem = ({ questionKey, answerKey }: { questionKey: string; answerKey: s
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-border">
+    <div className="border-b border-border/50">
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between py-6 text-left group">
         <span className="text-lg font-medium text-foreground pr-8">{t(questionKey)}</span>
         <span className="text-muted-foreground flex-shrink-0 transition-transform duration-200">
