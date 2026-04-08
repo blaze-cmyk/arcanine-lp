@@ -20,9 +20,15 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="relative z-50 pt-3 mx-auto">
-      <div className="rounded-2xl transition-all duration-300">
-        <div className="flex items-center justify-between h-14 px-5">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "backdrop-blur-xl bg-background/60 border-b border-border/40"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="max-w-8xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-14 px-1">
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-12">
             <div className="flex items-center gap-0">
@@ -30,7 +36,7 @@ const Navbar = () => {
               <span className="text-lg font-bold tracking-tight font-display text-foreground">Arcanine</span>
             </div>
 
-            {/* Desktop links — next to logo */}
+            {/* Desktop links */}
             <div className="hidden md:flex items-center gap-6">
               {links.map((link) => (
                 <a
@@ -44,7 +50,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Right: Get Demo + Log In + Sign Up */}
+          {/* Right: Demo + Log In + Sign Up */}
           <div className="hidden md:flex items-center gap-2">
             <button className="py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 px-[8px]">
               Demo Account
@@ -66,7 +72,7 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-border/30 mx-5 pt-4 flex flex-col gap-3">
+          <div className="md:hidden pb-4 border-t border-border/30 mx-1 pt-4 flex flex-col gap-3">
             {links.map((link) => (
               <a
                 key={link.label}
