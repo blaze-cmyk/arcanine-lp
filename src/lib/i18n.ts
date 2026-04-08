@@ -40,7 +40,7 @@ import af from "@/locales/af.json";
 import tg from "@/locales/tg.json";
 import az from "@/locales/az.json";
 import uz from "@/locales/uz.json";
-import hy from "@/locales/hy.json";
+
 import ka from "@/locales/ka.json";
 import ur from "@/locales/ur.json";
 import cs from "@/locales/cs.json";
@@ -97,7 +97,7 @@ export const LANGUAGES = [
   { code: "tg", name: "Тоҷикӣ" },
   { code: "az", name: "Azərbaycan" },
   { code: "uz", name: "Ўзбекча" },
-  { code: "hy", name: "հայերեն" },
+  
   { code: "ka", name: "ქართული" },
   { code: "ur", name: "اردو", dir: "rtl" as const },
   { code: "cs", name: "Čeština" },
@@ -132,7 +132,7 @@ const resources: Record<string, { translation: Record<string, unknown> }> = {
   ky: { translation: ky }, kk: { translation: kk }, nl: { translation: nl },
   yo: { translation: yo }, ig: { translation: ig }, ha: { translation: ha },
   af: { translation: af }, tg: { translation: tg }, az: { translation: az },
-  uz: { translation: uz }, hy: { translation: hy }, ka: { translation: ka },
+  uz: { translation: uz }, ka: { translation: ka },
   ur: { translation: ur }, cs: { translation: cs }, hu: { translation: hu },
   sv: { translation: sv }, no: { translation: no }, da: { translation: da },
   fi: { translation: fi }, sk: { translation: sk }, bg: { translation: bg },
