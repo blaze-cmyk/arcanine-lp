@@ -44,7 +44,7 @@ const LiveActivity = () => {
                 opacity: 1 - i * 0.12,
               }}
             >
-              <span className={`font-mono-num font-bold text-lg ${trade.profit ? "text-profit" : "text-loss"}`}>
+              <span className={`font-display tabular-nums font-bold text-lg ${trade.profit ? "text-profit" : "text-loss"}`}>
                 {trade.amount}
               </span>
               <span className="text-sm text-muted-foreground font-medium">{trade.user}</span>

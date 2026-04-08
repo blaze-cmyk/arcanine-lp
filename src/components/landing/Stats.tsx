@@ -180,7 +180,7 @@ const ReviewCard = ({
         </div>
         <span className="text-sm font-medium text-foreground/80">{review.name}</span>
       </div>
-      <span className="text-xs font-mono-num font-semibold text-profit">{review.profit}</span>
+      <span className="text-xs font-display tabular-nums font-semibold text-profit">{review.profit}</span>
     </div>
   </div>
 );

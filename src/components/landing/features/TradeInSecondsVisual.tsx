@@ -47,7 +47,7 @@ const TradeInSecondsVisual = () => {
           }}
         >
           <span className="text-[10px] text-muted-foreground">BTC/USD</span>
-          <span className="text-xs font-mono-num font-bold text-foreground">$67,432</span>
+          <span className="text-xs font-display tabular-nums font-bold text-foreground">$67,432</span>
         </div>
 
         {/* Timer */}

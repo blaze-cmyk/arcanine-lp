@@ -130,7 +130,7 @@ const LiveWins = () => {
                 <span className="text-[10px] text-muted-foreground truncate">{win.user}</span>
                 <div className="flex items-center gap-0.5">
                   <TrendingUp size={9} className="text-profit" />
-                  <span className="text-xs font-bold font-mono-num text-profit">{win.amount}</span>
+                  <span className="text-xs font-bold font-display tabular-nums text-profit">{win.amount}</span>
                 </div>
               </div>
             </div>

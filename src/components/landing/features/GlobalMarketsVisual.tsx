@@ -51,12 +51,12 @@ const GlobalMarketsVisual = () => {
             {/* Asset name + price */}
             <div className="flex-1 min-w-0">
               <span className="text-[11px] font-semibold text-foreground block leading-tight">{asset.name}</span>
-              <span className="text-[10px] font-mono text-muted-foreground">${asset.price}</span>
+              <span className="text-[10px] font-display tabular-nums text-muted-foreground">${asset.price}</span>
             </div>
 
             {/* Change */}
             <span
-              className="text-[10px] font-mono font-semibold min-w-[48px] text-right"
+              className="text-[10px] font-display tabular-nums font-semibold min-w-[48px] text-right"
               style={{ color: asset.up ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
             >
               {asset.change}

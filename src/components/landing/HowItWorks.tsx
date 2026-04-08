@@ -18,7 +18,7 @@ const steps = [
             }}
           >
             <span className="text-muted-foreground text-xs tracking-wider uppercase block mb-2">Amount</span>
-            <span className="font-mono text-3xl font-bold text-foreground">$250</span>
+            <span className="font-display tabular-nums text-3xl font-bold text-foreground">$250</span>
           </div>
           {/* Floating chips */}
           <div
@@ -117,7 +117,7 @@ const steps = [
             <span className="text-xs tracking-wider uppercase block mb-2" style={{ color: "hsl(var(--profit))" }}>
               Profit
             </span>
-            <span className="font-mono text-3xl font-bold" style={{ color: "hsl(var(--profit))" }}>
+            <span className="font-display tabular-nums text-3xl font-bold" style={{ color: "hsl(var(--profit))" }}>
               +$350
             </span>
           </div>
@@ -134,7 +134,7 @@ const steps = [
           </div>
           {/* Timer */}
           <div
-            className="absolute -bottom-3 right-0 rounded-lg px-3 py-1.5 text-xs font-mono"
+            className="absolute -bottom-3 right-0 rounded-lg px-3 py-1.5 text-xs font-display tabular-nums"
             style={{
               background: "hsl(var(--card))",
               border: "1px solid hsl(var(--border) / 0.5)",

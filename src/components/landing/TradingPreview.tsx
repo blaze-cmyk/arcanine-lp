@@ -155,10 +155,10 @@ const TradingPreview = () => {
 
             {/* Price display */}
             <div className="flex items-baseline gap-3">
-              <span className="font-mono-num text-4xl font-bold">
+              <span className="font-display tabular-nums text-4xl font-bold">
                 {activeAsset === "EUR/USD" ? "" : "$"}{currentPrices[activeAsset]?.toFixed(DECIMALS[activeAsset])}
               </span>
-              <span className="text-profit text-sm font-semibold font-mono-num">+0.42%</span>
+              <span className="text-profit text-sm font-semibold font-display tabular-nums">+0.42%</span>
             </div>
 
             {/* Chart */}
@@ -171,7 +171,7 @@ const TradingPreview = () => {
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Amount</span>
-                  <span className="font-mono-num font-semibold">₹{amount}</span>
+                  <span className="font-display tabular-nums font-semibold">₹{amount}</span>
                 </div>
                 <input
                   type="range"
@@ -188,7 +188,7 @@ const TradingPreview = () => {
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Timer</span>
-                  <span className="font-mono-num font-semibold">{timer}s</span>
+                  <span className="font-display tabular-nums font-semibold">{timer}s</span>
                 </div>
                 <div className="flex gap-2">
                   {[15, 30, 60].map(t => (
@@ -231,7 +231,7 @@ const TradingPreview = () => {
                   className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/40 animate-slide-up"
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
-                  <span className={`font-mono-num font-bold text-sm ${item.profit ? "text-profit" : "text-loss"}`}>
+                  <span className={`font-display tabular-nums font-bold text-sm ${item.profit ? "text-profit" : "text-loss"}`}>
                     {item.amount}
                   </span>
                   <span className="text-xs text-muted-foreground">{item.user}</span>

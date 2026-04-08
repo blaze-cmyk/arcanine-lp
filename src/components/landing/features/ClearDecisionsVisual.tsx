@@ -88,13 +88,13 @@ const ClearDecisionsVisual = () => {
         >
           <span className="text-[9px] uppercase tracking-widest text-muted-foreground">EUR / USD</span>
           <span
-            className="text-xl font-mono-num font-bold tabular-nums transition-colors duration-300"
+            className="text-xl font-display tabular-nums font-bold tabular-nums transition-colors duration-300"
             style={{ color: picked ? (isPositive ? "hsl(var(--profit))" : "hsl(var(--loss))") : "hsl(var(--foreground))" }}
           >
             {currentPrice}
           </span>
           <span
-            className="text-[10px] font-mono-num transition-all duration-300"
+            className="text-[10px] font-display tabular-nums transition-all duration-300"
             style={{
               color: isPositive ? "hsl(var(--profit))" : "hsl(var(--loss))",
               opacity: picked ? 1 : 0.5,
