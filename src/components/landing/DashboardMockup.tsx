@@ -539,7 +539,7 @@ const DashboardMockup = () => {
   return (
     <div className="flex h-[500px] sm:h-[560px] bg-[#0f1113] rounded-none overflow-hidden select-none text-[#f5f5f7]">
       {/* Sidebar */}
-      <div className="hidden sm:flex w-[52px] flex-col items-center py-3 bg-card border-r border-border flex-shrink-0">
+      <div className="hidden sm:flex w-[52px] flex-col items-center py-3 bg-card border-r border-border/40 flex-shrink-0">
         {SIDEBAR_ITEMS.map((item) => {
           const Icon = item.icon;
           return (
@@ -559,11 +559,11 @@ const DashboardMockup = () => {
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Balance header */}
-        <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border bg-card">
+        <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border/40 bg-card">
           <div className="flex items-center gap-1.5 mr-auto">
             <img src={logo} alt="Arcanine" className="h-7 w-auto" />
           </div>
-          <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
+          <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border/40">
             <div className="text-left">
               <div className="text-[7px] text-primary font-bold uppercase tracking-wider">DEMO ACCOUNT</div>
               <div className="text-[11px] font-bold text-foreground font-display tabular-nums">$10,000.00</div>
@@ -651,9 +651,9 @@ const DashboardMockup = () => {
           </div>
 
           {/* Trade panel (right) */}
-          <div className="hidden md:flex w-[220px] flex-col bg-card border-l border-border flex-shrink-0 overflow-hidden">
+          <div className="hidden md:flex w-[220px] flex-col bg-card border-l border-border/40 flex-shrink-0 overflow-hidden">
             {/* Pair info */}
-            <div className="px-2.5 py-2 border-b border-border">
+            <div className="px-2.5 py-2 border-b border-border/30">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-foreground text-[10px]">{currentAsset.symbol}</span>
                 <span className="text-primary text-[10px] font-bold">{currentAsset.payout}%</span>
@@ -664,8 +664,8 @@ const DashboardMockup = () => {
             </div>
 
             {/* Time selector */}
-            <div className="px-2.5 py-2 border-b border-border">
-              <fieldset className="border border-border rounded-md px-2 pb-1.5 pt-0">
+            <div className="px-2.5 py-2 border-b border-border/30">
+              <fieldset className="border border-border/40 rounded-md px-2 pb-1.5 pt-0">
                 <legend className="text-[8px] text-muted-foreground px-0.5">Time</legend>
                 <div className="flex items-center gap-1">
                   <button
@@ -686,8 +686,8 @@ const DashboardMockup = () => {
             </div>
 
             {/* Investment */}
-            <div className="px-2.5 py-2 border-b border-border">
-              <fieldset className="border border-border rounded-md px-2 pb-1.5 pt-0">
+            <div className="px-2.5 py-2 border-b border-border/30">
+              <fieldset className="border border-border/40 rounded-md px-2 pb-1.5 pt-0">
                 <legend className="text-[8px] text-muted-foreground px-0.5">Investment</legend>
                 <div className="flex items-center gap-1">
                   <button
@@ -730,7 +730,7 @@ const DashboardMockup = () => {
             </div>
 
             {/* Trades / Orders tabs */}
-            <div className="border-t border-border mt-auto flex-1 flex flex-col">
+            <div className="border-t border-border/30 mt-auto flex-1 flex flex-col">
               <div className="flex">
                 <button className="flex-1 py-1.5 text-[9px] font-bold text-primary border-b-2 border-primary">
                   Trades
