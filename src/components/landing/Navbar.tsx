@@ -42,7 +42,7 @@ const Navbar = () => {
         }}
       />
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <div className="relative flex items-center justify-between h-[4.5rem] px-1">
+        <div className="relative flex items-center justify-between h-[5.5rem] px-1">
           {/* Left: Logo */}
           <div className="flex items-center gap-0">
             <img src={logo} alt="Arcanine" className="w-14 h-14" />
@@ -50,7 +50,7 @@ const Navbar = () => {
           </div>
 
           {/* Center: Desktop links */}
-          <div className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 px-1.5 py-1.5 rounded-full border border-border/50 bg-background/40 backdrop-blur-md">
+          <div className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 px-1.5 py-1.5 rounded-full border border-border bg-muted/60 backdrop-blur-xl shadow-[0_0_20px_rgba(0,0,0,0.3)]">
             {links.map((link) => (
               <a
                 key={link.label}
