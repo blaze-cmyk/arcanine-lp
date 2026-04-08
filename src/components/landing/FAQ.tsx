@@ -37,12 +37,12 @@ const FAQ = () => {
 
   return (
     <section id="frequently-asked-questions" className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
-      {/* Top gradient separator */}
-      <div className="absolute top-0 left-0 right-0 flex justify-center">
+      {/* Top gradient separator — downward-facing glow */}
+      <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
         <div
-          className="w-full max-w-4xl h-px"
+          className="w-full max-w-3xl h-24"
           style={{
-            background: "radial-gradient(ellipse at center, rgba(255,106,0,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse 50% 100% at 50% 0%, rgba(255,106,0,0.07) 0%, transparent 100%)",
           }}
         />
       </div>
