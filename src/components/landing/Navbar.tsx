@@ -50,13 +50,13 @@ const Navbar = () => {
           </div>
 
           {/* Center: Desktop links */}
-          <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+          <div className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 px-1.5 py-1.5 rounded-full border border-border/50 bg-background/40 backdrop-blur-md">
             {links.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm font-medium font-display text-foreground/80 hover:text-foreground transition-colors duration-200"
+                className="text-sm font-medium font-display text-foreground/70 hover:text-foreground hover:bg-muted/50 px-4 py-1.5 rounded-full transition-all duration-200"
               >
                 {link.label}
               </a>
