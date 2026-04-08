@@ -6,40 +6,16 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
-      {/* Soft gradient globs */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Top-left warm orange blob */}
-        <div
-          className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] rounded-full opacity-[0.07]"
-          style={{ background: "radial-gradient(circle, hsl(24 100% 50%) 0%, transparent 70%)", filter: "blur(100px)" }}
-        />
-        {/* Top-right cool blue/purple blob */}
-        <div
-          className="absolute -top-[10%] -right-[8%] w-[500px] h-[500px] rounded-full opacity-[0.05]"
-          style={{ background: "radial-gradient(circle, hsl(260 60% 55%) 0%, transparent 70%)", filter: "blur(120px)" }}
-        />
-        {/* Center warm glow behind content */}
-        <div
-          className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full opacity-[0.04]"
-          style={{ background: "radial-gradient(ellipse, hsl(24 90% 55%) 0%, transparent 65%)", filter: "blur(80px)" }}
-        />
-        {/* Bottom-left teal accent */}
-        <div
-          className="absolute bottom-[10%] -left-[5%] w-[400px] h-[400px] rounded-full opacity-[0.04]"
-          style={{ background: "radial-gradient(circle, hsl(160 45% 50%) 0%, transparent 70%)", filter: "blur(100px)" }}
-        />
-      </div>
-
       {/* Grid with aggressive radial fade — visible only near center */}
-      <div className="absolute inset-0 pointer-events-none z-[1]">
+      <div className="absolute inset-0 pointer-events-none z-0">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
             backgroundSize: "72px 72px",
-            maskImage: "radial-gradient(ellipse 55% 50% at 50% 38%, black 0%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 55% 50% at 50% 38%, black 0%, transparent 100%)",
+            maskImage: "radial-gradient(ellipse 50% 45% at 50% 38%, black 0%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse 50% 45% at 50% 38%, black 0%, transparent 100%)",
           }}
         />
       </div>
