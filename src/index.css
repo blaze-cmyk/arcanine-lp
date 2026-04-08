@@ -7,7 +7,7 @@
 
 @layer base {
   :root {
-    --background: 240 10% 4%;
+    --background: 240 6% 7%;
     --foreground: 240 5% 96%;
 
     --card: 240 8% 7%;
@@ -58,7 +58,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-color: #0B0B0E;
+    background-color: #111118;
   }
 
   h1, h2, h3, h4, h5, h6 {
