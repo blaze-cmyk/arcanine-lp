@@ -37,12 +37,14 @@ const FAQ = () => {
 
   return (
     <section id="frequently-asked-questions" className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
-      {/* Top gradient separator — downward-facing glow */}
-      <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
+      {/* Top gradient separator — downward-facing light */}
+      <div className="absolute top-0 left-0 right-0 pointer-events-none">
         <div
-          className="w-full max-w-3xl h-24"
+          className="w-full h-32"
           style={{
-            background: "radial-gradient(ellipse 50% 100% at 50% 0%, rgba(255,106,0,0.07) 0%, transparent 100%)",
+            background: "linear-gradient(180deg, rgba(255,106,0,0.06) 0%, transparent 100%)",
+            maskImage: "linear-gradient(90deg, transparent 10%, black 30%, black 70%, transparent 90%)",
+            WebkitMaskImage: "linear-gradient(90deg, transparent 10%, black 30%, black 70%, transparent 90%)",
           }}
         />
       </div>
