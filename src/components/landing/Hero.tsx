@@ -8,7 +8,7 @@ const Hero = () => {
         {/* Top badge */}
         <div className="animate-slide-up inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full border border-border/40 bg-card/60 backdrop-blur-sm">
           <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold font-display">#1</span>
-          <span className="text-sm text-muted-foreground font-medium">The smarter way to trade binary options</span>
+          <span className="text-sm text-muted-foreground font-medium">Brought to you by Factual Capital Group</span>
         </div>
 
         {/* Headline */}
