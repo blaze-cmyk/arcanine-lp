@@ -29,14 +29,14 @@ const Navbar = () => {
     >
       {/* Fading bottom border */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-px transition-opacity duration-500"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[50%] h-px transition-opacity duration-500"
         style={{
-          background: "linear-gradient(90deg, transparent 0%, hsl(var(--border) / 0.5) 30%, hsl(var(--border) / 0.5) 70%, transparent 100%)",
+          background: "linear-gradient(90deg, transparent 0%, hsl(var(--border) / 0.5) 20%, hsl(var(--border) / 0.5) 80%, transparent 100%)",
           opacity: scrolled ? 1 : 0,
         }}
       />
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 px-1">
+        <div className="flex items-center justify-between h-[4.5rem] px-1">
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-12">
             <div className="flex items-center gap-0">
