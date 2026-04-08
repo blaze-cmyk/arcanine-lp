@@ -159,6 +159,49 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const crosshairRef = useRef<{ x: number; y: number } | null>(null);
   const animRef = useRef<number>(0);
+  const isHoveredRef = useRef(false);
+  const liveCandlesRef = useRef<Candle[]>([]);
+  const lastTickRef = useRef<number>(0);
+  const growingCandleRef = useRef<Candle | null>(null);
+
+  // Generate a new candle tick for live movement
+  const tickLiveCandle = useCallback(() => {
+    const asset = ASSETS[assetIndex];
+    const base = getCandlesForAsset(assetIndex);
+    const allCandles = [...base, ...liveCandlesRef.current];
+    const lastCandle = allCandles[allCandles.length - 1];
+
+    if (!growingCandleRef.current) {
+      // Start a new candle
+      const open = lastCandle.c;
+      growingCandleRef.current = {
+        o: open,
+        h: open,
+        l: open,
+        c: open,
+        time: lastCandle.time + 60,
+      };
+    }
+
+    // Simulate a price tick on the growing candle
+    const gc = growingCandleRef.current;
+    const direction = (Math.random() - 0.47) * asset.volatility * 0.15;
+    gc.c += direction;
+    gc.h = Math.max(gc.h, gc.c);
+    gc.l = Math.min(gc.l, gc.c);
+  }, [assetIndex]);
+
+  // Finalize current growing candle and start next
+  const finalizeLiveCandle = useCallback(() => {
+    if (growingCandleRef.current) {
+      liveCandlesRef.current = [...liveCandlesRef.current, growingCandleRef.current];
+      // Keep max 20 live candles to avoid endless growth
+      if (liveCandlesRef.current.length > 20) {
+        liveCandlesRef.current = liveCandlesRef.current.slice(-20);
+      }
+      growingCandleRef.current = null;
+    }
+  }, []);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -174,23 +217,30 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     canvas.height = height * dpr;
     ctx.scale(dpr, dpr);
 
-    const candles = getCandlesForAsset(assetIndex);
+    // Merge base + live + growing candles
+    const baseCandles = getCandlesForAsset(assetIndex);
+    const allCandles = [
+      ...baseCandles,
+      ...liveCandlesRef.current,
+      ...(growingCandleRef.current ? [growingCandleRef.current] : []),
+    ];
+
     const step = CANDLE_WIDTH_BASE + CANDLE_GAP;
     const candleW = CANDLE_WIDTH_BASE;
     const chartWidth = width - PRICE_SCALE_WIDTH;
 
     // Calculate visible range
-    const totalWidth = candles.length * step;
+    const totalWidth = allCandles.length * step;
     const effectiveOffset = totalWidth - chartWidth + step * 8;
     const startIdx = Math.max(0, Math.floor(effectiveOffset / step) - 2);
-    const endIdx = Math.min(candles.length - 1, Math.ceil((effectiveOffset + chartWidth) / step) + 2);
+    const endIdx = Math.min(allCandles.length - 1, Math.ceil((effectiveOffset + chartWidth) / step) + 2);
 
     // Price range
     let minPrice = Infinity,
       maxPrice = -Infinity;
-    for (let i = startIdx; i <= endIdx && i < candles.length; i++) {
-      if (candles[i].l < minPrice) minPrice = candles[i].l;
-      if (candles[i].h > maxPrice) maxPrice = candles[i].h;
+    for (let i = startIdx; i <= endIdx && i < allCandles.length; i++) {
+      if (allCandles[i].l < minPrice) minPrice = allCandles[i].l;
+      if (allCandles[i].h > maxPrice) maxPrice = allCandles[i].h;
     }
     const padding = (maxPrice - minPrice) * 0.06;
     minPrice -= padding;
@@ -241,8 +291,8 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     }
 
     // Draw candles
-    for (let i = startIdx; i <= endIdx && i < candles.length; i++) {
-      const candle = candles[i];
+    for (let i = startIdx; i <= endIdx && i < allCandles.length; i++) {
+      const candle = allCandles[i];
       const x = i * step - effectiveOffset;
       const centerX = x + step / 2;
       if (centerX < -candleW * 2 || centerX > chartWidth + candleW * 2) continue;
@@ -268,7 +318,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
       ctx.fillRect(Math.round(centerX - candleW / 2), Math.round(bodyTop), Math.round(candleW), Math.round(bodyHeight));
 
       // Live timer badge on last candle
-      if (i === candles.length - 1) {
+      if (i === allCandles.length - 1) {
         const livePriceY = priceToY(candle.c);
         const badgeW2 = 40,
           badgeH2 = 16;
@@ -290,7 +340,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     }
 
     // Current price line
-    const lastPrice = candles[candles.length - 1].c;
+    const lastPrice = allCandles[allCandles.length - 1].c;
     const priceY = priceToY(lastPrice);
     ctx.strokeStyle = COLORS.priceLine;
     ctx.lineWidth = 1;
@@ -309,42 +359,6 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.lineTo(chartWidth - 6, priceY + 4);
     ctx.closePath();
     ctx.fill();
-
-    // "Beginning of trade" preview line
-    const tradeStartIdx = candles.length - 1;
-    const tradeStartX = tradeStartIdx * step - effectiveOffset + step / 2;
-    if (tradeStartX > 0 && tradeStartX < chartWidth) {
-      ctx.strokeStyle = COLORS.priceLine;
-      ctx.lineWidth = 1;
-      ctx.setLineDash([5, 4]);
-      ctx.beginPath();
-      ctx.moveTo(tradeStartX, PADDING_TOP);
-      ctx.lineTo(tradeStartX, height - TIME_SCALE_HEIGHT);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-
-    // "End of trade" preview line
-    const tradeEndX = tradeStartX + step * 10;
-    if (tradeEndX > 0 && tradeEndX < chartWidth + 50) {
-      ctx.strokeStyle = "rgba(160, 170, 190, 0.35)";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([]);
-      ctx.beginPath();
-      ctx.moveTo(tradeEndX, PADDING_TOP);
-      ctx.lineTo(tradeEndX, height - TIME_SCALE_HEIGHT);
-      ctx.stroke();
-
-      ctx.fillStyle = "rgba(160, 170, 190, 0.5)";
-      ctx.font = "10px 'Inter', sans-serif";
-      ctx.textAlign = "left";
-      ctx.textBaseline = "bottom";
-      ctx.fillText("End of trade", tradeEndX + 6, PADDING_TOP - 4);
-
-      // Stop square
-      ctx.fillStyle = "rgba(160, 170, 190, 0.4)";
-      ctx.fillRect(tradeEndX - 4, PADDING_TOP - 17, 8, 8);
-    }
 
     // Price scale
     ctx.fillStyle = COLORS.priceScaleBg;
@@ -395,16 +409,16 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     for (let i = startIdx; i <= endIdx; i++) {
-      if (i % timeStep !== 0 || i >= candles.length) continue;
+      if (i % timeStep !== 0 || i >= allCandles.length) continue;
       const x = i * step - effectiveOffset + step / 2;
       if (x < 20 || x > chartWidth - 20) continue;
-      const date = new Date(candles[i].time * 1000);
+      const date = new Date(allCandles[i].time * 1000);
       const label = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
       ctx.fillText(label, x, height - TIME_SCALE_HEIGHT / 2);
     }
 
     // Glow dot at current price
-    const dotX = (candles.length - 1) * step - effectiveOffset + step / 2;
+    const dotX = (allCandles.length - 1) * step - effectiveOffset + step / 2;
     ctx.beginPath();
     ctx.arc(dotX, priceY, 3.5, 0, Math.PI * 2);
     ctx.fillStyle = COLORS.priceLine;
@@ -445,8 +459,8 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
 
       // Time label on crosshair
       const candleIdx = Math.round((ch.x + effectiveOffset) / step);
-      if (candleIdx >= 0 && candleIdx < candles.length) {
-        const date = new Date(candles[candleIdx].time * 1000);
+      if (candleIdx >= 0 && candleIdx < allCandles.length) {
+        const date = new Date(allCandles[candleIdx].time * 1000);
         const timeLabel = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
         const timeLabelW = 48;
         const timeLabelH = 18;
@@ -461,15 +475,39 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
   }, [assetIndex]);
 
   useEffect(() => {
+    let tickInterval: ReturnType<typeof setInterval> | null = null;
+    let candleInterval: ReturnType<typeof setInterval> | null = null;
+
     const loop = () => {
+      // Tick the growing candle rapidly while hovered
+      if (isHoveredRef.current) {
+        const now = performance.now();
+        if (now - lastTickRef.current > 80) {
+          tickLiveCandle();
+          lastTickRef.current = now;
+        }
+      }
       draw();
       animRef.current = requestAnimationFrame(loop);
     };
     animRef.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animRef.current);
-  }, [draw]);
+
+    // Finalize a candle every 1.5s while hovered
+    candleInterval = setInterval(() => {
+      if (isHoveredRef.current && growingCandleRef.current) {
+        finalizeLiveCandle();
+      }
+    }, 1500);
+
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      if (tickInterval) clearInterval(tickInterval);
+      if (candleInterval) clearInterval(candleInterval);
+    };
+  }, [draw, tickLiveCandle, finalizeLiveCandle]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    isHoveredRef.current = true;
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
     const x = e.clientX - rect.left;
@@ -479,6 +517,7 @@ const CandlestickChart = ({ assetIndex }: { assetIndex: number }) => {
   }, []);
 
   const handleMouseLeave = useCallback(() => {
+    isHoveredRef.current = false;
     crosshairRef.current = null;
   }, []);
 
