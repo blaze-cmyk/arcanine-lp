@@ -37,14 +37,24 @@ const FAQ = () => {
 
   return (
     <section id="frequently-asked-questions" className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
-      {/* Top gradient separator — downward-facing light */}
+      {/* Top gradient separator — bright line with downward glow */}
       <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
-        <div
-          className="w-full max-w-2xl h-28"
-          style={{
-            background: "radial-gradient(ellipse 80% 100% at 50% 0%, rgba(255,106,0,0.07) 0%, transparent 100%)",
-          }}
-        />
+        <div className="relative w-full max-w-3xl">
+          {/* Bright thin line */}
+          <div
+            className="h-px"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(255,106,0,0.35) 0%, transparent 70%)",
+            }}
+          />
+          {/* Soft glow beneath */}
+          <div
+            className="h-24"
+            style={{
+              background: "radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255,106,0,0.06) 0%, transparent 100%)",
+            }}
+          />
+        </div>
       </div>
       
       <div className="max-w-4xl mx-auto">
