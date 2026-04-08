@@ -8,6 +8,7 @@ import Stats from "@/components/landing/Stats";
 import DemoCTA from "@/components/landing/DemoCTA";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Footer from "@/components/landing/Footer";
+import SpotlightDivider from "@/components/landing/SpotlightDivider";
 
 const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden relative">
@@ -30,6 +31,7 @@ const Index = () => (
     <HowItWorks />
     <FairnessLogic />
     <Stats />
+    <SpotlightDivider />
     <FAQ />
     <DemoCTA />
     <Footer />
