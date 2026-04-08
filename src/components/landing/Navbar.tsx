@@ -14,10 +14,15 @@ const Navbar = () => {
 
   const links = [
     { label: "How it works", href: "#how-it-works" },
-    { label: "Pricing", href: "#pricing" },
     { label: "Testimonials", href: "#testimonials" },
     { label: "FAQ", href: "#faq" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <nav
