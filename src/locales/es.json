@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Cómo funciona",
+    "testimonials": "Testimonios",
+    "faq": "Preguntas frecuentes",
+    "demoAccount": "Cuenta Demo",
+    "logIn": "Iniciar sesión",
+    "signUp": "Registrarse"
+  },
+  "hero": {
+    "badge": "Presentado por Factual Capital Group",
+    "badgeRank": "#1",
+    "headline": "Predice el próximo movimiento del mercado",
+    "subhead": "Toma una posición en la dirección del precio, arriba o abajo, y ve los resultados en segundos. Una forma simple y rápida de operar en mercados globales.",
+    "createAccount": "Crear una cuenta",
+    "tryDemo": "Prueba gratis",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Ganancias en Vivo"
+  },
+  "features": {
+    "heading": "Diseñado para velocidad y claridad",
+    "subheading": "Arcanine ofrece una experiencia de trading con ejecución rápida, pagos transparentes y toma de decisiones sin esfuerzo.",
+    "tradeInSeconds": "Opera en segundos",
+    "tradeInSecondsDesc": "Los resultados se resuelven rápidamente, sin esperas ni complejidad.",
+    "clearPayouts": "Pagos cristalinos",
+    "clearPayoutsDesc": "Sabe exactamente cuánto puedes ganar antes de comprometerte. Sin comisiones ocultas, sin sorpresas.",
+    "clearDecisions": "Decisiones claras",
+    "clearDecisionsDesc": "Un sistema directo de subir o bajar, sin herramientas innecesarias.",
+    "globalMarkets": "Mercados globales",
+    "globalMarketsDesc": "Opera en múltiples activos, en cualquier momento, desde cualquier lugar."
+  },
+  "howItWorks": {
+    "eyebrow": "De cero a ganancia",
+    "heading": "Tres movimientos.",
+    "headingLine2": "Un resultado.",
+    "subheading": "Sin gráficos que estudiar. Sin jerga que aprender. Solo una decisión simple que rinde en segundos.",
+    "step1Title": "Establece tu apuesta",
+    "step1Desc": "Elige cuánto invertir — de $1 a $10,000. Siempre controlas tu riesgo.",
+    "step2Title": "Predice el movimiento",
+    "step2Desc": "¿El precio subirá o bajará? Elige una dirección y establece tu plazo. Eso es todo.",
+    "step3Title": "Cobra al instante",
+    "step3Desc": "Obtén resultados en segundos. Las ganancias llegan a tu cuenta inmediatamente — sin esperas, sin retrasos.",
+    "amount": "Monto",
+    "min": "Mín $1",
+    "up": "Arriba",
+    "down": "Abajo",
+    "profit": "Ganancia",
+    "settled": "Liquidado"
+  },
+  "fairness": {
+    "heading": "Depósito Transparente",
+    "headingLine2": "Retiro Rápido",
+    "description": "Transfiere de forma segura con métodos de pago conocidos. Los depósitos son instantáneos, los retiros llegan en minutos — no días.",
+    "cta": "Comenzar a Operar"
+  },
+  "stats": {
+    "heading": "Confiado por traders",
+    "headingLine2": "en todo el mundo",
+    "subheading": "Únete a miles que ya están ganando con Arcanine",
+    "activeTraders": "Traders activos",
+    "countries": "Países",
+    "tradingAssets": "Activos de trading",
+    "monthlyPayouts": "Pagos mensuales"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Preguntas frecuentes",
+    "contactPrompt": "¿No encontraste lo que buscas?",
+    "contactLink": "Contáctanos.",
+    "q1": "¿Qué es el trading de opciones binarias?",
+    "a1": "El trading de opciones binarias es un instrumento financiero que te permite predecir si el precio de un activo subirá o bajará dentro de un período específico. Si tu predicción es correcta, obtienes un retorno fijo sobre tu inversión.",
+    "q2": "¿Cómo empiezo?",
+    "a2": "Regístrate para una cuenta gratuita, completa un proceso rápido de verificación y deposita fondos para comenzar a operar.",
+    "q3": "¿Qué activos puedo operar?",
+    "a3": "Puedes operar una amplia gama de activos incluyendo pares de divisas forex, criptomonedas, acciones, materias primas e índices.",
+    "q4": "¿Qué tan rápido se procesan los retiros?",
+    "a4": "Las solicitudes de retiro se procesan normalmente en 1–2 días hábiles.",
+    "q5": "¿Mi dinero está seguro en la plataforma?",
+    "a5": "Usamos encriptación de grado bancario y cuentas de clientes segregadas para asegurar que tus fondos estén siempre protegidos.",
+    "q6": "¿Cuál es el monto mínimo de depósito?",
+    "a6": "El depósito mínimo varía por método de pago pero comienza desde tan solo $10.",
+    "q7": "¿Puedo practicar sin arriesgar dinero real?",
+    "a7": "¡Sí! Ofrecemos una cuenta demo completa con $10,000 en fondos virtuales.",
+    "q8": "¿Qué plazos de trading están disponibles?",
+    "a8": "Soportamos una variedad de tiempos de expiración que van desde 60 segundos hasta varias horas."
+  },
+  "demo": {
+    "heading": "Opera gráficos en vivo con",
+    "headingLine2": "fondos virtuales",
+    "bullet1": "$10,000 precargados en tu cuenta demo",
+    "bullet2": "Recargas de saldo ilimitadas en cualquier momento",
+    "cta": "Probar cuenta demo"
+  },
+  "footer": {
+    "description": "Una plataforma de opciones binarias de próxima generación construida para velocidad, transparencia y trading preciso en mercados globales.",
+    "copyright": "© {{year}} Arcanine. Todos los derechos reservados.",
+    "quickMenu": "Menú Rápido",
+    "howItWorks": "Cómo Funciona",
+    "assetIndex": "Índice de Activos",
+    "tradingTerminal": "Terminal de Trading",
+    "demoAccount": "Cuenta Demo",
+    "faqs": "Preguntas Frecuentes",
+    "support": "Soporte",
+    "information": "Información",
+    "termsOfService": "Términos de Servicio",
+    "privacyPolicy": "Política de Privacidad",
+    "amlKyc": "Política AML y KYC",
+    "responsibleTrading": "Trading Responsable",
+    "acceptedPayments": "Pagos Aceptados",
+    "riskWarningTitle": "ADVERTENCIA DE INVERSIÓN DE ALTO RIESGO:",
+    "riskWarningText": "El trading de opciones binarias implica un riesgo significativo y puede no ser adecuado para todos los inversores.",
+    "riskDisclosureTitle": "Divulgación de Riesgos:",
+    "riskDisclosureText": "Las opciones binarias son instrumentos financieros complejos.",
+    "noGuarantee": "Sin Garantía de Ganancia:",
+    "noGuaranteeText": "No hay garantía de que cualquier estrategia genere ganancias.",
+    "notAdvice": "No es Asesoramiento Financiero:",
+    "notAdviceText": "El contenido proporcionado es solo para fines educativos e informativos.",
+    "eligibilityTitle": "Elegibilidad y Cumplimiento:",
+    "eligibilityText": "Los servicios están restringidos a usuarios mayores de 18 años.",
+    "liabilityTitle": "Limitación de Responsabilidad:",
+    "liabilityText": "Arcanine no será responsable de pérdidas directas, indirectas o consecuentes.",
+    "highRisk": "Producto de Alto Riesgo",
+    "capitalAtRisk": "Capital en Riesgo",
+    "adultsOnly": "Solo 18+"
+  },
+  "riskWarning": {
+    "title": "Advertencia General de Riesgo",
+    "text1": "El trading de opciones binarias conlleva un alto nivel de riesgo y puede resultar en la pérdida de todo tu capital invertido.",
+    "text2": "Debes ser consciente de todos los riesgos asociados y buscar asesoramiento de un asesor financiero independiente si tienes dudas."
+  },
+  "trustStrip": {
+    "fast": "Ejecuta operaciones en milisegundos",
+    "secure": "Transacciones seguras",
+    "withdrawals": "Retiros rápidos",
+    "global": "Disponible globalmente"
+  }
+}
