@@ -29,19 +29,15 @@ const Index = () => (
       <Hero />
     </div>
     <LiveWins />
-    <SectionDivider />
     <ScrollRevealWrapper>
       <Features />
     </ScrollRevealWrapper>
     <SectionDivider />
     <HowItWorks />
-    <SectionDivider />
     <FairnessLogic />
-    <SectionDivider />
     <Stats />
     <SectionDivider />
     <FAQ />
-    <SectionDivider />
     <DemoCTA />
     <Footer />
     <BackToTop />
