@@ -91,7 +91,7 @@ const Stats = () => {
   }, []);
 
   return (
-    <section className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden" ref={ref} id="testimonials">
+    <section className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden" ref={ref} id="testimonials">
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(232,169,74,0.05) 0%, transparent 65%)" }} />
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 transition-all duration-700" style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}>

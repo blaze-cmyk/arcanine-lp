@@ -73,7 +73,7 @@ const DemoCTA = () => {
   const targets = [1, 0, 0, 0, 0];
 
   return (
-    <section id="demo" className="py-32 sm:py-40 px-4 sm:px-6">
+    <section id="demo" className="py-20 sm:py-28 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
         <h2 className="text-[3.75rem] font-bold tracking-[-0.02em] leading-[1] mb-16 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           {t("demo.heading")}

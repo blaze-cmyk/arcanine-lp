@@ -36,26 +36,7 @@ const FAQ = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="frequently-asked-questions" className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
-      {/* Top gradient separator — bright line with downward glow */}
-      <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
-        <div className="relative w-full max-w-3xl">
-          {/* Bright thin line — fades at edges */}
-          <div
-            className="h-px"
-            style={{
-              background: "linear-gradient(90deg, transparent 0%, rgba(255,106,0,0.4) 30%, rgba(255,106,0,0.4) 70%, transparent 100%)",
-            }}
-          />
-          {/* Soft glow beneath — also fades at edges */}
-          <div
-            className="h-24"
-            style={{
-              background: "radial-gradient(ellipse 40% 100% at 50% 0%, rgba(255,106,0,0.06) 0%, transparent 100%)",
-            }}
-          />
-        </div>
-      </div>
+    <section id="frequently-asked-questions" className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden">
       
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-14">
