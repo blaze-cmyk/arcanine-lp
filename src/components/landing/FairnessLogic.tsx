@@ -44,7 +44,7 @@ const FairnessLogic = () => {
   }, []);
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
+    <section ref={ref} className="relative py-12 sm:py-16 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Container card */}
         <div
