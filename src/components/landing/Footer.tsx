@@ -21,7 +21,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-background border-t border-border">
+    <footer className="bg-background border-t border-border/40">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="py-16 grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 md:gap-20">
           <div>
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border" />
+        <div className="border-t border-border/30" />
 
         <div className="py-8">
           <p className="text-xs font-semibold tracking-widest text-muted-foreground/60 uppercase mb-5">{t("footer.acceptedPayments")}</p>
@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border" />
+        <div className="border-t border-border/30" />
 
         <div className="py-10 space-y-6">
           <div>
@@ -99,7 +99,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border py-6">
+        <div className="border-t border-border/30 py-6">
           <div className="flex items-center gap-4 text-xs text-muted-foreground/50">
             <span>{t("footer.highRisk")}</span>
             <span>|</span>
