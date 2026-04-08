@@ -50,7 +50,7 @@ const Navbar = () => {
           </div>
 
           {/* Center: Desktop links */}
-          <div className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 px-1.5 py-1.5 rounded-full border border-border bg-muted/60 backdrop-blur-xl shadow-[0_0_20px_rgba(0,0,0,0.3)]">
+          <div className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 px-1.5 py-1.5 rounded-full border border-foreground/15 backdrop-blur-xl">
             {links.map((link) => (
               <a
                 key={link.label}
