@@ -6,30 +6,6 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
-      {/* Ambient lighting layer */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Primary orange glow — behind headline */}
-        <div
-          className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[900px] h-[700px]"
-          style={{
-            background: 'radial-gradient(ellipse 100% 80% at 50% 40%, hsla(24,100%,50%,0.07) 0%, hsla(24,100%,50%,0.03) 40%, transparent 70%)',
-          }}
-        />
-        {/* Secondary neutral glow — bottom right */}
-        <div
-          className="absolute bottom-[5%] right-[-5%] w-[600px] h-[500px]"
-          style={{
-            background: 'radial-gradient(ellipse 90% 80% at 60% 50%, hsla(0,0%,100%,0.04) 0%, hsla(0,0%,100%,0.015) 50%, transparent 75%)',
-          }}
-        />
-        {/* Noise grain overlay */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.03] mix-blend-overlay">
-          <filter id="heroNoise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#heroNoise)" />
-        </svg>
-      </div>
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <div className="animate-slide-up inline-flex items-center gap-3 mb-6 pl-2 pr-5 rounded-full border border-border/40 bg-card/60 backdrop-blur-sm py-[8px]">
           <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold tabular-nums">{t("hero.badgeRank")}</span>
