@@ -6,19 +6,6 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
-      {/* Grid with aggressive radial fade — visible only near center */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-            maskImage: "radial-gradient(ellipse 50% 45% at 50% 38%, black 0%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(ellipse 50% 45% at 50% 38%, black 0%, transparent 100%)",
-          }}
-        />
-      </div>
 
       {/* Noise texture */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.025] mix-blend-overlay">
