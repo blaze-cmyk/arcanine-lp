@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Como funciona",
+    "testimonials": "Depoimentos",
+    "faq": "FAQ",
+    "demoAccount": "Conta Demo",
+    "logIn": "Entrar",
+    "signUp": "Cadastrar"
+  },
+  "hero": {
+    "badge": "Apresentado pelo Factual Capital Group",
+    "badgeRank": "#1",
+    "headline": "Preveja o próximo movimento do mercado",
+    "subhead": "Tome uma posição na direção do preço, para cima ou para baixo, e veja os resultados em segundos. Uma maneira simples e rápida de negociar mercados globais.",
+    "createAccount": "Criar uma conta",
+    "tryDemo": "Experimente grátis",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Ganhos ao Vivo"
+  },
+  "features": {
+    "heading": "Projetado para velocidade e clareza",
+    "subheading": "Arcanine oferece uma experiência de negociação com execução rápida, pagamentos transparentes e tomada de decisão sem esforço.",
+    "tradeInSeconds": "Negocie em segundos",
+    "tradeInSecondsDesc": "Os resultados são resolvidos rapidamente, sem espera ou complexidade.",
+    "clearPayouts": "Pagamentos transparentes",
+    "clearPayoutsDesc": "Saiba exatamente quanto pode ganhar antes de se comprometer. Sem taxas ocultas, sem surpresas.",
+    "clearDecisions": "Decisões claras",
+    "clearDecisionsDesc": "Um sistema direto de subir ou descer, sem ferramentas desnecessárias.",
+    "globalMarkets": "Mercados globais",
+    "globalMarketsDesc": "Negocie em diversos ativos, a qualquer hora, de qualquer lugar."
+  },
+  "howItWorks": {
+    "eyebrow": "Do zero ao lucro",
+    "heading": "Três movimentos.",
+    "headingLine2": "Um resultado.",
+    "subheading": "Sem gráficos para estudar. Sem jargão para aprender. Apenas uma decisão simples que rende em segundos.",
+    "step1Title": "Defina sua aposta",
+    "step1Desc": "Escolha quanto investir — de $1 a $10.000. Você sempre controla seu risco.",
+    "step2Title": "Preveja o movimento",
+    "step2Desc": "O preço vai subir ou descer? Escolha uma direção e defina seu prazo. Só isso.",
+    "step3Title": "Receba instantaneamente",
+    "step3Desc": "Obtenha resultados em segundos. Os lucros chegam à sua conta imediatamente — sem espera, sem atrasos.",
+    "amount": "Valor",
+    "min": "Mín $1",
+    "up": "Subir",
+    "down": "Descer",
+    "profit": "Lucro",
+    "settled": "Liquidado"
+  },
+  "fairness": {
+    "heading": "Depósito Transparente",
+    "headingLine2": "Saque Rápido",
+    "description": "Transfira com segurança por métodos de pagamento conhecidos. Depósitos são instantâneos, saques chegam em minutos — não dias.",
+    "cta": "Começar a Negociar"
+  },
+  "stats": {
+    "heading": "Confiado por traders",
+    "headingLine2": "no mundo todo",
+    "subheading": "Junte-se a milhares que já estão ganhando com Arcanine",
+    "activeTraders": "Traders ativos",
+    "countries": "Países",
+    "tradingAssets": "Ativos de negociação",
+    "monthlyPayouts": "Pagamentos mensais"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Perguntas frequentes",
+    "contactPrompt": "Não encontrou o que procura?",
+    "contactLink": "Fale conosco.",
+    "q1": "O que é negociação de opções binárias?",
+    "a1": "A negociação de opções binárias é um instrumento financeiro que permite prever se o preço de um ativo vai subir ou descer dentro de um período específico. Se sua previsão estiver correta, você ganha um retorno fixo sobre seu investimento.",
+    "q2": "Como eu começo?",
+    "a2": "Cadastre-se para uma conta gratuita, complete um processo rápido de verificação e deposite fundos para começar a negociar. Também oferecemos uma conta demo com fundos virtuais para você praticar sem risco antes de negociar com dinheiro real.",
+    "q3": "Quais ativos posso negociar?",
+    "a3": "Você pode negociar uma ampla gama de ativos, incluindo pares de moedas forex, criptomoedas, ações, commodities e índices — tudo em uma única plataforma com dados de mercado em tempo real.",
+    "q4": "Quão rápido os saques são processados?",
+    "a4": "As solicitações de saque são normalmente processadas em 1–2 dias úteis. Dependendo do método de pagamento, os fundos podem levar 1–3 dias adicionais para aparecer na sua conta.",
+    "q5": "Meu dinheiro está seguro na plataforma?",
+    "a5": "Usamos criptografia de nível bancário e contas de clientes segregadas para garantir que seus fundos estejam sempre protegidos. Nossa plataforma é totalmente regulamentada e passa por auditorias de segurança regulares de terceiros.",
+    "q6": "Qual é o valor mínimo de depósito?",
+    "a6": "O depósito mínimo varia por método de pagamento, mas começa em apenas $10. Isso o torna acessível para iniciantes que querem começar pequeno e aumentar gradualmente sua atividade de negociação.",
+    "q7": "Posso praticar sem arriscar dinheiro real?",
+    "a7": "Sim! Oferecemos uma conta demo completa com $10.000 em fundos virtuais. Você pode praticar estratégias de negociação, explorar a plataforma e ganhar confiança antes de mudar para uma conta real.",
+    "q8": "Quais prazos de negociação estão disponíveis?",
+    "a8": "Suportamos uma variedade de tempos de expiração que variam de 60 segundos a várias horas. Essa flexibilidade permite escolher prazos que combinem com seu estilo de negociação."
+  },
+  "demo": {
+    "heading": "Negocie gráficos ao vivo com",
+    "headingLine2": "fundos virtuais",
+    "bullet1": "$10.000 pré-carregados na sua conta demo",
+    "bullet2": "Recargas de saldo ilimitadas a qualquer momento",
+    "cta": "Experimentar conta demo"
+  },
+  "footer": {
+    "description": "Uma plataforma de opções binárias de próxima geração construída para velocidade, transparência e negociação precisa em mercados globais.",
+    "copyright": "© {{year}} Arcanine. Todos os direitos reservados.",
+    "quickMenu": "Menu Rápido",
+    "howItWorks": "Como Funciona",
+    "assetIndex": "Índice de Ativos",
+    "tradingTerminal": "Terminal de Negociação",
+    "demoAccount": "Conta Demo",
+    "faqs": "Perguntas Frequentes",
+    "support": "Suporte",
+    "information": "Informações",
+    "termsOfService": "Termos de Serviço",
+    "privacyPolicy": "Política de Privacidade",
+    "amlKyc": "Política AML e KYC",
+    "responsibleTrading": "Negociação Responsável",
+    "acceptedPayments": "Pagamentos Aceitos",
+    "riskWarningTitle": "AVISO DE INVESTIMENTO DE ALTO RISCO:",
+    "riskWarningText": "A negociação de opções binárias envolve risco significativo e pode não ser adequada para todos os investidores. O valor de suas posições pode flutuar rapidamente e você pode perder todo o seu capital investido.",
+    "riskDisclosureTitle": "Divulgação de Risco:",
+    "riskDisclosureText": "Opções binárias são instrumentos financeiros complexos. Os preços são derivados de ativos subjacentes incluindo pares forex, commodities, índices e criptomoedas.",
+    "noGuarantee": "Sem Garantia de Lucro:",
+    "noGuaranteeText": "Não há garantia de que qualquer estratégia ou abordagem gerará lucros.",
+    "notAdvice": "Não é Aconselhamento Financeiro:",
+    "notAdviceText": "O conteúdo fornecido nesta plataforma é apenas para fins educacionais e informativos.",
+    "eligibilityTitle": "Elegibilidade e Conformidade:",
+    "eligibilityText": "Os serviços são restritos a usuários com 18 anos ou mais que não sejam residentes de jurisdições onde a negociação de opções binárias é proibida.",
+    "liabilityTitle": "Limitação de Responsabilidade:",
+    "liabilityText": "Arcanine não será responsável por quaisquer perdas diretas, indiretas, incidentais ou consequenciais decorrentes do uso de nossa plataforma.",
+    "highRisk": "Produto de Alto Risco",
+    "capitalAtRisk": "Capital em Risco",
+    "adultsOnly": "Apenas 18+"
+  },
+  "riskWarning": {
+    "title": "Aviso Geral de Risco",
+    "text1": "A negociação de opções binárias envolve um alto nível de risco e pode resultar na perda de todo o seu capital investido. Você não deve investir mais do que pode perder.",
+    "text2": "Você deve estar ciente de todos os riscos associados à negociação de opções binárias e procurar aconselhamento de um consultor financeiro independente se tiver dúvidas."
+  },
+  "trustStrip": {
+    "fast": "Execute negociações em milissegundos",
+    "secure": "Transações seguras",
+    "withdrawals": "Saques rápidos",
+    "global": "Disponível globalmente"
+  }
+}
