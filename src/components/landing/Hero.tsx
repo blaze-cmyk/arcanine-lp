@@ -6,105 +6,22 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
-      {/* ── Background layers ── */}
+      {/* Grid with aggressive radial fade — visible only near center */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundSize: "72px 72px",
+            maskImage: "radial-gradient(ellipse 50% 45% at 50% 38%, black 0%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse 50% 45% at 50% 38%, black 0%, transparent 100%)",
+          }}
+        />
+      </div>
 
-      {/* Subtle grid pattern for structure */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-      {/* Grid fade-out mask */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          background: "radial-gradient(ellipse 70% 60% at 50% 40%, transparent 0%, hsl(var(--background)) 75%)",
-        }}
-      />
-
-      {/* Primary hero glow — concentrated behind headline */}
-      <div
-        className="absolute top-[-8%] left-1/2 -translate-x-1/2 w-[80%] h-[55%] pointer-events-none z-0"
-        style={{
-          background: "radial-gradient(ellipse 55% 45% at 50% 35%, rgba(255,106,0,0.14) 0%, rgba(255,80,0,0.06) 35%, transparent 70%)",
-        }}
-      />
-
-      {/* Secondary warm wash — wider, softer */}
-      <div
-        className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[100%] h-[45%] pointer-events-none z-0 blur-3xl"
-        style={{
-          background: "radial-gradient(ellipse 80% 45% at 50% 45%, rgba(255,120,20,0.07) 0%, rgba(255,80,0,0.02) 55%, transparent 100%)",
-        }}
-      />
-
-      {/* Vertical light beam behind the heading */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[45%] pointer-events-none z-0"
-        style={{
-          background: "linear-gradient(180deg, transparent 0%, rgba(255,106,0,0.15) 30%, rgba(255,106,0,0.08) 60%, transparent 100%)",
-          filter: "blur(8px)",
-          width: "120px",
-        }}
-      />
-
-      {/* Side accent glows */}
-      <div
-        className="absolute top-[18%] left-[-3%] w-[30%] h-[55%] pointer-events-none z-0 blur-3xl"
-        style={{
-          background: "radial-gradient(ellipse at 30% 50%, rgba(255,106,0,0.05) 0%, transparent 70%)",
-        }}
-      />
-      <div
-        className="absolute top-[18%] right-[-3%] w-[30%] h-[55%] pointer-events-none z-0 blur-3xl"
-        style={{
-          background: "radial-gradient(ellipse at 70% 50%, rgba(255,106,0,0.05) 0%, transparent 70%)",
-        }}
-      />
-
-      {/* Floating orbs for organic depth */}
-      <div
-        className="absolute pointer-events-none z-0 rounded-full animate-pulse-soft"
-        style={{
-          width: "300px",
-          height: "300px",
-          top: "5%",
-          left: "15%",
-          background: "radial-gradient(circle, rgba(255,106,0,0.06) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div
-        className="absolute pointer-events-none z-0 rounded-full animate-pulse-soft"
-        style={{
-          width: "250px",
-          height: "250px",
-          top: "12%",
-          right: "10%",
-          background: "radial-gradient(circle, rgba(255,140,40,0.05) 0%, transparent 70%)",
-          filter: "blur(50px)",
-          animationDelay: "1.5s",
-        }}
-      />
-      <div
-        className="absolute pointer-events-none z-0 rounded-full animate-pulse-soft"
-        style={{
-          width: "200px",
-          height: "200px",
-          top: "55%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: "radial-gradient(circle, rgba(255,100,0,0.04) 0%, transparent 70%)",
-          filter: "blur(35px)",
-          animationDelay: "3s",
-        }}
-      />
-
-      {/* Noise texture for grain/depth */}
-      <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.03] mix-blend-overlay">
+      {/* Noise texture */}
+      <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.025] mix-blend-overlay">
         <svg width="100%" height="100%">
           <filter id="heroNoise">
             <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" />
@@ -112,14 +29,6 @@ const Hero = () => {
           <rect width="100%" height="100%" filter="url(#heroNoise)" />
         </svg>
       </div>
-
-      {/* Vignette edges */}
-      <div
-        className="absolute inset-0 pointer-events-none z-[1]"
-        style={{
-          background: "radial-gradient(ellipse 80% 70% at 50% 40%, transparent 50%, rgba(11,11,14,0.6) 100%)",
-        }}
-      />
 
       {/* ── Content ── */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
