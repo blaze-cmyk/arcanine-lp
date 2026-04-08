@@ -90,7 +90,7 @@ const Navbar = () => {
                 key={link.label}
                 href={link.href}
                 className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-1.5"
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => { handleNavClick(e, link.href); setMobileOpen(false); }}
               >
                 {link.label}
               </a>
