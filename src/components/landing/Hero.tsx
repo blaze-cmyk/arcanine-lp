@@ -3,30 +3,6 @@ import DashboardMockup from "./DashboardMockup";
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-20 sm:pt-24">
-      {/* Falling light beam effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
-        {/* Core bright beam */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[70%]"
-          style={{
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 20%, rgba(255,106,0,0.3) 60%, transparent 100%)',
-            boxShadow: '0 0 15px 4px rgba(255,255,255,0.4), 0 0 60px 15px rgba(255,106,0,0.15), 0 0 120px 40px rgba(255,106,0,0.08)',
-          }}
-        />
-        {/* Wide soft glow behind beam */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[500px] h-[80%]"
-          style={{
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,106,0,0.04) 30%, transparent 70%)',
-            filter: 'blur(40px)',
-          }}
-        />
-        {/* Ultra-wide ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[60%]"
-          style={{
-            background: 'radial-gradient(ellipse 50% 60% at 50% 0%, rgba(255,106,0,0.06) 0%, transparent 100%)',
-          }}
-        />
-      </div>
-
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Headline */}
