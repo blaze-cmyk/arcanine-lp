@@ -40,14 +40,14 @@ const FAQ = () => {
       {/* Top gradient separator — bright line with downward glow */}
       <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
         <div className="relative w-full max-w-3xl">
-          {/* Bright thin line */}
+          {/* Bright thin line — fades at edges */}
           <div
             className="h-px"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(255,106,0,0.35) 0%, transparent 70%)",
+              background: "linear-gradient(90deg, transparent 0%, rgba(255,106,0,0.4) 30%, rgba(255,106,0,0.4) 70%, transparent 100%)",
             }}
           />
-          {/* Soft glow beneath */}
+          {/* Soft glow beneath — also fades at edges */}
           <div
             className="h-24"
             style={{
