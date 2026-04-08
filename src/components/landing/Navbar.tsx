@@ -36,26 +36,24 @@ const Navbar = () => {
         }}
       />
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-[4.5rem] px-1">
-          {/* Left: Logo + Nav */}
-          <div className="flex items-center gap-12">
-            <div className="flex items-center gap-0">
-              <img src={logo} alt="Arcanine" className="w-14 h-14" />
-              <span className="text-lg font-bold tracking-tight font-display text-foreground">Arcanine</span>
-            </div>
+        <div className="relative flex items-center justify-between h-[4.5rem] px-1">
+          {/* Left: Logo */}
+          <div className="flex items-center gap-0">
+            <img src={logo} alt="Arcanine" className="w-14 h-14" />
+            <span className="text-lg font-bold tracking-tight font-display text-foreground">Arcanine</span>
+          </div>
 
-            {/* Desktop links */}
-            <div className="hidden md:flex items-center gap-6">
-              {links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+          {/* Center: Desktop links */}
+          <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+            {links.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-200"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
 
           {/* Right: Demo + Log In + Sign Up */}
