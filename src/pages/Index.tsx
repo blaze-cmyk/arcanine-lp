@@ -8,6 +8,9 @@ import Stats from "@/components/landing/Stats";
 import DemoCTA from "@/components/landing/DemoCTA";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Footer from "@/components/landing/Footer";
+import SectionDivider from "@/components/landing/SectionDivider";
+import BackToTop from "@/components/landing/BackToTop";
+import ScrollRevealWrapper from "@/components/landing/ScrollRevealWrapper";
 
 const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden relative">
@@ -26,13 +29,22 @@ const Index = () => (
       <Hero />
     </div>
     <LiveWins />
-    <Features />
+    <SectionDivider />
+    <ScrollRevealWrapper>
+      <Features />
+    </ScrollRevealWrapper>
+    <SectionDivider />
     <HowItWorks />
+    <SectionDivider />
     <FairnessLogic />
+    <SectionDivider />
     <Stats />
+    <SectionDivider />
     <FAQ />
+    <SectionDivider />
     <DemoCTA />
     <Footer />
+    <BackToTop />
   </div>
 );
 
