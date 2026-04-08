@@ -13,9 +13,10 @@ const Navbar = () => {
   }, []);
 
   const links = [
-    { label: "How it works", href: "#how-it-works" },
+    { label: "How it works", href: "#three-moves" },
     { label: "Testimonials", href: "#testimonials" },
-    { label: "FAQ", href: "#faq" },
+    { label: "FAQ", href: "#frequently-asked-questions" },
+    { label: "Demo Account", href: "#demo" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -62,11 +63,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right: Demo + Log In + Sign Up */}
           <div className="hidden md:flex items-center gap-2">
-            <button className="py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 px-[8px]">
-              Demo Account
-            </button>
             <button className="inline-flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-foreground bg-secondary-btn rounded-xl transition-colors duration-200">
               <LogIn className="w-4 h-4" />
               Log In
