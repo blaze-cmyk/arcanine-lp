@@ -74,7 +74,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 };
 
 const FAQ = () => (
-  <section className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
+  <section id="frequently-asked-questions" className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
     {/* Subtle center glow */}
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, transparent 70%)" }} />
     <div className="max-w-4xl mx-auto">
