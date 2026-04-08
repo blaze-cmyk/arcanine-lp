@@ -5,6 +5,12 @@ const Hero = () => {
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
+        {/* Top badge */}
+        <div className="animate-slide-up inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full border border-border/40 bg-card/60 backdrop-blur-sm">
+          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold font-display">#1</span>
+          <span className="text-sm text-muted-foreground font-medium">The smarter way to trade binary options</span>
+        </div>
+
         {/* Headline */}
         <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-7 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           Predict the next market move
