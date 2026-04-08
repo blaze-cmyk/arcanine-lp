@@ -74,16 +74,16 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 };
 
 const FAQ = () => (
-  <section className="section-light relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
+  <section className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
     {/* Subtle center glow */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,106,0,0.04) 0%, transparent 70%)" }} />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, transparent 70%)" }} />
     <div className="max-w-4xl mx-auto">
       {/* Header — centered */}
       <div className="text-center mb-14">
         <span className="inline-block text-xs font-medium tracking-wider uppercase text-muted-foreground border border-border rounded-full px-4 py-1.5 mb-5">
           FAQ
         </span>
-        <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, hsl(var(--foreground)) 22.5%, hsl(var(--foreground) / 0.7) 100%)' }}>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           Frequently asked questions
         </h2>
         <p className="text-base text-muted-foreground">
