@@ -51,7 +51,7 @@ const FAQ = () => {
           <div
             className="h-24"
             style={{
-              background: "radial-gradient(ellipse 50% 100% at 50% 0%, rgba(255,106,0,0.06) 0%, transparent 100%)",
+              background: "radial-gradient(ellipse 45% 100% at 50% 0%, rgba(255,106,0,0.06) 0%, transparent 100%)",
             }}
           />
         </div>
