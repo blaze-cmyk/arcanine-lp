@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Cách hoạt động",
+    "testimonials": "Đánh giá",
+    "faq": "Câu hỏi thường gặp",
+    "demoAccount": "Tài khoản demo",
+    "logIn": "Đăng nhập",
+    "signUp": "Đăng ký"
+  },
+  "hero": {
+    "badge": "Được cung cấp bởi Factual Capital Group",
+    "badgeRank": "#1",
+    "headline": "Dự đoán bước đi tiếp theo của thị trường",
+    "subhead": "Đặt vị thế theo hướng giá, tăng hoặc giảm, và xem kết quả trong vài giây.",
+    "createAccount": "Tạo tài khoản",
+    "tryDemo": "Dùng thử miễn phí",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Thắng trực tiếp"
+  },
+  "features": {
+    "heading": "Thiết kế cho tốc độ và sự rõ ràng",
+    "subheading": "Arcanine mang đến trải nghiệm giao dịch nhanh chóng và minh bạch.",
+    "tradeInSeconds": "Giao dịch trong giây",
+    "tradeInSecondsDesc": "Kết quả nhanh, không chờ đợi.",
+    "clearPayouts": "Thanh toán rõ ràng",
+    "clearPayoutsDesc": "Biết trước lợi nhuận. Không phí ẩn.",
+    "clearDecisions": "Quyết định rõ ràng",
+    "clearDecisionsDesc": "Hệ thống tăng-giảm đơn giản.",
+    "globalMarkets": "Thị trường toàn cầu",
+    "globalMarketsDesc": "Giao dịch mọi lúc, mọi nơi."
+  },
+  "howItWorks": {
+    "eyebrow": "Từ số 0 đến lợi nhuận",
+    "heading": "Ba bước.",
+    "headingLine2": "Một kết quả.",
+    "subheading": "Không biểu đồ. Không thuật ngữ. Chỉ một quyết định đơn giản.",
+    "step1Title": "Đặt mức cược",
+    "step1Desc": "Chọn số tiền đầu tư từ $1 đến $10,000.",
+    "step2Title": "Dự đoán xu hướng",
+    "step2Desc": "Giá sẽ tăng hay giảm? Chọn hướng.",
+    "step3Title": "Nhận ngay lập tức",
+    "step3Desc": "Kết quả trong giây. Lợi nhuận vào tài khoản ngay.",
+    "amount": "Số tiền",
+    "min": "Tối thiểu $1",
+    "up": "Tăng",
+    "down": "Giảm",
+    "profit": "Lợi nhuận",
+    "settled": "Hoàn tất"
+  },
+  "fairness": {
+    "heading": "Nạp tiền minh bạch",
+    "headingLine2": "Rút tiền nhanh",
+    "description": "Chuyển tiền an toàn qua các phương thức quen thuộc.",
+    "cta": "Bắt đầu giao dịch"
+  },
+  "stats": {
+    "heading": "Được tin tưởng bởi các nhà giao dịch",
+    "headingLine2": "trên toàn thế giới",
+    "subheading": "Tham gia cùng hàng nghìn người đang chiến thắng",
+    "activeTraders": "Nhà giao dịch hoạt động",
+    "countries": "Quốc gia",
+    "tradingAssets": "Tài sản giao dịch",
+    "monthlyPayouts": "Thanh toán hàng tháng"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Câu hỏi thường gặp",
+    "contactPrompt": "Không tìm thấy?",
+    "contactLink": "Liên hệ chúng tôi.",
+    "q1": "Giao dịch quyền chọn nhị phân là gì?",
+    "a1": "Công cụ tài chính dự đoán giá tăng hay giảm.",
+    "q2": "Bắt đầu thế nào?",
+    "a2": "Đăng ký miễn phí và nạp tiền.",
+    "q3": "Giao dịch tài sản nào?",
+    "a3": "Forex, crypto, cổ phiếu, hàng hóa và chỉ số.",
+    "q4": "Rút tiền nhanh không?",
+    "a4": "1-2 ngày làm việc.",
+    "q5": "Tiền có an toàn không?",
+    "a5": "Mã hóa cấp ngân hàng.",
+    "q6": "Nạp tối thiểu bao nhiêu?",
+    "a6": "Từ $10.",
+    "q7": "Có thể tập luyện không?",
+    "a7": "Có! Tài khoản demo $10,000.",
+    "q8": "Khung thời gian nào?",
+    "a8": "Từ 60 giây đến vài giờ."
+  },
+  "demo": {
+    "heading": "Giao dịch biểu đồ trực tiếp với",
+    "headingLine2": "tiền ảo",
+    "bullet1": "$10,000 sẵn trong tài khoản demo",
+    "bullet2": "Nạp lại không giới hạn",
+    "cta": "Thử tài khoản demo"
+  },
+  "footer": {
+    "description": "Nền tảng quyền chọn nhị phân thế hệ mới cho tốc độ và minh bạch.",
+    "copyright": "© {{year}} Arcanine. Bảo lưu mọi quyền.",
+    "quickMenu": "Menu nhanh",
+    "howItWorks": "Cách hoạt động",
+    "assetIndex": "Chỉ số tài sản",
+    "tradingTerminal": "Giao diện giao dịch",
+    "demoAccount": "Tài khoản demo",
+    "faqs": "FAQ",
+    "support": "Hỗ trợ",
+    "information": "Thông tin",
+    "termsOfService": "Điều khoản",
+    "privacyPolicy": "Chính sách riêng tư",
+    "amlKyc": "AML & KYC",
+    "responsibleTrading": "Giao dịch có trách nhiệm",
+    "acceptedPayments": "Phương thức thanh toán",
+    "riskWarningTitle": "CẢNH BÁO RỦI RO CAO:",
+    "riskWarningText": "Giao dịch quyền chọn nhị phân có rủi ro cao.",
+    "riskDisclosureTitle": "Công bố rủi ro:",
+    "riskDisclosureText": "Quyền chọn nhị phân là công cụ phức tạp.",
+    "noGuarantee": "Không đảm bảo lợi nhuận:",
+    "noGuaranteeText": "Không chiến lược nào đảm bảo lợi nhuận.",
+    "notAdvice": "Không phải tư vấn tài chính:",
+    "notAdviceText": "Chỉ mang tính giáo dục.",
+    "eligibilityTitle": "Điều kiện:",
+    "eligibilityText": "Chỉ dành cho người từ 18 tuổi.",
+    "liabilityTitle": "Giới hạn trách nhiệm:",
+    "liabilityText": "Arcanine không chịu trách nhiệm về tổn thất.",
+    "highRisk": "Sản phẩm rủi ro cao",
+    "capitalAtRisk": "Vốn có rủi ro",
+    "adultsOnly": "Chỉ 18+"
+  },
+  "riskWarning": {
+    "title": "Cảnh báo rủi ro chung",
+    "text1": "Giao dịch quyền chọn nhị phân có mức rủi ro cao.",
+    "text2": "Tham khảo ý kiến cố vấn tài chính độc lập nếu có thắc mắc."
+  },
+  "trustStrip": {
+    "fast": "Thực hiện trong mili giây",
+    "secure": "Giao dịch an toàn",
+    "withdrawals": "Rút tiền nhanh",
+    "global": "Có mặt toàn cầu"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Nasıl çalışır",
+    "testimonials": "Yorumlar",
+    "faq": "SSS",
+    "demoAccount": "Demo Hesap",
+    "logIn": "Giriş Yap",
+    "signUp": "Kayıt Ol"
+  },
+  "hero": {
+    "badge": "Factual Capital Group tarafından sunulmuştur",
+    "badgeRank": "#1",
+    "headline": "Bir sonraki piyasa hareketini tahmin edin",
+    "subhead": "Fiyat yönünde pozisyon alın, yukarı veya aşağı, ve sonuçları saniyeler içinde görün.",
+    "createAccount": "Hesap oluştur",
+    "tryDemo": "Ücretsiz dene",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Canlı Kazançlar"
+  },
+  "features": {
+    "heading": "Hız ve netlik için tasarlandı",
+    "subheading": "Arcanine hızlı işlem, şeffaf ödemeler ve kolay karar verme ile ticaret deneyimi sunar.",
+    "tradeInSeconds": "Saniyeler içinde işlem yapın",
+    "tradeInSecondsDesc": "Sonuçlar hızlı gelir, bekleme yok.",
+    "clearPayouts": "Net ödemeler",
+    "clearPayoutsDesc": "Ne kazanacağınızı önceden bilin. Gizli ücret yok.",
+    "clearDecisions": "Net kararlar",
+    "clearDecisionsDesc": "Basit bir yukarı-aşağı sistemi.",
+    "globalMarkets": "Küresel piyasalar",
+    "globalMarketsDesc": "Her zaman, her yerden varlıklarla işlem yapın."
+  },
+  "howItWorks": {
+    "eyebrow": "Sıfırdan kâra",
+    "heading": "Üç adım.",
+    "headingLine2": "Bir sonuç.",
+    "subheading": "Grafik yok. Jargon yok. Saniyeler içinde kazandıran basit bir karar.",
+    "step1Title": "Bahsinizi belirleyin",
+    "step1Desc": "1 $ ile 10.000 $ arasında yatırım yapın.",
+    "step2Title": "Hareketi tahmin edin",
+    "step2Desc": "Fiyat yükselecek mi düşecek mi? Yön seçin.",
+    "step3Title": "Anında tahsil edin",
+    "step3Desc": "Sonuçlar saniyeler içinde. Kârlar anında hesabınıza gelir.",
+    "amount": "Miktar",
+    "min": "Min 1 $",
+    "up": "Yukarı",
+    "down": "Aşağı",
+    "profit": "Kâr",
+    "settled": "Tamamlandı"
+  },
+  "fairness": {
+    "heading": "Şeffaf Yatırma",
+    "headingLine2": "Hızlı Çekim",
+    "description": "Tanıdık ödeme yöntemleriyle güvenle transfer edin.",
+    "cta": "Ticarete Başla"
+  },
+  "stats": {
+    "heading": "Yatırımcıların güvendiği",
+    "headingLine2": "dünya çapında",
+    "subheading": "Arcanine ile kazanan binlerce kişiye katılın",
+    "activeTraders": "Aktif yatırımcılar",
+    "countries": "Ülkeler",
+    "tradingAssets": "İşlem varlıkları",
+    "monthlyPayouts": "Aylık ödemeler"
+  },
+  "faq": {
+    "badge": "SSS",
+    "heading": "Sık sorulan sorular",
+    "contactPrompt": "Aradığınızı bulamadınız mı?",
+    "contactLink": "Bize ulaşın.",
+    "q1": "İkili opsiyon ticareti nedir?",
+    "a1": "Bir varlığın fiyatının yükselip düşeceğini tahmin etmenizi sağlayan bir finansal araç.",
+    "q2": "Nasıl başlarım?",
+    "a2": "Ücretsiz kayıt olun ve fon yatırın.",
+    "q3": "Hangi varlıklarla işlem yapabilirim?",
+    "a3": "Forex, kripto, hisse senetleri, emtialar ve endeksler.",
+    "q4": "Çekimler ne kadar hızlı?",
+    "a4": "1–2 iş günü içinde işlenir.",
+    "q5": "Param güvende mi?",
+    "a5": "Banka düzeyinde şifreleme kullanıyoruz.",
+    "q6": "Minimum yatırma tutarı nedir?",
+    "a6": "10 $'dan başlar.",
+    "q7": "Risk almadan pratik yapabilir miyim?",
+    "a7": "Evet! 10.000 $ sanal fonlu demo hesap.",
+    "q8": "Hangi zaman dilimleri mevcut?",
+    "a8": "60 saniyeden birkaç saate kadar."
+  },
+  "demo": {
+    "heading": "Canlı grafiklerle işlem yapın",
+    "headingLine2": "sanal fonlarla",
+    "bullet1": "Demo hesabınızda 10.000 $ yüklü",
+    "bullet2": "Sınırsız bakiye yükleme",
+    "cta": "Demo hesabı dene"
+  },
+  "footer": {
+    "description": "Hız, şeffaflık ve hassas ticaret için yeni nesil ikili opsiyon platformu.",
+    "copyright": "© {{year}} Arcanine. Tüm hakları saklıdır.",
+    "quickMenu": "Hızlı Menü",
+    "howItWorks": "Nasıl çalışır",
+    "assetIndex": "Varlık Endeksi",
+    "tradingTerminal": "Ticaret Terminali",
+    "demoAccount": "Demo Hesap",
+    "faqs": "SSS",
+    "support": "Destek",
+    "information": "Bilgi",
+    "termsOfService": "Hizmet Şartları",
+    "privacyPolicy": "Gizlilik Politikası",
+    "amlKyc": "AML & KYC",
+    "responsibleTrading": "Sorumlu Ticaret",
+    "acceptedPayments": "Kabul Edilen Ödemeler",
+    "riskWarningTitle": "YÜKSEK RİSK UYARISI:",
+    "riskWarningText": "İkili opsiyon ticareti önemli risk içerir.",
+    "riskDisclosureTitle": "Risk Açıklaması:",
+    "riskDisclosureText": "İkili opsiyonlar karmaşık finansal araçlardır.",
+    "noGuarantee": "Kâr Garantisi Yok:",
+    "noGuaranteeText": "Hiçbir strateji kâr garantisi vermez.",
+    "notAdvice": "Finansal Tavsiye Değildir:",
+    "notAdviceText": "İçerik yalnızca eğitim amaçlıdır.",
+    "eligibilityTitle": "Uygunluk:",
+    "eligibilityText": "Yalnızca 18 yaş üstü.",
+    "liabilityTitle": "Sorumluluk Sınırlaması:",
+    "liabilityText": "Arcanine kayıplardan sorumlu değildir.",
+    "highRisk": "Yüksek Riskli Ürün",
+    "capitalAtRisk": "Sermaye Risk Altında",
+    "adultsOnly": "Yalnızca 18+"
+  },
+  "riskWarning": {
+    "title": "Genel Risk Uyarısı",
+    "text1": "İkili opsiyon ticareti yüksek düzeyde risk taşır.",
+    "text2": "Bağımsız bir finansal danışmana başvurun."
+  },
+  "trustStrip": {
+    "fast": "Milisaniyeler içinde işlem",
+    "secure": "Güvenli işlemler",
+    "withdrawals": "Hızlı çekimler",
+    "global": "Küresel erişim"
+  }
+}

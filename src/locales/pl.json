@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Jak to działa",
+    "testimonials": "Opinie",
+    "faq": "FAQ",
+    "demoAccount": "Konto demo",
+    "logIn": "Zaloguj się",
+    "signUp": "Zarejestruj się"
+  },
+  "hero": {
+    "badge": "Brought to you by Factual Capital Group",
+    "badgeRank": "#1",
+    "headline": "Przewiduj następny ruch rynku",
+    "subhead": "Take a position on price direction, up or down, and see results in seconds. A simple, fast way to trade global markets.",
+    "createAccount": "Utwórz konto",
+    "tryDemo": "Wypróbuj za darmo",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Live Wins"
+  },
+  "features": {
+    "heading": "Designed for speed and clarity",
+    "subheading": "Arcanine provides a trading experience with fast execution, transparent payouts, and effortless decision-making.",
+    "tradeInSeconds": "Trade in seconds",
+    "tradeInSecondsDesc": "Results resolve quickly, without waiting or complexity.",
+    "clearPayouts": "Crystal-clear payouts",
+    "clearPayoutsDesc": "Know exactly what you stand to earn before you commit. No hidden fees, no surprises.",
+    "clearDecisions": "Clear decisions",
+    "clearDecisionsDesc": "A straightforward up-or-down system, without unnecessary tools.",
+    "globalMarkets": "Global markets",
+    "globalMarketsDesc": "Trade across assets, anytime, from anywhere."
+  },
+  "howItWorks": {
+    "eyebrow": "From zero to profit",
+    "heading": "Three moves.",
+    "headingLine2": "One outcome.",
+    "subheading": "No charts to study. No jargon to learn. Just a simple decision that pays off in seconds.",
+    "step1Title": "Set your stake",
+    "step1Desc": "Choose how much to invest — from $1 to $10,000. You're always in control of your risk.",
+    "step2Title": "Predict the move",
+    "step2Desc": "Will the price go up or down? Pick a direction and set your timeframe. That's it.",
+    "step3Title": "Collect instantly",
+    "step3Desc": "Get results in seconds. Profits land in your account immediately — no waiting, no delays.",
+    "amount": "Amount",
+    "min": "Min $1",
+    "up": "Up",
+    "down": "Down",
+    "profit": "Profit",
+    "settled": "Settled"
+  },
+  "fairness": {
+    "heading": "Transparent Deposit",
+    "headingLine2": "Fast Withdrawal",
+    "description": "Transfer safely via familiar payment methods. Deposits are instant, withdrawals land in minutes — not days.",
+    "cta": "Start Trading"
+  },
+  "stats": {
+    "heading": "Trusted by traders",
+    "headingLine2": "worldwide",
+    "subheading": "Join thousands already winning with Arcanine",
+    "activeTraders": "Active traders",
+    "countries": "Countries",
+    "tradingAssets": "Trading assets",
+    "monthlyPayouts": "Monthly payouts"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Frequently asked questions",
+    "contactPrompt": "Haven't found what you're looking for?",
+    "contactLink": "Contact us.",
+    "q1": "What is binary options trading?",
+    "a1": "Binary options trading is a financial instrument that allows you to predict whether the price of an asset will go up or down within a specific time frame. If your prediction is correct, you earn a fixed return on your investment.",
+    "q2": "How do I get started?",
+    "a2": "Sign up for a free account, complete a quick verification process, and deposit funds to start trading. We also offer a demo account with virtual funds so you can practice risk-free before trading with real money.",
+    "q3": "What assets can I trade?",
+    "a3": "You can trade a wide range of assets including forex currency pairs, cryptocurrencies, stocks, commodities, and indices — all from a single platform with real-time market data.",
+    "q4": "How fast are withdrawals processed?",
+    "a4": "Withdrawal requests are typically processed within 1–2 business days. Depending on your payment method, funds may take an additional 1–3 days to appear in your account.",
+    "q5": "Is my money safe on the platform?",
+    "a5": "We use bank-grade encryption and segregated client accounts to ensure your funds are always protected. Our platform is fully regulated and undergoes regular third-party security audits.",
+    "q6": "What is the minimum deposit amount?",
+    "a6": "The minimum deposit varies by payment method but starts as low as $10. This makes it accessible for beginners who want to start small and gradually increase their trading activity.",
+    "q7": "Can I practice without risking real money?",
+    "a7": "Yes! We offer a fully-featured demo account preloaded with $10,000 in virtual funds. You can practice trading strategies, explore the platform, and build confidence before switching to a real account.",
+    "q8": "What trading timeframes are available?",
+    "a8": "We support a variety of expiry times ranging from 60 seconds to several hours. This flexibility lets you choose timeframes that match your trading style, whether you prefer quick scalps or longer positions."
+  },
+  "demo": {
+    "heading": "Trade live charts with",
+    "headingLine2": "virtual funds",
+    "bullet1": "$10,000 preloaded in your demo account",
+    "bullet2": "Unlimited balance refills at any time",
+    "cta": "Try demo account"
+  },
+  "footer": {
+    "description": "A next-generation binary options platform built for speed, transparency, and precision trading across global markets.",
+    "copyright": "© {{year}} Arcanine. All rights reserved.",
+    "quickMenu": "Quick Menu",
+    "howItWorks": "How it Works",
+    "assetIndex": "Asset Index",
+    "tradingTerminal": "Trading Terminal",
+    "demoAccount": "Demo Account",
+    "faqs": "FAQs",
+    "support": "Support",
+    "information": "Information",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "amlKyc": "AML & KYC Policy",
+    "responsibleTrading": "Responsible Trading",
+    "acceptedPayments": "Accepted Payments",
+    "riskWarningTitle": "HIGH RISK INVESTMENT WARNING:",
+    "riskWarningText": "Binary options trading involves significant risk and may not be suitable for all investors. The value of your positions can fluctuate rapidly, and you may lose the entirety of your invested capital. Before engaging in binary options trading, carefully assess your financial situation, experience level, and willingness to accept risk. Only trade with funds you can afford to lose entirely. Demo account performance does not guarantee future results in live trading.",
+    "riskDisclosureTitle": "Risk Disclosure:",
+    "riskDisclosureText": "Binary options are complex financial instruments. Prices are derived from underlying assets including forex pairs, commodities, indices, and cryptocurrencies. Market volatility can cause rapid and unpredictable price movements.",
+    "noGuarantee": "No Guarantee of Profit:",
+    "noGuaranteeText": "There is no assurance that any strategy or approach will generate profits. Historical returns shown on the platform are for illustrative purposes only.",
+    "notAdvice": "Not Financial Advice:",
+    "notAdviceText": "Content provided on this platform is for educational and informational purposes only and should not be construed as financial, investment, or tax advice.",
+    "eligibilityTitle": "Eligibility & Compliance:",
+    "eligibilityText": "Services are restricted to users 18 years or older who are not residents of jurisdictions where binary options trading is prohibited. Arcanine enforces strict anti-money laundering (AML) and know-your-customer (KYC) protocols. Identity verification is required before processing any withdrawal.",
+    "liabilityTitle": "Limitation of Liability:",
+    "liabilityText": "Arcanine shall not be liable for any direct, indirect, incidental, or consequential losses arising from the use of our platform, including but not limited to trading losses, data inaccuracies, or service interruptions.",
+    "highRisk": "High Risk Product",
+    "capitalAtRisk": "Capital at Risk",
+    "adultsOnly": "18+ Only"
+  },
+  "riskWarning": {
+    "title": "General Risk Warning",
+    "text1": "Binary options trading carries a high level of risk and can result in the loss of all your invested capital. You should not invest more than you can afford to lose. Before deciding to trade, you should carefully consider your investment objectives, level of experience, and risk appetite. There is a possibility that you may sustain a loss of some or all of your initial investment and therefore you should not invest money that you cannot afford to lose.",
+    "text2": "You should be aware of all the risks associated with trading binary options and seek advice from an independent financial advisor if you have any doubts. Past performance is not indicative of future results."
+  },
+  "trustStrip": {
+    "fast": "Execute trades in milliseconds",
+    "secure": "Secure transactions",
+    "withdrawals": "Fast withdrawals",
+    "global": "Available globally"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "작동 방식",
+    "testimonials": "후기",
+    "faq": "FAQ",
+    "demoAccount": "데모 계좌",
+    "logIn": "로그인",
+    "signUp": "회원가입"
+  },
+  "hero": {
+    "badge": "Factual Capital Group 제공",
+    "badgeRank": "#1",
+    "headline": "다음 시장 움직임을 예측하세요",
+    "subhead": "가격 방향에 포지션을 잡고, 위 또는 아래, 몇 초 안에 결과를 확인하세요.",
+    "createAccount": "계정 만들기",
+    "tryDemo": "무료 체험",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "실시간 수익"
+  },
+  "features": {
+    "heading": "속도와 명확성을 위해 설계",
+    "subheading": "빠른 실행, 투명한 지불, 손쉬운 의사결정.",
+    "tradeInSeconds": "초 단위 거래",
+    "tradeInSecondsDesc": "빠른 결과, 대기 없음.",
+    "clearPayouts": "투명한 지불",
+    "clearPayoutsDesc": "수수료 없이 수익을 미리 파악.",
+    "clearDecisions": "명확한 결정",
+    "clearDecisionsDesc": "간단한 상승/하락 시스템.",
+    "globalMarkets": "글로벌 시장",
+    "globalMarketsDesc": "언제 어디서나 거래."
+  },
+  "howItWorks": {
+    "eyebrow": "제로에서 수익으로",
+    "heading": "세 단계.",
+    "headingLine2": "하나의 결과.",
+    "subheading": "차트 불필요. 전문 용어 불필요. 간단한 결정.",
+    "step1Title": "금액 설정",
+    "step1Desc": "$1부터 $10,000까지 투자.",
+    "step2Title": "움직임 예측",
+    "step2Desc": "가격이 오를까 내릴까? 방향 선택.",
+    "step3Title": "즉시 수령",
+    "step3Desc": "초 단위 결과. 즉시 입금.",
+    "amount": "금액",
+    "min": "최소 $1",
+    "up": "상승",
+    "down": "하락",
+    "profit": "수익",
+    "settled": "완료"
+  },
+  "fairness": {
+    "heading": "투명한 입금",
+    "headingLine2": "빠른 출금",
+    "description": "익숙한 결제 방법으로 안전하게 송금.",
+    "cta": "거래 시작"
+  },
+  "stats": {
+    "heading": "전 세계 트레이더가",
+    "headingLine2": "신뢰하는",
+    "subheading": "Arcanine과 함께 수익을 올리는 수천 명에 합류",
+    "activeTraders": "활성 트레이더",
+    "countries": "국가",
+    "tradingAssets": "거래 자산",
+    "monthlyPayouts": "월간 지급"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "자주 묻는 질문",
+    "contactPrompt": "찾는 정보가 없나요?",
+    "contactLink": "문의하기.",
+    "q1": "바이너리 옵션 거래란?",
+    "a1": "자산 가격의 상승/하락을 예측하는 금융 상품.",
+    "q2": "시작 방법은?",
+    "a2": "무료 가입 후 입금.",
+    "q3": "거래 가능한 자산은?",
+    "a3": "외환, 암호화폐, 주식, 원자재, 지수.",
+    "q4": "출금 속도는?",
+    "a4": "1-2 영업일 내 처리.",
+    "q5": "자금은 안전한가요?",
+    "a5": "은행급 암호화 적용.",
+    "q6": "최소 입금액은?",
+    "a6": "$10부터.",
+    "q7": "위험 없이 연습 가능?",
+    "a7": "$10,000 가상 자금 데모 계좌.",
+    "q8": "거래 시간은?",
+    "a8": "60초부터 수 시간까지."
+  },
+  "demo": {
+    "heading": "가상 자금으로",
+    "headingLine2": "실시간 차트 거래",
+    "bullet1": "데모 계좌에 $10,000 사전 충전",
+    "bullet2": "무제한 잔액 충전",
+    "cta": "데모 계좌 체험"
+  },
+  "footer": {
+    "description": "속도, 투명성, 정밀 거래를 위한 차세대 바이너리 옵션 플랫폼.",
+    "copyright": "© {{year}} Arcanine. 모든 권리 보유.",
+    "quickMenu": "빠른 메뉴",
+    "howItWorks": "작동 방식",
+    "assetIndex": "자산 인덱스",
+    "tradingTerminal": "거래 터미널",
+    "demoAccount": "데모 계좌",
+    "faqs": "FAQ",
+    "support": "지원",
+    "information": "정보",
+    "termsOfService": "이용약관",
+    "privacyPolicy": "개인정보처리방침",
+    "amlKyc": "AML & KYC",
+    "responsibleTrading": "책임감 있는 거래",
+    "acceptedPayments": "결제 수단",
+    "riskWarningTitle": "고위험 경고:",
+    "riskWarningText": "바이너리 옵션 거래는 상당한 위험을 수반합니다.",
+    "riskDisclosureTitle": "위험 공시:",
+    "riskDisclosureText": "바이너리 옵션은 복잡한 금융 상품입니다.",
+    "noGuarantee": "수익 보장 없음:",
+    "noGuaranteeText": "어떤 전략도 수익을 보장하지 않습니다.",
+    "notAdvice": "금융 조언 아님:",
+    "notAdviceText": "교육 목적으로만 제공.",
+    "eligibilityTitle": "자격 요건:",
+    "eligibilityText": "18세 이상만 이용 가능.",
+    "liabilityTitle": "책임 제한:",
+    "liabilityText": "Arcanine은 손실에 대해 책임지지 않습니다.",
+    "highRisk": "고위험 상품",
+    "capitalAtRisk": "자본 위험",
+    "adultsOnly": "18세 이상"
+  },
+  "riskWarning": {
+    "title": "일반 위험 경고",
+    "text1": "바이너리 옵션 거래는 높은 위험을 수반합니다.",
+    "text2": "의문이 있으면 독립 재정 고문에게 상담하세요."
+  },
+  "trustStrip": {
+    "fast": "밀리초 실행",
+    "secure": "안전한 거래",
+    "withdrawals": "빠른 출금",
+    "global": "전 세계 이용 가능"
+  }
+}

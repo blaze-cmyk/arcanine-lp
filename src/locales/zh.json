@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "如何运作",
+    "testimonials": "用户评价",
+    "faq": "常见问题",
+    "demoAccount": "模拟账户",
+    "logIn": "登录",
+    "signUp": "注册"
+  },
+  "hero": {
+    "badge": "由 Factual Capital Group 呈现",
+    "badgeRank": "#1",
+    "headline": "预测下一个市场走势",
+    "subhead": "对价格方向做出判断，看涨或看跌，几秒钟内即可看到结果。一种简单、快速的全球市场交易方式。",
+    "createAccount": "创建账户",
+    "tryDemo": "免费试用",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "实时盈利"
+  },
+  "features": {
+    "heading": "为速度和清晰度而设计",
+    "subheading": "Arcanine 提供快速执行、透明支付和轻松决策的交易体验。",
+    "tradeInSeconds": "秒级交易",
+    "tradeInSecondsDesc": "结果快速出现，无需等待。",
+    "clearPayouts": "透明支付",
+    "clearPayoutsDesc": "提前知道您能赚多少。无隐藏费用。",
+    "clearDecisions": "清晰决策",
+    "clearDecisionsDesc": "简单的涨跌系统。",
+    "globalMarkets": "全球市场",
+    "globalMarketsDesc": "随时随地交易各类资产。"
+  },
+  "howItWorks": {
+    "eyebrow": "从零到盈利",
+    "heading": "三步操作。",
+    "headingLine2": "一个结果。",
+    "subheading": "无需研究图表。无需学习术语。只需一个简单决定。",
+    "step1Title": "设定投注",
+    "step1Desc": "选择投资金额 — 从 $1 到 $10,000。",
+    "step2Title": "预测走势",
+    "step2Desc": "价格会涨还是跌？选择方向即可。",
+    "step3Title": "即时收款",
+    "step3Desc": "几秒内出结果。利润立即到账。",
+    "amount": "金额",
+    "min": "最低 $1",
+    "up": "看涨",
+    "down": "看跌",
+    "profit": "利润",
+    "settled": "已结算"
+  },
+  "fairness": {
+    "heading": "透明入金",
+    "headingLine2": "快速出金",
+    "description": "通过熟悉的支付方式安全转账。入金即时，出金分钟到账。",
+    "cta": "开始交易"
+  },
+  "stats": {
+    "heading": "全球交易者",
+    "headingLine2": "信赖之选",
+    "subheading": "加入数千名已在 Arcanine 盈利的交易者",
+    "activeTraders": "活跃交易者",
+    "countries": "覆盖国家",
+    "tradingAssets": "交易资产",
+    "monthlyPayouts": "月度支付"
+  },
+  "faq": {
+    "badge": "常见问题",
+    "heading": "常见问题解答",
+    "contactPrompt": "没找到想要的？",
+    "contactLink": "联系我们。",
+    "q1": "什么是二元期权交易？",
+    "a1": "一种预测资产价格涨跌的金融工具。",
+    "q2": "如何开始？",
+    "a2": "免费注册并入金即可开始交易。",
+    "q3": "可以交易哪些资产？",
+    "a3": "外汇、加密货币、股票、大宗商品和指数。",
+    "q4": "出金速度如何？",
+    "a4": "1-2个工作日内处理。",
+    "q5": "我的资金安全吗？",
+    "a5": "银行级加密和独立客户账户。",
+    "q6": "最低入金是多少？",
+    "a6": "低至 $10。",
+    "q7": "可以免费练习吗？",
+    "a7": "可以！$10,000 虚拟资金模拟账户。",
+    "q8": "有哪些交易时间？",
+    "a8": "从60秒到数小时。"
+  },
+  "demo": {
+    "heading": "用虚拟资金交易",
+    "headingLine2": "实时图表",
+    "bullet1": "模拟账户预充 $10,000",
+    "bullet2": "随时无限充值",
+    "cta": "试用模拟账户"
+  },
+  "footer": {
+    "description": "新一代二元期权平台，为速度、透明和精准交易而生。",
+    "copyright": "© {{year}} Arcanine. 保留所有权利。",
+    "quickMenu": "快捷菜单",
+    "howItWorks": "如何运作",
+    "assetIndex": "资产索引",
+    "tradingTerminal": "交易终端",
+    "demoAccount": "模拟账户",
+    "faqs": "常见问题",
+    "support": "客服",
+    "information": "信息",
+    "termsOfService": "服务条款",
+    "privacyPolicy": "隐私政策",
+    "amlKyc": "反洗钱政策",
+    "responsibleTrading": "负责任交易",
+    "acceptedPayments": "支持的支付方式",
+    "riskWarningTitle": "高风险投资警告：",
+    "riskWarningText": "二元期权交易存在重大风险。",
+    "riskDisclosureTitle": "风险披露：",
+    "riskDisclosureText": "二元期权是复杂的金融工具。",
+    "noGuarantee": "不保证盈利：",
+    "noGuaranteeText": "任何策略都不能保证盈利。",
+    "notAdvice": "非财务建议：",
+    "notAdviceText": "内容仅供教育参考。",
+    "eligibilityTitle": "资格要求：",
+    "eligibilityText": "仅限18岁以上用户。",
+    "liabilityTitle": "责任限制：",
+    "liabilityText": "Arcanine 不对任何损失负责。",
+    "highRisk": "高风险产品",
+    "capitalAtRisk": "资金面临风险",
+    "adultsOnly": "仅限18+"
+  },
+  "riskWarning": {
+    "title": "一般风险警告",
+    "text1": "二元期权交易存在高风险，可能导致全部投资损失。",
+    "text2": "如有疑问，请咨询独立财务顾问。"
+  },
+  "trustStrip": {
+    "fast": "毫秒级执行",
+    "secure": "安全交易",
+    "withdrawals": "快速出金",
+    "global": "全球可用"
+  }
+}
