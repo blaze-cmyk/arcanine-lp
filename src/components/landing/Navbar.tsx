@@ -23,10 +23,18 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "backdrop-blur-xl bg-background/60 border-b border-border/40"
-          : "bg-transparent border-b border-transparent"
+          ? "backdrop-blur-xl bg-background/60"
+          : "bg-transparent"
       }`}
     >
+      {/* Fading bottom border */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px transition-opacity duration-500"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, hsl(var(--border) / 0.5) 30%, hsl(var(--border) / 0.5) 70%, transparent 100%)",
+          opacity: scrolled ? 1 : 0,
+        }}
+      />
       <div className="max-w-8xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 px-1">
           {/* Left: Logo + Nav */}
