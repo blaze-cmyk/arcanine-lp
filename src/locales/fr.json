@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Comment ça marche",
+    "testimonials": "Témoignages",
+    "faq": "FAQ",
+    "demoAccount": "Compte démo",
+    "logIn": "Connexion",
+    "signUp": "Inscription"
+  },
+  "hero": {
+    "badge": "Présenté par Factual Capital Group",
+    "badgeRank": "#1",
+    "headline": "Prédisez le prochain mouvement du marché",
+    "subhead": "Prenez position sur la direction du prix, à la hausse ou à la baisse, et voyez les résultats en quelques secondes.",
+    "createAccount": "Créer un compte",
+    "tryDemo": "Essai gratuit",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Gains en direct"
+  },
+  "features": {
+    "heading": "Conçu pour la vitesse et la clarté",
+    "subheading": "Arcanine offre une expérience de trading avec une exécution rapide et des paiements transparents.",
+    "tradeInSeconds": "Tradez en secondes",
+    "tradeInSecondsDesc": "Les résultats arrivent rapidement, sans attente ni complexité.",
+    "clearPayouts": "Paiements transparents",
+    "clearPayoutsDesc": "Sachez exactement combien vous pouvez gagner. Pas de frais cachés.",
+    "clearDecisions": "Décisions claires",
+    "clearDecisionsDesc": "Un système simple de hausse ou baisse.",
+    "globalMarkets": "Marchés mondiaux",
+    "globalMarketsDesc": "Tradez des actifs, n'importe quand, n'importe où."
+  },
+  "howItWorks": {
+    "eyebrow": "De zéro au profit",
+    "heading": "Trois étapes.",
+    "headingLine2": "Un résultat.",
+    "subheading": "Pas de graphiques. Pas de jargon. Juste une décision simple qui rapporte en secondes.",
+    "step1Title": "Définissez votre mise",
+    "step1Desc": "Choisissez combien investir — de 1 $ à 10 000 $.",
+    "step2Title": "Prédisez le mouvement",
+    "step2Desc": "Le prix va-t-il monter ou descendre ? Choisissez et définissez votre délai.",
+    "step3Title": "Encaissez instantanément",
+    "step3Desc": "Résultats en secondes. Les profits arrivent immédiatement.",
+    "amount": "Montant",
+    "min": "Min 1 $",
+    "up": "Hausse",
+    "down": "Baisse",
+    "profit": "Profit",
+    "settled": "Réglé"
+  },
+  "fairness": {
+    "heading": "Dépôt transparent",
+    "headingLine2": "Retrait rapide",
+    "description": "Transférez en toute sécurité. Les dépôts sont instantanés, les retraits en minutes.",
+    "cta": "Commencer à trader"
+  },
+  "stats": {
+    "heading": "Fait confiance par les traders",
+    "headingLine2": "du monde entier",
+    "subheading": "Rejoignez des milliers qui gagnent déjà avec Arcanine",
+    "activeTraders": "Traders actifs",
+    "countries": "Pays",
+    "tradingAssets": "Actifs de trading",
+    "monthlyPayouts": "Paiements mensuels"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Questions fréquemment posées",
+    "contactPrompt": "Vous n'avez pas trouvé ?",
+    "contactLink": "Contactez-nous.",
+    "q1": "Qu'est-ce que le trading d'options binaires ?",
+    "a1": "Un instrument financier pour prédire si le prix d'un actif va monter ou descendre.",
+    "q2": "Comment commencer ?",
+    "a2": "Inscrivez-vous gratuitement et déposez des fonds.",
+    "q3": "Quels actifs puis-je trader ?",
+    "a3": "Forex, crypto, actions, matières premières et indices.",
+    "q4": "Quelle est la rapidité des retraits ?",
+    "a4": "Traités en 1–2 jours ouvrables.",
+    "q5": "Mon argent est-il en sécurité ?",
+    "a5": "Chiffrement bancaire et comptes séparés.",
+    "q6": "Quel est le dépôt minimum ?",
+    "a6": "À partir de 10 $.",
+    "q7": "Puis-je m'entraîner sans risque ?",
+    "a7": "Oui ! Compte démo avec 10 000 $ virtuels.",
+    "q8": "Quels délais sont disponibles ?",
+    "a8": "De 60 secondes à plusieurs heures."
+  },
+  "demo": {
+    "heading": "Tradez des graphiques en direct avec",
+    "headingLine2": "des fonds virtuels",
+    "bullet1": "10 000 $ préchargés",
+    "bullet2": "Recharges illimitées",
+    "cta": "Essayer le compte démo"
+  },
+  "footer": {
+    "description": "Plateforme d'options binaires nouvelle génération pour la vitesse et la transparence.",
+    "copyright": "© {{year}} Arcanine. Tous droits réservés.",
+    "quickMenu": "Menu rapide",
+    "howItWorks": "Comment ça marche",
+    "assetIndex": "Index des actifs",
+    "tradingTerminal": "Terminal de trading",
+    "demoAccount": "Compte démo",
+    "faqs": "FAQ",
+    "support": "Support",
+    "information": "Information",
+    "termsOfService": "Conditions d'utilisation",
+    "privacyPolicy": "Politique de confidentialité",
+    "amlKyc": "Politique AML & KYC",
+    "responsibleTrading": "Trading responsable",
+    "acceptedPayments": "Paiements acceptés",
+    "riskWarningTitle": "AVERTISSEMENT RISQUE ÉLEVÉ :",
+    "riskWarningText": "Le trading d'options binaires comporte des risques importants.",
+    "riskDisclosureTitle": "Divulgation des risques :",
+    "riskDisclosureText": "Les options binaires sont des instruments financiers complexes.",
+    "noGuarantee": "Aucune garantie de profit :",
+    "noGuaranteeText": "Aucune stratégie ne garantit des profits.",
+    "notAdvice": "Pas un conseil financier :",
+    "notAdviceText": "Contenu à titre éducatif uniquement.",
+    "eligibilityTitle": "Éligibilité :",
+    "eligibilityText": "Réservé aux utilisateurs de 18 ans et plus.",
+    "liabilityTitle": "Limitation de responsabilité :",
+    "liabilityText": "Arcanine décline toute responsabilité pour les pertes.",
+    "highRisk": "Produit à haut risque",
+    "capitalAtRisk": "Capital à risque",
+    "adultsOnly": "18+ uniquement"
+  },
+  "riskWarning": {
+    "title": "Avertissement général sur les risques",
+    "text1": "Le trading d'options binaires comporte un niveau de risque élevé.",
+    "text2": "Consultez un conseiller financier indépendant en cas de doute."
+  },
+  "trustStrip": {
+    "fast": "Exécution en millisecondes",
+    "secure": "Transactions sécurisées",
+    "withdrawals": "Retraits rapides",
+    "global": "Disponible mondialement"
+  }
+}

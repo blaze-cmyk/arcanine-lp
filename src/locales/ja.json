@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "仕組み",
+    "testimonials": "レビュー",
+    "faq": "よくある質問",
+    "demoAccount": "デモ口座",
+    "logIn": "ログイン",
+    "signUp": "登録"
+  },
+  "hero": {
+    "badge": "Factual Capital Group 提供",
+    "badgeRank": "#1",
+    "headline": "次の市場の動きを予測する",
+    "subhead": "価格の方向性にポジションを取り、上か下か、数秒で結果を確認。グローバル市場を取引するシンプルで高速な方法。",
+    "createAccount": "アカウント作成",
+    "tryDemo": "無料デモ",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "ライブ勝利"
+  },
+  "features": {
+    "heading": "スピードと明確さのために設計",
+    "subheading": "Arcanineは高速実行、透明な支払い、簡単な意思決定を提供します。",
+    "tradeInSeconds": "数秒で取引",
+    "tradeInSecondsDesc": "結果はすぐに出ます。",
+    "clearPayouts": "明確な支払い",
+    "clearPayoutsDesc": "事前に利益を把握。隠れた手数料なし。",
+    "clearDecisions": "明確な判断",
+    "clearDecisionsDesc": "シンプルな上下システム。",
+    "globalMarkets": "グローバル市場",
+    "globalMarketsDesc": "いつでもどこでも資産を取引。"
+  },
+  "howItWorks": {
+    "eyebrow": "ゼロから利益へ",
+    "heading": "3つのステップ。",
+    "headingLine2": "1つの結果。",
+    "subheading": "チャート不要。専門用語不要。シンプルな判断が数秒で成果に。",
+    "step1Title": "投資額を設定",
+    "step1Desc": "$1から$10,000まで投資額を選択。",
+    "step2Title": "動きを予測",
+    "step2Desc": "価格は上がる？下がる？方向を選ぶだけ。",
+    "step3Title": "即座に受取",
+    "step3Desc": "数秒で結果。利益は即座に口座に。",
+    "amount": "金額",
+    "min": "最低 $1",
+    "up": "上昇",
+    "down": "下降",
+    "profit": "利益",
+    "settled": "確定"
+  },
+  "fairness": {
+    "heading": "透明な入金",
+    "headingLine2": "高速出金",
+    "description": "馴染みのある決済方法で安全に送金。入金は即時、出金は数分で。",
+    "cta": "取引を開始"
+  },
+  "stats": {
+    "heading": "世界中のトレーダーに",
+    "headingLine2": "信頼されています",
+    "subheading": "Arcanineで既に利益を得ている数千人に参加",
+    "activeTraders": "アクティブトレーダー",
+    "countries": "対応国",
+    "tradingAssets": "取引資産",
+    "monthlyPayouts": "月間支払い"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "よくある質問",
+    "contactPrompt": "お探しの情報が見つかりませんか？",
+    "contactLink": "お問い合わせ",
+    "q1": "バイナリーオプション取引とは？",
+    "a1": "資産の価格が上がるか下がるかを予測する金融商品です。",
+    "q2": "始め方は？",
+    "a2": "無料登録して入金するだけ。",
+    "q3": "取引できる資産は？",
+    "a3": "FX、仮想通貨、株式、商品、指数。",
+    "q4": "出金の速さは？",
+    "a4": "1〜2営業日で処理。",
+    "q5": "資金は安全ですか？",
+    "a5": "銀行レベルの暗号化を使用。",
+    "q6": "最低入金額は？",
+    "a6": "$10から。",
+    "q7": "リスクなしで練習できますか？",
+    "a7": "はい！$10,000のデモ口座。",
+    "q8": "取引時間は？",
+    "a8": "60秒から数時間まで。"
+  },
+  "demo": {
+    "heading": "仮想資金でライブチャートを",
+    "headingLine2": "取引する",
+    "bullet1": "デモ口座に$10,000プリロード",
+    "bullet2": "残高の無制限リチャージ",
+    "cta": "デモ口座を試す"
+  },
+  "footer": {
+    "description": "スピード、透明性、精密取引のための次世代バイナリーオプションプラットフォーム。",
+    "copyright": "© {{year}} Arcanine. 全著作権所有。",
+    "quickMenu": "クイックメニュー",
+    "howItWorks": "仕組み",
+    "assetIndex": "資産インデックス",
+    "tradingTerminal": "取引ターミナル",
+    "demoAccount": "デモ口座",
+    "faqs": "FAQ",
+    "support": "サポート",
+    "information": "情報",
+    "termsOfService": "利用規約",
+    "privacyPolicy": "プライバシーポリシー",
+    "amlKyc": "AML & KYC",
+    "responsibleTrading": "責任ある取引",
+    "acceptedPayments": "対応決済",
+    "riskWarningTitle": "高リスク警告：",
+    "riskWarningText": "バイナリーオプション取引には重大なリスクがあります。",
+    "riskDisclosureTitle": "リスク開示：",
+    "riskDisclosureText": "バイナリーオプションは複雑な金融商品です。",
+    "noGuarantee": "利益保証なし：",
+    "noGuaranteeText": "いかなる戦略も利益を保証しません。",
+    "notAdvice": "金融アドバイスではありません：",
+    "notAdviceText": "教育目的のみ。",
+    "eligibilityTitle": "資格要件：",
+    "eligibilityText": "18歳以上限定。",
+    "liabilityTitle": "責任制限：",
+    "liabilityText": "Arcanineは損失に対して責任を負いません。",
+    "highRisk": "高リスク商品",
+    "capitalAtRisk": "資本リスクあり",
+    "adultsOnly": "18歳以上限定"
+  },
+  "riskWarning": {
+    "title": "一般的なリスク警告",
+    "text1": "バイナリーオプション取引は高いリスクを伴います。",
+    "text2": "疑問がある場合は独立したファイナンシャルアドバイザーに相談してください。"
+  },
+  "trustStrip": {
+    "fast": "ミリ秒で約定",
+    "secure": "安全な取引",
+    "withdrawals": "高速出金",
+    "global": "世界中で利用可能"
+  }
+}

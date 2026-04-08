@@ -1,0 +1,139 @@
+{
+  "nav": {
+    "howItWorks": "Wie es funktioniert",
+    "testimonials": "Bewertungen",
+    "faq": "FAQ",
+    "demoAccount": "Demokonto",
+    "logIn": "Anmelden",
+    "signUp": "Registrieren"
+  },
+  "hero": {
+    "badge": "Präsentiert von Factual Capital Group",
+    "badgeRank": "#1",
+    "headline": "Sagen Sie die nächste Marktbewegung voraus",
+    "subhead": "Nehmen Sie eine Position zur Preisrichtung ein, nach oben oder unten, und sehen Sie Ergebnisse in Sekunden. Eine einfache, schnelle Art, globale Märkte zu handeln.",
+    "createAccount": "Konto erstellen",
+    "tryDemo": "Kostenlos testen",
+    "browserBar": "app.arcanine.trade"
+  },
+  "liveWins": {
+    "title": "Live-Gewinne"
+  },
+  "features": {
+    "heading": "Für Geschwindigkeit und Klarheit entwickelt",
+    "subheading": "Arcanine bietet ein Handelserlebnis mit schneller Ausführung, transparenten Auszahlungen und müheloser Entscheidungsfindung.",
+    "tradeInSeconds": "In Sekunden handeln",
+    "tradeInSecondsDesc": "Ergebnisse werden schnell aufgelöst, ohne Wartezeit oder Komplexität.",
+    "clearPayouts": "Kristallklare Auszahlungen",
+    "clearPayoutsDesc": "Wissen Sie genau, was Sie verdienen können, bevor Sie sich festlegen. Keine versteckten Gebühren.",
+    "clearDecisions": "Klare Entscheidungen",
+    "clearDecisionsDesc": "Ein einfaches Auf-oder-Ab-System ohne unnötige Werkzeuge.",
+    "globalMarkets": "Globale Märkte",
+    "globalMarketsDesc": "Handeln Sie Vermögenswerte jederzeit und überall."
+  },
+  "howItWorks": {
+    "eyebrow": "Von null zum Gewinn",
+    "heading": "Drei Schritte.",
+    "headingLine2": "Ein Ergebnis.",
+    "subheading": "Keine Charts zum Studieren. Kein Fachjargon. Nur eine einfache Entscheidung, die sich in Sekunden auszahlt.",
+    "step1Title": "Einsatz festlegen",
+    "step1Desc": "Wählen Sie den Investitionsbetrag — von 1 $ bis 10.000 $. Sie kontrollieren immer Ihr Risiko.",
+    "step2Title": "Bewegung vorhersagen",
+    "step2Desc": "Wird der Preis steigen oder fallen? Wählen Sie eine Richtung und einen Zeitrahmen.",
+    "step3Title": "Sofort kassieren",
+    "step3Desc": "Ergebnisse in Sekunden. Gewinne landen sofort auf Ihrem Konto.",
+    "amount": "Betrag",
+    "min": "Min 1 $",
+    "up": "Hoch",
+    "down": "Runter",
+    "profit": "Gewinn",
+    "settled": "Abgeschlossen"
+  },
+  "fairness": {
+    "heading": "Transparente Einzahlung",
+    "headingLine2": "Schnelle Auszahlung",
+    "description": "Überweisen Sie sicher über bekannte Zahlungsmethoden. Einzahlungen sind sofort, Auszahlungen in Minuten.",
+    "cta": "Handel starten"
+  },
+  "stats": {
+    "heading": "Von Tradern vertraut",
+    "headingLine2": "weltweit",
+    "subheading": "Schließen Sie sich Tausenden an, die bereits mit Arcanine gewinnen",
+    "activeTraders": "Aktive Trader",
+    "countries": "Länder",
+    "tradingAssets": "Handelsaktiva",
+    "monthlyPayouts": "Monatliche Auszahlungen"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "heading": "Häufig gestellte Fragen",
+    "contactPrompt": "Nicht gefunden, was Sie suchen?",
+    "contactLink": "Kontaktieren Sie uns.",
+    "q1": "Was ist Binäroptionshandel?",
+    "a1": "Der Binäroptionshandel ist ein Finanzinstrument, mit dem Sie vorhersagen können, ob der Preis eines Vermögenswerts innerhalb eines bestimmten Zeitrahmens steigt oder fällt.",
+    "q2": "Wie fange ich an?",
+    "a2": "Registrieren Sie sich kostenlos, verifizieren Sie sich und zahlen Sie ein, um mit dem Handel zu beginnen.",
+    "q3": "Welche Vermögenswerte kann ich handeln?",
+    "a3": "Forex, Krypto, Aktien, Rohstoffe und Indizes — alles auf einer Plattform.",
+    "q4": "Wie schnell werden Auszahlungen bearbeitet?",
+    "a4": "Auszahlungen werden in 1–2 Werktagen bearbeitet.",
+    "q5": "Ist mein Geld sicher?",
+    "a5": "Wir verwenden Bankverschlüsselung und getrennte Kundenkonten.",
+    "q6": "Was ist die Mindesteinzahlung?",
+    "a6": "Die Mindesteinzahlung beginnt bei 10 $.",
+    "q7": "Kann ich ohne echtes Geld üben?",
+    "a7": "Ja! Wir bieten ein Demokonto mit 10.000 $ virtuellem Guthaben.",
+    "q8": "Welche Zeitrahmen gibt es?",
+    "a8": "Von 60 Sekunden bis zu mehreren Stunden."
+  },
+  "demo": {
+    "heading": "Handeln Sie Live-Charts mit",
+    "headingLine2": "virtuellem Guthaben",
+    "bullet1": "10.000 $ auf Ihrem Demokonto vorgeladen",
+    "bullet2": "Unbegrenzte Aufladungen jederzeit",
+    "cta": "Demokonto testen"
+  },
+  "footer": {
+    "description": "Eine Binäroptionsplattform der nächsten Generation für Geschwindigkeit, Transparenz und präzisen Handel.",
+    "copyright": "© {{year}} Arcanine. Alle Rechte vorbehalten.",
+    "quickMenu": "Schnellmenü",
+    "howItWorks": "Wie es funktioniert",
+    "assetIndex": "Vermögensindex",
+    "tradingTerminal": "Handelsterminal",
+    "demoAccount": "Demokonto",
+    "faqs": "FAQ",
+    "support": "Support",
+    "information": "Information",
+    "termsOfService": "Nutzungsbedingungen",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "amlKyc": "AML & KYC",
+    "responsibleTrading": "Verantwortungsvolles Handeln",
+    "acceptedPayments": "Akzeptierte Zahlungen",
+    "riskWarningTitle": "HOCHRISIKO-INVESTITIONSWARNUNG:",
+    "riskWarningText": "Der Handel mit Binäroptionen birgt erhebliche Risiken.",
+    "riskDisclosureTitle": "Risikohinweis:",
+    "riskDisclosureText": "Binäroptionen sind komplexe Finanzinstrumente.",
+    "noGuarantee": "Keine Gewinngarantie:",
+    "noGuaranteeText": "Es gibt keine Garantie, dass eine Strategie Gewinne erzielt.",
+    "notAdvice": "Keine Finanzberatung:",
+    "notAdviceText": "Inhalte dienen nur zu Bildungszwecken.",
+    "eligibilityTitle": "Berechtigung:",
+    "eligibilityText": "Nur für Nutzer ab 18 Jahren.",
+    "liabilityTitle": "Haftungsbeschränkung:",
+    "liabilityText": "Arcanine haftet nicht für direkte oder indirekte Verluste.",
+    "highRisk": "Hochrisikoprodukt",
+    "capitalAtRisk": "Kapital gefährdet",
+    "adultsOnly": "Nur 18+"
+  },
+  "riskWarning": {
+    "title": "Allgemeine Risikowarnung",
+    "text1": "Der Handel mit Binäroptionen birgt ein hohes Risiko und kann zum Verlust des gesamten investierten Kapitals führen.",
+    "text2": "Holen Sie sich bei Zweifeln Rat von einem unabhängigen Finanzberater."
+  },
+  "trustStrip": {
+    "fast": "Trades in Millisekunden",
+    "secure": "Sichere Transaktionen",
+    "withdrawals": "Schnelle Auszahlungen",
+    "global": "Weltweit verfügbar"
+  }
+}
