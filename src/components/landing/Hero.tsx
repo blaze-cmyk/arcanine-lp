@@ -1,47 +1,40 @@
+import { useTranslation } from "react-i18next";
 import DashboardMockup from "./DashboardMockup";
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
-      {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
-        {/* Top badge */}
         <div className="animate-slide-up inline-flex items-center gap-3 mb-6 pl-2 pr-5 rounded-full border border-border/40 bg-card/60 backdrop-blur-sm py-[8px]">
-          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold tabular-nums">#1</span>
-          <span className="text-sm text-muted-foreground font-medium">Brought to you by Factual Capital Group</span>
+          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold tabular-nums">{t("hero.badgeRank")}</span>
+          <span className="text-sm text-muted-foreground font-medium">{t("hero.badge")}</span>
         </div>
 
-        {/* Headline */}
         <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1] mb-7 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
-          Predict the next market move
+          {t("hero.headline")}
         </h1>
 
-        {/* Subhead */}
         <p className="animate-slide-up-delay-1 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-          Take a position on price direction, up or down, and see results in seconds. A simple, fast way to trade global
-          markets.
+          {t("hero.subhead")}
         </p>
 
-        {/* Dual CTA */}
         <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button className="inline-flex items-center px-6 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
-            Create an account
+            {t("hero.createAccount")}
           </button>
           <button className="inline-flex items-center px-7 py-[0.8125rem] bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
-            Try free demo
+            {t("hero.tryDemo")}
           </button>
         </div>
       </div>
 
-      {/* Dashboard preview with ambient glow */}
       <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 mb-[-60px] animate-slide-up-delay-4">
-        {/* Ambient glow behind the preview */}
         <div className="absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.06),transparent_60%)] blur-3xl pointer-events-none" />
         <div className="absolute -inset-4 rounded-3xl bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
 
-        {/* The preview card */}
         <div className="relative glass-strong rounded-2xl border border-border/40 overflow-hidden shadow-2xl shadow-black/40">
-          {/* Top bar (browser chrome) */}
           <div className="flex items-center gap-2 px-5 py-2.5 border-b border-border/30">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-loss/60" />
@@ -50,18 +43,15 @@ const Hero = () => {
             </div>
             <div className="flex-1 flex justify-center">
               <div className="px-4 py-1 rounded-md bg-muted/50 text-xs text-muted-foreground font-display tabular-nums">
-                app.arcanine.trade
+                {t("hero.browserBar")}
               </div>
             </div>
             <div className="w-12" />
           </div>
-
-          {/* Dashboard mockup */}
           <DashboardMockup />
         </div>
       </div>
 
-      {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
     </section>
   );
