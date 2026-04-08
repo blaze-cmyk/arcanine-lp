@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { TrendingUp, Pause } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { faker } from "@faker-js/faker";
 
 interface Win {
@@ -56,6 +57,7 @@ const generateWin = (isNew = false): Win => {
 const initialWins = Array.from({ length: 8 }, () => generateWin());
 
 const LiveWins = () => {
+  const { t } = useTranslation();
   const [wins, setWins] = useState<Win[]>(initialWins);
   const [paused, setPaused] = useState(false);
   const firstCardRef = useRef<HTMLDivElement>(null);
@@ -84,7 +86,6 @@ const LiveWins = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto mt-5 pb-1">
-        {/* Live Wins pill badge */}
         <div className="absolute -top-3 left-0 z-20">
           <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-secondary-btn border border-border/50 shadow-lg shadow-black/20">
             <span className="relative flex h-3.5 w-3.5 items-center justify-center">
@@ -97,11 +98,10 @@ const LiveWins = () => {
                 </>
               )}
             </span>
-            <span className="text-xs font-semibold text-foreground">Live Wins</span>
+            <span className="text-xs font-semibold text-foreground">{t("liveWins.title")}</span>
           </div>
         </div>
 
-        {/* Right fade */}
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
         <div
