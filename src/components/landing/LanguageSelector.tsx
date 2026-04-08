@@ -31,8 +31,8 @@ const LanguageSelector = () => {
 
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 w-[320px] max-h-[400px] overflow-y-auto rounded-xl border border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl shadow-black/40 z-50 p-3"
-          style={{ scrollbarWidth: "thin" }}
+          className="absolute right-0 top-full mt-2 w-[320px] max-h-[400px] overflow-y-auto rounded-xl border border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl shadow-black/40 z-50 p-3 scrollbar-none"
+          style={{ scrollbarWidth: "none" }}
         >
           <div className="grid grid-cols-2 gap-1">
             {LANGUAGES.map((lang) => (
