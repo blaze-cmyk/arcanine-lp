@@ -82,7 +82,7 @@ i18n
 
 // Set document direction on language change
 i18n.on("languageChanged", (lng) => {
-  const dir = RTL_LANGUAGES.includes(lng) ? "rtl" : "ltr";
+  const dir = RTL_LANGUAGES.includes(lng as any) ? "rtl" : "ltr";
   document.documentElement.dir = dir;
   document.documentElement.lang = lng;
 });
