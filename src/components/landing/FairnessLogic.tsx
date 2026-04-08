@@ -51,30 +51,23 @@ const FairnessLogic = () => {
           className="relative rounded-2xl overflow-hidden"
           style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border) / 0.5)" }}
         >
-          {/* Ambient orange glow at bottom */}
+          {/* Ambient orange glow at top-right corner */}
           <div
-            className="absolute bottom-0 left-0 right-0 h-[45%] pointer-events-none z-0"
+            className="absolute -top-[20%] -right-[10%] w-[60%] h-[70%] pointer-events-none z-0"
             style={{
-              background: "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(255,106,0,0.25) 0%, rgba(255,80,0,0.12) 30%, rgba(255,60,0,0.04) 60%, transparent 100%)",
+              background: "radial-gradient(ellipse 70% 60% at 70% 30%, rgba(255,106,0,0.22) 0%, rgba(255,80,0,0.08) 40%, transparent 70%)",
             }}
           />
           <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-[35%] pointer-events-none z-0 blur-2xl"
+            className="absolute -top-[10%] -right-[5%] w-[45%] h-[50%] pointer-events-none z-0 blur-2xl"
             style={{
-              background: "radial-gradient(ellipse at 50% 100%, rgba(255,120,20,0.3) 0%, rgba(255,80,0,0.1) 50%, transparent 100%)",
+              background: "radial-gradient(ellipse at 75% 25%, rgba(255,120,20,0.28) 0%, rgba(255,80,0,0.08) 50%, transparent 100%)",
             }}
           />
           <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[40%] h-[20%] pointer-events-none z-0 blur-xl"
+            className="absolute top-[5%] right-[5%] w-[30%] h-[30%] pointer-events-none z-0 blur-xl"
             style={{
-              background: "radial-gradient(ellipse at 50% 100%, rgba(255,160,60,0.25) 0%, transparent 80%)",
-            }}
-          />
-          {/* Subtle top-edge highlight */}
-          <div
-            className="absolute top-0 left-0 right-0 h-px pointer-events-none z-0"
-            style={{
-              background: "linear-gradient(90deg, transparent 10%, hsl(var(--border) / 0.4) 50%, transparent 90%)",
+              background: "radial-gradient(ellipse at 60% 40%, rgba(255,160,60,0.2) 0%, transparent 80%)",
             }}
           />
           <div className="relative z-10 py-20 sm:py-24 px-8 sm:px-12 lg:px-16">
