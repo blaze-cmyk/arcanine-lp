@@ -36,7 +36,7 @@ const FAQ = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="frequently-asked-questions" className="relative py-32 sm:py-40 px-4 sm:px-6 overflow-hidden">
+    <section id="frequently-asked-questions" className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden">
       {/* Top gradient separator — bright line with downward glow */}
       <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
         <div className="relative w-full max-w-3xl">

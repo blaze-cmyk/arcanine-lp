@@ -38,7 +38,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-32 sm:py-40 px-4">
+    <section className="py-20 sm:py-28 px-4">
       <svg className="absolute w-0 h-0" aria-hidden="true">
         <defs>
           <filter id="feature-noise">
