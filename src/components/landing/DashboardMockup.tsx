@@ -566,7 +566,7 @@ const DashboardMockup = () => {
           <div className="flex items-center gap-1.5 bg-secondary rounded-md px-2.5 py-1.5 border border-border">
             <div className="text-left">
               <div className="text-[7px] text-primary font-bold uppercase tracking-wider">DEMO ACCOUNT</div>
-              <div className="text-[11px] font-bold text-foreground font-mono-num">$10,000.00</div>
+              <div className="text-[11px] font-bold text-foreground font-display tabular-nums">$10,000.00</div>
             </div>
             <ChevronDown size={10} className="text-muted-foreground" />
           </div>
@@ -580,7 +580,7 @@ const DashboardMockup = () => {
         <div className="flex-1 flex min-h-0">
           {/* Probability bar */}
           <div className="hidden sm:flex flex-col items-center justify-between h-full py-2 w-5 flex-shrink-0 bg-[#0f1113]">
-            <span className="text-[9px] font-bold text-loss font-mono-num">{bearPct}%</span>
+            <span className="text-[9px] font-bold text-loss font-display tabular-nums">{bearPct}%</span>
             <div className="flex-1 w-[3px] rounded-full overflow-hidden flex flex-col my-1">
               <div
                 className="transition-all duration-700"
@@ -597,7 +597,7 @@ const DashboardMockup = () => {
                 }}
               />
             </div>
-            <span className="text-[9px] font-bold text-profit font-mono-num">{bullPct}%</span>
+            <span className="text-[9px] font-bold text-profit font-display tabular-nums">{bullPct}%</span>
           </div>
 
           {/* Chart + tabs */}
@@ -629,7 +629,7 @@ const DashboardMockup = () => {
             <div className="absolute bottom-[28px] left-1.5 z-10 flex flex-col gap-0.5">
               {[
                 <Pencil size={11} key="p" />,
-                <span className="text-[8px] font-semibold font-mono-num" key="t">
+                <span className="text-[8px] font-semibold font-display tabular-nums" key="t">
                   1m
                 </span>,
                 <CandleIcon key="c" />,
@@ -658,7 +658,7 @@ const DashboardMockup = () => {
                 <span className="font-semibold text-foreground text-[10px]">{currentAsset.symbol}</span>
                 <span className="text-primary text-[10px] font-bold">{currentAsset.payout}%</span>
               </div>
-              <div className="font-mono-num text-lg font-bold mt-0.5">
+              <div className="font-display tabular-nums text-lg font-bold mt-0.5">
                 ${currentPrice?.toFixed(currentAsset.decimals)}
               </div>
             </div>
@@ -674,7 +674,7 @@ const DashboardMockup = () => {
                   >
                     <Minus size={10} />
                   </button>
-                  <span className="flex-1 text-center text-[11px] font-bold font-mono-num">{timeDisplay}</span>
+                  <span className="flex-1 text-center text-[11px] font-bold font-display tabular-nums">{timeDisplay}</span>
                   <button
                     onClick={() => adjustTime(5)}
                     className="w-6 h-6 rounded bg-primary/15 flex items-center justify-center text-primary hover:bg-primary/25 transition-colors"
@@ -696,7 +696,7 @@ const DashboardMockup = () => {
                   >
                     <Minus size={10} />
                   </button>
-                  <span className="flex-1 text-center text-[11px] font-bold font-mono-num">{investment} $</span>
+                  <span className="flex-1 text-center text-[11px] font-bold font-display tabular-nums">{investment} $</span>
                   <button
                     onClick={() => adjustInvestment(10)}
                     className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
@@ -707,11 +707,11 @@ const DashboardMockup = () => {
               </fieldset>
               <div className="flex justify-between text-[8px] mt-1.5 px-1">
                 <span className="text-muted-foreground">Payout</span>
-                <span className="text-profit font-bold font-mono-num">+${payoutAmount}</span>
+                <span className="text-profit font-bold font-display tabular-nums">+${payoutAmount}</span>
               </div>
               <div className="flex justify-between text-[8px] px-1 mt-0.5">
                 <span className="text-muted-foreground">Fee ({100 - currentAsset.payout}%)</span>
-                <span className="text-muted-foreground font-mono-num">
+                <span className="text-muted-foreground font-display tabular-nums">
                   -${((investment * (100 - currentAsset.payout)) / 100).toFixed(2)}
                 </span>
               </div>
@@ -747,8 +747,8 @@ const DashboardMockup = () => {
                     </span>
                   </div>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[8px] text-muted-foreground font-mono-num">$50.00</span>
-                    <span className="text-[8px] text-profit font-bold font-mono-num">+$46.00</span>
+                    <span className="text-[8px] text-muted-foreground font-display tabular-nums">$50.00</span>
+                    <span className="text-[8px] text-profit font-bold font-display tabular-nums">+$46.00</span>
                   </div>
                 </div>
                 {/* Trade 2 — ETH losing */}
@@ -760,8 +760,8 @@ const DashboardMockup = () => {
                     </span>
                   </div>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[8px] text-muted-foreground font-mono-num">$100.00</span>
-                    <span className="text-[8px] text-loss font-bold font-mono-num">-$100.00</span>
+                    <span className="text-[8px] text-muted-foreground font-display tabular-nums">$100.00</span>
+                    <span className="text-[8px] text-loss font-bold font-display tabular-nums">-$100.00</span>
                   </div>
                 </div>
                 {/* Trade 3 — GOLD winning */}
@@ -773,8 +773,8 @@ const DashboardMockup = () => {
                     </span>
                   </div>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[8px] text-muted-foreground font-mono-num">$75.00</span>
-                    <span className="text-[8px] text-profit font-bold font-mono-num">+$63.75</span>
+                    <span className="text-[8px] text-muted-foreground font-display tabular-nums">$75.00</span>
+                    <span className="text-[8px] text-profit font-bold font-display tabular-nums">+$63.75</span>
                   </div>
                 </div>
               </div>

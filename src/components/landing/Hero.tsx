@@ -49,7 +49,7 @@ const Hero = () => {
               <div className="w-3 h-3 rounded-full bg-profit/60" />
             </div>
             <div className="flex-1 flex justify-center">
-              <div className="px-4 py-1 rounded-md bg-muted/50 text-xs text-muted-foreground font-mono-num">
+              <div className="px-4 py-1 rounded-md bg-muted/50 text-xs text-muted-foreground font-display tabular-nums">
                 app.arcanine.trade
               </div>
             </div>

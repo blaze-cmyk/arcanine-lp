@@ -33,7 +33,7 @@ const ClearPayoutsVisual = () => {
             </div>
             <span className="text-xs font-semibold text-foreground">EUR/USD · Call</span>
           </div>
-          <span className="text-[10px] font-mono text-muted-foreground">01:00</span>
+          <span className="text-[10px] font-display tabular-nums text-muted-foreground">01:00</span>
         </div>
 
         {/* Body rows */}
@@ -41,14 +41,14 @@ const ClearPayoutsVisual = () => {
           {/* Investment */}
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-muted-foreground">Investment</span>
-            <span className="text-xs font-mono font-semibold text-foreground">$100.00</span>
+            <span className="text-xs font-display tabular-nums font-semibold text-foreground">$100.00</span>
           </div>
 
           {/* Multiplier */}
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-muted-foreground">Multiplier</span>
             <span
-              className="text-xs font-mono font-semibold transition-colors duration-500"
+              className="text-xs font-display tabular-nums font-semibold transition-colors duration-500"
               style={{ color: hovered ? "hsl(var(--primary))" : "hsl(var(--foreground))" }}
             >
               ×1.85
@@ -62,7 +62,7 @@ const ClearPayoutsVisual = () => {
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-muted-foreground">Potential Payout</span>
             <span
-              className="text-sm font-mono font-bold transition-all duration-500"
+              className="text-sm font-display tabular-nums font-bold transition-all duration-500"
               style={{
                 color: hovered ? "hsl(var(--profit))" : "hsl(var(--foreground))",
               }}
@@ -80,7 +80,7 @@ const ClearPayoutsVisual = () => {
               Platform fee
             </span>
             <span
-              className="text-[10px] font-mono text-muted-foreground transition-opacity duration-500"
+              className="text-[10px] font-display tabular-nums text-muted-foreground transition-opacity duration-500"
               style={{ opacity: hovered ? 1 : 0 }}
             >
               $0.00
