@@ -51,6 +51,32 @@ const FairnessLogic = () => {
           className="relative rounded-2xl overflow-hidden"
           style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border) / 0.5)" }}
         >
+          {/* Ambient orange glow at bottom */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-[45%] pointer-events-none z-0"
+            style={{
+              background: "radial-gradient(ellipse 80% 70% at 50% 100%, rgba(255,106,0,0.25) 0%, rgba(255,80,0,0.12) 30%, rgba(255,60,0,0.04) 60%, transparent 100%)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-[35%] pointer-events-none z-0 blur-2xl"
+            style={{
+              background: "radial-gradient(ellipse at 50% 100%, rgba(255,120,20,0.3) 0%, rgba(255,80,0,0.1) 50%, transparent 100%)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[40%] h-[20%] pointer-events-none z-0 blur-xl"
+            style={{
+              background: "radial-gradient(ellipse at 50% 100%, rgba(255,160,60,0.25) 0%, transparent 80%)",
+            }}
+          />
+          {/* Subtle top-edge highlight */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px pointer-events-none z-0"
+            style={{
+              background: "linear-gradient(90deg, transparent 10%, hsl(var(--border) / 0.4) 50%, transparent 90%)",
+            }}
+          />
           <div className="relative z-10 py-20 sm:py-24 px-8 sm:px-12 lg:px-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div
