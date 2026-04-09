@@ -4,13 +4,6 @@ import ClearPayoutsVisual from "./features/ClearPayoutsVisual";
 import ClearDecisionsVisual from "./features/ClearDecisionsVisual";
 import GlobalMarketsVisual from "./features/GlobalMarketsVisual";
 
-const meshGradients = [
-  "radial-gradient(ellipse 70% 55% at 75% 10%, hsl(24 100% 50% / 0.18) 0%, hsl(24 100% 40% / 0.06) 40%, transparent 70%)",
-  "radial-gradient(ellipse 60% 50% at 25% 15%, hsl(160 50% 45% / 0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 45% at 80% 20%, hsl(24 100% 50% / 0.10) 0%, transparent 60%)",
-  "radial-gradient(ellipse 65% 55% at 55% 12%, hsl(240 50% 55% / 0.14) 0%, hsl(260 40% 40% / 0.05) 45%, transparent 70%)",
-  "radial-gradient(ellipse 80% 60% at 50% 5%, hsl(24 100% 50% / 0.16) 0%, hsl(24 80% 30% / 0.04) 50%, transparent 75%), radial-gradient(ellipse 40% 40% at 15% 60%, hsl(280 40% 45% / 0.06) 0%, transparent 60%)",
-];
-
 const Features = () => {
   const { t } = useTranslation();
 
@@ -39,15 +32,6 @@ const Features = () => {
 
   return (
     <section className="py-20 sm:py-28 px-4">
-      <svg className="absolute w-0 h-0" aria-hidden="true">
-        <defs>
-          <filter id="feature-noise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-            <feColorMatrix type="saturate" values="0" />
-          </filter>
-        </defs>
-      </svg>
-
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2
@@ -70,16 +54,28 @@ const Features = () => {
             return (
               <div
                 key={index}
-                className={`relative rounded-2xl border border-border/40 overflow-hidden flex flex-col h-[340px] ${
+                className={`relative rounded-2xl overflow-hidden flex flex-col h-[340px] ${
                   isSmall ? "md:col-span-2" : "md:col-span-3"
                 }`}
-                style={{ background: "hsl(var(--card))" }}
+                style={{
+                  background: "hsl(var(--card))",
+                  border: "1px solid hsl(var(--border) / 0.5)",
+                }}
               >
-                <div className="absolute inset-0 pointer-events-none" style={{ background: meshGradients[index] }} />
-                <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 70% at 50% 40%, transparent 40%, hsl(var(--card) / 0.7) 100%)" }} />
-                <div className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay" style={{ filter: "url(#feature-noise)", width: "100%", height: "100%" }} />
+                {/* Subtle top-edge highlight like other sections */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-px pointer-events-none z-[2]"
+                  style={{
+                    background: "linear-gradient(90deg, transparent 10%, hsl(var(--border) / 0.4) 50%, transparent 90%)",
+                  }}
+                />
                 <div className="flex-1 relative z-[1]">{visual}</div>
-                <div className="absolute bottom-0 left-0 right-0 h-[120px] pointer-events-none z-[2]" style={{ background: "linear-gradient(to bottom, transparent 0%, hsl(var(--card)) 65%)" }} />
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[120px] pointer-events-none z-[2]"
+                  style={{
+                    background: "linear-gradient(to bottom, transparent 0%, hsl(var(--card)) 65%)",
+                  }}
+                />
                 <div className="p-6 max-w-md relative z-[3]">
                   <p className="text-base leading-relaxed text-muted-foreground">
                     <span className="font-medium text-foreground">{title}.</span> {description}
