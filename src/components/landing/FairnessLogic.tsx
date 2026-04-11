@@ -97,7 +97,7 @@ const FairnessLogic = () => {
                 <a
                   href="#"
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-accent text-primary-foreground transition-all duration-200 hover:shadow-lg"
-                  style={{ boxShadow: "0 0 30px rgba(255,106,0,0.2)" }}
+                  style={{ boxShadow: "0 0 30px rgba(25,205,168,0.2)" }}
                 >
                   {t("fairness.cta")}
                 </a>
