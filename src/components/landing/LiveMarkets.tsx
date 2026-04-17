@@ -15,6 +15,7 @@ type Asset = {
   name: string;            // display name (e.g. "Bitcoin")
   category: "crypto" | "stock" | "forex" | "commodity";
   icon?: string;           // image URL (cryptologos.cc) — preferred
+  pairIcons?: [string, string]; // for forex pair flags
   initial?: string;        // fallback letter/glyph
   binanceSymbol?: string;  // for crypto
   yahooSymbol?: string;    // for everything else
