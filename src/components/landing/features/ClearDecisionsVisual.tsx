@@ -74,6 +74,19 @@ const ClearDecisionsVisual = () => {
   const [headerPrice, setHeaderPrice] = useState<number | null>(null);
   const [openPrice, setOpenPrice] = useState<number | null>(null);
 
+  // Interaction state
+  const interactRef = useRef({
+    offsetX: 0,        // positive = pan left (toward older candles)
+    scaleX: 1,         // x zoom multiplier
+    scaleY: 1,         // y zoom multiplier
+    isDraggingChart: false,
+    isDraggingPrice: false,
+    dragStartX: 0,
+    dragStartY: 0,
+    dragStartOffsetX: 0,
+    dragStartScaleY: 1,
+  });
+
   // Fetch initial klines + WebSocket
   useEffect(() => {
     let cancelled = false;
