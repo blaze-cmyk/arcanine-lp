@@ -271,7 +271,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
           <div className="relative group/up">
             <button
               aria-label={`Buy ${asset.name} long`}
-              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-success/20 flex items-center justify-center text-foreground hover:text-success transition-colors border border-transparent hover:border-success/40"
+              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-profit/20 flex items-center justify-center text-foreground hover:text-profit transition-colors border border-transparent hover:border-profit/40"
             >
               <ArrowUp className="w-4 h-4" />
             </button>
@@ -285,7 +285,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
           <div className="relative group/down">
             <button
               aria-label={`Sell ${asset.name} short`}
-              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-destructive/20 flex items-center justify-center text-foreground hover:text-destructive transition-colors"
+              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-loss/20 flex items-center justify-center text-foreground hover:text-loss transition-colors border border-transparent hover:border-loss/40"
             >
               <ArrowDown className="w-4 h-4" />
             </button>
