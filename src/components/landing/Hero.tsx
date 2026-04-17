@@ -43,12 +43,12 @@ const Hero = () => {
       </div>
 
       {/* ── Dashboard mockup ── */}
-      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 animate-slide-up-delay-4">
+      <div className="relative z-10 w-full mx-auto max-w-6xl mt-12 sm:mt-20 animate-slide-up-delay-4">
         <img src={dashboardPreview} alt="Arcanine trading platform preview" className="relative w-full h-auto block" />
       </div>
 
       {/* Dark gradient below dashboard (does not overlap image) */}
-      <div className="relative z-10 w-full h-16 sm:h-20 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+      <div className="relative z-10 w-full h-10 sm:h-20 bg-gradient-to-b from-transparent to-background pointer-events-none" />
 
     </section>
   );
