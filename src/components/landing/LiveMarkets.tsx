@@ -6,12 +6,16 @@ import solIcon from "@/assets/icons/sol.png";
 import aaplIcon from "@/assets/icons/aapl.svg";
 import tslaIcon from "@/assets/icons/tsla.svg";
 import nvdaIcon from "@/assets/icons/nvda.svg";
+import euFlag from "@/assets/icons/eu.svg";
+import usFlag from "@/assets/icons/us.svg";
+import gbFlag from "@/assets/icons/gb.svg";
 
 type Asset = {
   symbol: string;          // display symbol
   name: string;            // display name (e.g. "Bitcoin")
   category: "crypto" | "stock" | "forex" | "commodity";
   icon?: string;           // image URL (cryptologos.cc) — preferred
+  pairIcons?: [string, string]; // for forex pair flags
   initial?: string;        // fallback letter/glyph
   binanceSymbol?: string;  // for crypto
   yahooSymbol?: string;    // for everything else
@@ -37,9 +41,9 @@ const ASSETS: Asset[] = [
   { symbol: "NVDA", name: "NVIDIA",      category: "stock",
     icon: nvdaIcon, yahooSymbol: "NVDA",  decimals: 2, prefix: "$" },
   { symbol: "EUR/USD", name: "Euro / Dollar", category: "forex",
-    initial: "€", yahooSymbol: "EURUSD=X", decimals: 4 },
+    pairIcons: [euFlag, usFlag], yahooSymbol: "EURUSD=X", decimals: 4 },
   { symbol: "GBP/USD", name: "Pound / Dollar", category: "forex",
-    initial: "£", yahooSymbol: "GBPUSD=X", decimals: 4 },
+    pairIcons: [gbFlag, usFlag], yahooSymbol: "GBPUSD=X", decimals: 4 },
   { symbol: "WTI",  name: "Crude Oil",   category: "commodity",
     initial: "🛢", yahooSymbol: "CL=F", decimals: 2, prefix: "$" },
   { symbol: "XAU/USD", name: "Gold Spot", category: "commodity",
@@ -216,7 +220,22 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
     >
       {/* Header: icon + name */}
       <div className="flex items-center gap-2.5 mb-2">
-        {asset.icon ? (
+        {asset.pairIcons ? (
+          <div className="relative w-9 h-7">
+            <img
+              src={asset.pairIcons[0]}
+              alt=""
+              className="absolute left-0 top-0 w-5 h-5 rounded-full object-cover ring-1 ring-border bg-white"
+              loading="lazy"
+            />
+            <img
+              src={asset.pairIcons[1]}
+              alt=""
+              className="absolute right-0 bottom-0 w-5 h-5 rounded-full object-cover ring-1 ring-border bg-white"
+              loading="lazy"
+            />
+          </div>
+        ) : asset.icon ? (
           ["ETH", "AAPL", "TSLA", "NVDA"].includes(asset.symbol) ? (
             <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center overflow-hidden">
               <img
