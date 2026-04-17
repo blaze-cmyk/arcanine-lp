@@ -88,7 +88,7 @@ function Selector<T extends { symbol: string; icon: string }>({
       )}
     </div>
   );
-};
+}
 
 const ClearPayoutsVisual = () => {
   const [crypto, setCrypto] = useState<Crypto>(CRYPTOS[0]);
