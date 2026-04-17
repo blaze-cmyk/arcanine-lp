@@ -129,19 +129,19 @@ const GlobalMarketsVisual = () => {
 
   return (
     <div
-      className="relative w-full h-full flex items-start justify-center cursor-pointer select-none px-6 pt-6"
+      className="relative w-full h-full flex items-start justify-center cursor-pointer select-none px-5 pt-5"
       style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
     >
-      <div className="w-full flex flex-col gap-2.5">
+      <div className="w-full max-w-[420px] flex flex-col gap-1.5">
         {/* Header row */}
-        <div className="grid grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-2 px-3 pb-2 mb-1 border-b border-border/30">
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Market</span>
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">LTP</span>
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">Volume</span>
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right whitespace-nowrap inline-flex items-center justify-end gap-1">
+        <div className="grid grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-2 px-3 pb-1.5 mb-0.5 border-b border-border/30">
+          <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground">Market</span>
+          <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right">LTP</span>
+          <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right">Volume</span>
+          <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right whitespace-nowrap inline-flex items-center justify-end gap-1">
             Profit +1m <span aria-hidden="true">▼</span>
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">5m</span>
+          <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right">5m</span>
         </div>
 
         {ASSETS.map((asset, i) => {
@@ -150,7 +150,7 @@ const GlobalMarketsVisual = () => {
           return (
             <div
               key={asset.symbol}
-              className="grid grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-2 rounded-lg px-3 py-2.5 transition-all duration-300"
+              className="grid grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-2 rounded-lg px-3 py-1.5 transition-all duration-300"
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
               style={{
@@ -160,31 +160,31 @@ const GlobalMarketsVisual = () => {
             >
 
               {/* Market */}
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-2.5 min-w-0">
                 {asset.whiteBg ? (
-                  <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src={asset.icon} alt={asset.name} className="w-6 h-6 object-contain" loading="lazy" />
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <img src={asset.icon} alt={asset.name} className="w-5 h-5 object-contain" loading="lazy" />
                   </div>
                 ) : (
-                  <img src={asset.icon} alt={asset.name} className="w-9 h-9 rounded-full object-contain flex-shrink-0" loading="lazy" />
+                  <img src={asset.icon} alt={asset.name} className="w-8 h-8 rounded-full object-contain flex-shrink-0" loading="lazy" />
                 )}
                 <div className="min-w-0">
-                  <div className="text-[13px] font-semibold text-foreground leading-tight whitespace-nowrap">{asset.symbol}</div>
-                  <div className="text-[11px] text-muted-foreground leading-tight truncate">{asset.name}</div>
+                  <div className="text-[12px] font-semibold text-foreground leading-tight whitespace-nowrap">{asset.symbol}</div>
+                  <div className="text-[10px] text-muted-foreground leading-tight truncate">{asset.name}</div>
                 </div>
               </div>
 
               {/* LTP */}
               <div className="text-right">
-                <div className="text-sm font-display tabular-nums font-semibold text-foreground leading-tight">
+                <div className="text-[12px] font-display tabular-nums font-semibold text-foreground leading-tight">
                   {q?.loading || q?.price === null ? (
-                    <span className="inline-block h-3 w-14 rounded bg-muted animate-pulse align-middle" />
+                    <span className="inline-block h-3 w-12 rounded bg-muted animate-pulse align-middle" />
                   ) : (
                     <>${formatPrice(q!.price!)}</>
                   )}
                 </div>
                 <div
-                  className="text-xs font-display tabular-nums leading-tight mt-0.5"
+                  className="text-[10px] font-display tabular-nums leading-tight mt-0.5"
                   style={{ color: up ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
                 >
                   {q?.changePct !== null && q?.changePct !== undefined
@@ -196,13 +196,13 @@ const GlobalMarketsVisual = () => {
               {/* Volume (mocked) */}
               <div className="text-right">
                 <div
-                  className="text-sm font-display tabular-nums font-semibold leading-tight"
+                  className="text-[12px] font-display tabular-nums font-semibold leading-tight"
                   style={{ color: asset.volumeUp ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
                 >
                   {asset.volume}
                 </div>
                 <div
-                  className="text-xs font-display tabular-nums leading-tight mt-0.5"
+                  className="text-[10px] font-display tabular-nums leading-tight mt-0.5"
                   style={{ color: asset.volumeUp ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
                 >
                   {asset.volumePct}
@@ -210,12 +210,12 @@ const GlobalMarketsVisual = () => {
               </div>
 
               {/* Profit 1m */}
-              <div className="text-sm font-display tabular-nums font-bold text-right text-profit">
+              <div className="text-[12px] font-display tabular-nums font-bold text-right text-profit">
                 {asset.profit1m}
               </div>
 
               {/* Profit 5m */}
-              <div className="text-sm font-display tabular-nums font-bold text-right text-profit">
+              <div className="text-[12px] font-display tabular-nums font-bold text-right text-profit">
                 {asset.profit5m}
               </div>
             </div>
