@@ -6,6 +6,9 @@ import solIcon from "@/assets/icons/sol.png";
 import aaplIcon from "@/assets/icons/aapl.svg";
 import tslaIcon from "@/assets/icons/tsla.svg";
 import nvdaIcon from "@/assets/icons/nvda.svg";
+import euFlag from "@/assets/icons/eu.svg";
+import usFlag from "@/assets/icons/us.svg";
+import gbFlag from "@/assets/icons/gb.svg";
 
 type Asset = {
   symbol: string;          // display symbol
