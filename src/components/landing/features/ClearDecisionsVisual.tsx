@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
  */
 
 type Candle = { time: number; open: number; high: number; low: number; close: number };
+type BinanceKline = [number, string, string, string, string, ...unknown[]];
 
 const COLORS = {
   bg: "#111118",
@@ -32,6 +33,10 @@ const PADDING_BOTTOM = 6;
 const SYMBOL = "BTCUSDT";
 const INTERVAL = "1m";
 const NUM_CANDLES = 60;
+const REST_ENDPOINTS = [
+  "https://api.binance.com",
+  "https://data-api.binance.vision",
+];
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -40,6 +45,34 @@ const formatPrice = (p: number) =>
 
 const formatTime = (d: Date) =>
   `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+
+const isBinanceKlineArray = (data: unknown): data is BinanceKline[] =>
+  Array.isArray(data) &&
+  data.length > 0 &&
+  Array.isArray(data[0]) &&
+  data[0].length >= 5;
+
+const seedFallbackCandles = (latest: Candle, count = NUM_CANDLES): Candle[] => {
+  const range = Math.max(latest.high - latest.low, latest.close * 0.0006, 8);
+
+  return Array.from({ length: count }, (_, index) => {
+    const t = index / Math.max(1, count - 1);
+    const wave = Math.sin(t * Math.PI * 3.2) * range * 0.18;
+    const drift = (t - 0.5) * range * 0.12;
+    const close = latest.close + wave + drift;
+    const open = close - Math.cos(t * Math.PI * 2.4) * range * 0.08;
+    const high = Math.max(open, close) + range * 0.06;
+    const low = Math.min(open, close) - range * 0.06;
+
+    return {
+      time: latest.time - (count - 1 - index) * 60,
+      open,
+      high,
+      low,
+      close,
+    };
+  });
+};
 
 function calculatePriceStep(range: number): number {
   if (range <= 0) return 1;
@@ -74,11 +107,10 @@ const ClearDecisionsVisual = () => {
   const [headerPrice, setHeaderPrice] = useState<number | null>(null);
   const [openPrice, setOpenPrice] = useState<number | null>(null);
 
-  // Interaction state
   const interactRef = useRef({
-    offsetX: 0,        // positive = pan left (toward older candles)
-    scaleX: 1,         // x zoom multiplier
-    scaleY: 1,         // y zoom multiplier
+    offsetX: 0,
+    scaleX: 1,
+    scaleY: 1,
     isDraggingChart: false,
     isDraggingPrice: false,
     dragStartX: 0,
@@ -87,43 +119,62 @@ const ClearDecisionsVisual = () => {
     dragStartScaleY: 1,
   });
 
-  // Fetch initial klines + WebSocket
   useEffect(() => {
     let cancelled = false;
     let ws: WebSocket | null = null;
 
+    const applySeed = (seeded: Candle[]) => {
+      candlesRef.current = seeded;
+      const last = seeded[seeded.length - 1];
+      priceRef.current = last.close;
+      smoothPriceRef.current = last.close;
+      setHeaderPrice(last.close);
+      setOpenPrice(seeded[0].open);
+      force((n) => n + 1);
+    };
+
     (async () => {
-      try {
-        const res = await fetch(
-          `https://api.binance.com/api/v3/klines?symbol=${SYMBOL}&interval=${INTERVAL}&limit=${NUM_CANDLES}`
-        );
-        const raw: unknown[][] = await res.json();
-        if (cancelled) return;
-        const seeded: Candle[] = raw.map((k) => ({
-          time: Math.floor((k[0] as number) / 1000),
-          open: parseFloat(k[1] as string),
-          high: parseFloat(k[2] as string),
-          low: parseFloat(k[3] as string),
-          close: parseFloat(k[4] as string),
-        }));
-        candlesRef.current = seeded;
-        const last = seeded[seeded.length - 1];
-        priceRef.current = last.close;
-        smoothPriceRef.current = last.close;
-        setHeaderPrice(last.close);
-        setOpenPrice(seeded[0].open);
-        force((n) => n + 1);
-      } catch {
-        /* noop */
+      let seeded: Candle[] | null = null;
+
+      for (const endpoint of REST_ENDPOINTS) {
+        try {
+          const res = await fetch(
+            `${endpoint}/api/v3/klines?symbol=${SYMBOL}&interval=${INTERVAL}&limit=${NUM_CANDLES}`,
+            { cache: "no-store" }
+          );
+          if (!res.ok) continue;
+
+          const raw: unknown = await res.json();
+          if (!isBinanceKlineArray(raw)) continue;
+
+          seeded = raw.map((k) => ({
+            time: Math.floor(k[0] / 1000),
+            open: parseFloat(k[1]),
+            high: parseFloat(k[2]),
+            low: parseFloat(k[3]),
+            close: parseFloat(k[4]),
+          }));
+          break;
+        } catch {
+          continue;
+        }
+      }
+
+      if (cancelled) return;
+      if (seeded && seeded.length > 0) {
+        applySeed(seeded);
       }
 
       ws = new WebSocket(
         `wss://stream.binance.com:9443/ws/${SYMBOL.toLowerCase()}@kline_${INTERVAL}`
       );
+
       ws.onmessage = (event) => {
         try {
-          const k = JSON.parse(event.data).k;
+          const payload = JSON.parse(event.data);
+          const k = payload?.k;
           if (!k) return;
+
           const c: Candle = {
             time: Math.floor(k.t / 1000),
             open: parseFloat(k.o),
@@ -131,16 +182,19 @@ const ClearDecisionsVisual = () => {
             low: parseFloat(k.l),
             close: parseFloat(k.c),
           };
+
           priceRef.current = c.close;
           setHeaderPrice(c.close);
+
           const arr = candlesRef.current;
           if (arr.length === 0) {
-            candlesRef.current = [c];
+            applySeed(seedFallbackCandles(c));
             return;
           }
+
           const last = arr[arr.length - 1];
           if (last.time === c.time) {
-            arr[arr.length - 1] = c;
+            candlesRef.current = [...arr.slice(0, -1), c];
           } else {
             candlesRef.current = [...arr.slice(-(NUM_CANDLES - 1)), c];
           }
@@ -156,7 +210,6 @@ const ClearDecisionsVisual = () => {
     };
   }, []);
 
-  // Animation loop — render at ~60fps with smoothing
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -167,13 +220,18 @@ const ClearDecisionsVisual = () => {
     const rect = canvas.getBoundingClientRect();
     const W = rect.width;
     const H = rect.height;
+
+    if (!W || !H) {
+      animRef.current = requestAnimationFrame(draw);
+      return;
+    }
+
     if (canvas.width !== W * dpr || canvas.height !== H * dpr) {
       canvas.width = W * dpr;
       canvas.height = H * dpr;
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Smooth price
     if (priceRef.current > 0) {
       smoothPriceRef.current =
         smoothPriceRef.current === 0
@@ -181,7 +239,6 @@ const ClearDecisionsVisual = () => {
           : lerp(smoothPriceRef.current, priceRef.current, 0.25);
     }
 
-    // Background
     ctx.fillStyle = COLORS.bg;
     ctx.fillRect(0, 0, W, H);
 
@@ -192,6 +249,7 @@ const ClearDecisionsVisual = () => {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("Connecting to BTC/USDT feed…", W / 2, H / 2);
+      animRef.current = requestAnimationFrame(draw);
       return;
     }
 
@@ -202,7 +260,6 @@ const ClearDecisionsVisual = () => {
     const step = CANDLE_STEP * it.scaleX;
     const candleW = Math.max(1, CANDLE_WIDTH * it.scaleX);
 
-    // Visible candles — anchor right edge (newest), apply offset
     const rightGap = step * 6;
     const visibleCount = Math.max(4, Math.floor((chartW - rightGap) / step));
     const offsetCandles = Math.round(it.offsetX / step);
@@ -210,7 +267,6 @@ const ClearDecisionsVisual = () => {
     const endIdx = Math.min(baseEnd, Math.max(visibleCount - 1, baseEnd - offsetCandles));
     const startIdx = Math.max(0, endIdx - visibleCount + 1);
 
-    // Price range — zoom near current price
     let minPrice = Infinity;
     let maxPrice = -Infinity;
     for (let i = startIdx; i <= endIdx; i++) {
@@ -223,13 +279,12 @@ const ClearDecisionsVisual = () => {
       if (live > maxPrice) maxPrice = live;
     }
     const liveCandle = candles[endIdx];
-    const candleRange = Math.max(liveCandle.high - liveCandle.low, liveCandle.open * 0.00035);
+    const candleRange = Math.max(liveCandle.high - liveCandle.low, liveCandle.open * 0.00035, 1);
     const basePadding = (maxPrice - minPrice) * 0.08;
     const livePadding = candleRange * 2.5;
-    const padding = Math.max(basePadding, livePadding, (live || liveCandle.close) * 0.0002);
+    const padding = Math.max(basePadding, livePadding, (live || liveCandle.close) * 0.0002, 1);
     let rawMin = minPrice - padding;
     let rawMax = maxPrice + padding;
-    // Apply Y zoom around center
     const center = (rawMin + rawMax) / 2;
     const half = (rawMax - rawMin) / 2 / Math.max(0.001, it.scaleY);
     rawMin = center - half;
@@ -237,8 +292,13 @@ const ClearDecisionsVisual = () => {
     minPrice = rawMin;
     maxPrice = rawMax;
 
+    if (Math.abs(maxPrice - minPrice) < 0.0001) {
+      minPrice -= candleRange;
+      maxPrice += candleRange;
+    }
+
     const priceToY = (p: number) =>
-      PADDING_TOP + chartH * (1 - (p - minPrice) / (maxPrice - minPrice));
+      PADDING_TOP + chartH * (1 - (p - minPrice) / Math.max(maxPrice - minPrice, 0.0001));
 
     // Grid
     const priceRange = maxPrice - minPrice;
