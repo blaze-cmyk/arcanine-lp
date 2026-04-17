@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 type Asset = {
@@ -44,6 +44,8 @@ type Quote = {
   price: number | null;
   changePct: number | null;
   spark: number[];
+  /** unix-ms timestamps aligned 1:1 with `spark` */
+  times: number[];
   loading: boolean;
 };
 
@@ -59,41 +61,140 @@ const formatPrice = (n: number, asset: Asset) => {
   });
 };
 
-/* ─────────────── Sparkline ─────────────── */
-const Sparkline = ({ points, up }: { points: number[]; up: boolean }) => {
-  if (!points || points.length < 2) {
-    return <div className="h-full w-full" />;
-  }
-  const w = 280;
-  const h = 70;
-  const min = Math.min(...points);
-  const max = Math.max(...points);
-  const range = max - min || 1;
-  const stepX = w / (points.length - 1);
-  const path = points
-    .map((p, i) => {
-      const x = i * stepX;
-      const y = h - ((p - min) / range) * h;
-      return `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
-    })
-    .join(" ");
+/* ─────────────── Interactive Chart ─────────────── */
+const InteractiveChart = ({
+  points,
+  times,
+  up,
+  asset,
+}: {
+  points: number[];
+  times: number[];
+  up: boolean;
+  asset: Asset;
+}) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [hover, setHover] = useState<{ idx: number; x: number; y: number } | null>(null);
+
+  const W = 280;
+  const H = 70;
+
+  const { path, areaPath, coords } = useMemo(() => {
+    if (!points || points.length < 2) {
+      return { path: "", areaPath: "", coords: [] as Array<{ x: number; y: number }> };
+    }
+    const min = Math.min(...points);
+    const max = Math.max(...points);
+    const range = max - min || 1;
+    const stepX = W / (points.length - 1);
+    const cs = points.map((p, i) => ({
+      x: i * stepX,
+      y: H - ((p - min) / range) * H,
+    }));
+    const d = cs.map((c, i) => `${i === 0 ? "M" : "L"}${c.x.toFixed(2)},${c.y.toFixed(2)}`).join(" ");
+    const area = `${d} L${W},${H} L0,${H} Z`;
+    return { path: d, areaPath: area, coords: cs };
+  }, [points]);
+
+  if (!points || points.length < 2) return <div className="h-full w-full" />;
+
   const stroke = up ? "hsl(var(--profit))" : "hsl(var(--loss))";
+  const fillId = `area-${asset.symbol.replace(/[^a-z0-9]/gi, "")}`;
+  const stopColor = up ? "rgba(0,255,136,0.25)" : "rgba(255,59,92,0.25)";
+
+  const handleMove = (e: React.MouseEvent) => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const relX = ((e.clientX - rect.left) / rect.width) * W;
+    // nearest point index
+    const stepX = W / (points.length - 1);
+    let idx = Math.round(relX / stepX);
+    idx = Math.max(0, Math.min(points.length - 1, idx));
+    setHover({ idx, x: coords[idx].x, y: coords[idx].y });
+  };
+
+  const formatTime = (ms: number) =>
+    new Date(ms).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
+  // Tooltip positioning in % of width/height for responsive overlay
+  const tipLeftPct = hover ? (hover.x / W) * 100 : 0;
+  const tipTopPct = hover ? (hover.y / H) * 100 : 0;
+  // flip tooltip to the left if it would overflow on the right
+  const flipLeft = tipLeftPct > 60;
 
   return (
-    <svg
-      viewBox={`0 0 ${w} ${h}`}
-      preserveAspectRatio="none"
-      className="w-full h-full"
+    <div
+      ref={wrapperRef}
+      className="relative w-full h-full"
+      onMouseMove={handleMove}
+      onMouseLeave={() => setHover(null)}
+      onTouchStart={() => setHover(null)}
     >
-      <path
-        d={path}
-        fill="none"
-        stroke={stroke}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="none"
+        className="w-full h-full overflow-visible"
+      >
+        <defs>
+          <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={stopColor} />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+        </defs>
+        <path d={areaPath} fill={`url(#${fillId})`} />
+        <path
+          d={path}
+          fill="none"
+          stroke={stroke}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {hover && (
+          <>
+            {/* vertical guideline */}
+            <line
+              x1={hover.x}
+              x2={hover.x}
+              y1={0}
+              y2={H}
+              stroke="hsl(var(--foreground) / 0.5)"
+              strokeWidth="1"
+              vectorEffect="non-scaling-stroke"
+            />
+            {/* dot */}
+            <circle
+              cx={hover.x}
+              cy={hover.y}
+              r="4"
+              fill="hsl(var(--background))"
+              stroke="hsl(var(--foreground))"
+              strokeWidth="1.5"
+              vectorEffect="non-scaling-stroke"
+            />
+          </>
+        )}
+      </svg>
+
+      {hover && times[hover.idx] != null && (
+        <div
+          className="pointer-events-none absolute z-10 rounded-xl bg-background/95 border border-border shadow-xl px-3 py-2 text-xs whitespace-nowrap"
+          style={{
+            left: `${tipLeftPct}%`,
+            top: `${tipTopPct}%`,
+            transform: `translate(${flipLeft ? "calc(-100% - 10px)" : "10px"}, -110%)`,
+            fontFamily: "'Bricolage Grotesque', system-ui, sans-serif",
+          }}
+        >
+          <div className="text-muted-foreground tabular-nums">{formatTime(times[hover.idx])}</div>
+          <div className="text-foreground font-bold tabular-nums text-sm">
+            {asset.prefix}
+            {formatPrice(points[hover.idx], asset)}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -124,12 +225,17 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
         <span className="text-base font-semibold text-foreground">{asset.name}</span>
       </div>
 
-      {/* Sparkline */}
+      {/* Interactive chart */}
       <div className="h-16 my-3">
         {quote.loading || quote.spark.length < 2 ? (
           <div className="w-full h-full rounded bg-muted/40 animate-pulse" />
         ) : (
-          <Sparkline points={quote.spark} up={up} />
+          <InteractiveChart
+            points={quote.spark}
+            times={quote.times}
+            up={up}
+            asset={asset}
+          />
         )}
       </div>
 
@@ -184,7 +290,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
 const LiveMarkets = () => {
   const [quotes, setQuotes] = useState<Record<string, Quote>>(() =>
     Object.fromEntries(
-      ASSETS.map((a) => [a.symbol, { price: null, changePct: null, spark: [], loading: true }])
+      ASSETS.map((a) => [a.symbol, { price: null, changePct: null, spark: [], times: [], loading: true }])
     )
   );
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -208,17 +314,21 @@ const LiveMarkets = () => {
           priceChangePercent: string;
         }> = await tickerRes.json();
 
-        // 2) sparklines (1h klines x 24)
+        // 2) sparklines (1h klines x 24)  — for richer detail use 15m × 96
         const sparkResults = await Promise.all(
           cryptoAssets.map(async (a) => {
             try {
               const r = await fetch(
-                `https://api.binance.com/api/v3/klines?symbol=${a.binanceSymbol}&interval=1h&limit=24`
+                `https://api.binance.com/api/v3/klines?symbol=${a.binanceSymbol}&interval=15m&limit=96`
               );
               const d: Array<unknown[]> = await r.json();
-              return { sym: a.symbol, points: d.map((row) => parseFloat(row[4] as string)) };
+              return {
+                sym: a.symbol,
+                points: d.map((row) => parseFloat(row[4] as string)),
+                times: d.map((row) => row[0] as number),
+              };
             } catch {
-              return { sym: a.symbol, points: [] };
+              return { sym: a.symbol, points: [] as number[], times: [] as number[] };
             }
           })
         );
@@ -233,6 +343,7 @@ const LiveMarkets = () => {
               price: t ? parseFloat(t.lastPrice) : prev[a.symbol].price,
               changePct: t ? parseFloat(t.priceChangePercent) : prev[a.symbol].changePct,
               spark: sp?.points ?? prev[a.symbol].spark,
+              times: sp?.times ?? prev[a.symbol].times,
               loading: false,
             };
           }
@@ -261,7 +372,10 @@ const LiveMarkets = () => {
         });
         if (!res.ok) throw new Error(`quote failed ${res.status}`);
         const j: {
-          quotes: Record<string, { price?: number; changePct?: number; sparkline?: number[]; error?: string }>;
+          quotes: Record<
+            string,
+            { price?: number; changePct?: number; sparkline?: number[]; timestamps?: number[]; error?: string }
+          >;
         } = await res.json();
         if (cancelled) return;
         setQuotes((prev) => {
@@ -273,6 +387,7 @@ const LiveMarkets = () => {
                 price: q.price,
                 changePct: q.changePct ?? 0,
                 spark: q.sparkline ?? [],
+                times: q.timestamps ?? [],
                 loading: false,
               };
             } else {
