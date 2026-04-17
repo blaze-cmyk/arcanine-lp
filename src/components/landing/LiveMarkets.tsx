@@ -220,7 +220,22 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
     >
       {/* Header: icon + name */}
       <div className="flex items-center gap-2.5 mb-2">
-        {asset.icon ? (
+        {asset.pairIcons ? (
+          <div className="relative w-9 h-7">
+            <img
+              src={asset.pairIcons[0]}
+              alt=""
+              className="absolute left-0 top-0 w-5 h-5 rounded-full object-cover ring-1 ring-border bg-white"
+              loading="lazy"
+            />
+            <img
+              src={asset.pairIcons[1]}
+              alt=""
+              className="absolute right-0 bottom-0 w-5 h-5 rounded-full object-cover ring-1 ring-border bg-white"
+              loading="lazy"
+            />
+          </div>
+        ) : asset.icon ? (
           ["ETH", "AAPL", "TSLA", "NVDA"].includes(asset.symbol) ? (
             <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center overflow-hidden">
               <img
