@@ -5,7 +5,7 @@ const Hero = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-8 sm:pb-12">
+    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
       {/* Noise texture */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.025] mix-blend-overlay">
@@ -48,7 +48,7 @@ const Hero = () => {
       </div>
 
       {/* Dark gradient below dashboard (does not overlap image) */}
-      <div className="relative z-10 w-full h-24 sm:h-32 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+      <div className="relative z-10 w-full h-16 sm:h-20 bg-gradient-to-b from-transparent to-background pointer-events-none" />
 
     </section>
   );
