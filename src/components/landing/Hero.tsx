@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import DashboardMockup from "./DashboardMockup";
+import dashboardPreview from "@/assets/dashboard-preview.png";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ const Hero = () => {
             </div>
             <div className="w-12" />
           </div>
-          <DashboardMockup />
+          <img src={dashboardPreview} alt="Arcanine trading platform preview" className="w-full h-auto block" />
         </div>
       </div>
 
