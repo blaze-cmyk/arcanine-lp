@@ -16,7 +16,7 @@ type Row = {
 
 const INITIAL_ROWS: Row[] = [
   { id: "t1", direction: "up", amount: 100, profit: 90.0, secondsLeft: 60, expanded: true },
-  { id: "t2", direction: "up", amount: 100, profit: 0.0, secondsLeft: 60, expanded: false },
+  { id: "t2", direction: "up", amount: 100, profit: 72.5, secondsLeft: 60, expanded: false },
 ];
 
 const fmt = (n: number) =>
