@@ -5,7 +5,7 @@ const Hero = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
+    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-24 sm:pb-32">
 
       {/* Noise texture */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.025] mix-blend-overlay">
