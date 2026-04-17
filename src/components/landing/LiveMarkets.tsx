@@ -285,7 +285,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
           <div className="relative group/down">
             <button
               aria-label={`Sell ${asset.name} short`}
-              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-destructive/20 flex items-center justify-center text-foreground hover:text-destructive transition-colors"
+              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-loss/20 flex items-center justify-center text-foreground hover:text-loss transition-colors border border-transparent hover:border-loss/40"
             >
               <ArrowDown className="w-4 h-4" />
             </button>
