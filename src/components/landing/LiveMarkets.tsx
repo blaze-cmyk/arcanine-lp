@@ -6,7 +6,7 @@ import solIcon from "@/assets/icons/sol.png";
 import aaplIcon from "@/assets/icons/aapl.svg";
 import tslaIcon from "@/assets/icons/tsla.svg";
 import nvdaIcon from "@/assets/icons/nvda.svg";
-import euFlag from "@/assets/icons/eu.svg";
+import euFlag from "@/assets/icons/eu.png";
 import usFlag from "@/assets/icons/us.svg";
 import gbFlag from "@/assets/icons/gb.svg";
 import crudeOilIcon from "@/assets/icons/crude-oil.svg";
