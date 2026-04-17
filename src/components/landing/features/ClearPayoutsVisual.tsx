@@ -11,13 +11,28 @@ import payApple from "@/assets/pay/applepay.png";
 import payGoogle from "@/assets/pay/gpay.png";
 import payUpi from "@/assets/pay/upi.png";
 import payRevolut from "@/assets/pay/revolut.png";
+import payMastercard from "@/assets/pay/mastercard.png";
+import payPaypal from "@/assets/pay/paypal.png";
+import paySepa from "@/assets/pay/sepa.png";
+import payGrab from "@/assets/pay/grabpay.png";
+import payVisa from "@/assets/pay/visa.png";
+import payRazorpay from "@/assets/pay/razorpay.png";
 
-const PAYMENT_METHODS = [
+const PAYMENT_METHODS_LEFT = [
   { src: payRevolut, alt: "Revolut" },
   { src: payUpi, alt: "UPI" },
   { src: payGoogle, alt: "Google Pay" },
   { src: payApple, alt: "Apple Pay" },
   { src: payAmex, alt: "Amex" },
+];
+
+const PAYMENT_METHODS_RIGHT = [
+  { src: payMastercard, alt: "Mastercard" },
+  { src: payPaypal, alt: "PayPal" },
+  { src: paySepa, alt: "SEPA" },
+  { src: payGrab, alt: "GrabPay" },
+  { src: payVisa, alt: "Visa" },
+  { src: payRazorpay, alt: "Razorpay" },
 ];
 
 type Crypto = { symbol: "BTC" | "ETH" | "SOL"; binance: string; icon: string; decimals: number; defaultAmount: string };
