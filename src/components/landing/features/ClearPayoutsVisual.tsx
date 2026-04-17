@@ -183,7 +183,7 @@ const ClearPayoutsVisual = () => {
               inputMode="decimal"
               className="flex-1 min-w-0 bg-transparent text-2xl font-bold tabular-nums text-foreground outline-none"
             />
-            <Selector items={CRYPTOS} value={crypto} onChange={setCrypto} />
+            <Selector<Crypto> items={CRYPTOS} value={crypto} onChange={(v) => setCrypto(v)} />
           </div>
         </div>
 
@@ -210,7 +210,7 @@ const ClearPayoutsVisual = () => {
             >
               {youGet !== null ? formatFiat(youGet) : "—"}
             </span>
-            <Selector items={FIATS} value={fiat} onChange={setFiat} />
+            <Selector<Fiat> items={FIATS} value={fiat} onChange={(v) => setFiat(v)} />
           </div>
         </div>
       </div>
