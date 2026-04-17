@@ -29,10 +29,10 @@ type Asset = {
 const ASSETS: Asset[] = [
   { symbol: "BTC",  name: "Bitcoin",     category: "crypto",
     icon: btcIcon,
-    binanceSymbol: "BTCUSDT", decimals: 2, prefix: "$", compact: true },
+    binanceSymbol: "BTCUSDT", decimals: 2, prefix: "$" },
   { symbol: "ETH",  name: "Ethereum",    category: "crypto",
     icon: ethIcon,
-    binanceSymbol: "ETHUSDT", decimals: 2, prefix: "$", compact: true },
+    binanceSymbol: "ETHUSDT", decimals: 2, prefix: "$" },
   { symbol: "SOL",  name: "Solana",      category: "crypto",
     icon: solIcon,
     binanceSymbol: "SOLUSDT", decimals: 2, prefix: "$" },
