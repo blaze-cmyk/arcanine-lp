@@ -147,7 +147,7 @@ const InteractiveChart = ({
           d={path}
           fill="none"
           stroke={stroke}
-          strokeWidth="2"
+          strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
