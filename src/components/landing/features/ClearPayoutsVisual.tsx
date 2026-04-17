@@ -18,13 +18,16 @@ import payGrab from "@/assets/pay/grabpay.png";
 import payVisa from "@/assets/pay/visa.png";
 import payRazorpay from "@/assets/pay/razorpay.png";
 
-const PAYMENT_METHODS_LEFT = [
+const PAYMENT_TRACK_A = [
   { src: payRevolut, alt: "Revolut" },
   { src: payUpi, alt: "UPI" },
   { src: payGoogle, alt: "Google Pay" },
   { src: payApple, alt: "Apple Pay" },
   { src: payAmex, alt: "Amex" },
   { src: payMastercard, alt: "Mastercard" },
+];
+
+const PAYMENT_TRACK_B = [
   { src: payPaypal, alt: "PayPal" },
   { src: paySepa, alt: "SEPA" },
   { src: payGrab, alt: "GrabPay" },
@@ -194,18 +197,32 @@ const ClearPayoutsVisual = () => {
         }}
       />
 
-      {/* Stacked payment methods on the left */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 z-[1] flex flex-col items-center pointer-events-none">
-        {PAYMENT_METHODS_LEFT.map((m, i) => (
-          <div
-            key={m.alt}
-            className="w-11 h-11 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
-            style={{
-              marginTop: i === 0 ? 0 : -14,
-              zIndex: PAYMENT_METHODS_LEFT.length - i,
-            }}
-          >
-            <img src={m.src} alt={m.alt} className="w-7 h-7 object-contain" />
+      {/* Two vertical marquee tracks of payment methods on the left */}
+      <div
+        className="absolute left-3 top-0 bottom-0 z-[1] flex gap-2 items-stretch pointer-events-none py-2"
+        style={{
+          maskImage: "linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)",
+        }}
+      >
+        {[
+          { items: PAYMENT_TRACK_A, anim: "marquee-y-up 18s linear infinite" },
+          { items: PAYMENT_TRACK_B, anim: "marquee-y-down 22s linear infinite" },
+        ].map((track, ti) => (
+          <div key={ti} className="relative h-full w-14 overflow-hidden">
+            <div
+              className="flex flex-col items-center gap-3"
+              style={{ animation: track.anim }}
+            >
+              {[...track.items, ...track.items].map((m, i) => (
+                <div
+                  key={`${ti}-${i}`}
+                  className="w-14 h-14 shrink-0 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
+                >
+                  <img src={m.src} alt={m.alt} className="w-9 h-9 object-contain" />
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
