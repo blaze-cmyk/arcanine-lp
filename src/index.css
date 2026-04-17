@@ -17,9 +17,9 @@
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 24 100% 50%;             /* #FF6700 fiery orange */
-    --primary-foreground: 0 0% 0%;      /* #000000 on orange */
-    --primary-hover: 24 100% 60%;       /* #FF8533 */
+    --primary: 152 100% 50%;            /* #00FF88 vibrant green */
+    --primary-foreground: 0 0% 0%;      /* #000000 on green */
+    --primary-hover: 159 100% 60%;      /* #33FFAA */
 
     --secondary: 0 0% 7%;               /* #111111 */
     --secondary-foreground: 0 0% 100%;
