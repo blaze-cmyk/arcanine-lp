@@ -74,6 +74,19 @@ const ClearDecisionsVisual = () => {
   const [headerPrice, setHeaderPrice] = useState<number | null>(null);
   const [openPrice, setOpenPrice] = useState<number | null>(null);
 
+  // Interaction state
+  const interactRef = useRef({
+    offsetX: 0,        // positive = pan left (toward older candles)
+    scaleX: 1,         // x zoom multiplier
+    scaleY: 1,         // y zoom multiplier
+    isDraggingChart: false,
+    isDraggingPrice: false,
+    dragStartX: 0,
+    dragStartY: 0,
+    dragStartOffsetX: 0,
+    dragStartScaleY: 1,
+  });
+
   // Fetch initial klines + WebSocket
   useEffect(() => {
     let cancelled = false;
@@ -185,11 +198,17 @@ const ClearDecisionsVisual = () => {
     const chartW = W - PRICE_SCALE_WIDTH;
     const chartH = H - TIME_SCALE_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
 
-    // Visible candles — anchor right edge (newest), leave a small right gap
-    const rightGap = CANDLE_STEP * 6;
-    const visibleCount = Math.floor((chartW - rightGap) / CANDLE_STEP);
-    const startIdx = Math.max(0, candles.length - visibleCount);
-    const endIdx = candles.length - 1;
+    const it = interactRef.current;
+    const step = CANDLE_STEP * it.scaleX;
+    const candleW = Math.max(1, CANDLE_WIDTH * it.scaleX);
+
+    // Visible candles — anchor right edge (newest), apply offset
+    const rightGap = step * 6;
+    const visibleCount = Math.max(4, Math.floor((chartW - rightGap) / step));
+    const offsetCandles = Math.round(it.offsetX / step);
+    const baseEnd = candles.length - 1;
+    const endIdx = Math.min(baseEnd, Math.max(visibleCount - 1, baseEnd - offsetCandles));
+    const startIdx = Math.max(0, endIdx - visibleCount + 1);
 
     // Price range — zoom near current price
     let minPrice = Infinity;
@@ -199,7 +218,7 @@ const ClearDecisionsVisual = () => {
       if (candles[i].high > maxPrice) maxPrice = candles[i].high;
     }
     const live = smoothPriceRef.current;
-    if (live > 0) {
+    if (live > 0 && endIdx === baseEnd) {
       if (live < minPrice) minPrice = live;
       if (live > maxPrice) maxPrice = live;
     }
@@ -207,9 +226,16 @@ const ClearDecisionsVisual = () => {
     const candleRange = Math.max(liveCandle.high - liveCandle.low, liveCandle.open * 0.00035);
     const basePadding = (maxPrice - minPrice) * 0.08;
     const livePadding = candleRange * 2.5;
-    const padding = Math.max(basePadding, livePadding, live * 0.0002);
-    minPrice -= padding;
-    maxPrice += padding;
+    const padding = Math.max(basePadding, livePadding, (live || liveCandle.close) * 0.0002);
+    let rawMin = minPrice - padding;
+    let rawMax = maxPrice + padding;
+    // Apply Y zoom around center
+    const center = (rawMin + rawMax) / 2;
+    const half = (rawMax - rawMin) / 2 / Math.max(0.001, it.scaleY);
+    rawMin = center - half;
+    rawMax = center + half;
+    minPrice = rawMin;
+    maxPrice = rawMax;
 
     const priceToY = (p: number) =>
       PADDING_TOP + chartH * (1 - (p - minPrice) / (maxPrice - minPrice));
@@ -235,7 +261,7 @@ const ClearDecisionsVisual = () => {
     const timeStep = 5;
     for (let i = startIdx; i <= endIdx; i++) {
       if (i % timeStep !== 0) continue;
-      const x = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const x = (i - startIdx) * step + step / 2;
       ctx.beginPath();
       ctx.moveTo(x, PADDING_TOP);
       ctx.lineTo(x, H - TIME_SCALE_HEIGHT);
@@ -245,7 +271,7 @@ const ClearDecisionsVisual = () => {
     // Candles
     for (let i = startIdx; i <= endIdx; i++) {
       const c = candles[i];
-      const centerX = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const centerX = (i - startIdx) * step + step / 2;
       const isGreen = c.close >= c.open;
       const openY = priceToY(c.open);
       const closeY = priceToY(c.close);
@@ -262,7 +288,7 @@ const ClearDecisionsVisual = () => {
       const bodyTop = Math.min(openY, closeY);
       const bodyH = Math.max(1, Math.abs(closeY - openY));
       ctx.fillStyle = isGreen ? COLORS.candleGreen : COLORS.candleRed;
-      ctx.fillRect(Math.round(centerX - CANDLE_WIDTH / 2), Math.round(bodyTop), CANDLE_WIDTH, Math.round(bodyH));
+      ctx.fillRect(Math.round(centerX - candleW / 2), Math.round(bodyTop), Math.round(candleW), Math.round(bodyH));
     }
 
     // Live price line + right-edge arrow
@@ -361,7 +387,7 @@ const ClearDecisionsVisual = () => {
     ctx.textBaseline = "middle";
     for (let i = startIdx; i <= endIdx; i++) {
       if (i % timeStep !== 0) continue;
-      const x = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const x = (i - startIdx) * step + step / 2;
       if (x < 16 || x > chartW - 16) continue;
       ctx.fillText(formatTime(new Date(candles[i].time * 1000)), x, H - TIME_SCALE_HEIGHT / 2);
     }
@@ -373,6 +399,75 @@ const ClearDecisionsVisual = () => {
     animRef.current = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animRef.current);
   }, [draw]);
+
+  // Wheel zoom (X axis), passive:false so we can preventDefault scroll
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const it = interactRef.current;
+      const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+      it.scaleX = Math.min(4, Math.max(0.4, it.scaleX * factor));
+    };
+    canvas.addEventListener("wheel", onWheel, { passive: false });
+    return () => canvas.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const it = interactRef.current;
+    const chartW = rect.width - PRICE_SCALE_WIDTH;
+    if (x >= chartW) {
+      it.isDraggingPrice = true;
+      it.dragStartY = e.clientY;
+      it.dragStartScaleY = it.scaleY;
+      canvas.style.cursor = "ns-resize";
+    } else {
+      it.isDraggingChart = true;
+      it.dragStartX = e.clientX;
+      it.dragStartOffsetX = it.offsetX;
+      canvas.style.cursor = "grabbing";
+    }
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const it = interactRef.current;
+    if (it.isDraggingChart) {
+      const dx = e.clientX - it.dragStartX;
+      it.offsetX = Math.max(0, it.dragStartOffsetX + dx);
+    } else if (it.isDraggingPrice) {
+      const dy = e.clientY - it.dragStartY;
+      // drag down → zoom out, drag up → zoom in
+      const factor = Math.exp(-dy / 120);
+      it.scaleY = Math.min(6, Math.max(0.3, it.dragStartScaleY * factor));
+    } else {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const chartW = rect.width - PRICE_SCALE_WIDTH;
+      canvas.style.cursor = x >= chartW ? "ns-resize" : "grab";
+    }
+  };
+
+  const endDrag = () => {
+    const canvas = canvasRef.current;
+    const it = interactRef.current;
+    it.isDraggingChart = false;
+    it.isDraggingPrice = false;
+    if (canvas) canvas.style.cursor = "grab";
+  };
+
+  const onDoubleClick = () => {
+    const it = interactRef.current;
+    it.offsetX = 0;
+    it.scaleX = 1;
+    it.scaleY = 1;
+  };
 
   const change = headerPrice !== null && openPrice !== null ? headerPrice - openPrice : 0;
   const changePct = openPrice ? (change / openPrice) * 100 : 0;
@@ -411,7 +506,15 @@ const ClearDecisionsVisual = () => {
         </div>
       </div>
 
-      <canvas ref={canvasRef} className="w-full h-full block" />
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full block cursor-grab"
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+        onDoubleClick={onDoubleClick}
+      />
     </div>
   );
 };
