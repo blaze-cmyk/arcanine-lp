@@ -1,36 +1,80 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 /**
- * Compact candlestick chart inspired by the Arcanine Dashboard CustomChart.
- * Streams real-time BTCUSDT 1m klines from Binance via WebSocket.
+ * Faithful port of the Arcanine Dashboard CustomChart visual style,
+ * trimmed for a landing-page card. Streams BTCUSDT 1m klines from Binance.
  */
 
+type Candle = { time: number; open: number; high: number; low: number; close: number };
+
 const COLORS = {
-  gridLine: "rgba(255, 255, 255, 0.05)",
+  bg: "#111118",
+  gridLine: "rgba(255, 255, 255, 0.06)",
+  priceScaleBg: "#111118",
+  priceScaleBorder: "#1a1a24",
   candleGreen: "#3dbc84",
   candleRed: "#c94545",
   wickGreen: "#3dbc8488",
   wickRed: "#c9454588",
   priceLine: "#18dcb5",
-  priceLabelBg: "#18dcb5",
-  priceLabelText: "#0c1014",
+  priceLabel: "#18dcb5",
+  textMuted: "#ffffff",
+  textLight: "#6b7280",
 };
 
-type Candle = { o: number; h: number; l: number; c: number; t: number };
-
-const NUM_CANDLES = 30;
+const CANDLE_WIDTH = 7;
+const CANDLE_GAP = 3;
+const CANDLE_STEP = CANDLE_WIDTH + CANDLE_GAP;
+const PRICE_SCALE_WIDTH = 64;
+const TIME_SCALE_HEIGHT = 22;
+const PADDING_TOP = 12;
+const PADDING_BOTTOM = 6;
 const SYMBOL = "BTCUSDT";
 const INTERVAL = "1m";
+const NUM_CANDLES = 60;
+
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 const formatPrice = (p: number) =>
   p.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
+const formatTime = (d: Date) =>
+  `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+
+function calculatePriceStep(range: number): number {
+  if (range <= 0) return 1;
+  const rough = range / 5;
+  const pow = Math.pow(10, Math.floor(Math.log10(rough)));
+  const norm = rough / pow;
+  let step;
+  if (norm < 1.5) step = 1;
+  else if (norm < 3) step = 2;
+  else if (norm < 7) step = 5;
+  else step = 10;
+  return step * pow;
+}
+
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
 const ClearDecisionsVisual = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [candles, setCandles] = useState<Candle[]>([]);
-  const [livePrice, setLivePrice] = useState<number | null>(null);
+  const candlesRef = useRef<Candle[]>([]);
+  const priceRef = useRef<number>(0);
+  const smoothPriceRef = useRef<number>(0);
+  const animRef = useRef<number>(0);
+  const [, force] = useState(0);
+  const [headerPrice, setHeaderPrice] = useState<number | null>(null);
+  const [openPrice, setOpenPrice] = useState<number | null>(null);
 
-  // Fetch initial klines + subscribe to live updates
+  // Fetch initial klines + WebSocket
   useEffect(() => {
     let cancelled = false;
     let ws: WebSocket | null = null;
@@ -43,48 +87,52 @@ const ClearDecisionsVisual = () => {
         const raw: unknown[][] = await res.json();
         if (cancelled) return;
         const seeded: Candle[] = raw.map((k) => ({
-          t: k[0] as number,
-          o: parseFloat(k[1] as string),
-          h: parseFloat(k[2] as string),
-          l: parseFloat(k[3] as string),
-          c: parseFloat(k[4] as string),
+          time: Math.floor((k[0] as number) / 1000),
+          open: parseFloat(k[1] as string),
+          high: parseFloat(k[2] as string),
+          low: parseFloat(k[3] as string),
+          close: parseFloat(k[4] as string),
         }));
-        setCandles(seeded);
-        setLivePrice(seeded[seeded.length - 1].c);
+        candlesRef.current = seeded;
+        const last = seeded[seeded.length - 1];
+        priceRef.current = last.close;
+        smoothPriceRef.current = last.close;
+        setHeaderPrice(last.close);
+        setOpenPrice(seeded[0].open);
+        force((n) => n + 1);
       } catch {
-        /* ignore */
+        /* noop */
       }
 
-      // Live kline stream
       ws = new WebSocket(
         `wss://stream.binance.com:9443/ws/${SYMBOL.toLowerCase()}@kline_${INTERVAL}`
       );
       ws.onmessage = (event) => {
         try {
-          const msg = JSON.parse(event.data);
-          const k = msg.k;
+          const k = JSON.parse(event.data).k;
           if (!k) return;
-          const candle: Candle = {
-            t: k.t,
-            o: parseFloat(k.o),
-            h: parseFloat(k.h),
-            l: parseFloat(k.l),
-            c: parseFloat(k.c),
+          const c: Candle = {
+            time: Math.floor(k.t / 1000),
+            open: parseFloat(k.o),
+            high: parseFloat(k.h),
+            low: parseFloat(k.l),
+            close: parseFloat(k.c),
           };
-          setLivePrice(candle.c);
-          setCandles((prev) => {
-            if (prev.length === 0) return [candle];
-            const last = prev[prev.length - 1];
-            if (last.t === candle.t) {
-              const copy = prev.slice();
-              copy[copy.length - 1] = candle;
-              return copy;
-            }
-            // new candle
-            return [...prev.slice(-(NUM_CANDLES - 1)), candle];
-          });
+          priceRef.current = c.close;
+          setHeaderPrice(c.close);
+          const arr = candlesRef.current;
+          if (arr.length === 0) {
+            candlesRef.current = [c];
+            return;
+          }
+          const last = arr[arr.length - 1];
+          if (last.time === c.time) {
+            arr[arr.length - 1] = c;
+          } else {
+            candlesRef.current = [...arr.slice(-(NUM_CANDLES - 1)), c];
+          }
         } catch {
-          /* ignore */
+          /* noop */
         }
       };
     })();
@@ -95,10 +143,10 @@ const ClearDecisionsVisual = () => {
     };
   }, []);
 
-  // Draw
-  useEffect(() => {
+  // Animation loop — render at ~60fps with smoothing
+  const draw = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || candles.length === 0 || livePrice === null) return;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -106,135 +154,255 @@ const ClearDecisionsVisual = () => {
     const rect = canvas.getBoundingClientRect();
     const W = rect.width;
     const H = rect.height;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
+    if (canvas.width !== W * dpr || canvas.height !== H * dpr) {
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+    }
     ctx.setTransform(dpr, dpr, 0, 0, 0, 0);
-    ctx.clearRect(0, 0, W, H);
 
-    const PRICE_SCALE_W = 72;
-    const PADDING_TOP = 14;
-    const PADDING_BOTTOM = 14;
-    const chartW = W - PRICE_SCALE_W;
-    const chartH = H - PADDING_TOP - PADDING_BOTTOM;
+    // Smooth price
+    if (priceRef.current > 0) {
+      smoothPriceRef.current =
+        smoothPriceRef.current === 0
+          ? priceRef.current
+          : lerp(smoothPriceRef.current, priceRef.current, 0.25);
+    }
+
+    // Background
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    const candles = candlesRef.current;
+    if (candles.length === 0) {
+      ctx.fillStyle = COLORS.textLight;
+      ctx.font = "12px 'Bricolage Grotesque', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("Connecting to BTC/USDT feed…", W / 2, H / 2);
+      return;
+    }
+
+    const chartW = W - PRICE_SCALE_WIDTH;
+    const chartH = H - TIME_SCALE_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
+
+    // Visible candles — anchor right edge (newest), leave a small right gap
+    const rightGap = CANDLE_STEP * 6;
+    const visibleCount = Math.floor((chartW - rightGap) / CANDLE_STEP);
+    const startIdx = Math.max(0, candles.length - visibleCount);
+    const endIdx = candles.length - 1;
 
     // Price range — zoom near current price
-    let min = Infinity;
-    let max = -Infinity;
-    for (const c of candles) {
-      if (c.l < min) min = c.l;
-      if (c.h > max) max = c.h;
+    let minPrice = Infinity;
+    let maxPrice = -Infinity;
+    for (let i = startIdx; i <= endIdx; i++) {
+      if (candles[i].low < minPrice) minPrice = candles[i].low;
+      if (candles[i].high > maxPrice) maxPrice = candles[i].high;
     }
-    if (livePrice < min) min = livePrice;
-    if (livePrice > max) max = livePrice;
-    const pad = (max - min) * 0.25 || livePrice * 0.0005;
-    min -= pad;
-    max += pad;
+    const live = smoothPriceRef.current;
+    if (live > 0) {
+      if (live < minPrice) minPrice = live;
+      if (live > maxPrice) maxPrice = live;
+    }
+    const liveCandle = candles[endIdx];
+    const candleRange = Math.max(liveCandle.high - liveCandle.low, liveCandle.open * 0.00035);
+    const basePadding = (maxPrice - minPrice) * 0.08;
+    const livePadding = candleRange * 2.5;
+    const padding = Math.max(basePadding, livePadding, live * 0.0002);
+    minPrice -= padding;
+    maxPrice += padding;
 
     const priceToY = (p: number) =>
-      PADDING_TOP + chartH * (1 - (p - min) / (max - min));
+      PADDING_TOP + chartH * (1 - (p - minPrice) / (maxPrice - minPrice));
 
-    // Horizontal grid lines
+    // Grid
+    const priceRange = maxPrice - minPrice;
+    const priceStep = calculatePriceStep(priceRange);
+    const firstPrice = Math.ceil(minPrice / priceStep) * priceStep;
+
     ctx.strokeStyle = COLORS.gridLine;
-    ctx.lineWidth = 1;
-    for (let i = 1; i < 4; i++) {
-      const y = PADDING_TOP + (chartH / 4) * i;
+    ctx.lineWidth = 0.5;
+    ctx.setLineDash([]);
+    for (let p = firstPrice; p <= maxPrice; p += priceStep) {
+      const y = priceToY(p);
+      if (y < PADDING_TOP || y > H - TIME_SCALE_HEIGHT) continue;
       ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(chartW, y);
       ctx.stroke();
     }
 
-    // Candles
-    const step = chartW / candles.length;
-    const candleW = Math.max(2, step * 0.6);
-    candles.forEach((c, i) => {
-      const x = i * step + step / 2;
-      const isUp = c.c >= c.o;
-      const color = isUp ? COLORS.candleGreen : COLORS.candleRed;
-      const wickColor = isUp ? COLORS.wickGreen : COLORS.wickRed;
+    // Vertical grid every ~5 candles
+    const timeStep = 5;
+    for (let i = startIdx; i <= endIdx; i++) {
+      if (i % timeStep !== 0) continue;
+      const x = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      ctx.beginPath();
+      ctx.moveTo(x, PADDING_TOP);
+      ctx.lineTo(x, H - TIME_SCALE_HEIGHT);
+      ctx.stroke();
+    }
 
-      ctx.strokeStyle = wickColor;
+    // Candles
+    for (let i = startIdx; i <= endIdx; i++) {
+      const c = candles[i];
+      const centerX = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const isGreen = c.close >= c.open;
+      const openY = priceToY(c.open);
+      const closeY = priceToY(c.close);
+      const highY = priceToY(c.high);
+      const lowY = priceToY(c.low);
+
+      ctx.strokeStyle = isGreen ? COLORS.wickGreen : COLORS.wickRed;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(x, priceToY(c.h));
-      ctx.lineTo(x, priceToY(c.l));
+      ctx.moveTo(centerX, highY);
+      ctx.lineTo(centerX, lowY);
       ctx.stroke();
 
-      const yOpen = priceToY(c.o);
-      const yClose = priceToY(c.c);
-      const top = Math.min(yOpen, yClose);
-      const bodyH = Math.max(1.5, Math.abs(yClose - yOpen));
-      ctx.fillStyle = color;
-      ctx.fillRect(x - candleW / 2, top, candleW, bodyH);
-    });
+      const bodyTop = Math.min(openY, closeY);
+      const bodyH = Math.max(1, Math.abs(closeY - openY));
+      ctx.fillStyle = isGreen ? COLORS.candleGreen : COLORS.candleRed;
+      ctx.fillRect(Math.round(centerX - CANDLE_WIDTH / 2), Math.round(bodyTop), CANDLE_WIDTH, Math.round(bodyH));
+    }
 
-    // Live price line
-    const priceY = priceToY(livePrice);
-    ctx.strokeStyle = COLORS.priceLine;
+    // Live price line + right-edge arrow
+    if (live > 0) {
+      const py = priceToY(live);
+      ctx.strokeStyle = COLORS.priceLine;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(0, py);
+      ctx.lineTo(chartW, py);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = COLORS.priceLine;
+      ctx.beginPath();
+      ctx.moveTo(chartW - 6, py - 4);
+      ctx.lineTo(chartW, py);
+      ctx.lineTo(chartW - 6, py + 4);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Live countdown badge above price line
+    {
+      const last = candles[endIdx];
+      const nowMs = Date.now();
+      const candleEndMs = (last.time + 60) * 1000;
+      const secsLeft = Math.max(0, Math.ceil((candleEndMs - nowMs) / 1000));
+      const timerText = `00:${String(secsLeft).padStart(2, "0")}`;
+      const py = priceToY(live || last.close);
+      const bw = 40;
+      const bh = 16;
+      const bx = chartW - bw - 6;
+      const by = py - bh - 8;
+      ctx.fillStyle = "rgba(30, 35, 48, 0.95)";
+      roundRect(ctx, bx, by, bw, bh, 4);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.lineWidth = 0.5;
+      roundRect(ctx, bx, by, bw, bh, 4);
+      ctx.stroke();
+      ctx.fillStyle = "#d1d5db";
+      ctx.font = "9px 'Bricolage Grotesque', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(timerText, bx + bw / 2, by + bh / 2);
+    }
+
+    // Price scale
+    ctx.fillStyle = COLORS.priceScaleBg;
+    ctx.fillRect(chartW, 0, PRICE_SCALE_WIDTH, H);
+    ctx.strokeStyle = COLORS.priceScaleBorder;
     ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
     ctx.beginPath();
-    ctx.moveTo(0, priceY);
-    ctx.lineTo(chartW, priceY);
+    ctx.moveTo(chartW, 0);
+    ctx.lineTo(chartW, H);
     ctx.stroke();
-    ctx.setLineDash([]);
 
-    // Price label on the right
-    const labelW = PRICE_SCALE_W - 4;
-    const labelH = 20;
-    const labelX = chartW + 2;
-    const labelY = priceY - labelH / 2;
-    ctx.fillStyle = COLORS.priceLabelBg;
-    const r = 4;
+    ctx.fillStyle = COLORS.textMuted;
+    ctx.font = "9px 'Bricolage Grotesque', sans-serif";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    for (let p = firstPrice; p <= maxPrice; p += priceStep) {
+      const y = priceToY(p);
+      if (y < PADDING_TOP || y > H - TIME_SCALE_HEIGHT) continue;
+      ctx.fillText(formatPrice(p), W - 6, y);
+    }
+
+    // Live price label
+    if (live > 0) {
+      const py = priceToY(live);
+      const labelH = 18;
+      ctx.fillStyle = COLORS.priceLabel;
+      roundRect(ctx, chartW + 1, py - labelH / 2, PRICE_SCALE_WIDTH - 2, labelH, 4);
+      ctx.fill();
+      ctx.fillStyle = "#1a1a2e";
+      ctx.font = "bold 10px 'Bricolage Grotesque', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(formatPrice(live), chartW + PRICE_SCALE_WIDTH / 2, py);
+    }
+
+    // Time scale
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, H - TIME_SCALE_HEIGHT, W, TIME_SCALE_HEIGHT);
+    ctx.strokeStyle = COLORS.priceScaleBorder;
     ctx.beginPath();
-    ctx.moveTo(labelX + r, labelY);
-    ctx.lineTo(labelX + labelW - r, labelY);
-    ctx.quadraticCurveTo(labelX + labelW, labelY, labelX + labelW, labelY + r);
-    ctx.lineTo(labelX + labelW, labelY + labelH - r);
-    ctx.quadraticCurveTo(labelX + labelW, labelY + labelH, labelX + labelW - r, labelY + labelH);
-    ctx.lineTo(labelX + r, labelY + labelH);
-    ctx.quadraticCurveTo(labelX, labelY + labelH, labelX, labelY + labelH - r);
-    ctx.lineTo(labelX, labelY + r);
-    ctx.quadraticCurveTo(labelX, labelY, labelX + r, labelY);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(0, H - TIME_SCALE_HEIGHT);
+    ctx.lineTo(W, H - TIME_SCALE_HEIGHT);
+    ctx.stroke();
 
-    ctx.fillStyle = COLORS.priceLabelText;
-    ctx.font = "600 11px 'Bricolage Grotesque', system-ui, sans-serif";
+    ctx.fillStyle = COLORS.textLight;
+    ctx.font = "9px 'Bricolage Grotesque', sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(formatPrice(livePrice), labelX + labelW / 2, labelY + labelH / 2);
-  }, [candles, livePrice]);
+    for (let i = startIdx; i <= endIdx; i++) {
+      if (i % timeStep !== 0) continue;
+      const x = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      if (x < 16 || x > chartW - 16) continue;
+      ctx.fillText(formatTime(new Date(candles[i].time * 1000)), x, H - TIME_SCALE_HEIGHT / 2);
+    }
 
-  const last = candles[candles.length - 1];
-  const open = last?.o ?? 0;
-  const price = livePrice ?? open;
-  const change = price - open;
-  const changePct = open ? (change / open) * 100 : 0;
+    animRef.current = requestAnimationFrame(draw);
+  }, []);
+
+  useEffect(() => {
+    animRef.current = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(animRef.current);
+  }, [draw]);
+
+  const change = headerPrice !== null && openPrice !== null ? headerPrice - openPrice : 0;
+  const changePct = openPrice ? (change / openPrice) * 100 : 0;
   const up = change >= 0;
 
   return (
     <div
-      className="relative w-full h-full flex flex-col select-none px-5 pt-5"
-      style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+      className="relative w-full h-full flex flex-col select-none"
+      style={{
+        fontFamily: "'Bricolage Grotesque', system-ui, sans-serif",
+        background: COLORS.bg,
+      }}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-2">
+      {/* Floating header */}
+      <div className="absolute top-3 left-4 right-4 z-10 flex items-start justify-between pointer-events-none">
         <div>
-          <div className="text-[11px] uppercase tracking-wider text-muted-foreground">BTC / USDT</div>
+          <div className="text-[10px] uppercase tracking-wider text-muted-foreground">BTC / USDT · 1m</div>
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold tabular-nums text-foreground">
-              {livePrice !== null ? `$${formatPrice(livePrice)}` : "—"}
+            <span className="text-base font-bold tabular-nums text-foreground">
+              {headerPrice !== null ? `$${formatPrice(headerPrice)}` : "—"}
             </span>
             <span
-              className="text-[11px] tabular-nums font-medium"
+              className="text-[10px] tabular-nums font-medium"
               style={{ color: up ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
             >
-              {livePrice !== null ? `${up ? "+" : ""}${changePct.toFixed(3)}%` : ""}
+              {headerPrice !== null ? `${up ? "+" : ""}${changePct.toFixed(3)}%` : ""}
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
+        <div className="flex items-center gap-1.5 text-[9px] uppercase tracking-wider text-muted-foreground">
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-profit opacity-75 animate-ping" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-profit" />
@@ -243,10 +411,7 @@ const ClearDecisionsVisual = () => {
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="flex-1 min-h-0">
-        <canvas ref={canvasRef} className="w-full h-full block" />
-      </div>
+      <canvas ref={canvasRef} className="w-full h-full block" />
     </div>
   );
 };
