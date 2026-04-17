@@ -134,7 +134,7 @@ const GlobalMarketsVisual = () => {
     >
       <div className="w-full flex flex-col gap-2.5">
         {/* Header row */}
-        <div className="grid grid-cols-[1.5fr_1fr_1fr_0.55fr_0.55fr] items-center gap-3 px-4 pb-2 mb-1 border-b border-border/30">
+        <div className="grid grid-cols-[1.7fr_1fr_0.9fr_0.5fr_0.5fr] items-center gap-2 px-4 pb-2 mb-1 border-b border-border/30">
           <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Market</span>
           <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">LTP</span>
           <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">Volume</span>
@@ -148,7 +148,7 @@ const GlobalMarketsVisual = () => {
           return (
             <div
               key={asset.symbol}
-              className="grid grid-cols-[1.5fr_1fr_1fr_0.55fr_0.55fr] items-center gap-3 rounded-lg px-4 py-2.5 transition-all duration-300"
+              className="grid grid-cols-[1.7fr_1fr_0.9fr_0.5fr_0.5fr] items-center gap-2 rounded-lg px-4 py-2.5 transition-all duration-300"
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
               style={{
@@ -167,8 +167,8 @@ const GlobalMarketsVisual = () => {
                   <img src={asset.icon} alt={asset.name} className="w-9 h-9 rounded-full object-contain flex-shrink-0" loading="lazy" />
                 )}
                 <div className="min-w-0">
-                  <div className="text-sm font-semibold text-foreground leading-tight truncate">{asset.symbol}</div>
-                  <div className="text-xs text-muted-foreground leading-tight truncate">{asset.name}</div>
+                  <div className="text-[13px] font-semibold text-foreground leading-tight whitespace-nowrap">{asset.symbol}</div>
+                  <div className="text-[11px] text-muted-foreground leading-tight truncate">{asset.name}</div>
                 </div>
               </div>
 
