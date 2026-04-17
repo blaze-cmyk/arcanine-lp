@@ -23,7 +23,7 @@ const FIATS: Fiat[] = [
 const formatFiat = (n: number) =>
   n.toLocaleString("en-US", { minimumFractionDigits: 4, maximumFractionDigits: 4 });
 
-const Selector = <T extends { symbol: string; icon: string }>({
+function Selector<T extends { symbol: string; icon: string }>({
   items,
   value,
   onChange,
@@ -31,7 +31,7 @@ const Selector = <T extends { symbol: string; icon: string }>({
   items: T[];
   value: T;
   onChange: (next: T) => void;
-}) => {
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
