@@ -158,7 +158,7 @@ const ClearDecisionsVisual = () => {
       canvas.width = W * dpr;
       canvas.height = H * dpr;
     }
-    ctx.setTransform(dpr, dpr, 0, 0, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // Smooth price
     if (priceRef.current > 0) {
