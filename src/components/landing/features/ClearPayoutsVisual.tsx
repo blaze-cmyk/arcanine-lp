@@ -24,9 +24,6 @@ const PAYMENT_METHODS_LEFT = [
   { src: payGoogle, alt: "Google Pay" },
   { src: payApple, alt: "Apple Pay" },
   { src: payAmex, alt: "Amex" },
-];
-
-const PAYMENT_METHODS_RIGHT = [
   { src: payMastercard, alt: "Mastercard" },
   { src: payPaypal, alt: "PayPal" },
   { src: paySepa, alt: "SEPA" },
