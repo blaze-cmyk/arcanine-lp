@@ -43,7 +43,7 @@ const Hero = () => {
       </div>
 
       {/* ── Dashboard mockup ── */}
-      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 mb-[-60px] animate-slide-up-delay-4">
+      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 mb-16 sm:mb-24 animate-slide-up-delay-4">
         <img src={dashboardPreview} alt="Arcanine trading platform preview" className="relative w-full h-auto block" />
       </div>
 
