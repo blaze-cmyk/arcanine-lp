@@ -387,7 +387,7 @@ const ClearDecisionsVisual = () => {
     ctx.textBaseline = "middle";
     for (let i = startIdx; i <= endIdx; i++) {
       if (i % timeStep !== 0) continue;
-      const x = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const x = (i - startIdx) * step + step / 2;
       if (x < 16 || x > chartW - 16) continue;
       ctx.fillText(formatTime(new Date(candles[i].time * 1000)), x, H - TIME_SCALE_HEIGHT / 2);
     }
