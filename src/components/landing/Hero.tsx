@@ -44,9 +44,6 @@ const Hero = () => {
 
       {/* ── Dashboard mockup ── */}
       <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 mb-[-60px] animate-slide-up-delay-4">
-        <div className="absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.06),transparent_60%)] blur-3xl pointer-events-none" />
-        <div className="absolute -inset-4 rounded-3xl bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
-
         <img src={dashboardPreview} alt="Arcanine trading platform preview" className="relative w-full h-auto block" />
       </div>
 
