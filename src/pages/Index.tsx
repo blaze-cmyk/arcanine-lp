@@ -1,5 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import LiveMarkets from "@/components/landing/LiveMarkets";
 
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
@@ -28,7 +29,9 @@ const Index = () => (
       <Navbar />
       <Hero />
     </div>
-    
+
+    <LiveMarkets />
+
     <ScrollRevealWrapper>
       <Features />
     </ScrollRevealWrapper>
