@@ -119,15 +119,20 @@
   }
 
   .glow-orange {
-    box-shadow: 0 0 30px rgba(255, 103, 0, 0.35), 0 0 80px rgba(255, 103, 0, 0.12);
+    /* Kept name for backwards compat — now uses primary green glow */
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.35), 0 0 80px rgba(0, 255, 136, 0.12);
   }
 
   .glow-orange-soft {
-    box-shadow: 0 0 60px rgba(255, 103, 0, 0.18);
+    box-shadow: 0 0 60px rgba(0, 255, 136, 0.18);
   }
 
   .glow-green {
     box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
+  }
+
+  .glow-accent-orange {
+    box-shadow: 0 0 30px rgba(255, 103, 0, 0.3), 0 0 80px rgba(255, 103, 0, 0.1);
   }
 
   .glow-red {
@@ -148,11 +153,11 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #FF6700 0%, #FF8533 100%);
+    background-image: linear-gradient(135deg, #00FF88 0%, #33FFAA 100%);
   }
 
   .bg-gradient-accent {
-    background: #FF6700;
+    background: #00FF88;
     position: relative;
     overflow: hidden;
     z-index: 0;
@@ -163,7 +168,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(103deg, #FF8533 0%, #FF6700 100%);
+    background: linear-gradient(103deg, #33FFAA 0%, #00FF88 100%);
     z-index: -1;
     transition: opacity 0.2s ease;
   }
@@ -174,7 +179,7 @@
 
   .bg-secondary-btn {
     background-color: #111111;
-    border: 1px solid #FF6700;
+    border: 1px solid #00FF88;
     color: #FFFFFF;
   }
 
