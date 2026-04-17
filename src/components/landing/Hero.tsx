@@ -47,22 +47,7 @@ const Hero = () => {
         <div className="absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.06),transparent_60%)] blur-3xl pointer-events-none" />
         <div className="absolute -inset-4 rounded-3xl bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none" />
 
-        <div className="relative glass-strong rounded-2xl border border-border/40 overflow-hidden shadow-2xl shadow-black/40">
-          <div className="flex items-center gap-2 px-5 py-2.5 border-b border-border/30">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-loss/60" />
-              <div className="w-3 h-3 rounded-full bg-[hsl(45,100%,50%)]/60" />
-              <div className="w-3 h-3 rounded-full bg-profit/60" />
-            </div>
-            <div className="flex-1 flex justify-center">
-              <div className="px-4 py-1 rounded-md bg-muted/50 text-xs text-muted-foreground font-display tabular-nums">
-                {t("hero.browserBar")}
-              </div>
-            </div>
-            <div className="w-12" />
-          </div>
-          <img src={dashboardPreview} alt="Arcanine trading platform preview" className="w-full h-auto block" />
-        </div>
+        <img src={dashboardPreview} alt="Arcanine trading platform preview" className="relative w-full h-auto block" />
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
