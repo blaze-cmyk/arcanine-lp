@@ -119,50 +119,51 @@
   }
 
   .glow-orange {
-    box-shadow: 0 0 30px rgba(25, 205, 168, 0.25), 0 0 80px rgba(25, 205, 168, 0.08);
+    box-shadow: 0 0 30px rgba(255, 103, 0, 0.35), 0 0 80px rgba(255, 103, 0, 0.12);
   }
 
   .glow-orange-soft {
-    box-shadow: 0 0 60px rgba(25, 205, 168, 0.12);
+    box-shadow: 0 0 60px rgba(255, 103, 0, 0.18);
   }
 
   .glow-green {
-    box-shadow: 0 0 20px hsl(160 45% 50% / 0.25), 0 0 60px hsl(160 45% 50% / 0.08);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
   }
 
   .glow-red {
-    box-shadow: 0 0 20px hsl(0 55% 55% / 0.25), 0 0 60px hsl(0 55% 55% / 0.08);
+    box-shadow: 0 0 20px rgba(255, 59, 92, 0.3), 0 0 60px rgba(255, 59, 92, 0.1);
   }
 
   .glass {
-    background: rgba(18, 18, 22, 0.6);
+    background: rgba(17, 17, 17, 0.6);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(31, 31, 37, 0.5);
+    border: 1px solid rgba(34, 34, 34, 0.6);
   }
 
   .glass-strong {
-    background: rgba(18, 18, 22, 0.8);
+    background: rgba(17, 17, 17, 0.85);
     backdrop-filter: blur(40px);
-    border: 1px solid rgba(31, 31, 37, 0.6);
+    border: 1px solid rgba(34, 34, 34, 0.7);
   }
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #19CDA8 0%, #24C173 100%);
+    background-image: linear-gradient(135deg, #FF6700 0%, #FF8533 100%);
   }
 
   .bg-gradient-accent {
-    background: #19CDA8;
+    background: #FF6700;
     position: relative;
     overflow: hidden;
     z-index: 0;
+    color: #000000;
   }
 
   .bg-gradient-accent::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(103deg, #24C173 0.37%, #1FBF8E 15.31%, #19CDA8 100%);
+    background: linear-gradient(103deg, #FF8533 0%, #FF6700 100%);
     z-index: -1;
     transition: opacity 0.2s ease;
   }
@@ -172,11 +173,13 @@
   }
 
   .bg-secondary-btn {
-    background-color: #1a2e28;
+    background-color: #111111;
+    border: 1px solid #FF6700;
+    color: #FFFFFF;
   }
 
   .bg-secondary-btn:hover {
-    background-color: #213630;
+    background-color: #1a1a1a;
   }
 
   .font-mono-num {
