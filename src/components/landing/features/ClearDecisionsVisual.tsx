@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * Compact candlestick chart inspired by the Arcanine Dashboard CustomChart.
- * Zoomed in near the live price with a moving price line and price label —
- * meant to illustrate "real-time charts with zero lag".
+ * Streams real-time BTCUSDT 1m klines from Binance via WebSocket.
  */
 
 const COLORS = {
@@ -17,68 +16,89 @@ const COLORS = {
   priceLabelText: "#0c1014",
 };
 
-type Candle = { o: number; h: number; l: number; c: number };
+type Candle = { o: number; h: number; l: number; c: number; t: number };
 
-const NUM_CANDLES = 28;
+const NUM_CANDLES = 30;
+const SYMBOL = "BTCUSDT";
+const INTERVAL = "1m";
 
-const seedCandles = (): Candle[] => {
-  const candles: Candle[] = [];
-  let price = 1.0847;
-  for (let i = 0; i < NUM_CANDLES; i++) {
-    const o = price;
-    const drift = (Math.random() - 0.48) * 0.0008;
-    const c = +(o + drift).toFixed(5);
-    const h = Math.max(o, c) + Math.random() * 0.0004;
-    const l = Math.min(o, c) - Math.random() * 0.0004;
-    candles.push({ o, h, l, c });
-    price = c;
-  }
-  return candles;
-};
+const formatPrice = (p: number) =>
+  p.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const ClearDecisionsVisual = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [candles, setCandles] = useState<Candle[]>(seedCandles);
-  const [livePrice, setLivePrice] = useState(() => candles[candles.length - 1].c);
+  const [candles, setCandles] = useState<Candle[]>([]);
+  const [livePrice, setLivePrice] = useState<number | null>(null);
 
-  // Tick the live price + occasionally append a new candle
+  // Fetch initial klines + subscribe to live updates
   useEffect(() => {
-    const tickInterval = setInterval(() => {
-      setLivePrice((prev) => {
-        const drift = (Math.random() - 0.5) * 0.00035;
-        const next = +(prev + drift).toFixed(5);
-        setCandles((cs) => {
-          const copy = [...cs];
-          const last = { ...copy[copy.length - 1] };
-          last.c = next;
-          if (next > last.h) last.h = next;
-          if (next < last.l) last.l = next;
-          copy[copy.length - 1] = last;
-          return copy;
-        });
-        return next;
-      });
-    }, 280);
+    let cancelled = false;
+    let ws: WebSocket | null = null;
 
-    const newCandleInterval = setInterval(() => {
-      setCandles((cs) => {
-        const last = cs[cs.length - 1];
-        const o = last.c;
-        const next: Candle = { o, h: o, l: o, c: o };
-        return [...cs.slice(1), next];
-      });
-    }, 4000);
+    (async () => {
+      try {
+        const res = await fetch(
+          `https://api.binance.com/api/v3/klines?symbol=${SYMBOL}&interval=${INTERVAL}&limit=${NUM_CANDLES}`
+        );
+        const raw: unknown[][] = await res.json();
+        if (cancelled) return;
+        const seeded: Candle[] = raw.map((k) => ({
+          t: k[0] as number,
+          o: parseFloat(k[1] as string),
+          h: parseFloat(k[2] as string),
+          l: parseFloat(k[3] as string),
+          c: parseFloat(k[4] as string),
+        }));
+        setCandles(seeded);
+        setLivePrice(seeded[seeded.length - 1].c);
+      } catch {
+        /* ignore */
+      }
+
+      // Live kline stream
+      ws = new WebSocket(
+        `wss://stream.binance.com:9443/ws/${SYMBOL.toLowerCase()}@kline_${INTERVAL}`
+      );
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          const k = msg.k;
+          if (!k) return;
+          const candle: Candle = {
+            t: k.t,
+            o: parseFloat(k.o),
+            h: parseFloat(k.h),
+            l: parseFloat(k.l),
+            c: parseFloat(k.c),
+          };
+          setLivePrice(candle.c);
+          setCandles((prev) => {
+            if (prev.length === 0) return [candle];
+            const last = prev[prev.length - 1];
+            if (last.t === candle.t) {
+              const copy = prev.slice();
+              copy[copy.length - 1] = candle;
+              return copy;
+            }
+            // new candle
+            return [...prev.slice(-(NUM_CANDLES - 1)), candle];
+          });
+        } catch {
+          /* ignore */
+        }
+      };
+    })();
 
     return () => {
-      clearInterval(tickInterval);
-      clearInterval(newCandleInterval);
+      cancelled = true;
+      try { ws?.close(); } catch { /* noop */ }
     };
   }, []);
 
   // Draw
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || candles.length === 0 || livePrice === null) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -91,7 +111,7 @@ const ClearDecisionsVisual = () => {
     ctx.setTransform(dpr, dpr, 0, 0, 0, 0);
     ctx.clearRect(0, 0, W, H);
 
-    const PRICE_SCALE_W = 56;
+    const PRICE_SCALE_W = 72;
     const PADDING_TOP = 14;
     const PADDING_BOTTOM = 14;
     const chartW = W - PRICE_SCALE_W;
@@ -183,13 +203,14 @@ const ClearDecisionsVisual = () => {
     ctx.font = "600 11px 'Bricolage Grotesque', system-ui, sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(livePrice.toFixed(5), labelX + labelW / 2, labelY + labelH / 2);
+    ctx.fillText(formatPrice(livePrice), labelX + labelW / 2, labelY + labelH / 2);
   }, [candles, livePrice]);
 
   const last = candles[candles.length - 1];
-  const open = last.o;
-  const change = livePrice - open;
-  const changePct = (change / open) * 100;
+  const open = last?.o ?? 0;
+  const price = livePrice ?? open;
+  const change = price - open;
+  const changePct = open ? (change / open) * 100 : 0;
   const up = change >= 0;
 
   return (
@@ -200,14 +221,16 @@ const ClearDecisionsVisual = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <div>
-          <div className="text-[11px] uppercase tracking-wider text-muted-foreground">EUR / USD</div>
+          <div className="text-[11px] uppercase tracking-wider text-muted-foreground">BTC / USDT</div>
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold tabular-nums text-foreground">{livePrice.toFixed(5)}</span>
+            <span className="text-lg font-bold tabular-nums text-foreground">
+              {livePrice !== null ? `$${formatPrice(livePrice)}` : "—"}
+            </span>
             <span
               className="text-[11px] tabular-nums font-medium"
               style={{ color: up ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
             >
-              {up ? "+" : ""}{changePct.toFixed(3)}%
+              {livePrice !== null ? `${up ? "+" : ""}${changePct.toFixed(3)}%` : ""}
             </span>
           </div>
         </div>
