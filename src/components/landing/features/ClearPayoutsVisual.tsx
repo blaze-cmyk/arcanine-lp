@@ -18,13 +18,16 @@ import payGrab from "@/assets/pay/grabpay.png";
 import payVisa from "@/assets/pay/visa.png";
 import payRazorpay from "@/assets/pay/razorpay.png";
 
-const PAYMENT_METHODS_LEFT = [
+const PAYMENT_TRACK_A = [
   { src: payRevolut, alt: "Revolut" },
   { src: payUpi, alt: "UPI" },
   { src: payGoogle, alt: "Google Pay" },
   { src: payApple, alt: "Apple Pay" },
   { src: payAmex, alt: "Amex" },
   { src: payMastercard, alt: "Mastercard" },
+];
+
+const PAYMENT_TRACK_B = [
   { src: payPaypal, alt: "PayPal" },
   { src: paySepa, alt: "SEPA" },
   { src: payGrab, alt: "GrabPay" },
