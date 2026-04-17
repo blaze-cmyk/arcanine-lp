@@ -11,13 +11,28 @@ import payApple from "@/assets/pay/applepay.png";
 import payGoogle from "@/assets/pay/gpay.png";
 import payUpi from "@/assets/pay/upi.png";
 import payRevolut from "@/assets/pay/revolut.png";
+import payMastercard from "@/assets/pay/mastercard.png";
+import payPaypal from "@/assets/pay/paypal.png";
+import paySepa from "@/assets/pay/sepa.png";
+import payGrab from "@/assets/pay/grabpay.png";
+import payVisa from "@/assets/pay/visa.png";
+import payRazorpay from "@/assets/pay/razorpay.png";
 
-const PAYMENT_METHODS = [
+const PAYMENT_METHODS_LEFT = [
   { src: payRevolut, alt: "Revolut" },
   { src: payUpi, alt: "UPI" },
   { src: payGoogle, alt: "Google Pay" },
   { src: payApple, alt: "Apple Pay" },
   { src: payAmex, alt: "Amex" },
+];
+
+const PAYMENT_METHODS_RIGHT = [
+  { src: payMastercard, alt: "Mastercard" },
+  { src: payPaypal, alt: "PayPal" },
+  { src: paySepa, alt: "SEPA" },
+  { src: payGrab, alt: "GrabPay" },
+  { src: payVisa, alt: "Visa" },
+  { src: payRazorpay, alt: "Razorpay" },
 ];
 
 type Crypto = { symbol: "BTC" | "ETH" | "SOL"; binance: string; icon: string; decimals: number; defaultAmount: string };
@@ -184,13 +199,29 @@ const ClearPayoutsVisual = () => {
 
       {/* Stacked payment methods on the left */}
       <div className="absolute left-4 top-1/2 -translate-y-1/2 z-[1] flex flex-col items-center pointer-events-none">
-        {PAYMENT_METHODS.map((m, i) => (
+        {PAYMENT_METHODS_LEFT.map((m, i) => (
           <div
             key={m.alt}
             className="w-11 h-11 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
             style={{
               marginTop: i === 0 ? 0 : -14,
-              zIndex: PAYMENT_METHODS.length - i,
+              zIndex: PAYMENT_METHODS_LEFT.length - i,
+            }}
+          >
+            <img src={m.src} alt={m.alt} className="w-7 h-7 object-contain" />
+          </div>
+        ))}
+      </div>
+
+      {/* Stacked payment methods on the right */}
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-[1] flex flex-col items-center pointer-events-none">
+        {PAYMENT_METHODS_RIGHT.map((m, i) => (
+          <div
+            key={m.alt}
+            className="w-11 h-11 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
+            style={{
+              marginTop: i === 0 ? 0 : -14,
+              zIndex: PAYMENT_METHODS_RIGHT.length - i,
             }}
           >
             <img src={m.src} alt={m.alt} className="w-7 h-7 object-contain" />
