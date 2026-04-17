@@ -268,18 +268,34 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            aria-label={`Buy ${asset.name} up`}
-            className="w-9 h-9 rounded-full bg-muted/70 hover:bg-muted flex items-center justify-center text-foreground transition-colors"
-          >
-            <ArrowUp className="w-4 h-4" />
-          </button>
-          <button
-            aria-label={`Sell ${asset.name} down`}
-            className="w-9 h-9 rounded-full bg-muted/70 hover:bg-muted flex items-center justify-center text-foreground transition-colors"
-          >
-            <ArrowDown className="w-4 h-4" />
-          </button>
+          <div className="relative group/up">
+            <button
+              aria-label={`Buy ${asset.name} long`}
+              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-success/20 flex items-center justify-center text-foreground hover:text-success transition-colors"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+            <span
+              style={{ fontFamily: "Bricolage Grotesque, system-ui, sans-serif" }}
+              className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg bg-card border border-border text-xs text-foreground opacity-0 group-hover/up:opacity-100 transition-opacity whitespace-nowrap"
+            >
+              Long
+            </span>
+          </div>
+          <div className="relative group/down">
+            <button
+              aria-label={`Sell ${asset.name} short`}
+              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-destructive/20 flex items-center justify-center text-foreground hover:text-destructive transition-colors"
+            >
+              <ArrowDown className="w-4 h-4" />
+            </button>
+            <span
+              style={{ fontFamily: "Bricolage Grotesque, system-ui, sans-serif" }}
+              className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg bg-card border border-border text-xs text-foreground opacity-0 group-hover/down:opacity-100 transition-opacity whitespace-nowrap"
+            >
+              Short
+            </span>
+          </div>
         </div>
       </div>
     </div>
