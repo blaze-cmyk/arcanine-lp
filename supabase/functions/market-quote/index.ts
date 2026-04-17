@@ -26,8 +26,18 @@ async function fetchOne(symbol: string) {
   const prevClose: number = meta.chartPreviousClose ?? meta.previousClose ?? price;
   const changePct = prevClose ? ((price - prevClose) / prevClose) * 100 : 0;
   const closes: Array<number | null> = result.indicators?.quote?.[0]?.close ?? [];
-  const sparkline = closes.filter((v): v is number => typeof v === "number");
-  return { price, prevClose, changePct, sparkline };
+  const tsRaw: Array<number | null> = result.timestamp ?? [];
+  const sparkline: number[] = [];
+  const timestamps: number[] = [];
+  for (let i = 0; i < closes.length; i++) {
+    const c = closes[i];
+    const t = tsRaw[i];
+    if (typeof c === "number" && typeof t === "number") {
+      sparkline.push(c);
+      timestamps.push(t * 1000); // yahoo returns seconds
+    }
+  }
+  return { price, prevClose, changePct, sparkline, timestamps };
 }
 
 Deno.serve(async (req) => {

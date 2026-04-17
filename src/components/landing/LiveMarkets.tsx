@@ -225,12 +225,17 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
         <span className="text-base font-semibold text-foreground">{asset.name}</span>
       </div>
 
-      {/* Sparkline */}
+      {/* Interactive chart */}
       <div className="h-16 my-3">
         {quote.loading || quote.spark.length < 2 ? (
           <div className="w-full h-full rounded bg-muted/40 animate-pulse" />
         ) : (
-          <Sparkline points={quote.spark} up={up} />
+          <InteractiveChart
+            points={quote.spark}
+            times={quote.times}
+            up={up}
+            asset={asset}
+          />
         )}
       </div>
 
@@ -285,7 +290,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
 const LiveMarkets = () => {
   const [quotes, setQuotes] = useState<Record<string, Quote>>(() =>
     Object.fromEntries(
-      ASSETS.map((a) => [a.symbol, { price: null, changePct: null, spark: [], loading: true }])
+      ASSETS.map((a) => [a.symbol, { price: null, changePct: null, spark: [], times: [], loading: true }])
     )
   );
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -309,17 +314,21 @@ const LiveMarkets = () => {
           priceChangePercent: string;
         }> = await tickerRes.json();
 
-        // 2) sparklines (1h klines x 24)
+        // 2) sparklines (1h klines x 24)  — for richer detail use 15m × 96
         const sparkResults = await Promise.all(
           cryptoAssets.map(async (a) => {
             try {
               const r = await fetch(
-                `https://api.binance.com/api/v3/klines?symbol=${a.binanceSymbol}&interval=1h&limit=24`
+                `https://api.binance.com/api/v3/klines?symbol=${a.binanceSymbol}&interval=15m&limit=96`
               );
               const d: Array<unknown[]> = await r.json();
-              return { sym: a.symbol, points: d.map((row) => parseFloat(row[4] as string)) };
+              return {
+                sym: a.symbol,
+                points: d.map((row) => parseFloat(row[4] as string)),
+                times: d.map((row) => row[0] as number),
+              };
             } catch {
-              return { sym: a.symbol, points: [] };
+              return { sym: a.symbol, points: [] as number[], times: [] as number[] };
             }
           })
         );
@@ -334,6 +343,7 @@ const LiveMarkets = () => {
               price: t ? parseFloat(t.lastPrice) : prev[a.symbol].price,
               changePct: t ? parseFloat(t.priceChangePercent) : prev[a.symbol].changePct,
               spark: sp?.points ?? prev[a.symbol].spark,
+              times: sp?.times ?? prev[a.symbol].times,
               loading: false,
             };
           }
@@ -362,7 +372,10 @@ const LiveMarkets = () => {
         });
         if (!res.ok) throw new Error(`quote failed ${res.status}`);
         const j: {
-          quotes: Record<string, { price?: number; changePct?: number; sparkline?: number[]; error?: string }>;
+          quotes: Record<
+            string,
+            { price?: number; changePct?: number; sparkline?: number[]; timestamps?: number[]; error?: string }
+          >;
         } = await res.json();
         if (cancelled) return;
         setQuotes((prev) => {
@@ -374,6 +387,7 @@ const LiveMarkets = () => {
                 price: q.price,
                 changePct: q.changePct ?? 0,
                 spark: q.sparkline ?? [],
+                times: q.timestamps ?? [],
                 loading: false,
               };
             } else {
