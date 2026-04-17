@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 type Asset = {
   symbol: string;          // display symbol
@@ -250,18 +249,6 @@ const LiveMarkets = () => {
     };
 
     const fetchYahoo = async (a: Asset) => {
-      try {
-        const { data, error } = await supabase.functions.invoke("market-quote", {
-          body: null,
-          method: "GET" as never, // invoke supports query via URL
-        });
-        // supabase-js doesn't support query params via invoke; use direct fetch below
-        if (error) throw error;
-        if (data) return; // unreachable, fallthrough
-      } catch {
-        // fall through to direct fetch
-      }
-
       try {
         const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/market-quote?symbol=${encodeURIComponent(
           a.yahooSymbol!
