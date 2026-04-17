@@ -32,13 +32,13 @@ const Hero = () => {
           {t("hero.subhead")}
         </p>
 
-        <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div className="animate-slide-up-delay-2 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button className="inline-flex items-center px-6 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
             {t("hero.createAccount")}
           </button>
-          <button className="inline-flex items-center px-7 py-[0.8125rem] bg-secondary-btn text-foreground font-semibold text-base rounded-xl transition-colors duration-200">
-            {t("hero.tryDemo")}
-          </button>
+          <p className="text-sm text-muted-foreground">
+            {t("hero.depositNote")}
+          </p>
         </div>
       </div>
 
