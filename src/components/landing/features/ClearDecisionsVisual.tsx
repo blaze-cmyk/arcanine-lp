@@ -1,176 +1,228 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+/**
+ * Compact candlestick chart inspired by the Arcanine Dashboard CustomChart.
+ * Zoomed in near the live price with a moving price line and price label —
+ * meant to illustrate "real-time charts with zero lag".
+ */
+
+const COLORS = {
+  gridLine: "rgba(255, 255, 255, 0.05)",
+  candleGreen: "#3dbc84",
+  candleRed: "#c94545",
+  wickGreen: "#3dbc8488",
+  wickRed: "#c9454588",
+  priceLine: "#18dcb5",
+  priceLabelBg: "#18dcb5",
+  priceLabelText: "#0c1014",
+};
+
+type Candle = { o: number; h: number; l: number; c: number };
+
+const NUM_CANDLES = 28;
+
+const seedCandles = (): Candle[] => {
+  const candles: Candle[] = [];
+  let price = 1.0847;
+  for (let i = 0; i < NUM_CANDLES; i++) {
+    const o = price;
+    const drift = (Math.random() - 0.48) * 0.0008;
+    const c = +(o + drift).toFixed(5);
+    const h = Math.max(o, c) + Math.random() * 0.0004;
+    const l = Math.min(o, c) - Math.random() * 0.0004;
+    candles.push({ o, h, l, c });
+    price = c;
+  }
+  return candles;
+};
 
 const ClearDecisionsVisual = () => {
-  const [picked, setPicked] = useState<"up" | "down" | null>(null);
-  const [priceOffset, setPriceOffset] = useState(0);
-  const animRef = useRef<number | null>(null);
-  const startRef = useRef<number>(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [candles, setCandles] = useState<Candle[]>(seedCandles);
+  const [livePrice, setLivePrice] = useState(() => candles[candles.length - 1].c);
 
-  // Animate price movement on pick
+  // Tick the live price + occasionally append a new candle
   useEffect(() => {
-    if (!picked) {
-      setPriceOffset(0);
-      if (animRef.current) cancelAnimationFrame(animRef.current);
-      return;
-    }
-    startRef.current = performance.now();
-    const direction = picked === "up" ? 1 : -1;
-    const animate = (now: number) => {
-      const elapsed = now - startRef.current;
-      const progress = Math.min(elapsed / 1200, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setPriceOffset(direction * eased * 18);
-      if (progress < 1) animRef.current = requestAnimationFrame(animate);
+    const tickInterval = setInterval(() => {
+      setLivePrice((prev) => {
+        const drift = (Math.random() - 0.5) * 0.00035;
+        const next = +(prev + drift).toFixed(5);
+        setCandles((cs) => {
+          const copy = [...cs];
+          const last = { ...copy[copy.length - 1] };
+          last.c = next;
+          if (next > last.h) last.h = next;
+          if (next < last.l) last.l = next;
+          copy[copy.length - 1] = last;
+          return copy;
+        });
+        return next;
+      });
+    }, 280);
+
+    const newCandleInterval = setInterval(() => {
+      setCandles((cs) => {
+        const last = cs[cs.length - 1];
+        const o = last.c;
+        const next: Candle = { o, h: o, l: o, c: o };
+        return [...cs.slice(1), next];
+      });
+    }, 4000);
+
+    return () => {
+      clearInterval(tickInterval);
+      clearInterval(newCandleInterval);
     };
-    animRef.current = requestAnimationFrame(animate);
-    return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
-  }, [picked]);
+  }, []);
 
-  const basePrice = 1.0847;
-  const currentPrice = (basePrice + priceOffset * 0.0001).toFixed(4);
-  const priceDelta = (priceOffset * 0.0001).toFixed(4);
-  const isPositive = priceOffset >= 0;
+  // Draw
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-  // Mini sparkline points
-  const sparkBase = [40, 38, 42, 39, 41, 37, 40, 38, 43, 41, 39, 42, 40];
-  const sparkPoints = sparkBase.map((y, i) => {
-    const shift = 0;
-    return { x: i * 22, y: y + shift };
-  });
-  const sparkD = sparkPoints.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    const W = rect.width;
+    const H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, dpr, 0, 0, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    const PRICE_SCALE_W = 56;
+    const PADDING_TOP = 14;
+    const PADDING_BOTTOM = 14;
+    const chartW = W - PRICE_SCALE_W;
+    const chartH = H - PADDING_TOP - PADDING_BOTTOM;
+
+    // Price range — zoom near current price
+    let min = Infinity;
+    let max = -Infinity;
+    for (const c of candles) {
+      if (c.l < min) min = c.l;
+      if (c.h > max) max = c.h;
+    }
+    if (livePrice < min) min = livePrice;
+    if (livePrice > max) max = livePrice;
+    const pad = (max - min) * 0.25 || livePrice * 0.0005;
+    min -= pad;
+    max += pad;
+
+    const priceToY = (p: number) =>
+      PADDING_TOP + chartH * (1 - (p - min) / (max - min));
+
+    // Horizontal grid lines
+    ctx.strokeStyle = COLORS.gridLine;
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 4; i++) {
+      const y = PADDING_TOP + (chartH / 4) * i;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(chartW, y);
+      ctx.stroke();
+    }
+
+    // Candles
+    const step = chartW / candles.length;
+    const candleW = Math.max(2, step * 0.6);
+    candles.forEach((c, i) => {
+      const x = i * step + step / 2;
+      const isUp = c.c >= c.o;
+      const color = isUp ? COLORS.candleGreen : COLORS.candleRed;
+      const wickColor = isUp ? COLORS.wickGreen : COLORS.wickRed;
+
+      ctx.strokeStyle = wickColor;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, priceToY(c.h));
+      ctx.lineTo(x, priceToY(c.l));
+      ctx.stroke();
+
+      const yOpen = priceToY(c.o);
+      const yClose = priceToY(c.c);
+      const top = Math.min(yOpen, yClose);
+      const bodyH = Math.max(1.5, Math.abs(yClose - yOpen));
+      ctx.fillStyle = color;
+      ctx.fillRect(x - candleW / 2, top, candleW, bodyH);
+    });
+
+    // Live price line
+    const priceY = priceToY(livePrice);
+    ctx.strokeStyle = COLORS.priceLine;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(0, priceY);
+    ctx.lineTo(chartW, priceY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Price label on the right
+    const labelW = PRICE_SCALE_W - 4;
+    const labelH = 20;
+    const labelX = chartW + 2;
+    const labelY = priceY - labelH / 2;
+    ctx.fillStyle = COLORS.priceLabelBg;
+    const r = 4;
+    ctx.beginPath();
+    ctx.moveTo(labelX + r, labelY);
+    ctx.lineTo(labelX + labelW - r, labelY);
+    ctx.quadraticCurveTo(labelX + labelW, labelY, labelX + labelW, labelY + r);
+    ctx.lineTo(labelX + labelW, labelY + labelH - r);
+    ctx.quadraticCurveTo(labelX + labelW, labelY + labelH, labelX + labelW - r, labelY + labelH);
+    ctx.lineTo(labelX + r, labelY + labelH);
+    ctx.quadraticCurveTo(labelX, labelY + labelH, labelX, labelY + labelH - r);
+    ctx.lineTo(labelX, labelY + r);
+    ctx.quadraticCurveTo(labelX, labelY, labelX + r, labelY);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = COLORS.priceLabelText;
+    ctx.font = "600 11px 'Bricolage Grotesque', system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(livePrice.toFixed(5), labelX + labelW / 2, labelY + labelH / 2);
+  }, [candles, livePrice]);
+
+  const last = candles[candles.length - 1];
+  const open = last.o;
+  const change = livePrice - open;
+  const changePct = (change / open) * 100;
+  const up = change >= 0;
 
   return (
     <div
-      className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer select-none overflow-hidden"
-      onMouseLeave={() => setPicked(null)}
+      className="relative w-full h-full flex flex-col select-none px-5 pt-5"
+      style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
     >
-      {/* Ambient glow behind selected direction */}
-      <div
-        className="absolute inset-0 transition-all duration-700 pointer-events-none"
-        style={{
-          opacity: picked ? 1 : 0,
-          background: picked === "up"
-            ? "radial-gradient(ellipse 80% 60% at 50% 30%, hsl(var(--profit) / 0.06) 0%, transparent 70%)"
-            : "radial-gradient(ellipse 80% 60% at 50% 70%, hsl(var(--loss) / 0.06) 0%, transparent 70%)",
-        }}
-      />
-
-      {/* Sparkline background */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-        <svg viewBox="0 0 264 80" className="w-full h-[60%]" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="decisionSparkGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={picked === "down" ? "hsl(var(--loss))" : "hsl(var(--profit))"} stopOpacity="0.3" />
-              <stop offset="100%" stopColor={picked === "down" ? "hsl(var(--loss))" : "hsl(var(--profit))"} stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path d={sparkD + " L264,60 L0,60 Z"} fill="url(#decisionSparkGrad)" className="transition-all duration-700" />
-          <path
-            d={sparkD}
-            fill="none"
-            stroke={picked === "down" ? "hsl(var(--loss))" : "hsl(var(--profit))"}
-            strokeWidth="1.5"
-            className="transition-all duration-700"
-          />
-        </svg>
-      </div>
-
-      {/* Live price display */}
-      <div className="relative z-10 mb-5 flex flex-col items-center">
-        <div
-          className="rounded-xl px-4 py-2.5 flex flex-col items-center gap-1 transition-all duration-500"
-          style={{
-            background: "hsl(var(--card) / 0.8)",
-            border: `1px solid ${picked ? (isPositive ? "hsl(var(--profit) / 0.2)" : "hsl(var(--loss) / 0.2)") : "hsl(var(--border) / 0.3)"}`,
-            backdropFilter: "blur(12px)",
-            transform: picked ? "scale(1.05)" : "scale(1)",
-          }}
-        >
-          <span className="text-[9px] uppercase tracking-widest text-muted-foreground">EUR / USD</span>
-          <span
-            className="text-xl font-display tabular-nums font-bold tabular-nums transition-colors duration-300"
-            style={{ color: picked ? (isPositive ? "hsl(var(--profit))" : "hsl(var(--loss))") : "hsl(var(--foreground))" }}
-          >
-            {currentPrice}
+      {/* Header */}
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <div className="text-[11px] uppercase tracking-wider text-muted-foreground">EUR / USD</div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-lg font-bold tabular-nums text-foreground">{livePrice.toFixed(5)}</span>
+            <span
+              className="text-[11px] tabular-nums font-medium"
+              style={{ color: up ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
+            >
+              {up ? "+" : ""}{changePct.toFixed(3)}%
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-profit opacity-75 animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-profit" />
           </span>
-          <span
-            className="text-[10px] font-display tabular-nums transition-all duration-300"
-            style={{
-              color: isPositive ? "hsl(var(--profit))" : "hsl(var(--loss))",
-              opacity: picked ? 1 : 0.5,
-            }}
-          >
-            {isPositive ? "+" : ""}{priceDelta}
-          </span>
+          Live
         </div>
       </div>
 
-      {/* Decision buttons */}
-      <div className="relative z-10 flex gap-3">
-        {(["up", "down"] as const).map((dir) => {
-          const isActive = picked === dir;
-          const color = dir === "up" ? "--profit" : "--loss";
-          return (
-            <button
-              key={dir}
-              className="group/btn relative rounded-xl px-5 py-3 flex flex-col items-center gap-1.5 transition-all duration-400 outline-none min-w-[76px] overflow-hidden"
-              style={{
-                background: isActive ? `hsl(var(${color}) / 0.12)` : "hsl(var(--muted) / 0.4)",
-                border: `1.5px solid ${isActive ? `hsl(var(${color}) / 0.4)` : "hsl(var(--border) / 0.3)"}`,
-                transform: isActive ? "translateY(-3px) scale(1.04)" : "translateY(0) scale(1)",
-                boxShadow: isActive
-                  ? `0 8px 30px hsl(var(${color}) / 0.2), 0 0 0 1px hsl(var(${color}) / 0.1)`
-                  : "none",
-              }}
-              onMouseEnter={() => setPicked(dir)}
-            >
-              {/* Glow sweep on active */}
-              <div
-                className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  opacity: isActive ? 1 : 0,
-                  background: `radial-gradient(ellipse at 50% 100%, hsl(var(${color}) / 0.15) 0%, transparent 70%)`,
-                }}
-              />
-
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative z-10">
-                {dir === "up" ? (
-                  <path d="M8 2L14 12H2L8 2Z" fill={isActive ? `hsl(var(${color}))` : "hsl(var(--muted-foreground))"} style={{ transition: "fill 0.3s" }} />
-                ) : (
-                  <path d="M8 14L2 4H14L8 14Z" fill={isActive ? `hsl(var(${color}))` : "hsl(var(--muted-foreground))"} style={{ transition: "fill 0.3s" }} />
-                )}
-              </svg>
-              <span
-                className="text-[10px] font-bold uppercase tracking-wider relative z-10 transition-colors duration-300"
-                style={{ color: isActive ? `hsl(var(${color}))` : "hsl(var(--muted-foreground))" }}
-              >
-                {dir === "up" ? "Call" : "Put"}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Confirmation tag */}
-      <div
-        className="relative z-10 mt-3 flex items-center gap-2 rounded-lg px-3 py-1.5 transition-all duration-500"
-        style={{
-          opacity: picked ? 1 : 0,
-          transform: picked ? "translateY(0) scale(1)" : "translateY(6px) scale(0.95)",
-          background: picked === "up" ? "hsl(var(--profit) / 0.08)" : picked === "down" ? "hsl(var(--loss) / 0.08)" : "transparent",
-          border: `1px solid ${picked === "up" ? "hsl(var(--profit) / 0.2)" : picked === "down" ? "hsl(var(--loss) / 0.2)" : "transparent"}`,
-        }}
-      >
-        <div
-          className="w-1.5 h-1.5 rounded-full animate-pulse"
-          style={{ background: picked === "up" ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
-        />
-        <span
-          className="text-[10px] font-semibold uppercase tracking-wider"
-          style={{ color: picked === "up" ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
-        >
-          {picked === "up" ? "Call · 1.92x payout" : "Put · 1.92x payout"}
-        </span>
+      {/* Chart */}
+      <div className="flex-1 min-h-0">
+        <canvas ref={canvasRef} className="w-full h-full block" />
       </div>
     </div>
   );
