@@ -5,7 +5,7 @@ const Hero = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32">
+    <section className="relative flex flex-col items-center justify-start overflow-x-clip pt-28 sm:pt-32 pb-12">
 
       {/* Noise texture */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.025] mix-blend-overlay">
@@ -43,11 +43,11 @@ const Hero = () => {
       </div>
 
       {/* ── Dashboard mockup ── */}
-      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 mb-[-60px] animate-slide-up-delay-4">
+      <div className="relative z-10 w-full mx-auto max-w-6xl mt-20 animate-slide-up-delay-4">
         <img src={dashboardPreview} alt="Arcanine trading platform preview" className="relative w-full h-auto block" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none z-[1]" />
     </section>
   );
 };
