@@ -9,9 +9,9 @@ const TradeInSecondsVisual = () => {
   const payout = Math.round(amount * (1 + PAYOUT_PCT / 100));
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center px-5 py-4">
+    <div className="relative w-full h-full flex items-start justify-center px-5 pt-4 pb-2">
       <div
-        className="w-full max-w-[260px] rounded-xl overflow-hidden"
+        className="w-full max-w-[240px] rounded-xl overflow-hidden"
         style={{
           background: "hsl(var(--card))",
           border: "1px solid hsl(var(--border) / 0.6)",
