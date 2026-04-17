@@ -467,9 +467,56 @@ const LiveMarkets = () => {
 
     fetchAll();
     const interval = setInterval(fetchAll, 30000);
+
+    // ─── Live WebSocket for crypto (real-time tick updates) ───
+    const cryptoAssets = ASSETS.filter((a) => a.binanceSymbol);
+    const streams = cryptoAssets
+      .map((a) => `${a.binanceSymbol!.toLowerCase()}@ticker`)
+      .join("/");
+    const ws = new WebSocket(`wss://stream.binance.com:9443/stream?streams=${streams}`);
+
+    ws.onmessage = (event) => {
+      if (cancelled) return;
+      try {
+        const msg = JSON.parse(event.data);
+        const d = msg?.data;
+        if (!d || !d.s) return;
+        const asset = cryptoAssets.find((a) => a.binanceSymbol === d.s);
+        if (!asset) return;
+        const price = parseFloat(d.c);
+        const changePct = parseFloat(d.P);
+        if (!isFinite(price)) return;
+        setQuotes((prev) => {
+          const cur = prev[asset.symbol];
+          if (!cur) return prev;
+          // append to sparkline (keep last 96 points sliding)
+          const nextSpark = cur.spark.length > 0 ? [...cur.spark.slice(-95), price] : cur.spark;
+          const nextTimes = cur.times.length > 0 ? [...cur.times.slice(-95), Date.now()] : cur.times;
+          return {
+            ...prev,
+            [asset.symbol]: {
+              ...cur,
+              price,
+              changePct: isFinite(changePct) ? changePct : cur.changePct,
+              spark: nextSpark,
+              times: nextTimes,
+              loading: false,
+            },
+          };
+        });
+      } catch {
+        /* ignore malformed frame */
+      }
+    };
+
     return () => {
       cancelled = true;
       clearInterval(interval);
+      try {
+        ws.close();
+      } catch {
+        /* noop */
+      }
     };
   }, []);
 
