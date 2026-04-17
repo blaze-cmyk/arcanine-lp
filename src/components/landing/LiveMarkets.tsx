@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
+import btcIcon from "@/assets/icons/btc.png";
+import ethIcon from "@/assets/icons/eth.png";
+import solIcon from "@/assets/icons/sol.png";
+import aaplIcon from "@/assets/icons/aapl.svg";
+import tslaIcon from "@/assets/icons/tsla.svg";
+import nvdaIcon from "@/assets/icons/nvda.svg";
 
 type Asset = {
   symbol: string;          // display symbol
@@ -16,20 +22,20 @@ type Asset = {
 
 const ASSETS: Asset[] = [
   { symbol: "BTC",  name: "Bitcoin",     category: "crypto",
-    icon: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg",
+    icon: btcIcon,
     binanceSymbol: "BTCUSDT", decimals: 2, prefix: "$", compact: true },
   { symbol: "ETH",  name: "Ethereum",    category: "crypto",
-    icon: "https://cryptologos.cc/logos/ethereum-eth-logo.svg",
+    icon: ethIcon,
     binanceSymbol: "ETHUSDT", decimals: 2, prefix: "$", compact: true },
   { symbol: "SOL",  name: "Solana",      category: "crypto",
-    icon: "https://cryptologos.cc/logos/solana-sol-logo.svg",
+    icon: solIcon,
     binanceSymbol: "SOLUSDT", decimals: 2, prefix: "$" },
   { symbol: "AAPL", name: "Apple",       category: "stock",
-    initial: "", yahooSymbol: "AAPL",   decimals: 2, prefix: "$" },
+    icon: aaplIcon, yahooSymbol: "AAPL",   decimals: 2, prefix: "$" },
   { symbol: "TSLA", name: "Tesla",       category: "stock",
-    initial: "T", yahooSymbol: "TSLA",  decimals: 2, prefix: "$" },
+    icon: tslaIcon, yahooSymbol: "TSLA",  decimals: 2, prefix: "$" },
   { symbol: "NVDA", name: "NVIDIA",      category: "stock",
-    initial: "N", yahooSymbol: "NVDA",  decimals: 2, prefix: "$" },
+    icon: nvdaIcon, yahooSymbol: "NVDA",  decimals: 2, prefix: "$" },
   { symbol: "EUR/USD", name: "Euro / Dollar", category: "forex",
     initial: "€", yahooSymbol: "EURUSD=X", decimals: 4 },
   { symbol: "GBP/USD", name: "Pound / Dollar", category: "forex",
