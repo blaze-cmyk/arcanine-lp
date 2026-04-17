@@ -261,7 +261,7 @@ const ClearDecisionsVisual = () => {
     const timeStep = 5;
     for (let i = startIdx; i <= endIdx; i++) {
       if (i % timeStep !== 0) continue;
-      const x = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const x = (i - startIdx) * step + step / 2;
       ctx.beginPath();
       ctx.moveTo(x, PADDING_TOP);
       ctx.lineTo(x, H - TIME_SCALE_HEIGHT);
@@ -271,7 +271,7 @@ const ClearDecisionsVisual = () => {
     // Candles
     for (let i = startIdx; i <= endIdx; i++) {
       const c = candles[i];
-      const centerX = (i - startIdx) * CANDLE_STEP + CANDLE_STEP / 2;
+      const centerX = (i - startIdx) * step + step / 2;
       const isGreen = c.close >= c.open;
       const openY = priceToY(c.open);
       const closeY = priceToY(c.close);
@@ -288,7 +288,7 @@ const ClearDecisionsVisual = () => {
       const bodyTop = Math.min(openY, closeY);
       const bodyH = Math.max(1, Math.abs(closeY - openY));
       ctx.fillStyle = isGreen ? COLORS.candleGreen : COLORS.candleRed;
-      ctx.fillRect(Math.round(centerX - CANDLE_WIDTH / 2), Math.round(bodyTop), CANDLE_WIDTH, Math.round(bodyH));
+      ctx.fillRect(Math.round(centerX - candleW / 2), Math.round(bodyTop), Math.round(candleW), Math.round(bodyH));
     }
 
     // Live price line + right-edge arrow
