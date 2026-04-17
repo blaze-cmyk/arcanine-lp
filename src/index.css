@@ -7,47 +7,53 @@
 
 @layer base {
   :root {
-    --background: 240 6% 7%;
-    --foreground: 240 5% 96%;
+    /* Arcanine 2026 Premium Dark Theme */
+    --background: 0 0% 4%;              /* #0A0A0A */
+    --foreground: 0 0% 100%;            /* #FFFFFF */
 
-    --card: 240 8% 7%;
-    --card-foreground: 240 5% 96%;
+    --card: 0 0% 7%;                    /* #111111 */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 240 8% 7%;
-    --popover-foreground: 240 5% 96%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 168 79% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 24 100% 50%;             /* #FF6700 fiery orange */
+    --primary-foreground: 0 0% 0%;      /* #000000 on orange */
+    --primary-hover: 24 100% 60%;       /* #FF8533 */
 
-    --secondary: 240 6% 10%;
-    --secondary-foreground: 240 5% 80%;
+    --secondary: 0 0% 7%;               /* #111111 */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 5% 12%;
-    --muted-foreground: 240 4% 64%;
+    --muted: 0 0% 13%;                  /* #222222 */
+    --muted-foreground: 0 0% 53%;       /* #888888 */
 
-    --accent: 240 6% 14%;
-    --accent-foreground: 240 5% 96%;
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 100% 62%;
+    --destructive: 350 100% 62%;        /* #FF3B5C */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 5% 26%;
-    --input: 240 6% 12%;
-    --ring: 168 79% 45%;
+    --border: 0 0% 13%;                 /* #222222 */
+    --input: 0 0% 13%;
+    --ring: 24 100% 50%;
 
     --radius: 0.5rem;
 
-    --profit: 160 45% 50%;
-    --loss: 0 55% 55%;
+    --profit: 152 100% 50%;             /* #00FF88 */
+    --profit-hover: 159 100% 60%;       /* #33FFAA */
+    --loss: 350 100% 62%;               /* #FF3B5C */
 
-    --sidebar-background: 240 8% 5%;
-    --sidebar-foreground: 240 5% 80%;
-    --sidebar-primary: 168 79% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 6% 10%;
-    --sidebar-accent-foreground: 240 5% 96%;
-    --sidebar-border: 240 6% 12%;
-    --sidebar-ring: 168 79% 45%;
+    /* Body text secondary */
+    --body: 0 0% 80%;                   /* #CCCCCC */
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: 24 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 7%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 13%;
+    --sidebar-ring: 24 100% 50%;
   }
 }
 
