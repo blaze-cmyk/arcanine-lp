@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 type Asset = {
@@ -44,6 +44,8 @@ type Quote = {
   price: number | null;
   changePct: number | null;
   spark: number[];
+  /** unix-ms timestamps aligned 1:1 with `spark` */
+  times: number[];
   loading: boolean;
 };
 
