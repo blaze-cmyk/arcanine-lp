@@ -248,41 +248,52 @@ const LiveMarkets = () => {
       }
     };
 
-    const fetchYahoo = async (a: Asset) => {
+    const fetchYahoo = async () => {
+      const yahooAssets = ASSETS.filter((a) => a.yahooSymbol);
       try {
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/market-quote?symbol=${encodeURIComponent(
-          a.yahooSymbol!
-        )}`;
+        const symbols = yahooAssets.map((a) => a.yahooSymbol!).join(",");
+        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/market-quote?symbols=${encodeURIComponent(symbols)}`;
         const res = await fetch(url, {
           headers: {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
             Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
         });
-        if (!res.ok) throw new Error("quote failed");
-        const j: { price: number; changePct: number; sparkline: number[] } = await res.json();
+        if (!res.ok) throw new Error(`quote failed ${res.status}`);
+        const j: {
+          quotes: Record<string, { price?: number; changePct?: number; sparkline?: number[]; error?: string }>;
+        } = await res.json();
         if (cancelled) return;
-        setQuotes((prev) => ({
-          ...prev,
-          [a.symbol]: {
-            price: j.price,
-            changePct: j.changePct,
-            spark: j.sparkline ?? [],
-            loading: false,
-          },
-        }));
+        setQuotes((prev) => {
+          const next = { ...prev };
+          for (const a of yahooAssets) {
+            const q = j.quotes?.[a.yahooSymbol!];
+            if (q && !q.error && typeof q.price === "number") {
+              next[a.symbol] = {
+                price: q.price,
+                changePct: q.changePct ?? 0,
+                spark: q.sparkline ?? [],
+                loading: false,
+              };
+            } else {
+              next[a.symbol] = { ...next[a.symbol], loading: false };
+            }
+          }
+          return next;
+        });
       } catch {
         if (cancelled) return;
-        setQuotes((prev) => ({
-          ...prev,
-          [a.symbol]: { ...prev[a.symbol], loading: false },
-        }));
+        setQuotes((prev) => {
+          const next = { ...prev };
+          for (const a of yahooAssets) next[a.symbol] = { ...next[a.symbol], loading: false };
+          return next;
+        });
       }
     };
 
     const fetchAll = () => {
       fetchCrypto();
-      ASSETS.filter((a) => a.yahooSymbol).forEach((a) => fetchYahoo(a));
+      fetchYahoo();
     };
 
     fetchAll();
