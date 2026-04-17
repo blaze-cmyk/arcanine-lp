@@ -6,6 +6,19 @@ import solIcon from "@/assets/icons/sol.png";
 import usFlag from "@/assets/icons/us.svg";
 import euFlag from "@/assets/icons/eu.png";
 import bgVideo from "@/assets/offramp-bg.webm";
+import payAmex from "@/assets/pay/amex.png";
+import payApple from "@/assets/pay/applepay.png";
+import payGoogle from "@/assets/pay/gpay.png";
+import payUpi from "@/assets/pay/upi.png";
+import payRevolut from "@/assets/pay/revolut.png";
+
+const PAYMENT_METHODS = [
+  { src: payRevolut, alt: "Revolut" },
+  { src: payUpi, alt: "UPI" },
+  { src: payGoogle, alt: "Google Pay" },
+  { src: payApple, alt: "Apple Pay" },
+  { src: payAmex, alt: "Amex" },
+];
 
 type Crypto = { symbol: "BTC" | "ETH" | "SOL"; binance: string; icon: string; decimals: number; defaultAmount: string };
 type Fiat = { symbol: "USD" | "EUR"; icon: string; rateVsUsd: number };
@@ -168,6 +181,22 @@ const ClearPayoutsVisual = () => {
             "linear-gradient(180deg, hsl(var(--card) / 0.4) 0%, hsl(var(--card) / 0.15) 40%, hsl(var(--card) / 0.55) 100%)",
         }}
       />
+
+      {/* Stacked payment methods on the left */}
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 z-[1] flex flex-col items-center pointer-events-none">
+        {PAYMENT_METHODS.map((m, i) => (
+          <div
+            key={m.alt}
+            className="w-11 h-11 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
+            style={{
+              marginTop: i === 0 ? 0 : -14,
+              zIndex: PAYMENT_METHODS.length - i,
+            }}
+          >
+            <img src={m.src} alt={m.alt} className="w-7 h-7 object-contain" />
+          </div>
+        ))}
+      </div>
 
       <div
         className="relative w-full max-w-[300px] rounded-2xl p-2 space-y-2 backdrop-blur-md"
