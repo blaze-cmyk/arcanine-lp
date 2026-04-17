@@ -198,11 +198,17 @@ const ClearDecisionsVisual = () => {
     const chartW = W - PRICE_SCALE_WIDTH;
     const chartH = H - TIME_SCALE_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
 
-    // Visible candles — anchor right edge (newest), leave a small right gap
-    const rightGap = CANDLE_STEP * 6;
-    const visibleCount = Math.floor((chartW - rightGap) / CANDLE_STEP);
-    const startIdx = Math.max(0, candles.length - visibleCount);
-    const endIdx = candles.length - 1;
+    const it = interactRef.current;
+    const step = CANDLE_STEP * it.scaleX;
+    const candleW = Math.max(1, CANDLE_WIDTH * it.scaleX);
+
+    // Visible candles — anchor right edge (newest), apply offset
+    const rightGap = step * 6;
+    const visibleCount = Math.max(4, Math.floor((chartW - rightGap) / step));
+    const offsetCandles = Math.round(it.offsetX / step);
+    const baseEnd = candles.length - 1;
+    const endIdx = Math.min(baseEnd, Math.max(visibleCount - 1, baseEnd - offsetCandles));
+    const startIdx = Math.max(0, endIdx - visibleCount + 1);
 
     // Price range — zoom near current price
     let minPrice = Infinity;
@@ -212,7 +218,7 @@ const ClearDecisionsVisual = () => {
       if (candles[i].high > maxPrice) maxPrice = candles[i].high;
     }
     const live = smoothPriceRef.current;
-    if (live > 0) {
+    if (live > 0 && endIdx === baseEnd) {
       if (live < minPrice) minPrice = live;
       if (live > maxPrice) maxPrice = live;
     }
@@ -220,9 +226,16 @@ const ClearDecisionsVisual = () => {
     const candleRange = Math.max(liveCandle.high - liveCandle.low, liveCandle.open * 0.00035);
     const basePadding = (maxPrice - minPrice) * 0.08;
     const livePadding = candleRange * 2.5;
-    const padding = Math.max(basePadding, livePadding, live * 0.0002);
-    minPrice -= padding;
-    maxPrice += padding;
+    const padding = Math.max(basePadding, livePadding, (live || liveCandle.close) * 0.0002);
+    let rawMin = minPrice - padding;
+    let rawMax = maxPrice + padding;
+    // Apply Y zoom around center
+    const center = (rawMin + rawMax) / 2;
+    const half = (rawMax - rawMin) / 2 / Math.max(0.001, it.scaleY);
+    rawMin = center - half;
+    rawMax = center + half;
+    minPrice = rawMin;
+    maxPrice = rawMax;
 
     const priceToY = (p: number) =>
       PADDING_TOP + chartH * (1 - (p - minPrice) / (maxPrice - minPrice));
