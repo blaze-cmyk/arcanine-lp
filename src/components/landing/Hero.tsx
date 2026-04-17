@@ -47,7 +47,7 @@ const Hero = () => {
         <img src={dashboardPreview} alt="Arcanine trading platform preview" className="relative w-full h-auto block" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
+      
     </section>
   );
 };
