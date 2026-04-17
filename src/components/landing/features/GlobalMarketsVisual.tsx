@@ -129,17 +129,17 @@ const GlobalMarketsVisual = () => {
 
   return (
     <div
-      className="relative w-full h-full flex items-center justify-center cursor-pointer select-none px-4"
+      className="relative w-full h-full flex items-start justify-center cursor-pointer select-none px-6 pt-6"
       style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
     >
-      <div className="w-full max-w-[340px] flex flex-col gap-1.5">
+      <div className="w-full flex flex-col gap-2.5">
         {/* Header row */}
-        <div className="grid grid-cols-[1.5fr_1fr_1fr_0.55fr_0.55fr] items-center gap-2 px-3 pb-1.5 mb-0.5 border-b border-border/30">
-          <span className="text-[8px] font-medium uppercase tracking-wider text-muted-foreground">Market</span>
-          <span className="text-[8px] font-medium uppercase tracking-wider text-muted-foreground text-right">LTP</span>
-          <span className="text-[8px] font-medium uppercase tracking-wider text-muted-foreground text-right">Volume</span>
-          <span className="text-[8px] font-medium uppercase tracking-wider text-muted-foreground text-right">1m</span>
-          <span className="text-[8px] font-medium uppercase tracking-wider text-muted-foreground text-right">5m</span>
+        <div className="grid grid-cols-[1.5fr_1fr_1fr_0.55fr_0.55fr] items-center gap-3 px-4 pb-2 mb-1 border-b border-border/30">
+          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Market</span>
+          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">LTP</span>
+          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">Volume</span>
+          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">1m</span>
+          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right">5m</span>
         </div>
 
         {ASSETS.map((asset, i) => {
@@ -148,15 +148,15 @@ const GlobalMarketsVisual = () => {
           return (
             <div
               key={asset.symbol}
-              className="grid grid-cols-[1.5fr_1fr_1fr_0.55fr_0.55fr] items-center gap-2 rounded-lg px-3 py-2 transition-all duration-300"
+              className="grid grid-cols-[1.5fr_1fr_1fr_0.55fr_0.55fr] items-center gap-3 rounded-lg px-4 py-2.5 transition-all duration-300"
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
               style={{
-                background: hoveredIdx === i ? "hsl(var(--primary) / 0.06)" : "hsl(var(--muted) / 0.3)",
-                border: `1px solid ${hoveredIdx === i ? "hsl(var(--primary) / 0.2)" : "hsl(var(--border) / 0.2)"}`,
-                transform: hoveredIdx === i ? "scale(1.02)" : "scale(1)",
+                background: hoveredIdx === i ? "hsl(var(--primary) / 0.06)" : "transparent",
+                transform: hoveredIdx === i ? "scale(1.01)" : "scale(1)",
               }}
             >
+
               {/* Market */}
               <div className="flex items-center gap-2 min-w-0">
                 {asset.whiteBg ? (
