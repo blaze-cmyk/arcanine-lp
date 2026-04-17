@@ -245,3 +245,13 @@
   from { stroke-dashoffset: 22; }
   to { stroke-dashoffset: 0; }
 }
+
+@keyframes marquee-y-up {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marquee-y-down {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
