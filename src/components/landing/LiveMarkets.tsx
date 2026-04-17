@@ -61,8 +61,6 @@ const formatPrice = (n: number, asset: Asset) => {
   });
 };
 
-/* ─────────────── Sparkline ─────────────── */
-const Sparkline = ({ points, up }: { points: number[]; up: boolean }) => {
 /* ─────────────── Interactive Chart ─────────────── */
 const InteractiveChart = ({
   points,
