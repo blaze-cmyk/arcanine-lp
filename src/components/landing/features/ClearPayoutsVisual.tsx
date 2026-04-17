@@ -5,6 +5,7 @@ import ethIcon from "@/assets/icons/eth.png";
 import solIcon from "@/assets/icons/sol.png";
 import usFlag from "@/assets/icons/us.svg";
 import euFlag from "@/assets/icons/eu.png";
+import bgVideo from "@/assets/offramp-bg.webm";
 
 type Crypto = { symbol: "BTC" | "ETH" | "SOL"; binance: string; icon: string; decimals: number; defaultAmount: string };
 type Fiat = { symbol: "USD" | "EUR"; icon: string; rateVsUsd: number };
@@ -149,11 +150,29 @@ const ClearPayoutsVisual = () => {
   const youGet = usdPrice !== null ? numericAmount * usdPrice * fiat.rateVsUsd : null;
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center px-5 py-4">
+    <div className="relative w-full h-full flex items-center justify-center px-5 py-4 overflow-hidden">
+      {/* Background video */}
+      <video
+        src={bgVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-70"
+      />
+      {/* Subtle dark gradient over video for legibility */}
       <div
-        className="w-full max-w-[300px] rounded-2xl p-2 space-y-2"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: "hsl(var(--card))",
+          background:
+            "linear-gradient(180deg, hsl(var(--card) / 0.4) 0%, hsl(var(--card) / 0.15) 40%, hsl(var(--card) / 0.55) 100%)",
+        }}
+      />
+
+      <div
+        className="relative w-full max-w-[300px] rounded-2xl p-2 space-y-2 backdrop-blur-md"
+        style={{
+          background: "hsl(var(--card) / 0.55)",
           border: "1px solid hsl(var(--border) / 0.5)",
           fontFamily: "'Bricolage Grotesque', system-ui, sans-serif",
         }}
