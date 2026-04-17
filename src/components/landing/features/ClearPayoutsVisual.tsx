@@ -24,9 +24,6 @@ const PAYMENT_METHODS_LEFT = [
   { src: payGoogle, alt: "Google Pay" },
   { src: payApple, alt: "Apple Pay" },
   { src: payAmex, alt: "Amex" },
-];
-
-const PAYMENT_METHODS_RIGHT = [
   { src: payMastercard, alt: "Mastercard" },
   { src: payPaypal, alt: "PayPal" },
   { src: paySepa, alt: "SEPA" },
@@ -206,22 +203,6 @@ const ClearPayoutsVisual = () => {
             style={{
               marginTop: i === 0 ? 0 : -14,
               zIndex: PAYMENT_METHODS_LEFT.length - i,
-            }}
-          >
-            <img src={m.src} alt={m.alt} className="w-7 h-7 object-contain" />
-          </div>
-        ))}
-      </div>
-
-      {/* Stacked payment methods on the right */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-[1] flex flex-col items-center pointer-events-none">
-        {PAYMENT_METHODS_RIGHT.map((m, i) => (
-          <div
-            key={m.alt}
-            className="w-11 h-11 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
-            style={{
-              marginTop: i === 0 ? 0 : -14,
-              zIndex: PAYMENT_METHODS_RIGHT.length - i,
             }}
           >
             <img src={m.src} alt={m.alt} className="w-7 h-7 object-contain" />
