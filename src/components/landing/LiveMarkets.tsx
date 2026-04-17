@@ -10,6 +10,7 @@ import euFlag from "@/assets/icons/eu.svg";
 import usFlag from "@/assets/icons/us.svg";
 import gbFlag from "@/assets/icons/gb.svg";
 import crudeOilIcon from "@/assets/icons/crude-oil.svg";
+import goldIcon from "@/assets/icons/gold.png";
 
 type Asset = {
   symbol: string;          // display symbol
@@ -48,7 +49,7 @@ const ASSETS: Asset[] = [
   { symbol: "WTI",  name: "Crude Oil",   category: "commodity",
     icon: crudeOilIcon, yahooSymbol: "CL=F", decimals: 2, prefix: "$" },
   { symbol: "XAU/USD", name: "Gold Spot", category: "commodity",
-    initial: "Au", yahooSymbol: "GC=F", decimals: 2, prefix: "$" },
+    icon: goldIcon, yahooSymbol: "GC=F", decimals: 2, prefix: "$" },
 ];
 
 type Quote = {
