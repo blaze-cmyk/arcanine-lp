@@ -17,9 +17,9 @@
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 24 100% 50%;             /* #FF6700 fiery orange */
-    --primary-foreground: 0 0% 0%;      /* #000000 on orange */
-    --primary-hover: 24 100% 60%;       /* #FF8533 */
+    --primary: 152 100% 50%;            /* #00FF88 vibrant green */
+    --primary-foreground: 0 0% 0%;      /* #000000 on green */
+    --primary-hover: 159 100% 60%;      /* #33FFAA */
 
     --secondary: 0 0% 7%;               /* #111111 */
     --secondary-foreground: 0 0% 100%;
@@ -35,7 +35,7 @@
 
     --border: 0 0% 13%;                 /* #222222 */
     --input: 0 0% 13%;
-    --ring: 24 100% 50%;
+    --ring: 152 100% 50%;
 
     --radius: 0.5rem;
 
@@ -48,12 +48,12 @@
 
     --sidebar-background: 0 0% 4%;
     --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 24 100% 50%;
+    --sidebar-primary: 152 100% 50%;
     --sidebar-primary-foreground: 0 0% 0%;
     --sidebar-accent: 0 0% 7%;
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 13%;
-    --sidebar-ring: 24 100% 50%;
+    --sidebar-ring: 152 100% 50%;
   }
 }
 
@@ -119,15 +119,20 @@
   }
 
   .glow-orange {
-    box-shadow: 0 0 30px rgba(255, 103, 0, 0.35), 0 0 80px rgba(255, 103, 0, 0.12);
+    /* Kept name for backwards compat — now uses primary green glow */
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.35), 0 0 80px rgba(0, 255, 136, 0.12);
   }
 
   .glow-orange-soft {
-    box-shadow: 0 0 60px rgba(255, 103, 0, 0.18);
+    box-shadow: 0 0 60px rgba(0, 255, 136, 0.18);
   }
 
   .glow-green {
     box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
+  }
+
+  .glow-accent-orange {
+    box-shadow: 0 0 30px rgba(255, 103, 0, 0.3), 0 0 80px rgba(255, 103, 0, 0.1);
   }
 
   .glow-red {
@@ -148,11 +153,11 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #FF6700 0%, #FF8533 100%);
+    background-image: linear-gradient(135deg, #00FF88 0%, #33FFAA 100%);
   }
 
   .bg-gradient-accent {
-    background: #FF6700;
+    background: #00FF88;
     position: relative;
     overflow: hidden;
     z-index: 0;
@@ -163,7 +168,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(103deg, #FF8533 0%, #FF6700 100%);
+    background: linear-gradient(103deg, #33FFAA 0%, #00FF88 100%);
     z-index: -1;
     transition: opacity 0.2s ease;
   }
@@ -174,7 +179,7 @@
 
   .bg-secondary-btn {
     background-color: #111111;
-    border: 1px solid #FF6700;
+    border: 1px solid #00FF88;
     color: #FFFFFF;
   }
 
