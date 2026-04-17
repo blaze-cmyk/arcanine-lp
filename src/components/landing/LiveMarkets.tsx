@@ -1,151 +1,240 @@
-import { useEffect, useState } from "react";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 type Asset = {
-  symbol: string;
-  name: string;
+  symbol: string;          // display symbol
+  name: string;            // display name (e.g. "Bitcoin")
   category: "crypto" | "stock" | "forex" | "commodity";
-  icon?: string;
-  initialIcon?: string;
-  binanceSymbol?: string;
-  yahooSymbol?: string;
+  icon?: string;           // image URL (cryptologos.cc) — preferred
+  initial?: string;        // fallback letter/glyph
+  binanceSymbol?: string;  // for crypto
+  yahooSymbol?: string;    // for everything else
   decimals: number;
   prefix?: string;
-  suffix?: string;
+  compact?: boolean;       // format big numbers like 77.6K
 };
 
 const ASSETS: Asset[] = [
-  // 3 Crypto — icons from cryptologos.cc
-  {
-    symbol: "BTC",
-    name: "Bitcoin",
-    category: "crypto",
+  { symbol: "BTC",  name: "Bitcoin",     category: "crypto",
     icon: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg",
-    binanceSymbol: "BTCUSDT",
-    decimals: 0,
-    prefix: "$",
-  },
-  {
-    symbol: "ETH",
-    name: "Ethereum",
-    category: "crypto",
+    binanceSymbol: "BTCUSDT", decimals: 2, prefix: "$", compact: true },
+  { symbol: "ETH",  name: "Ethereum",    category: "crypto",
     icon: "https://cryptologos.cc/logos/ethereum-eth-logo.svg",
-    binanceSymbol: "ETHUSDT",
-    decimals: 0,
-    prefix: "$",
-  },
-  {
-    symbol: "SOL",
-    name: "Solana",
-    category: "crypto",
+    binanceSymbol: "ETHUSDT", decimals: 2, prefix: "$", compact: true },
+  { symbol: "SOL",  name: "Solana",      category: "crypto",
     icon: "https://cryptologos.cc/logos/solana-sol-logo.svg",
-    binanceSymbol: "SOLUSDT",
-    decimals: 2,
-    prefix: "$",
-  },
-  // 3 Stocks
-  {
-    symbol: "AAPL",
-    name: "Apple",
-    category: "stock",
-    initialIcon: "A",
-    yahooSymbol: "AAPL",
-    decimals: 2,
-    prefix: "$",
-  },
-  {
-    symbol: "TSLA",
-    name: "Tesla",
-    category: "stock",
-    initialIcon: "T",
-    yahooSymbol: "TSLA",
-    decimals: 2,
-    prefix: "$",
-  },
-  {
-    symbol: "NVDA",
-    name: "NVIDIA",
-    category: "stock",
-    initialIcon: "N",
-    yahooSymbol: "NVDA",
-    decimals: 2,
-    prefix: "$",
-  },
-  // 2 Forex
-  {
-    symbol: "EUR/USD",
-    name: "Euro / Dollar",
-    category: "forex",
-    initialIcon: "€",
-    yahooSymbol: "EURUSD=X",
-    decimals: 4,
-  },
-  {
-    symbol: "GBP/USD",
-    name: "Pound / Dollar",
-    category: "forex",
-    initialIcon: "£",
-    yahooSymbol: "GBPUSD=X",
-    decimals: 4,
-  },
-  // 1 Crude oil
-  {
-    symbol: "WTI",
-    name: "Crude Oil",
-    category: "commodity",
-    initialIcon: "🛢",
-    yahooSymbol: "CL=F",
-    decimals: 2,
-    prefix: "$",
-  },
-  // 1 Gold
-  {
-    symbol: "XAU/USD",
-    name: "Gold Spot",
-    category: "commodity",
-    initialIcon: "Au",
-    yahooSymbol: "GC=F",
-    decimals: 2,
-    prefix: "$",
-  },
+    binanceSymbol: "SOLUSDT", decimals: 2, prefix: "$" },
+  { symbol: "AAPL", name: "Apple",       category: "stock",
+    initial: "", yahooSymbol: "AAPL",   decimals: 2, prefix: "$" },
+  { symbol: "TSLA", name: "Tesla",       category: "stock",
+    initial: "T", yahooSymbol: "TSLA",  decimals: 2, prefix: "$" },
+  { symbol: "NVDA", name: "NVIDIA",      category: "stock",
+    initial: "N", yahooSymbol: "NVDA",  decimals: 2, prefix: "$" },
+  { symbol: "EUR/USD", name: "Euro / Dollar", category: "forex",
+    initial: "€", yahooSymbol: "EURUSD=X", decimals: 4 },
+  { symbol: "GBP/USD", name: "Pound / Dollar", category: "forex",
+    initial: "£", yahooSymbol: "GBPUSD=X", decimals: 4 },
+  { symbol: "WTI",  name: "Crude Oil",   category: "commodity",
+    initial: "🛢", yahooSymbol: "CL=F", decimals: 2, prefix: "$" },
+  { symbol: "XAU/USD", name: "Gold Spot", category: "commodity",
+    initial: "Au", yahooSymbol: "GC=F", decimals: 2, prefix: "$" },
 ];
 
-type Quote = { price: number | null; changePct: number | null; loading: boolean };
+type Quote = {
+  price: number | null;
+  changePct: number | null;
+  spark: number[];
+  loading: boolean;
+};
 
-const fmt = (n: number, d: number) =>
-  n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const formatPrice = (n: number, asset: Asset) => {
+  if (asset.compact) {
+    if (n >= 1000) {
+      return `${(n / 1000).toFixed(1)}K`;
+    }
+  }
+  return n.toLocaleString("en-US", {
+    minimumFractionDigits: asset.decimals,
+    maximumFractionDigits: asset.decimals,
+  });
+};
 
+/* ─────────────── Sparkline ─────────────── */
+const Sparkline = ({ points, up }: { points: number[]; up: boolean }) => {
+  if (!points || points.length < 2) {
+    return <div className="h-full w-full" />;
+  }
+  const w = 280;
+  const h = 70;
+  const min = Math.min(...points);
+  const max = Math.max(...points);
+  const range = max - min || 1;
+  const stepX = w / (points.length - 1);
+  const path = points
+    .map((p, i) => {
+      const x = i * stepX;
+      const y = h - ((p - min) / range) * h;
+      return `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
+    })
+    .join(" ");
+  const stroke = up ? "hsl(var(--profit))" : "hsl(var(--loss))";
+
+  return (
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      preserveAspectRatio="none"
+      className="w-full h-full"
+    >
+      <path
+        d={path}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+/* ─────────────── Card ─────────────── */
+const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
+  const up = (quote?.changePct ?? 0) >= 0;
+  const changeColor = up ? "text-profit" : "text-loss";
+
+  return (
+    <div
+      className="snap-start shrink-0 w-[280px] sm:w-[300px] rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-5 hover:border-border transition-colors"
+      style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+    >
+      {/* Header: icon + name */}
+      <div className="flex items-center gap-2.5 mb-2">
+        {asset.icon ? (
+          <img
+            src={asset.icon}
+            alt={`${asset.name} logo`}
+            className="w-7 h-7 rounded-full object-contain"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-foreground">
+            {asset.initial || asset.symbol[0]}
+          </div>
+        )}
+        <span className="text-base font-semibold text-foreground">{asset.name}</span>
+      </div>
+
+      {/* Sparkline */}
+      <div className="h-16 my-3">
+        {quote.loading || quote.spark.length < 2 ? (
+          <div className="w-full h-full rounded bg-muted/40 animate-pulse" />
+        ) : (
+          <Sparkline points={quote.spark} up={up} />
+        )}
+      </div>
+
+      {/* Bottom row: price/change + buttons */}
+      <div className="flex items-end justify-between mt-3">
+        <div>
+          <div className="text-2xl font-bold tabular-nums text-foreground leading-tight">
+            {quote.loading || quote.price === null ? (
+              <span className="inline-block h-6 w-20 rounded bg-muted animate-pulse align-middle" />
+            ) : (
+              <>
+                {asset.prefix}
+                {formatPrice(quote.price, asset)}
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-1 mt-1 text-sm tabular-nums">
+            {quote.loading || quote.changePct === null ? (
+              <span className="inline-block h-3 w-14 rounded bg-muted animate-pulse" />
+            ) : (
+              <>
+                <span className={changeColor}>
+                  {up ? "+" : ""}
+                  {quote.changePct.toFixed(1)}%
+                </span>
+                <span className="text-muted-foreground">· 24H</span>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            aria-label={`Buy ${asset.name} up`}
+            className="w-9 h-9 rounded-full bg-muted/70 hover:bg-muted flex items-center justify-center text-foreground transition-colors"
+          >
+            <ArrowUp className="w-4 h-4" />
+          </button>
+          <button
+            aria-label={`Sell ${asset.name} down`}
+            className="w-9 h-9 rounded-full bg-muted/70 hover:bg-muted flex items-center justify-center text-foreground transition-colors"
+          >
+            <ArrowDown className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─────────────── Main section ─────────────── */
 const LiveMarkets = () => {
   const [quotes, setQuotes] = useState<Record<string, Quote>>(() =>
-    Object.fromEntries(ASSETS.map((a) => [a.symbol, { price: null, changePct: null, loading: true }]))
+    Object.fromEntries(
+      ASSETS.map((a) => [a.symbol, { price: null, changePct: null, spark: [], loading: true }])
+    )
   );
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     const fetchCrypto = async () => {
       const cryptoAssets = ASSETS.filter((a) => a.binanceSymbol);
-      const symbolsParam = encodeURIComponent(
-        JSON.stringify(cryptoAssets.map((a) => a.binanceSymbol))
-      );
       try {
-        const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${symbolsParam}`);
-        if (!res.ok) throw new Error("binance failed");
-        const data: Array<{ symbol: string; lastPrice: string; priceChangePercent: string }> = await res.json();
+        // 1) current prices + 24h change
+        const symbolsParam = encodeURIComponent(
+          JSON.stringify(cryptoAssets.map((a) => a.binanceSymbol))
+        );
+        const tickerRes = await fetch(
+          `https://api.binance.com/api/v3/ticker/24hr?symbols=${symbolsParam}`
+        );
+        const tickerData: Array<{
+          symbol: string;
+          lastPrice: string;
+          priceChangePercent: string;
+        }> = await tickerRes.json();
+
+        // 2) sparklines (1h klines x 24)
+        const sparkResults = await Promise.all(
+          cryptoAssets.map(async (a) => {
+            try {
+              const r = await fetch(
+                `https://api.binance.com/api/v3/klines?symbol=${a.binanceSymbol}&interval=1h&limit=24`
+              );
+              const d: Array<unknown[]> = await r.json();
+              return { sym: a.symbol, points: d.map((row) => parseFloat(row[4] as string)) };
+            } catch {
+              return { sym: a.symbol, points: [] };
+            }
+          })
+        );
+
         if (cancelled) return;
         setQuotes((prev) => {
           const next = { ...prev };
           for (const a of cryptoAssets) {
-            const row = data.find((d) => d.symbol === a.binanceSymbol);
-            if (row) {
-              next[a.symbol] = {
-                price: parseFloat(row.lastPrice),
-                changePct: parseFloat(row.priceChangePercent),
-                loading: false,
-              };
-            } else {
-              next[a.symbol] = { ...next[a.symbol], loading: false };
-            }
+            const t = tickerData.find((d) => d.symbol === a.binanceSymbol);
+            const sp = sparkResults.find((s) => s.sym === a.symbol);
+            next[a.symbol] = {
+              price: t ? parseFloat(t.lastPrice) : prev[a.symbol].price,
+              changePct: t ? parseFloat(t.priceChangePercent) : prev[a.symbol].changePct,
+              spark: sp?.points ?? prev[a.symbol].spark,
+              loading: false,
+            };
           }
           return next;
         });
@@ -161,23 +250,26 @@ const LiveMarkets = () => {
 
     const fetchYahoo = async (a: Asset) => {
       try {
-        // Public Yahoo Finance chart endpoint — supports CORS for browser requests
-        const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(
+        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/market-quote?symbol=${encodeURIComponent(
           a.yahooSymbol!
-        )}?interval=1d&range=2d`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("yahoo failed");
-        const json = await res.json();
-        const result = json?.chart?.result?.[0];
-        const meta = result?.meta;
-        if (!meta) throw new Error("no meta");
-        const price: number = meta.regularMarketPrice;
-        const prevClose: number = meta.chartPreviousClose ?? meta.previousClose;
-        const changePct = prevClose ? ((price - prevClose) / prevClose) * 100 : 0;
+        )}`;
+        const res = await fetch(url, {
+          headers: {
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+        });
+        if (!res.ok) throw new Error("quote failed");
+        const j: { price: number; changePct: number; sparkline: number[] } = await res.json();
         if (cancelled) return;
         setQuotes((prev) => ({
           ...prev,
-          [a.symbol]: { price, changePct, loading: false },
+          [a.symbol]: {
+            price: j.price,
+            changePct: j.changePct,
+            spark: j.sparkline ?? [],
+            loading: false,
+          },
         }));
       } catch {
         if (cancelled) return;
@@ -194,95 +286,67 @@ const LiveMarkets = () => {
     };
 
     fetchAll();
-    const interval = setInterval(fetchAll, 15000);
+    const interval = setInterval(fetchAll, 30000);
     return () => {
       cancelled = true;
       clearInterval(interval);
     };
   }, []);
 
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 320, behavior: "smooth" });
+  };
+
   return (
-    <section className="relative py-20 px-4 sm:px-6">
+    <section
+      className="relative py-20 px-4 sm:px-6"
+      style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-3">
-            Live Markets
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-[-0.02em] mb-3">
-            Trade real markets in <span className="text-primary">real time</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Live prices streamed from Binance and Yahoo Finance — crypto, stocks, forex and commodities.
-          </p>
+        {/* Header */}
+        <div className="flex items-end justify-between mb-8 gap-4">
+          <div>
+            <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-2">
+              Live Markets
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-[-0.02em]">
+              Trade real markets in <span className="text-primary">real time</span>
+            </h2>
+          </div>
+          <div className="hidden sm:flex items-center gap-2">
+            <button
+              onClick={() => scrollBy(-1)}
+              aria-label="Scroll left"
+              className="w-10 h-10 rounded-full border border-border bg-card/60 hover:bg-card flex items-center justify-center text-foreground transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => scrollBy(1)}
+              aria-label="Scroll right"
+              className="w-10 h-10 rounded-full border border-border bg-card/60 hover:bg-card flex items-center justify-center text-foreground transition-colors"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-          {ASSETS.map((asset) => {
-            const q = quotes[asset.symbol];
-            const up = (q?.changePct ?? 0) >= 0;
-            return (
-              <div
-                key={asset.symbol}
-                className="group relative rounded-2xl border border-border/60 bg-card/50 backdrop-blur-sm p-4 hover:border-primary/40 hover:bg-card transition-all duration-300"
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  {asset.icon ? (
-                    <img
-                      src={asset.icon}
-                      alt={`${asset.name} logo`}
-                      className="w-8 h-8 rounded-full object-contain"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-foreground">
-                      {asset.initialIcon}
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <div className="text-sm font-semibold leading-tight truncate">{asset.symbol}</div>
-                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground truncate">
-                      {asset.category}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="font-display tabular-nums text-lg sm:text-xl font-bold mb-1">
-                  {q?.loading || q?.price === null ? (
-                    <span className="inline-block h-5 w-16 rounded bg-muted animate-pulse" />
-                  ) : (
-                    <>
-                      {asset.prefix}
-                      {fmt(q.price!, asset.decimals)}
-                      {asset.suffix}
-                    </>
-                  )}
-                </div>
-
-                <div
-                  className={`inline-flex items-center gap-1 text-xs font-semibold tabular-nums ${
-                    up ? "text-profit" : "text-loss"
-                  }`}
-                >
-                  {q?.loading || q?.changePct === null ? (
-                    <span className="inline-block h-3 w-10 rounded bg-muted animate-pulse" />
-                  ) : (
-                    <>
-                      {up ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                      {up ? "+" : ""}
-                      {q.changePct!.toFixed(2)}%
-                      <span className="text-muted-foreground font-normal ml-1">24H</span>
-                    </>
-                  )}
-                </div>
-
-                {/* subtle live dot */}
-                <span className="absolute top-3 right-3 flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-                </span>
-              </div>
-            );
-          })}
+        {/* Horizontal slider */}
+        <div className="relative">
+          <div
+            ref={scrollerRef}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {ASSETS.map((asset) => (
+              <TickerCard key={asset.symbol} asset={asset} quote={quotes[asset.symbol]} />
+            ))}
+          </div>
+          {/* Right fade */}
+          <div className="pointer-events-none absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-background to-transparent" />
+          <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-background to-transparent" />
         </div>
       </div>
     </section>
