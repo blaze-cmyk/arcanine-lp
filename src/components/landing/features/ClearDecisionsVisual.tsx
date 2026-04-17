@@ -506,7 +506,15 @@ const ClearDecisionsVisual = () => {
         </div>
       </div>
 
-      <canvas ref={canvasRef} className="w-full h-full block" />
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full block cursor-grab"
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+        onDoubleClick={onDoubleClick}
+      />
     </div>
   );
 };
