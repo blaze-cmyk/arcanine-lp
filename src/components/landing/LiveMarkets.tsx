@@ -489,17 +489,12 @@ const LiveMarkets = () => {
         setQuotes((prev) => {
           const cur = prev[asset.symbol];
           if (!cur) return prev;
-          // append to sparkline (keep last 96 points sliding)
-          const nextSpark = cur.spark.length > 0 ? [...cur.spark.slice(-95), price] : cur.spark;
-          const nextTimes = cur.times.length > 0 ? [...cur.times.slice(-95), Date.now()] : cur.times;
           return {
             ...prev,
             [asset.symbol]: {
               ...cur,
               price,
               changePct: isFinite(changePct) ? changePct : cur.changePct,
-              spark: nextSpark,
-              times: nextTimes,
               loading: false,
             },
           };
