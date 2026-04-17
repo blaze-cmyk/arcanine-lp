@@ -271,7 +271,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
           <div className="relative group/up">
             <button
               aria-label={`Buy ${asset.name} long`}
-              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-success/20 flex items-center justify-center text-foreground hover:text-success transition-colors"
+              className="w-9 h-9 rounded-full bg-muted/70 hover:bg-success/20 flex items-center justify-center text-foreground hover:text-success transition-colors border border-transparent hover:border-success/40"
             >
               <ArrowUp className="w-4 h-4" />
             </button>
@@ -279,7 +279,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
               style={{ fontFamily: "Bricolage Grotesque, system-ui, sans-serif" }}
               className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg bg-card border border-border text-xs text-foreground opacity-0 group-hover/up:opacity-100 transition-opacity whitespace-nowrap"
             >
-              Long
+              Up
             </span>
           </div>
           <div className="relative group/down">
@@ -293,7 +293,7 @@ const TickerCard = ({ asset, quote }: { asset: Asset; quote: Quote }) => {
               style={{ fontFamily: "Bricolage Grotesque, system-ui, sans-serif" }}
               className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg bg-card border border-border text-xs text-foreground opacity-0 group-hover/down:opacity-100 transition-opacity whitespace-nowrap"
             >
-              Short
+              Down
             </span>
           </div>
         </div>
