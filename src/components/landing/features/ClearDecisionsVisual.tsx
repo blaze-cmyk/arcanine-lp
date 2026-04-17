@@ -400,6 +400,75 @@ const ClearDecisionsVisual = () => {
     return () => cancelAnimationFrame(animRef.current);
   }, [draw]);
 
+  // Wheel zoom (X axis), passive:false so we can preventDefault scroll
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const it = interactRef.current;
+      const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+      it.scaleX = Math.min(4, Math.max(0.4, it.scaleX * factor));
+    };
+    canvas.addEventListener("wheel", onWheel, { passive: false });
+    return () => canvas.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const it = interactRef.current;
+    const chartW = rect.width - PRICE_SCALE_WIDTH;
+    if (x >= chartW) {
+      it.isDraggingPrice = true;
+      it.dragStartY = e.clientY;
+      it.dragStartScaleY = it.scaleY;
+      canvas.style.cursor = "ns-resize";
+    } else {
+      it.isDraggingChart = true;
+      it.dragStartX = e.clientX;
+      it.dragStartOffsetX = it.offsetX;
+      canvas.style.cursor = "grabbing";
+    }
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const it = interactRef.current;
+    if (it.isDraggingChart) {
+      const dx = e.clientX - it.dragStartX;
+      it.offsetX = Math.max(0, it.dragStartOffsetX + dx);
+    } else if (it.isDraggingPrice) {
+      const dy = e.clientY - it.dragStartY;
+      // drag down → zoom out, drag up → zoom in
+      const factor = Math.exp(-dy / 120);
+      it.scaleY = Math.min(6, Math.max(0.3, it.dragStartScaleY * factor));
+    } else {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const chartW = rect.width - PRICE_SCALE_WIDTH;
+      canvas.style.cursor = x >= chartW ? "ns-resize" : "grab";
+    }
+  };
+
+  const endDrag = () => {
+    const canvas = canvasRef.current;
+    const it = interactRef.current;
+    it.isDraggingChart = false;
+    it.isDraggingPrice = false;
+    if (canvas) canvas.style.cursor = "grab";
+  };
+
+  const onDoubleClick = () => {
+    const it = interactRef.current;
+    it.offsetX = 0;
+    it.scaleX = 1;
+    it.scaleY = 1;
+  };
+
   const change = headerPrice !== null && openPrice !== null ? headerPrice - openPrice : 0;
   const changePct = openPrice ? (change / openPrice) * 100 : 0;
   const up = change >= 0;
