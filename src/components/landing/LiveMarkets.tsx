@@ -9,6 +9,7 @@ import nvdaIcon from "@/assets/icons/nvda.svg";
 import euFlag from "@/assets/icons/eu.svg";
 import usFlag from "@/assets/icons/us.svg";
 import gbFlag from "@/assets/icons/gb.svg";
+import crudeOilIcon from "@/assets/icons/crude-oil.svg";
 
 type Asset = {
   symbol: string;          // display symbol
@@ -45,7 +46,7 @@ const ASSETS: Asset[] = [
   { symbol: "GBP/USD", name: "Pound / Dollar", category: "forex",
     pairIcons: [gbFlag, usFlag], yahooSymbol: "GBPUSD=X", decimals: 4 },
   { symbol: "WTI",  name: "Crude Oil",   category: "commodity",
-    initial: "🛢", yahooSymbol: "CL=F", decimals: 2, prefix: "$" },
+    icon: crudeOilIcon, yahooSymbol: "CL=F", decimals: 2, prefix: "$" },
   { symbol: "XAU/USD", name: "Gold Spot", category: "commodity",
     initial: "Au", yahooSymbol: "GC=F", decimals: 2, prefix: "$" },
 ];
