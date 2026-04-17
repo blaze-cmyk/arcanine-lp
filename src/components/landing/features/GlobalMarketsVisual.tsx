@@ -158,31 +158,31 @@ const GlobalMarketsVisual = () => {
             >
 
               {/* Market */}
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-3 min-w-0">
                 {asset.whiteBg ? (
-                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src={asset.icon} alt={asset.name} className="w-4 h-4 object-contain" loading="lazy" />
+                  <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <img src={asset.icon} alt={asset.name} className="w-6 h-6 object-contain" loading="lazy" />
                   </div>
                 ) : (
-                  <img src={asset.icon} alt={asset.name} className="w-6 h-6 rounded-full object-contain flex-shrink-0" loading="lazy" />
+                  <img src={asset.icon} alt={asset.name} className="w-9 h-9 rounded-full object-contain flex-shrink-0" loading="lazy" />
                 )}
                 <div className="min-w-0">
-                  <div className="text-[10px] font-semibold text-foreground leading-tight truncate">{asset.symbol}</div>
-                  <div className="text-[8px] text-muted-foreground leading-tight truncate">{asset.name}</div>
+                  <div className="text-sm font-semibold text-foreground leading-tight truncate">{asset.symbol}</div>
+                  <div className="text-xs text-muted-foreground leading-tight truncate">{asset.name}</div>
                 </div>
               </div>
 
               {/* LTP */}
               <div className="text-right">
-                <div className="text-[10px] font-display tabular-nums font-semibold text-foreground leading-tight">
+                <div className="text-sm font-display tabular-nums font-semibold text-foreground leading-tight">
                   {q?.loading || q?.price === null ? (
-                    <span className="inline-block h-3 w-12 rounded bg-muted animate-pulse align-middle" />
+                    <span className="inline-block h-3 w-14 rounded bg-muted animate-pulse align-middle" />
                   ) : (
                     <>${formatPrice(q!.price!)}</>
                   )}
                 </div>
                 <div
-                  className="text-[9px] font-display tabular-nums leading-tight"
+                  className="text-xs font-display tabular-nums leading-tight mt-0.5"
                   style={{ color: up ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
                 >
                   {q?.changePct !== null && q?.changePct !== undefined
@@ -194,13 +194,13 @@ const GlobalMarketsVisual = () => {
               {/* Volume (mocked) */}
               <div className="text-right">
                 <div
-                  className="text-[10px] font-display tabular-nums font-semibold leading-tight"
+                  className="text-sm font-display tabular-nums font-semibold leading-tight"
                   style={{ color: asset.volumeUp ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
                 >
                   {asset.volume}
                 </div>
                 <div
-                  className="text-[9px] font-display tabular-nums leading-tight"
+                  className="text-xs font-display tabular-nums leading-tight mt-0.5"
                   style={{ color: asset.volumeUp ? "hsl(var(--profit))" : "hsl(var(--loss))" }}
                 >
                   {asset.volumePct}
@@ -208,12 +208,12 @@ const GlobalMarketsVisual = () => {
               </div>
 
               {/* Profit 1m */}
-              <div className="text-[10px] font-display tabular-nums font-bold text-right text-profit">
+              <div className="text-sm font-display tabular-nums font-bold text-right text-profit">
                 {asset.profit1m}
               </div>
 
               {/* Profit 5m */}
-              <div className="text-[10px] font-display tabular-nums font-bold text-right text-profit">
+              <div className="text-sm font-display tabular-nums font-bold text-right text-profit">
                 {asset.profit5m}
               </div>
             </div>
