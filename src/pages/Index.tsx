@@ -1,6 +1,6 @@
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
-import LiveWins from "@/components/landing/LiveWins";
+
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
 import FairnessLogic from "@/components/landing/FairnessLogic";
@@ -28,7 +28,7 @@ const Index = () => (
       <Navbar />
       <Hero />
     </div>
-    <LiveWins />
+    
     <ScrollRevealWrapper>
       <Features />
     </ScrollRevealWrapper>
