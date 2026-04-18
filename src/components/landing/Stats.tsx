@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Star } from "lucide-react";
+import { REVIEWS } from "@/data/reviews";
 
 const STATS_DATA = [
   { value: 50000, suffix: "+", prefix: "", labelKey: "stats.activeTraders" },
@@ -9,20 +10,8 @@ const STATS_DATA = [
   { value: 2, suffix: "M+", prefix: "$", labelKey: "stats.monthlyPayouts" },
 ];
 
-const REVIEWS = [
-  { name: "Alex R.", avatar: "🐺", text: "Fastest payouts I've ever experienced. Withdrew $4,200 and it hit my account in under 2 hours.", rating: 5, profit: "+$4,200" },
-  { name: "Maria K.", avatar: "🦊", text: "The interface is incredibly smooth. I switched from IQ Option and never looked back.", rating: 5, profit: "+$1,850" },
-  { name: "James T.", avatar: "🦅", text: "Started with $10, now consistently making $200-400 a week. The demo account helped me learn without risk.", rating: 5, profit: "+$12,400" },
-  { name: "Sophie L.", avatar: "🐯", text: "140+ assets to trade and the charts are real-time. This is what a professional platform looks like.", rating: 4, profit: "+$3,100" },
-  { name: "Daniel M.", avatar: "🐉", text: "Withdrawals are instant. No hidden fees, no delays. Best platform I've used in 5 years of trading.", rating: 5, profit: "+$7,600" },
-  { name: "Lina W.", avatar: "🦁", text: "The $1 minimum trade let me test strategies without burning my account. Now I trade with confidence.", rating: 5, profit: "+$2,300" },
-  { name: "Raj P.", avatar: "🐻", text: "Available in my country when most platforms aren't. Support team responds within minutes.", rating: 4, profit: "+$5,800" },
-  { name: "Emma S.", avatar: "🦈", text: "Clean UI, fast execution, and the payout percentages are genuinely competitive. Highly recommend.", rating: 5, profit: "+$4,500" },
-  { name: "Carlos V.", avatar: "🐲", text: "Switched from Binomo last month. The charting tools here are leagues ahead. Already up $3k.", rating: 5, profit: "+$3,400" },
-  { name: "Aisha N.", avatar: "🦋", text: "Love the copy-trading feature. I follow top traders and consistently earn passive income.", rating: 5, profit: "+$6,200" },
-  { name: "Tom H.", avatar: "🐺", text: "The mobile app is just as fast as desktop. I trade on my commute and it never lags.", rating: 4, profit: "+$1,900" },
-  { name: "Yuki S.", avatar: "🦊", text: "24/7 crypto trading with up to 95% payouts. Nothing else comes close in this space.", rating: 5, profit: "+$8,100" },
-];
+const INITIAL_COUNT = 12;
+const LOAD_INCREMENT = 16;
 
 const AnimatedNumber = ({ value, prefix, suffix, trigger, duration = 2000 }: { value: number; prefix: string; suffix: string; trigger: boolean; duration?: number }) => {
   const [display, setDisplay] = useState(0);
