@@ -12,6 +12,15 @@ const Hero = () => {
       {/* Animated WebGL liquid gradient background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <HeroShaderBackground />
+        {/* Noise grain overlay on shader */}
+        <div
+          className="absolute inset-0 mix-blend-overlay opacity-40"
+          style={{
+            backgroundImage: `url(${noiseOverlay})`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "300px 300px",
+          }}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/50 to-background" />
       </div>
 
