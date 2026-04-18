@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import btcIcon from "@/assets/icons/btc.png";
-import cardBgVideo from "@/assets/onramp-card-bg.webm";
 import ethIcon from "@/assets/icons/eth.png";
 import solIcon from "@/assets/icons/sol.png";
 
@@ -85,46 +84,37 @@ const HowItWorks = () => {
       title: t("howItWorks.step2Title"),
       description: t("howItWorks.step2Desc"),
       visual: (
-        <div className="relative w-full h-[220px] flex items-center justify-center overflow-hidden">
-          <video
-            src={cardBgVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-80"
-          />
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, hsl(var(--card) / 0.3) 0%, hsl(var(--card) / 0.1) 50%, hsl(var(--card) / 0.4) 100%)" }} />
+        <div className="relative w-full h-[220px] flex items-center justify-center">
           {/* Card 2 — Down (back, tilted right) */}
           <div
             className="absolute w-[150px] rounded-xl overflow-hidden"
             style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(0,0,0,0.08)",
+              background: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border) / 0.6)",
               transform: "translate(48px, -10px) rotate(8deg)",
               boxShadow: "0 20px 40px -10px rgba(0,0,0,0.6)",
             }}
           >
-            <div className="px-2.5 pt-2 pb-2" style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
-              <fieldset className="rounded-md px-2 pb-1 pt-0" style={{ border: "1px solid rgba(0,0,0,0.12)" }}>
-                <legend className="text-[8px] px-1 text-neutral-500">Investment</legend>
+            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
+              <fieldset className="border border-border/60 rounded-md px-2 pb-1 pt-0">
+                <legend className="text-[8px] text-muted-foreground px-1">Investment</legend>
                 <div className="flex items-center justify-between">
-                  <span className="text-neutral-400 text-[10px]">−</span>
+                  <span className="text-muted-foreground text-[10px]">−</span>
                   <div className="flex items-center gap-0.5">
-                    <span className="text-[11px] font-semibold text-neutral-900 tabular-nums font-display">100</span>
-                    <span className="text-neutral-400 text-[9px]">$</span>
+                    <span className="text-[11px] font-semibold text-foreground tabular-nums font-display">100</span>
+                    <span className="text-muted-foreground text-[9px]">$</span>
                   </div>
-                  <span className="text-neutral-400 text-[10px]">+</span>
+                  <span className="text-muted-foreground text-[10px]">+</span>
                 </div>
               </fieldset>
             </div>
-            <div className="px-2.5 py-1.5" style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
+            <div className="px-2.5 py-1.5 border-b border-border/40">
               <div className="flex items-center justify-between">
-                <span className="text-[9px] text-neutral-500">Your payout</span>
+                <span className="text-[9px] text-muted-foreground">Your payout</span>
                 <span className="text-[9px] font-bold" style={{ color: "hsl(var(--primary))" }}>90%</span>
               </div>
               <div className="flex items-center justify-center">
-                <span className="text-base font-extrabold text-neutral-900 font-display tabular-nums leading-tight">190</span>
+                <span className="text-base font-extrabold text-foreground font-display tabular-nums leading-tight">190</span>
                 <span className="text-xs font-bold ml-0.5" style={{ color: "hsl(var(--profit))" }}>$</span>
               </div>
             </div>
@@ -145,32 +135,32 @@ const HowItWorks = () => {
           <div
             className="absolute w-[160px] rounded-xl overflow-hidden"
             style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(0,0,0,0.08)",
+              background: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border) / 0.7)",
               transform: "translate(-48px, 18px) rotate(-8deg)",
               boxShadow: "0 25px 50px -12px rgba(0,0,0,0.75)",
             }}
           >
-            <div className="px-2.5 pt-2 pb-2" style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
-              <fieldset className="rounded-md px-2 pb-1 pt-0" style={{ border: "1px solid rgba(0,0,0,0.12)" }}>
-                <legend className="text-[8px] px-1 text-neutral-500">Investment</legend>
+            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
+              <fieldset className="border border-border/60 rounded-md px-2 pb-1 pt-0">
+                <legend className="text-[8px] text-muted-foreground px-1">Investment</legend>
                 <div className="flex items-center justify-between">
-                  <span className="text-neutral-400 text-[10px]">−</span>
+                  <span className="text-muted-foreground text-[10px]">−</span>
                   <div className="flex items-center gap-0.5">
-                    <span className="text-[11px] font-semibold text-neutral-900 tabular-nums font-display">100</span>
-                    <span className="text-neutral-400 text-[9px]">$</span>
+                    <span className="text-[11px] font-semibold text-foreground tabular-nums font-display">100</span>
+                    <span className="text-muted-foreground text-[9px]">$</span>
                   </div>
-                  <span className="text-neutral-400 text-[10px]">+</span>
+                  <span className="text-muted-foreground text-[10px]">+</span>
                 </div>
               </fieldset>
             </div>
-            <div className="px-2.5 py-1.5" style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
+            <div className="px-2.5 py-1.5 border-b border-border/40">
               <div className="flex items-center justify-between">
-                <span className="text-[9px] text-neutral-500">Your payout</span>
+                <span className="text-[9px] text-muted-foreground">Your payout</span>
                 <span className="text-[9px] font-bold" style={{ color: "hsl(var(--primary))" }}>90%</span>
               </div>
               <div className="flex items-center justify-center">
-                <span className="text-base font-extrabold text-neutral-900 font-display tabular-nums leading-tight">190</span>
+                <span className="text-base font-extrabold text-foreground font-display tabular-nums leading-tight">190</span>
                 <span className="text-xs font-bold ml-0.5" style={{ color: "hsl(var(--profit))" }}>$</span>
               </div>
             </div>
