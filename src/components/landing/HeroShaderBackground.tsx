@@ -236,7 +236,7 @@ const HeroShaderBackground = () => {
     <div
       ref={containerRef}
       className="absolute inset-0 w-full h-full"
-      style={{ display: "block" }}
+      style={{ display: "block", filter: "hue-rotate(-160deg) saturate(1.1)" }}
       aria-hidden="true"
     />
   );
