@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import btcIcon from "@/assets/icons/btc.png";
 import ethIcon from "@/assets/icons/eth.png";
 import solIcon from "@/assets/icons/sol.png";
+import howItWorksBg from "@/assets/howitworks-bg.webm";
 
 const HowItWorks = () => {
   const { t } = useTranslation();
