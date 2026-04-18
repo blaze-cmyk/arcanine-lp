@@ -197,35 +197,48 @@ const HeroShaderBackground = () => {
   useEffect(() => {
     let scene: any = null;
     let cancelled = false;
+    const isMobile =
+      typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
 
-    loadUnicornStudio()
-      .then(() => {
-        if (cancelled || !containerRef.current) return;
-        const US = (window as any).UnicornStudio;
-        if (!US?.addScene) return;
-        US.addScene({
-          element: containerRef.current,
-          fps: 60,
-          scale: 1,
-          dpi: 1.5,
-          projectId: SCENE_JSON.id,
-          lazyLoad: false,
-          fixed: false,
-          altText: "Animated hero background",
-          ariaLabel: "Animated hero background",
-          production: false,
-          interactivity: { mouse: { disableMobile: true } },
-          data: SCENE_JSON,
-        } as any)
-          .then((s: any) => {
-            scene = s;
-          })
-          .catch(() => {});
-      })
-      .catch(() => {});
+    const start = () => {
+      loadUnicornStudio()
+        .then(() => {
+          if (cancelled || !containerRef.current) return;
+          const US = (window as any).UnicornStudio;
+          if (!US?.addScene) return;
+          US.addScene({
+            element: containerRef.current,
+            fps: isMobile ? 30 : 60,
+            scale: 1,
+            dpi: isMobile ? 1 : 1.25,
+            projectId: SCENE_JSON.id,
+            lazyLoad: false,
+            fixed: false,
+            altText: "Animated hero background",
+            ariaLabel: "Animated hero background",
+            production: false,
+            interactivity: { mouse: { disableMobile: true } },
+            data: SCENE_JSON,
+          } as any)
+            .then((s: any) => {
+              scene = s;
+            })
+            .catch(() => {});
+        })
+        .catch(() => {});
+    };
+
+    // Defer heavy WebGL init until the browser is idle so it doesn't block first paint
+    const ric: any = (window as any).requestIdleCallback;
+    const handle = ric
+      ? ric(start, { timeout: 1500 })
+      : window.setTimeout(start, 200);
 
     return () => {
       cancelled = true;
+      const cic: any = (window as any).cancelIdleCallback;
+      if (ric && cic) cic(handle);
+      else clearTimeout(handle);
       try {
         scene?.destroy?.();
       } catch {}
