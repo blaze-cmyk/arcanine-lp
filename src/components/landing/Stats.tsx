@@ -38,33 +38,46 @@ const AnimatedNumber = ({ value, prefix, suffix, trigger, duration = 2000 }: { v
   );
 };
 
-const ReviewCard = ({ review, visible, delay }: { review: typeof REVIEWS[number]; visible: boolean; delay: number }) => (
-  <div
-    className="relative rounded-2xl p-6 overflow-hidden group transition-all duration-700"
-    style={{
-      background: "#111111",
-      border: "1px solid rgba(255,255,255,0.06)",
-      opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(24px)",
-      transitionDelay: `${delay}ms`,
-    }}
-  >
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(0,255,136,0.05) 0%, transparent 70%)" }} />
-    <div className="flex gap-0.5 mb-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={14} className={i < review.rating ? "text-[#00FF88] fill-[#00FF88]" : "text-muted-foreground/20"} />
-      ))}
-    </div>
-    <p className="text-sm text-[#CCCCCC] leading-relaxed mb-4">"{review.text}"</p>
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-full flex items-center justify-center text-base" style={{ background: "rgba(255,255,255,0.05)" }}>{review.avatar}</div>
-        <span className="text-sm font-medium text-white">{review.name}</span>
+const TRUNCATE_LENGTH = 160;
+
+const ReviewCard = ({ review, visible, delay }: { review: typeof REVIEWS[number]; visible: boolean; delay: number }) => {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = review.text.length > TRUNCATE_LENGTH;
+  const displayText = expanded || !isLong ? review.text : review.text.slice(0, TRUNCATE_LENGTH).trimEnd() + "…";
+
+  return (
+    <div
+      className="relative rounded-2xl p-6 overflow-hidden group transition-all duration-700 flex flex-col"
+      style={{
+        background: "#111111",
+        border: "1px solid rgba(255,255,255,0.06)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transitionDelay: `${delay}ms`,
+      }}
+    >
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(0,255,136,0.05) 0%, transparent 70%)" }} />
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-base font-semibold text-white">{review.name}</span>
+        <span className="text-xs font-display tabular-nums font-semibold text-[#00FF88]">{review.profit}</span>
       </div>
-      <span className="text-xs font-display tabular-nums font-semibold text-[#00FF88]">{review.profit}</span>
+      <div className="flex gap-0.5 mb-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} size={14} className={i < review.rating ? "text-[#00FF88] fill-[#00FF88]" : "text-muted-foreground/20"} />
+        ))}
+      </div>
+      <p className="text-sm text-[#CCCCCC] leading-relaxed mb-3">"{displayText}"</p>
+      {isLong && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="text-xs font-medium text-[#3B9EFF] hover:text-[#5BB1FF] transition-colors self-start inline-flex items-center gap-1"
+        >
+          {expanded ? "Show less" : "Read More"} <span aria-hidden>→</span>
+        </button>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 const Stats = () => {
   const { t } = useTranslation();
