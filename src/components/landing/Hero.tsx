@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import dashboardPreview from "@/assets/dashboard-preview.png";
+import HeroShaderBackground from "./HeroShaderBackground";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -7,12 +8,10 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
-      {/* Animated 3D glow background */}
+      {/* Animated WebGL liquid gradient background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="hero-blob hero-blob-1" />
-        <div className="hero-blob hero-blob-2" />
-        <div className="hero-blob hero-blob-3" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+        <HeroShaderBackground />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/50 to-background" />
       </div>
 
       {/* Noise texture */}
