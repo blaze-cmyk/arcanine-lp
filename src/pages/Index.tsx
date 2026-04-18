@@ -27,8 +27,8 @@ const Index = () => (
 
     <div className="max-w-8xl mx-auto px-4 sm:px-6">
       <Navbar />
-      <Hero />
     </div>
+    <Hero />
 
     <LiveMarkets />
 
