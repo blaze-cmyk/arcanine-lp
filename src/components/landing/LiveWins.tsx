@@ -19,7 +19,7 @@ const COLORS = [
   "from-emerald-500/20 to-emerald-500/5",
   "from-cyan-500/20 to-cyan-500/5",
   "from-violet-500/20 to-violet-500/5",
-  "from-amber-500/20 to-amber-500/5",
+  "from-emerald-500/20 to-emerald-500/5",
   "from-rose-500/20 to-rose-500/5",
   "from-blue-500/20 to-blue-500/5",
 ];
