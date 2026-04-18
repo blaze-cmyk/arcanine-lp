@@ -445,11 +445,17 @@ const ClearDecisionsVisual = () => {
     ctx.font = "9px 'Bricolage Grotesque', sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+    // Ensure ~52px minimum gap between time labels so they don't overlap on mobile
+    const minLabelPx = 52;
+    const labelStep = Math.max(timeStep, Math.ceil(minLabelPx / step));
+    let lastLabelX = -Infinity;
     for (let i = startIdx; i <= endIdx; i++) {
-      if (i % timeStep !== 0) continue;
+      if (i % labelStep !== 0) continue;
       const x = (i - startIdx) * step + step / 2;
       if (x < 16 || x > chartW - 16) continue;
+      if (x - lastLabelX < minLabelPx) continue;
       ctx.fillText(formatTime(new Date(candles[i].time * 1000)), x, H - TIME_SCALE_HEIGHT / 2);
+      lastLabelX = x;
     }
 
     animRef.current = requestAnimationFrame(draw);
