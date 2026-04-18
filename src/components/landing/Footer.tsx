@@ -40,7 +40,11 @@ const Footer = () => {
               <img src={logo} alt="Arcanine" className="w-10 h-10" />
               <span className="text-base font-bold tracking-tight font-display text-foreground">Arcanine</span>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-[300px] mb-6">{t("footer.description")}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-[300px] mb-6">
+              <span className="font-semibold text-foreground">Fast. Transparent. Precise.</span>
+              <br />
+              Modern binary options trading on global markets.
+            </p>
             <p className="text-xs text-muted-foreground/60">{t("footer.copyright", { year: new Date().getFullYear() })}</p>
           </div>
 
