@@ -14,10 +14,12 @@ const Footer = () => {
   ];
 
   const information = [
-    { label: t("footer.termsOfService"), href: "#" },
-    { label: t("footer.privacyPolicy"), href: "#" },
-    { label: t("footer.amlKyc"), href: "#" },
-    { label: t("footer.responsibleTrading"), href: "#" },
+    { label: "Privacy policy", href: "#" },
+    { label: "Service agreement", href: "#" },
+    { label: "Risk disclosure", href: "#" },
+    { label: "Rules of trading operations", href: "#" },
+    { label: "Non-trading operations regulations", href: "#" },
+    { label: "Payment policy", href: "#" },
   ];
 
   return (
