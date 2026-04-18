@@ -9,20 +9,20 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
-      {/* Animated WebGL liquid gradient — full-bleed with vignette */}
-      <div className="pointer-events-none z-0 absolute top-0 left-1/2 -translate-x-1/2 w-screen h-[55vh] sm:h-[85vh] overflow-hidden">
+      {/* Animated WebGL liquid gradient — top glow band (full-bleed) */}
+      <div className="pointer-events-none z-0 h-[32vh] sm:h-[75vh] overflow-hidden absolute top-0 left-1/2 -translate-x-1/2 w-screen">
         <div
           className="absolute inset-0"
           style={{
             maskImage:
-              "radial-gradient(ellipse 70% 75% at 50% 35%, #000 30%, rgba(0,0,0,0.85) 55%, transparent 92%)",
+              "linear-gradient(to bottom, #000 0%, #000 50%, transparent 95%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 70% 75% at 50% 35%, #000 30%, rgba(0,0,0,0.85) 55%, transparent 92%)",
+              "linear-gradient(to bottom, #000 0%, #000 50%, transparent 95%)",
           }}
         >
           <HeroShaderBackground />
           <div
-            className="absolute inset-0 mix-blend-overlay opacity-40"
+            className="absolute inset-0 mix-blend-overlay opacity-30"
             style={{
               backgroundImage: `url(${noiseOverlay})`,
               backgroundRepeat: "repeat",
@@ -30,14 +30,6 @@ const Hero = () => {
             }}
           />
         </div>
-        {/* Edge vignette to deepen left/right/bottom */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 70% at 50% 30%, transparent 40%, rgba(11,11,14,0.6) 70%, #0B0B0E 100%)",
-          }}
-        />
       </div>
 
       {/* Noise texture */}
