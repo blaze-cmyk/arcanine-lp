@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Unicorn Studio scene embed — renders the exact JSON scene
@@ -193,59 +193,39 @@ function loadUnicornStudio(): Promise<void> {
 
 const HeroShaderBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let scene: any = null;
     let cancelled = false;
-    let started = false;
 
-    const start = () => {
-      if (started || cancelled || !containerRef.current) return;
-      started = true;
-      loadUnicornStudio()
-        .then(() => {
-          if (cancelled || !containerRef.current) return;
-          const US = (window as any).UnicornStudio;
-          if (!US?.addScene) return;
-          // Lower DPI on mobile for faster first paint
-          const isMobile = window.matchMedia("(max-width: 768px)").matches;
-          US.addScene({
-            element: containerRef.current,
-            fps: isMobile ? 30 : 60,
-            scale: 1,
-            dpi: isMobile ? 1 : 1.25,
-            projectId: SCENE_JSON.id,
-            lazyLoad: false,
-            fixed: false,
-            altText: "Animated hero background",
-            ariaLabel: "Animated hero background",
-            production: false,
-            interactivity: { mouse: { disableMobile: true } },
-            data: SCENE_JSON,
-          } as any)
-            .then((s: any) => {
-              scene = s;
-              setReady(true);
-            })
-            .catch(() => {});
-        })
-        .catch(() => {});
-    };
-
-    // Defer until browser is idle so it doesn't block first paint / LCP
-    const w = window as any;
-    const idle =
-      w.requestIdleCallback?.bind(w) ||
-      ((cb: () => void) => setTimeout(cb, 200));
-    const cancelIdle = w.cancelIdleCallback?.bind(w) || clearTimeout;
-    const handle = idle(start, { timeout: 1500 });
+    loadUnicornStudio()
+      .then(() => {
+        if (cancelled || !containerRef.current) return;
+        const US = (window as any).UnicornStudio;
+        if (!US?.addScene) return;
+        US.addScene({
+          element: containerRef.current,
+          fps: 60,
+          scale: 1,
+          dpi: 1.5,
+          projectId: SCENE_JSON.id,
+          lazyLoad: false,
+          fixed: false,
+          altText: "Animated hero background",
+          ariaLabel: "Animated hero background",
+          production: false,
+          interactivity: { mouse: { disableMobile: true } },
+          data: SCENE_JSON,
+        } as any)
+          .then((s: any) => {
+            scene = s;
+          })
+          .catch(() => {});
+      })
+      .catch(() => {});
 
     return () => {
       cancelled = true;
-      try {
-        cancelIdle(handle);
-      } catch {}
       try {
         scene?.destroy?.();
       } catch {}
@@ -257,24 +237,12 @@ const HeroShaderBackground = () => {
       {/* Deep black base */}
       <div className="absolute inset-0" style={{ background: "#0A0A0A" }} />
 
-      {/* Instant gradient placeholder (shown until WebGL scene is ready) */}
-      {!ready && (
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(80% 60% at 50% 60%, rgba(0,255,136,0.18) 0%, rgba(0,80,60,0.25) 40%, #0A0A0A 80%)",
-          }}
-        />
-      )}
-
       {/* Unicorn scene, hue-shifted purple → neon green */}
       <div
         ref={containerRef}
-        className="absolute inset-0 w-full h-full transition-opacity duration-700"
+        className="absolute inset-0 w-full h-full"
         style={{
           display: "block",
-          opacity: ready ? 1 : 0,
           filter: "hue-rotate(-150deg) saturate(1.45) brightness(1.05)",
         }}
       />
