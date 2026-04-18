@@ -233,13 +233,38 @@ const HeroShaderBackground = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ display: "block", filter: "hue-rotate(-160deg) saturate(1.1)" }}
-      aria-hidden="true"
-    />
+    <div className="absolute inset-0 w-full h-full" aria-hidden="true">
+      {/* Deep black base */}
+      <div className="absolute inset-0" style={{ background: "#0A0A0A" }} />
+
+      {/* Unicorn scene, hue-shifted purple → neon green */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full"
+        style={{
+          display: "block",
+          filter: "hue-rotate(-150deg) saturate(1.45) brightness(1.05)",
+        }}
+      />
+
+      {/* Neon green glow tint + signature #00FF88 wash */}
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-screen"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 70% 60%, rgba(0,255,136,0.18) 0%, rgba(0,255,136,0) 70%), radial-gradient(40% 35% at 20% 80%, rgba(0,200,170,0.14) 0%, rgba(0,200,170,0) 70%)",
+        }}
+      />
+
+      {/* Subtle dark green vignette to deepen edges */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(120% 80% at 50% 40%, transparent 50%, rgba(10,30,20,0.55) 100%)",
+        }}
+      />
+    </div>
   );
-};
 
 export default HeroShaderBackground;
