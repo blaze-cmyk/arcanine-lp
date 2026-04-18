@@ -106,7 +106,26 @@ const Stats = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("stats.subheading")}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Mobile: horizontal scroll slider */}
+        <div className="sm:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-4 w-max pr-4">
+            {visibleReviews.map((review, i) => (
+              <div
+                key={`m-${review.name}-${i}`}
+                className="snap-start shrink-0 w-[78vw] max-w-[320px] flex"
+              >
+                <ReviewCard
+                  review={review}
+                  visible={visible}
+                  delay={i < INITIAL_COUNT ? 600 + i * 80 : 0}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tablet/Desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {visibleReviews.map((review, i) => (
             <ReviewCard
               key={`${review.name}-${i}`}
