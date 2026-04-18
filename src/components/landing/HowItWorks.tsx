@@ -164,7 +164,7 @@ const HowItWorks = () => {
                 </div>
                 <div className="px-4">{visual}</div>
                 <div className="px-6 pb-6 pt-4">
-                  <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+                  <p className="text-foreground/80 text-sm leading-relaxed">{description}</p>
                 </div>
               </div>
             </div>
