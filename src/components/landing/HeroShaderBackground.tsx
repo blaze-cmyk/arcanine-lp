@@ -193,39 +193,59 @@ function loadUnicornStudio(): Promise<void> {
 
 const HeroShaderBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let scene: any = null;
     let cancelled = false;
+    let started = false;
 
-    loadUnicornStudio()
-      .then(() => {
-        if (cancelled || !containerRef.current) return;
-        const US = (window as any).UnicornStudio;
-        if (!US?.addScene) return;
-        US.addScene({
-          element: containerRef.current,
-          fps: 60,
-          scale: 1,
-          dpi: 1.5,
-          projectId: SCENE_JSON.id,
-          lazyLoad: false,
-          fixed: false,
-          altText: "Animated hero background",
-          ariaLabel: "Animated hero background",
-          production: false,
-          interactivity: { mouse: { disableMobile: true } },
-          data: SCENE_JSON,
-        } as any)
-          .then((s: any) => {
-            scene = s;
-          })
-          .catch(() => {});
-      })
-      .catch(() => {});
+    const start = () => {
+      if (started || cancelled || !containerRef.current) return;
+      started = true;
+      loadUnicornStudio()
+        .then(() => {
+          if (cancelled || !containerRef.current) return;
+          const US = (window as any).UnicornStudio;
+          if (!US?.addScene) return;
+          // Lower DPI on mobile for faster first paint
+          const isMobile = window.matchMedia("(max-width: 768px)").matches;
+          US.addScene({
+            element: containerRef.current,
+            fps: isMobile ? 30 : 60,
+            scale: 1,
+            dpi: isMobile ? 1 : 1.25,
+            projectId: SCENE_JSON.id,
+            lazyLoad: false,
+            fixed: false,
+            altText: "Animated hero background",
+            ariaLabel: "Animated hero background",
+            production: false,
+            interactivity: { mouse: { disableMobile: true } },
+            data: SCENE_JSON,
+          } as any)
+            .then((s: any) => {
+              scene = s;
+              setReady(true);
+            })
+            .catch(() => {});
+        })
+        .catch(() => {});
+    };
+
+    // Defer until browser is idle so it doesn't block first paint / LCP
+    const w = window as any;
+    const idle =
+      w.requestIdleCallback?.bind(w) ||
+      ((cb: () => void) => setTimeout(cb, 200));
+    const cancelIdle = w.cancelIdleCallback?.bind(w) || clearTimeout;
+    const handle = idle(start, { timeout: 1500 });
 
     return () => {
       cancelled = true;
+      try {
+        cancelIdle(handle);
+      } catch {}
       try {
         scene?.destroy?.();
       } catch {}
