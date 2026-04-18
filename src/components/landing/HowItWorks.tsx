@@ -93,8 +93,7 @@ const HowItWorks = () => {
             loop
             muted
             playsInline
-            className="absolute inset-y-0 w-full h-full object-cover opacity-60 pointer-events-none"
-            style={{ left: "40px" }}
+            className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60 pointer-events-none" />
           {/* Card 2 — Down (back, tilted right) */}
