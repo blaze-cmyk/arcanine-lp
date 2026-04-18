@@ -65,11 +65,10 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-2">
             <LanguageSelector />
-            <button className="inline-flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-foreground bg-secondary-btn rounded-xl transition-colors duration-200">
-              <LogIn className="w-4 h-4" />
+            <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-card/80 transition-colors duration-200">
               {t("nav.logIn")}
             </button>
-            <button className="px-3 py-2.5 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-xl transition-colors duration-200">
+            <button className="px-4 py-2 text-sm font-semibold text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg transition-colors duration-200">
               {t("nav.signUp")}
             </button>
           </div>
