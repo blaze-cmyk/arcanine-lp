@@ -38,7 +38,7 @@ const AnimatedNumber = ({ value, prefix, suffix, trigger, duration = 2000 }: { v
   );
 };
 
-const ReviewCard = ({ review, visible, delay }: { review: (typeof REVIEWS)[0]; visible: boolean; delay: number }) => (
+const ReviewCard = ({ review, visible, delay }: { review: typeof REVIEWS[number]; visible: boolean; delay: number }) => (
   <div
     className="relative rounded-2xl p-6 overflow-hidden group transition-all duration-700"
     style={{
@@ -70,6 +70,7 @@ const Stats = () => {
   const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [shownCount, setShownCount] = useState(INITIAL_COUNT);
 
   useEffect(() => {
     const el = ref.current;
@@ -78,6 +79,9 @@ const Stats = () => {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  const visibleReviews = REVIEWS.slice(0, shownCount);
+  const hasMore = shownCount < REVIEWS.length;
 
   return (
     <section className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden" ref={ref} id="testimonials">
@@ -100,10 +104,32 @@ const Stats = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {REVIEWS.map((review, i) => (
-            <ReviewCard key={review.name} review={review} visible={visible} delay={600 + i * 120} />
+          {visibleReviews.map((review, i) => (
+            <ReviewCard
+              key={`${review.name}-${i}`}
+              review={review}
+              visible={visible}
+              delay={i < INITIAL_COUNT ? 600 + i * 80 : 0}
+            />
           ))}
         </div>
+
+        {hasMore && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setShownCount((c) => Math.min(c + LOAD_INCREMENT, REVIEWS.length))}
+              className="group relative px-8 py-3 rounded-full text-sm font-medium text-white transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(0,255,136,0.25)",
+                boxShadow: "0 0 24px rgba(0,255,136,0.08)",
+              }}
+            >
+              <span className="relative z-10">Load more reviews ({REVIEWS.length - shownCount} left)</span>
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "radial-gradient(circle at center, rgba(0,255,136,0.12), transparent 70%)" }} />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
