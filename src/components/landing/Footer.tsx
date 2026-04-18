@@ -1,5 +1,14 @@
 import { useTranslation } from "react-i18next";
 import logo from "@/assets/arcanine-logo.png";
+import advcash from "@/assets/payments/advcash.png";
+import gpay from "@/assets/payments/gpay.png";
+import upi from "@/assets/payments/upi.png";
+import rupay from "@/assets/payments/rupay.png";
+import applepay from "@/assets/payments/applepay.png";
+import webmoney from "@/assets/payments/webmoney.png";
+import grabpay from "@/assets/payments/grabpay.png";
+import sepa from "@/assets/payments/sepa.png";
+import perfectmoney from "@/assets/payments/perfectmoney.png";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -60,19 +69,18 @@ const Footer = () => {
           <p className="text-xs font-semibold tracking-widest text-muted-foreground/60 uppercase mb-5">{t("footer.acceptedPayments")}</p>
           <div className="flex flex-wrap gap-3">
             {[
-              { name: "Visa", bg: "#1A1F71", text: "VISA", textColor: "#FFFFFF" },
-              { name: "Mastercard", bg: "#1A1A2E", icon: "mc" },
-              { name: "Discover", bg: "#FF6000", text: "DISCOVER", textColor: "#FFFFFF" },
-              { name: "Apple Pay", bg: "#000000", text: "Pay", textColor: "#FFFFFF" },
-              { name: "Google Pay", bg: "#1A1A2E", text: "G Pay", textColor: "#FFFFFF" },
-              { name: "Bitcoin", bg: "#F7931A", text: "₿", textColor: "#FFFFFF" },
+              { name: "Advcash", src: advcash },
+              { name: "Google Pay", src: gpay },
+              { name: "UPI", src: upi },
+              { name: "RuPay", src: rupay },
+              { name: "Apple Pay", src: applepay },
+              { name: "WebMoney", src: webmoney },
+              { name: "GrabPay", src: grabpay },
+              { name: "SEPA", src: sepa },
+              { name: "Perfect Money", src: perfectmoney },
             ].map((method) => (
-              <div key={method.name} className="w-[52px] h-[34px] rounded-md flex items-center justify-center border border-white/5" style={{ background: method.bg }} title={method.name}>
-                {method.icon === "mc" ? (
-                  <div className="flex -space-x-1.5"><div className="w-3.5 h-3.5 rounded-full bg-[#EB001B]" /><div className="w-3.5 h-3.5 rounded-full bg-[#F79E1B] opacity-80" /></div>
-                ) : (
-                  <span className="text-[9px] font-bold leading-none" style={{ color: method.textColor }}>{method.text}</span>
-                )}
+              <div key={method.name} className="w-[52px] h-[34px] rounded-md flex items-center justify-center overflow-hidden border border-white/5 bg-[#111]" title={method.name}>
+                <img src={method.src} alt={method.name} className="w-full h-full object-contain" />
               </div>
             ))}
           </div>
