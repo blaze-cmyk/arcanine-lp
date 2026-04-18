@@ -49,7 +49,7 @@ const Hero = () => {
           {t("hero.headline")}
         </h1>
 
-        <p className="animate-slide-up-delay-1 text-sm sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed px-4 sm:px-0">
+        <p className="animate-slide-up-delay-1 text-sm sm:text-xl text-foreground/80 max-w-2xl mx-auto mb-12 leading-relaxed px-4 sm:px-0">
           {t("hero.subhead")}
         </p>
 
@@ -57,7 +57,7 @@ const Hero = () => {
           <button className="inline-flex items-center px-6 py-3 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
             {t("hero.createAccount")}
           </button>
-          <p className="text-sm text-muted-foreground max-w-[220px] text-center leading-snug">
+          <p className="text-sm text-foreground/80 max-w-[220px] text-center leading-snug">
             {t("hero.depositNote")}
           </p>
         </div>
