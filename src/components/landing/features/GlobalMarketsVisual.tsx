@@ -134,12 +134,12 @@ const GlobalMarketsVisual = () => {
     >
       <div className="w-full max-w-[420px] flex flex-col gap-1.5">
         {/* Header row */}
-        <div className="grid grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-2 px-3 pb-1.5 mb-0.5 border-b border-border/30">
+        <div className="grid grid-cols-[1.3fr_1fr_0.9fr_0.7fr_0.5fr] sm:grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-1.5 sm:gap-2 px-2 sm:px-3 pb-1.5 mb-0.5 border-b border-border/30">
           <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground">Market</span>
           <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right">LTP</span>
           <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right">Volume</span>
           <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right whitespace-nowrap inline-flex items-center justify-end gap-1">
-            Profit +1m <span aria-hidden="true">▼</span>
+            <span className="hidden sm:inline">Profit </span>+1m <span aria-hidden="true">▼</span>
           </span>
           <span className="text-[9px] font-medium uppercase tracking-wider text-muted-foreground text-right">5m</span>
         </div>
