@@ -197,38 +197,58 @@ const ClearPayoutsVisual = () => {
         }}
       />
 
-      {/* Two vertical marquee tracks of payment methods on the left */}
+      {/* Left vertical marquee track */}
       <div
-        className="absolute left-3 top-0 bottom-0 z-[1] flex gap-2 items-stretch pointer-events-none py-2"
+        className="absolute left-3 top-0 bottom-0 z-[1] flex items-stretch pointer-events-none py-2"
         style={{
           maskImage: "linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)",
         }}
       >
-        {[
-          { items: PAYMENT_TRACK_A, anim: "marquee-y-up 18s linear infinite" },
-          { items: PAYMENT_TRACK_B, anim: "marquee-y-down 22s linear infinite" },
-        ].map((track, ti) => (
-          <div key={ti} className="relative h-full w-14 overflow-hidden">
-            <div
-              className="flex flex-col items-center gap-3"
-              style={{ animation: track.anim }}
-            >
-              {[...track.items, ...track.items].map((m, i) => (
-                <div
-                  key={`${ti}-${i}`}
-                  className="w-14 h-14 shrink-0 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
-                >
-                  <img src={m.src} alt={m.alt} className="w-9 h-9 object-contain" />
-                </div>
-              ))}
-            </div>
+        <div className="relative h-full w-14 overflow-hidden">
+          <div
+            className="flex flex-col items-center gap-3"
+            style={{ animation: "marquee-y-up 18s linear infinite" }}
+          >
+            {[...PAYMENT_TRACK_A, ...PAYMENT_TRACK_A].map((m, i) => (
+              <div
+                key={`a-${i}`}
+                className="w-14 h-14 shrink-0 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
+              >
+                <img src={m.src} alt={m.alt} className="w-9 h-9 object-contain" />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+      </div>
+
+      {/* Right vertical marquee track */}
+      <div
+        className="absolute right-3 top-0 bottom-0 z-[1] flex items-stretch pointer-events-none py-2"
+        style={{
+          maskImage: "linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%)",
+        }}
+      >
+        <div className="relative h-full w-14 overflow-hidden">
+          <div
+            className="flex flex-col items-center gap-3"
+            style={{ animation: "marquee-y-down 22s linear infinite" }}
+          >
+            {[...PAYMENT_TRACK_B, ...PAYMENT_TRACK_B].map((m, i) => (
+              <div
+                key={`b-${i}`}
+                className="w-14 h-14 shrink-0 rounded-full bg-card border border-border/60 shadow-lg flex items-center justify-center overflow-hidden"
+              >
+                <img src={m.src} alt={m.alt} className="w-9 h-9 object-contain" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div
-        className="relative w-full max-w-[300px] rounded-2xl p-2 space-y-2 backdrop-blur-md"
+        className="relative w-full max-w-[220px] sm:max-w-[280px] rounded-2xl p-2 space-y-2 backdrop-blur-md"
         style={{
           background: "hsl(var(--card) / 0.55)",
           border: "1px solid hsl(var(--border) / 0.5)",
