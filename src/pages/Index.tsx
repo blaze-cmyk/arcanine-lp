@@ -1,17 +1,20 @@
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
-import LiveMarkets from "@/components/landing/LiveMarkets";
-
-import Features from "@/components/landing/Features";
-import FAQ from "@/components/landing/FAQ";
-
-import Stats from "@/components/landing/Stats";
-import DemoCTA from "@/components/landing/DemoCTA";
-import HowItWorks from "@/components/landing/HowItWorks";
-import Footer from "@/components/landing/Footer";
-import SectionDivider from "@/components/landing/SectionDivider";
 import BackToTop from "@/components/landing/BackToTop";
+import SectionDivider from "@/components/landing/SectionDivider";
 import ScrollRevealWrapper from "@/components/landing/ScrollRevealWrapper";
+
+// Lazy-load below-the-fold sections to shrink initial JS bundle
+const LiveMarkets = lazy(() => import("@/components/landing/LiveMarkets"));
+const Features = lazy(() => import("@/components/landing/Features"));
+const HowItWorks = lazy(() => import("@/components/landing/HowItWorks"));
+const Stats = lazy(() => import("@/components/landing/Stats"));
+const DemoCTA = lazy(() => import("@/components/landing/DemoCTA"));
+const FAQ = lazy(() => import("@/components/landing/FAQ"));
+const Footer = lazy(() => import("@/components/landing/Footer"));
+
+const SectionFallback = () => <div className="min-h-[200px]" aria-hidden />;
 
 const Index = () => (
   <div className="min-h-screen bg-background overflow-x-hidden relative">
@@ -30,19 +33,33 @@ const Index = () => (
     </div>
     <Hero />
 
-    <LiveMarkets />
+    <Suspense fallback={<SectionFallback />}>
+      <LiveMarkets />
+    </Suspense>
 
-    <ScrollRevealWrapper>
-      <Features />
-    </ScrollRevealWrapper>
+    <Suspense fallback={<SectionFallback />}>
+      <ScrollRevealWrapper>
+        <Features />
+      </ScrollRevealWrapper>
+    </Suspense>
     <SectionDivider />
-    <HowItWorks />
-    
-    <Stats />
+    <Suspense fallback={<SectionFallback />}>
+      <HowItWorks />
+    </Suspense>
+
+    <Suspense fallback={<SectionFallback />}>
+      <Stats />
+    </Suspense>
     <SectionDivider />
-    <DemoCTA />
-    <FAQ />
-    <Footer />
+    <Suspense fallback={<SectionFallback />}>
+      <DemoCTA />
+    </Suspense>
+    <Suspense fallback={<SectionFallback />}>
+      <FAQ />
+    </Suspense>
+    <Suspense fallback={<SectionFallback />}>
+      <Footer />
+    </Suspense>
     <BackToTop />
   </div>
 );
