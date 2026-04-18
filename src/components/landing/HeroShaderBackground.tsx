@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Unicorn Studio scene embed — renders the exact JSON scene
@@ -193,48 +193,8 @@ function loadUnicornStudio(): Promise<void> {
 
 const HeroShaderBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  // Detect device + reduced motion preference
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 767px)");
-    const rm = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setIsMobile(mq.matches);
-    setReducedMotion(rm.matches);
-    const onMq = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    const onRm = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener("change", onMq);
-    rm.addEventListener("change", onRm);
-    return () => {
-      mq.removeEventListener("change", onMq);
-      rm.removeEventListener("change", onRm);
-    };
-  }, []);
-
-  // Defer mounting the heavy WebGL scene until after first paint + idle
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const idle = (cb: () => void) =>
-      (window as any).requestIdleCallback
-        ? (window as any).requestIdleCallback(cb, { timeout: 1500 })
-        : window.setTimeout(cb, 600);
-    const handle = idle(() => setReady(true));
-    return () => {
-      if ((window as any).cancelIdleCallback) {
-        try {
-          (window as any).cancelIdleCallback(handle);
-        } catch {}
-      } else {
-        clearTimeout(handle as any);
-      }
-    };
-  }, []);
 
   useEffect(() => {
-    if (!ready || reducedMotion) return;
     let scene: any = null;
     let cancelled = false;
 
@@ -245,15 +205,15 @@ const HeroShaderBackground = () => {
         if (!US?.addScene) return;
         US.addScene({
           element: containerRef.current,
-          fps: isMobile ? 30 : 60,
-          scale: isMobile ? 0.65 : 1,
-          dpi: isMobile ? 1 : 1.25,
+          fps: 60,
+          scale: 1,
+          dpi: 1.5,
           projectId: SCENE_JSON.id,
-          lazyLoad: true,
+          lazyLoad: false,
           fixed: false,
           altText: "Animated hero background",
           ariaLabel: "Animated hero background",
-          production: true,
+          production: false,
           interactivity: { mouse: { disableMobile: true } },
           data: SCENE_JSON,
         } as any)
@@ -270,33 +230,24 @@ const HeroShaderBackground = () => {
         scene?.destroy?.();
       } catch {}
     };
-  }, [ready, reducedMotion, isMobile]);
+  }, []);
 
   return (
     <div className="absolute inset-0 w-full h-full" aria-hidden="true">
-      {/* Deep black base + static green gradient (instant paint, fallback) */}
+      {/* Deep black base */}
+      <div className="absolute inset-0" style={{ background: "#0A0A0A" }} />
+
+      {/* Unicorn scene, hue-shifted purple → neon green */}
       <div
-        className="absolute inset-0"
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full"
         style={{
-          background:
-            "radial-gradient(80% 60% at 70% 55%, rgba(0,255,136,0.22) 0%, rgba(0,255,136,0) 65%), radial-gradient(60% 50% at 20% 80%, rgba(0,200,170,0.18) 0%, rgba(0,200,170,0) 70%), #0A0A0A",
+          display: "block",
+          filter: "hue-rotate(-150deg) saturate(1.45) brightness(1.05)",
         }}
       />
 
-      {/* Unicorn scene, hue-shifted purple → neon green (deferred mount) */}
-      {ready && !reducedMotion && (
-        <div
-          ref={containerRef}
-          className="absolute inset-0 w-full h-full animate-fade-in"
-          style={{
-            display: "block",
-            filter: "hue-rotate(-150deg) saturate(1.45) brightness(1.05)",
-            willChange: "transform, opacity",
-          }}
-        />
-      )}
-
-      {/* Neon green glow tint */}
+      {/* Neon green glow tint + signature #00FF88 wash */}
       <div
         className="absolute inset-0 pointer-events-none mix-blend-screen"
         style={{
@@ -305,7 +256,7 @@ const HeroShaderBackground = () => {
         }}
       />
 
-      {/* Subtle dark green vignette */}
+      {/* Subtle dark green vignette to deepen edges */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
