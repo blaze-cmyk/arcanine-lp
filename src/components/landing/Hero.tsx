@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import dashboardPreview from "@/assets/dashboard-preview.png";
+import noiseOverlay from "@/assets/noise-overlay.png";
 import HeroShaderBackground from "./HeroShaderBackground";
 
 const Hero = () => {
