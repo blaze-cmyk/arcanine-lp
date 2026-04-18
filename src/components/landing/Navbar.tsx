@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, LogIn } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import logo from "@/assets/arcanine-logo.png";
 import LanguageSelector from "./LanguageSelector";
@@ -65,11 +65,10 @@ const Navbar = () => {
 
           <div className="hidden md:flex items-center gap-2">
             <LanguageSelector />
-            <button className="inline-flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-foreground bg-secondary-btn rounded-xl transition-colors duration-200">
-              <LogIn className="w-4 h-4" />
+            <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-card/80 transition-colors duration-200">
               {t("nav.logIn")}
             </button>
-            <button className="px-3 py-2.5 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-xl transition-colors duration-200">
+            <button className="px-4 py-2 text-sm font-semibold text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg transition-colors duration-200">
               {t("nav.signUp")}
             </button>
           </div>
@@ -93,11 +92,10 @@ const Navbar = () => {
             ))}
             <LanguageSelector />
             <div className="flex gap-2 mt-2">
-              <button className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-foreground/70 border border-border rounded-lg">
-                <LogIn className="w-4 h-4" />
+              <button className="flex-1 px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg">
                 {t("nav.logIn")}
               </button>
-              <button className="flex-1 px-4 py-2 text-sm font-semibold text-primary-foreground bg-gradient-accent rounded-lg">
+              <button className="flex-1 px-4 py-2 text-sm font-semibold text-primary-foreground bg-primary rounded-lg">
                 {t("nav.signUp")}
               </button>
             </div>
