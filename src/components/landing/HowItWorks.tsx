@@ -84,35 +84,62 @@ const HowItWorks = () => {
       title: t("howItWorks.step2Title"),
       description: t("howItWorks.step2Desc"),
       visual: (
-        <div className="relative w-full h-[200px] flex items-center justify-center gap-4">
+        <div className="relative w-full h-[200px] flex items-center justify-center px-2">
           <div
-            className="rounded-2xl px-6 py-5 text-center flex flex-col items-center gap-2"
-            style={{ background: "hsl(var(--profit) / 0.08)", border: "1px solid hsl(var(--profit) / 0.2)" }}
+            className="w-full max-w-[220px] rounded-xl overflow-hidden"
+            style={{ background: "hsl(var(--background) / 0.6)", border: "1px solid hsl(var(--border) / 0.5)" }}
           >
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M14 6L22 18H6L14 6Z" fill="hsl(160, 45%, 50%)" fillOpacity="0.9" />
-            </svg>
-            <span className="text-sm font-semibold" style={{ color: "hsl(var(--profit))" }}>{t("howItWorks.up")}</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "hsl(var(--primary))" }} />
-            <div className="w-px h-8" style={{ background: "hsl(var(--border))" }} />
-            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "hsl(var(--primary) / 0.15)", border: "1px solid hsl(var(--primary) / 0.3)" }}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M7 1V13M1 7H13" stroke="hsl(24, 100%, 50%)" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+            {/* Investment fieldset */}
+            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
+              <fieldset className="border border-border/60 rounded-md px-2 pb-1.5 pt-0">
+                <legend className="text-[9px] text-muted-foreground px-1">Investment</legend>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground text-xs leading-none">−</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm font-semibold text-foreground tabular-nums font-display">100</span>
+                    <span className="text-muted-foreground text-[10px]">$</span>
+                  </div>
+                  <span className="text-muted-foreground text-xs leading-none">+</span>
+                </div>
+              </fieldset>
+              <div className="text-center text-[9px] font-bold tracking-wider mt-1" style={{ color: "hsl(var(--primary))" }}>
+                SWITCH
+              </div>
             </div>
-            <div className="w-px h-8" style={{ background: "hsl(var(--border))" }} />
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "hsl(var(--primary))" }} />
-          </div>
-          <div
-            className="rounded-2xl px-6 py-5 text-center flex flex-col items-center gap-2"
-            style={{ background: "hsl(var(--loss) / 0.08)", border: "1px solid hsl(var(--loss) / 0.2)" }}
-          >
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M14 22L6 10H22L14 22Z" fill="hsl(0, 55%, 55%)" fillOpacity="0.9" />
-            </svg>
-            <span className="text-sm font-semibold" style={{ color: "hsl(var(--loss))" }}>{t("howItWorks.down")}</span>
+
+            {/* Payout */}
+            <div className="px-2.5 py-2 border-b border-border/40">
+              <div className="flex items-center justify-between mb-0.5">
+                <span className="text-[10px] text-muted-foreground">Your payout</span>
+                <span className="text-[10px] font-bold" style={{ color: "hsl(var(--primary))" }}>90% return</span>
+              </div>
+              <div className="flex items-center justify-center py-0.5">
+                <span className="text-xl font-extrabold tracking-tight text-foreground font-display tabular-nums">190</span>
+                <span className="text-base font-bold ml-1" style={{ color: "hsl(var(--profit))" }}>$</span>
+              </div>
+            </div>
+
+            {/* Up / Down buttons */}
+            <div className="px-2.5 py-2 space-y-1.5">
+              <button
+                className="w-full py-2 rounded-md flex items-center justify-between px-3 text-xs font-bold"
+                style={{ background: "hsl(var(--profit))", color: "hsl(var(--background))" }}
+              >
+                <span>{t("howItWorks.up")}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
+                </svg>
+              </button>
+              <button
+                className="w-full py-2 rounded-md flex items-center justify-between px-3 text-xs font-bold"
+                style={{ background: "hsl(var(--loss))", color: "hsl(var(--background))" }}
+              >
+                <span>{t("howItWorks.down")}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       ),
