@@ -101,9 +101,9 @@ const Stats = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 transition-all duration-700" style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1.1] mb-4 bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)" }}>
-            {t("stats.heading")}<br className="hidden sm:block" /> {t("stats.headingLine2")}
+            {t("stats.heading")} {t("stats.headingLine2")}
           </h2>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">{t("stats.subheading")}</p>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("stats.subheading")}</p>
         </div>
 
         <div className="flex flex-wrap justify-evenly gap-8 mb-16">
