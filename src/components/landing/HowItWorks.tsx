@@ -97,18 +97,19 @@ const HowItWorks = () => {
             style={{ objectPosition: "60% 35%" }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60 pointer-events-none" />
-          {/* Card 2 — Down (back, tilted right) */}
+          {/* Card 2 — Down (back, tilted right) — Liquid glass */}
           <div
-            className="absolute w-[150px] rounded-xl overflow-hidden"
+            className="absolute w-[150px] rounded-2xl overflow-hidden backdrop-blur-xl"
             style={{
-              background: "hsl(var(--card))",
-              border: "1px solid hsl(var(--border) / 0.6)",
+              background: "linear-gradient(135deg, hsl(var(--card) / 0.55) 0%, hsl(var(--card) / 0.25) 100%)",
+              border: "1px solid hsl(0 0% 100% / 0.08)",
               transform: "translate(48px, -10px) rotate(8deg)",
-              boxShadow: "0 20px 40px -10px rgba(0,0,0,0.6)",
+              boxShadow: "0 20px 40px -10px rgba(0,0,0,0.6), inset 0 1px 0 hsl(0 0% 100% / 0.08)",
             }}
           >
-            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
-              <fieldset className="border border-border/60 rounded-md px-2 pb-1 pt-0">
+            <div className="absolute inset-0 pointer-events-none rounded-2xl" style={{ background: "radial-gradient(120% 60% at 50% 0%, hsl(0 0% 100% / 0.06), transparent 60%)" }} />
+            <div className="relative px-2.5 pt-2 pb-2" style={{ borderBottom: "1px solid hsl(0 0% 100% / 0.06)" }}>
+              <fieldset className="rounded-md px-2 pb-1 pt-0" style={{ border: "1px solid hsl(0 0% 100% / 0.1)", background: "hsl(0 0% 100% / 0.03)" }}>
                 <legend className="text-[8px] text-muted-foreground px-1">Investment</legend>
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground text-[10px]">−</span>
@@ -120,7 +121,7 @@ const HowItWorks = () => {
                 </div>
               </fieldset>
             </div>
-            <div className="px-2.5 py-1.5 border-b border-border/40">
+            <div className="relative px-2.5 py-1.5" style={{ borderBottom: "1px solid hsl(0 0% 100% / 0.06)" }}>
               <div className="flex items-center justify-between">
                 <span className="text-[9px] text-muted-foreground">Your payout</span>
                 <span className="text-[9px] font-bold" style={{ color: "hsl(var(--primary))" }}>90%</span>
@@ -130,10 +131,14 @@ const HowItWorks = () => {
                 <span className="text-xs font-bold ml-0.5" style={{ color: "hsl(var(--profit))" }}>$</span>
               </div>
             </div>
-            <div className="px-2.5 py-2">
+            <div className="relative px-2.5 py-2">
               <button
-                className="w-full py-1.5 rounded-md flex items-center justify-between px-2.5 text-[11px] font-bold text-white"
-                style={{ background: "hsl(var(--loss))" }}
+                className="w-full py-1.5 rounded-lg flex items-center justify-between px-2.5 text-[11px] font-bold text-white backdrop-blur-md"
+                style={{
+                  background: "linear-gradient(180deg, hsl(var(--loss) / 0.85), hsl(var(--loss) / 0.65))",
+                  boxShadow: "inset 0 1px 0 hsl(0 0% 100% / 0.2), 0 4px 12px -4px hsl(var(--loss) / 0.5)",
+                  border: "1px solid hsl(0 0% 100% / 0.12)",
+                }}
               >
                 <span>Down</span>
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -143,18 +148,19 @@ const HowItWorks = () => {
             </div>
           </div>
 
-          {/* Card 1 — Up (front, tilted left) */}
+          {/* Card 1 — Up (front, tilted left) — Liquid glass */}
           <div
-            className="absolute w-[160px] rounded-xl overflow-hidden"
+            className="absolute w-[160px] rounded-2xl overflow-hidden backdrop-blur-xl"
             style={{
-              background: "hsl(var(--card))",
-              border: "1px solid hsl(var(--border) / 0.7)",
+              background: "linear-gradient(135deg, hsl(var(--card) / 0.6) 0%, hsl(var(--card) / 0.3) 100%)",
+              border: "1px solid hsl(0 0% 100% / 0.1)",
               transform: "translate(-48px, 18px) rotate(-8deg)",
-              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.75)",
+              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.75), inset 0 1px 0 hsl(0 0% 100% / 0.1)",
             }}
           >
-            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
-              <fieldset className="border border-border/60 rounded-md px-2 pb-1 pt-0">
+            <div className="absolute inset-0 pointer-events-none rounded-2xl" style={{ background: "radial-gradient(120% 60% at 50% 0%, hsl(0 0% 100% / 0.08), transparent 60%)" }} />
+            <div className="relative px-2.5 pt-2 pb-2" style={{ borderBottom: "1px solid hsl(0 0% 100% / 0.06)" }}>
+              <fieldset className="rounded-md px-2 pb-1 pt-0" style={{ border: "1px solid hsl(0 0% 100% / 0.1)", background: "hsl(0 0% 100% / 0.03)" }}>
                 <legend className="text-[8px] text-muted-foreground px-1">Investment</legend>
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground text-[10px]">−</span>
@@ -166,7 +172,7 @@ const HowItWorks = () => {
                 </div>
               </fieldset>
             </div>
-            <div className="px-2.5 py-1.5 border-b border-border/40">
+            <div className="relative px-2.5 py-1.5" style={{ borderBottom: "1px solid hsl(0 0% 100% / 0.06)" }}>
               <div className="flex items-center justify-between">
                 <span className="text-[9px] text-muted-foreground">Your payout</span>
                 <span className="text-[9px] font-bold" style={{ color: "hsl(var(--primary))" }}>90%</span>
@@ -176,10 +182,14 @@ const HowItWorks = () => {
                 <span className="text-xs font-bold ml-0.5" style={{ color: "hsl(var(--profit))" }}>$</span>
               </div>
             </div>
-            <div className="px-2.5 py-2">
+            <div className="relative px-2.5 py-2">
               <button
-                className="w-full py-1.5 rounded-md flex items-center justify-between px-2.5 text-[11px] font-bold text-white"
-                style={{ background: "hsl(var(--profit))" }}
+                className="w-full py-1.5 rounded-lg flex items-center justify-between px-2.5 text-[11px] font-bold text-white backdrop-blur-md"
+                style={{
+                  background: "linear-gradient(180deg, hsl(var(--profit) / 0.9), hsl(var(--profit) / 0.7))",
+                  boxShadow: "inset 0 1px 0 hsl(0 0% 100% / 0.25), 0 4px 12px -4px hsl(var(--profit) / 0.55)",
+                  border: "1px solid hsl(0 0% 100% / 0.14)",
+                }}
               >
                 <span>Up</span>
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
