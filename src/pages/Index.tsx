@@ -40,8 +40,8 @@ const Index = () => (
     
     <Stats />
     <SectionDivider />
-    <FAQ />
     <DemoCTA />
+    <FAQ />
     <Footer />
     <BackToTop />
   </div>
