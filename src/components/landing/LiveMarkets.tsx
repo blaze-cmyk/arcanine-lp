@@ -523,7 +523,7 @@ const LiveMarkets = () => {
 
   return (
     <section
-      className="relative py-20 px-4 sm:px-6"
+      className="relative pt-6 pb-16 sm:py-20 px-4 sm:px-6"
       style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif" }}
     >
       <div className="max-w-7xl mx-auto">
