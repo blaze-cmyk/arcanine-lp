@@ -6,7 +6,7 @@ const Footer = () => {
 
   const quickMenu = [
     { label: t("footer.howItWorks"), href: "#how-it-works" },
-    { label: t("footer.assetIndex"), href: "#" },
+    
     { label: t("footer.tradingTerminal"), href: "#" },
     { label: t("footer.demoAccount"), href: "#" },
     { label: t("footer.faqs"), href: "#faq" },
