@@ -94,7 +94,7 @@ const HowItWorks = () => {
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
-            style={{ objectPosition: "30% center" }}
+            style={{ objectPosition: "60% 35%" }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60 pointer-events-none" />
           {/* Card 2 — Down (back, tilted right) */}
