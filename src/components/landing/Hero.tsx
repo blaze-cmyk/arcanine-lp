@@ -44,10 +44,7 @@ const Hero = () => {
 
       {/* ── Content ── */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
-        <div className="animate-slide-up inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-soft" />
-          <span className="text-xs sm:text-sm font-medium text-primary">{t("hero.badge")}</span>
-        </div>
+        <div aria-hidden className="mb-6 h-7 sm:h-8" />
         <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1.15] mb-7 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           {t("hero.headline")}
         </h1>
