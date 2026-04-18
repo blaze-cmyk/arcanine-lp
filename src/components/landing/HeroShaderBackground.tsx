@@ -257,12 +257,24 @@ const HeroShaderBackground = () => {
       {/* Deep black base */}
       <div className="absolute inset-0" style={{ background: "#0A0A0A" }} />
 
+      {/* Instant gradient placeholder (shown until WebGL scene is ready) */}
+      {!ready && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(80% 60% at 50% 60%, rgba(0,255,136,0.18) 0%, rgba(0,80,60,0.25) 40%, #0A0A0A 80%)",
+          }}
+        />
+      )}
+
       {/* Unicorn scene, hue-shifted purple → neon green */}
       <div
         ref={containerRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full transition-opacity duration-700"
         style={{
           display: "block",
+          opacity: ready ? 1 : 0,
           filter: "hue-rotate(-150deg) saturate(1.45) brightness(1.05)",
         }}
       />
