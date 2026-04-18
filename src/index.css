@@ -255,3 +255,54 @@
   0% { transform: translateY(-50%); }
   100% { transform: translateY(0); }
 }
+
+/* ── Hero animated 3D-like glow blobs ── */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform, opacity;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
+.hero-blob-1 {
+  width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
+  top: -10%; left: 50%;
+  background: radial-gradient(circle at 30% 30%, hsl(152 100% 50% / 0.9), hsl(152 100% 40% / 0.4) 45%, transparent 70%);
+  animation: blob-float-1 18s ease-in-out infinite;
+}
+
+.hero-blob-2 {
+  width: 55vw; height: 55vw; max-width: 700px; max-height: 700px;
+  top: 5%; left: 20%;
+  background: radial-gradient(circle at 60% 40%, hsl(159 100% 60% / 0.7), hsl(152 100% 45% / 0.25) 50%, transparent 75%);
+  animation: blob-float-2 22s ease-in-out infinite;
+}
+
+.hero-blob-3 {
+  width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
+  top: 15%; right: 10%;
+  background: radial-gradient(circle at 40% 50%, hsl(152 100% 55% / 0.6), hsl(152 100% 35% / 0.2) 55%, transparent 80%);
+  animation: blob-float-3 26s ease-in-out infinite;
+}
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(-50%, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-55%, 8%) scale(1.15) rotate(40deg); }
+  66% { transform: translate(-45%, -6%) scale(0.9) rotate(-30deg); }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(15%, 12%) scale(1.2) rotate(60deg); }
+}
+
+@keyframes blob-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-12%, 10%) scale(1.1) rotate(-50deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob { animation: none; }
+}
