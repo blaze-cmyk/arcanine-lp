@@ -566,9 +566,6 @@ const LiveMarkets = () => {
               <TickerCard key={asset.symbol} asset={asset} quote={quotes[asset.symbol]} />
             ))}
           </div>
-          {/* Right fade */}
-          <div className="pointer-events-none absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-background to-transparent" />
-          <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-background to-transparent" />
         </div>
       </div>
     </section>
