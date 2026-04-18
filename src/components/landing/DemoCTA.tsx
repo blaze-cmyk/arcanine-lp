@@ -26,8 +26,8 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
 
   return (
     <div className="relative overflow-hidden" style={{ width: 120, height: containerH }}>
-      <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to bottom, #0B0B0E 20%, transparent 100%)" }} />
-      <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to top, #0B0B0E 20%, transparent 100%)" }} />
+      <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to bottom, #111111 20%, transparent 100%)" }} />
+      <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to top, #111111 20%, transparent 100%)" }} />
       <div
         className="flex flex-col items-center absolute left-0 right-0"
         style={{
@@ -37,14 +37,14 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
       >
         {strip.map((d, i) => {
           const distFromTarget = phase === "done" ? Math.abs(i - targetIndex) : -1;
-          let colorClass = "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-30";
+          let colorClass = "text-[#00FF88] opacity-30";
           if (phase === "done") {
-            if (distFromTarget === 0) colorClass = "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-100";
-            else if (distFromTarget === 1) colorClass = "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-40";
+            if (distFromTarget === 0) colorClass = "text-[#00FF88] opacity-100";
+            else if (distFromTarget === 1) colorClass = "text-[#00FF88] opacity-40";
           }
           return (
             <div key={i} className="flex items-center justify-center shrink-0" style={{ height: digitHeight }}>
-              <span className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}>{d}</span>
+              <span className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`} style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>{d}</span>
             </div>
           );
         })}
