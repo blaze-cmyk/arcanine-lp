@@ -9,19 +9,27 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
-      {/* Animated WebGL liquid gradient background */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <HeroShaderBackground />
-        {/* Noise grain overlay on shader */}
+      {/* Animated WebGL liquid gradient — top centered glow band */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0 w-[140%] h-[70vh] sm:h-[85vh] overflow-hidden">
         <div
-          className="absolute inset-0 mix-blend-overlay opacity-40"
+          className="absolute inset-0"
           style={{
-            backgroundImage: `url(${noiseOverlay})`,
-            backgroundRepeat: "repeat",
-            backgroundSize: "300px 300px",
+            maskImage:
+              "radial-gradient(ellipse 55% 65% at 50% 30%, #000 25%, rgba(0,0,0,0.55) 55%, transparent 80%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 55% 65% at 50% 30%, #000 25%, rgba(0,0,0,0.55) 55%, transparent 80%)",
           }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/50 to-background" />
+        >
+          <HeroShaderBackground />
+          <div
+            className="absolute inset-0 mix-blend-overlay opacity-40"
+            style={{
+              backgroundImage: `url(${noiseOverlay})`,
+              backgroundRepeat: "repeat",
+              backgroundSize: "300px 300px",
+            }}
+          />
+        </div>
       </div>
 
       {/* Noise texture */}
