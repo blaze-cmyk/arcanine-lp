@@ -19,11 +19,6 @@ const Hero = () => {
 
       {/* ── Content ── */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
-        <div className="animate-slide-up inline-flex items-center gap-3 mb-6 pl-2 pr-5 rounded-full border border-border/40 bg-card/60 backdrop-blur-sm py-[8px]">
-          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold tabular-nums">{t("hero.badgeRank")}</span>
-          <span className="text-sm text-muted-foreground font-medium">{t("hero.badge")}</span>
-        </div>
-
         <h1 className="animate-slide-up text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] leading-[1.15] mb-7 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
           {t("hero.headline")}
         </h1>
