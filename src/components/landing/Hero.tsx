@@ -49,7 +49,7 @@ const Hero = () => {
           {t("hero.headline")}
         </h1>
 
-        <p className="animate-slide-up-delay-1 text-sm sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed px-4 sm:px-0">
+        <p className="animate-slide-up-delay-1 text-sm sm:text-xl text-foreground/80 max-w-2xl mx-auto mb-12 leading-relaxed px-4 sm:px-0">
           {t("hero.subhead")}
         </p>
 
