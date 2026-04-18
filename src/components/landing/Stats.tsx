@@ -7,7 +7,6 @@ const STATS_DATA = [
   { value: 50000, suffix: "+", prefix: "", labelKey: "stats.activeTraders" },
   { value: 130, suffix: "+", prefix: "", labelKey: "stats.countries" },
   { value: 140, suffix: "+", prefix: "", labelKey: "stats.tradingAssets" },
-  { value: 2, suffix: "M+", prefix: "$", labelKey: "stats.monthlyPayouts" },
 ];
 
 const INITIAL_COUNT = 12;
