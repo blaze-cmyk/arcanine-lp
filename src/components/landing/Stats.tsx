@@ -106,15 +106,6 @@ const Stats = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("stats.subheading")}</p>
         </div>
 
-        <div className="flex flex-wrap justify-evenly gap-8 mb-16">
-          {STATS_DATA.map((stat, i) => (
-            <div key={stat.labelKey} className="flex flex-col items-center text-center gap-2 transition-all duration-700" style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transitionDelay: `${150 + i * 120}ms` }}>
-              <AnimatedNumber value={stat.value} prefix={stat.prefix} suffix={stat.suffix} trigger={visible} duration={2000 + i * 200} />
-              <p className="text-xs sm:text-sm text-muted-foreground tracking-wide uppercase">{t(stat.labelKey)}</p>
-            </div>
-          ))}
-        </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {visibleReviews.map((review, i) => (
             <ReviewCard
