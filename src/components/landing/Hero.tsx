@@ -9,20 +9,20 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
-      {/* Animated WebGL liquid gradient — top centered glow band */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0 w-[140%] h-[70vh] sm:h-[85vh] overflow-hidden">
+      {/* Animated WebGL liquid gradient — top glow band */}
+      <div className="absolute top-0 left-0 right-0 pointer-events-none z-0 h-[60vh] sm:h-[75vh] overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
             maskImage:
-              "radial-gradient(ellipse 55% 65% at 50% 30%, #000 25%, rgba(0,0,0,0.55) 55%, transparent 80%)",
+              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 55% 65% at 50% 30%, #000 25%, rgba(0,0,0,0.55) 55%, transparent 80%)",
+              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
           }}
         >
           <HeroShaderBackground />
           <div
-            className="absolute inset-0 mix-blend-overlay opacity-40"
+            className="absolute inset-0 mix-blend-overlay opacity-30"
             style={{
               backgroundImage: `url(${noiseOverlay})`,
               backgroundRepeat: "repeat",
