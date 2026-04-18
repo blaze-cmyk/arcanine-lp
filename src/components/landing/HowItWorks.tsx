@@ -84,58 +84,96 @@ const HowItWorks = () => {
       title: t("howItWorks.step2Title"),
       description: t("howItWorks.step2Desc"),
       visual: (
-        <div className="relative w-full h-[200px] flex items-center justify-center">
-          {/* Down card (back, tilted right) */}
+        <div className="relative w-full h-[220px] flex items-center justify-center">
+          {/* Card 2 — Down (back, tilted right) */}
           <div
-            className="absolute w-[150px] rounded-2xl overflow-hidden"
+            className="absolute w-[150px] rounded-xl overflow-hidden"
             style={{
-              background: "#FFFFFF",
-              transform: "translate(28px, -22px) rotate(8deg)",
+              background: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border) / 0.6)",
+              transform: "translate(48px, -10px) rotate(8deg)",
               boxShadow: "0 20px 40px -10px rgba(0,0,0,0.6)",
             }}
           >
-            <div className="px-4 pt-4 pb-3 flex items-center justify-between">
-              <div className="w-5 h-5 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 text-xs font-bold">−</div>
-              <div className="flex flex-col items-center">
-                <span className="text-2xl font-extrabold tracking-tight text-neutral-900 font-display tabular-nums leading-none">$100</span>
-                <span className="text-[10px] text-neutral-500 mt-1">
-                  To Win <span className="font-bold" style={{ color: "hsl(var(--profit))" }}>$133</span>
-                </span>
-              </div>
-              <div className="w-5 h-5 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 text-xs font-bold">+</div>
+            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
+              <fieldset className="border border-border/60 rounded-md px-2 pb-1 pt-0">
+                <legend className="text-[8px] text-muted-foreground px-1">Investment</legend>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground text-[10px]">−</span>
+                  <div className="flex items-center gap-0.5">
+                    <span className="text-[11px] font-semibold text-foreground tabular-nums font-display">100</span>
+                    <span className="text-muted-foreground text-[9px]">$</span>
+                  </div>
+                  <span className="text-muted-foreground text-[10px]">+</span>
+                </div>
+              </fieldset>
             </div>
-            <div
-              className="py-2 text-center text-[11px] font-semibold text-white"
-              style={{ background: "hsl(var(--loss))" }}
-            >
-              Buy Down
+            <div className="px-2.5 py-1.5 border-b border-border/40">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] text-muted-foreground">Your payout</span>
+                <span className="text-[9px] font-bold" style={{ color: "hsl(var(--primary))" }}>90%</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <span className="text-base font-extrabold text-foreground font-display tabular-nums leading-tight">190</span>
+                <span className="text-xs font-bold ml-0.5" style={{ color: "hsl(var(--profit))" }}>$</span>
+              </div>
+            </div>
+            <div className="px-2.5 py-2">
+              <button
+                className="w-full py-1.5 rounded-md flex items-center justify-between px-2.5 text-[11px] font-bold text-white"
+                style={{ background: "hsl(var(--loss))" }}
+              >
+                <span>Down</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
+                </svg>
+              </button>
             </div>
           </div>
 
-          {/* Up card (front, tilted left) */}
+          {/* Card 1 — Up (front, tilted left) */}
           <div
-            className="absolute w-[160px] rounded-2xl overflow-hidden"
+            className="absolute w-[160px] rounded-xl overflow-hidden"
             style={{
-              background: "#FFFFFF",
-              transform: "translate(-28px, 22px) rotate(-8deg)",
-              boxShadow: "0 20px 40px -10px rgba(0,0,0,0.7)",
+              background: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border) / 0.7)",
+              transform: "translate(-48px, 18px) rotate(-8deg)",
+              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.75)",
             }}
           >
-            <div className="px-4 pt-4 pb-3 flex items-center justify-between">
-              <div className="w-5 h-5 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 text-xs font-bold">−</div>
-              <div className="flex flex-col items-center">
-                <span className="text-2xl font-extrabold tracking-tight text-neutral-900 font-display tabular-nums leading-none">$100</span>
-                <span className="text-[10px] text-neutral-500 mt-1">
-                  To Win <span className="font-bold" style={{ color: "hsl(var(--profit))" }}>$190</span>
-                </span>
-              </div>
-              <div className="w-5 h-5 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 text-xs font-bold">+</div>
+            <div className="px-2.5 pt-2 pb-2 border-b border-border/40">
+              <fieldset className="border border-border/60 rounded-md px-2 pb-1 pt-0">
+                <legend className="text-[8px] text-muted-foreground px-1">Investment</legend>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground text-[10px]">−</span>
+                  <div className="flex items-center gap-0.5">
+                    <span className="text-[11px] font-semibold text-foreground tabular-nums font-display">100</span>
+                    <span className="text-muted-foreground text-[9px]">$</span>
+                  </div>
+                  <span className="text-muted-foreground text-[10px]">+</span>
+                </div>
+              </fieldset>
             </div>
-            <div
-              className="py-2 text-center text-[11px] font-semibold text-white"
-              style={{ background: "hsl(var(--profit))" }}
-            >
-              Buy Up
+            <div className="px-2.5 py-1.5 border-b border-border/40">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] text-muted-foreground">Your payout</span>
+                <span className="text-[9px] font-bold" style={{ color: "hsl(var(--primary))" }}>90%</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <span className="text-base font-extrabold text-foreground font-display tabular-nums leading-tight">190</span>
+                <span className="text-xs font-bold ml-0.5" style={{ color: "hsl(var(--profit))" }}>$</span>
+              </div>
+            </div>
+            <div className="px-2.5 py-2">
+              <button
+                className="w-full py-1.5 rounded-md flex items-center justify-between px-2.5 text-[11px] font-bold text-white"
+                style={{ background: "hsl(var(--profit))" }}
+              >
+                <span>Up</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
