@@ -10,14 +10,14 @@ const Hero = () => {
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
       {/* Animated WebGL liquid gradient — top glow band */}
-      <div className="absolute top-0 left-0 right-0 pointer-events-none z-0 h-[60vh] sm:h-[75vh] overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 pointer-events-none z-0 h-[32vh] sm:h-[75vh] overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
             maskImage:
-              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+              "linear-gradient(to bottom, #000 0%, #000 50%, transparent 95%)",
             WebkitMaskImage:
-              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+              "linear-gradient(to bottom, #000 0%, #000 50%, transparent 95%)",
           }}
         >
           <HeroShaderBackground />
