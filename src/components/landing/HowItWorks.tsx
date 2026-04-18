@@ -52,9 +52,9 @@ const HowItWorks = () => {
             ].map((row) => (
               <div
                 key={row.name}
-                className="grid items-center px-3 py-2"
+                className="grid items-center gap-2 px-3 py-2"
                 style={{
-                  gridTemplateColumns: "1.6fr 1fr 0.8fr 0.8fr",
+                  gridTemplateColumns: "1.5fr 1fr 1fr 0.8fr",
                   background: row.selected ? "hsl(var(--profit) / 0.08)" : "transparent",
                   borderTop: "1px solid hsl(var(--border) / 0.2)",
                   borderLeft: row.selected ? "2px solid hsl(var(--profit))" : "2px solid transparent",
