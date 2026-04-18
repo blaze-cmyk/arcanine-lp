@@ -18,6 +18,7 @@ const Hero = () => {
               "linear-gradient(to bottom, #000 0%, #000 50%, transparent 95%)",
             WebkitMaskImage:
               "linear-gradient(to bottom, #000 0%, #000 50%, transparent 95%)",
+            filter: "blur(40px)",
           }}
         >
           <HeroShaderBackground />
