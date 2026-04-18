@@ -18,16 +18,16 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
     return digits;
   }, [target]);
 
-  const digitHeight = 140;
+  const digitHeight = 90;
   const targetIndex = strip.length - 2;
   const totalTravel = targetIndex * digitHeight;
-  const containerH = 300;
+  const containerH = 200;
   const centerOffset = (containerH - digitHeight) / 2;
 
   return (
-    <div className="relative overflow-hidden" style={{ width: 120, height: containerH }}>
-      <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to bottom, #111111 20%, transparent 100%)" }} />
-      <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to top, #111111 20%, transparent 100%)" }} />
+    <div className="relative overflow-hidden w-[44px] sm:w-[80px] md:w-[120px]" style={{ height: containerH }}>
+      <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 60, background: "linear-gradient(to bottom, #111111 20%, transparent 100%)" }} />
+      <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 60, background: "linear-gradient(to top, #111111 20%, transparent 100%)" }} />
       <div
         className="flex flex-col items-center absolute left-0 right-0"
         style={{
@@ -44,7 +44,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
           }
           return (
             <div key={i} className="flex items-center justify-center shrink-0" style={{ height: digitHeight }}>
-              <span className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`} style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>{d}</span>
+              <span className={`text-[60px] sm:text-[100px] md:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`} style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>{d}</span>
             </div>
           );
         })}
@@ -54,7 +54,7 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
 };
 
 const ReelSeparator = () => (
-  <div className="flex items-center justify-center w-[1px] mx-0" style={{ height: 300 }}>
+  <div className="flex items-center justify-center w-[1px] mx-0 h-[200px]">
     <div className="w-full h-3/5" style={{ background: "linear-gradient(to bottom, transparent 10%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.06) 70%, transparent 90%)" }} />
   </div>
 );
@@ -73,9 +73,9 @@ const DemoCTA = () => {
   const targets = [1, 0, 0, 0, 0];
 
   return (
-    <section id="demo" className="py-20 sm:py-28 px-4 sm:px-6" style={{ background: "#0A0A0A" }}>
+    <section id="demo" className="py-16 sm:py-28 px-4 sm:px-6" style={{ background: "#0A0A0A" }}>
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-        <h2 className="text-[3.75rem] font-bold tracking-[-0.02em] leading-[1] mb-16 text-white">
+        <h2 className="text-3xl sm:text-5xl md:text-[3.75rem] font-bold tracking-[-0.02em] leading-[1.05] mb-10 sm:mb-16 text-white">
           {t("demo.heading")}
           <br />
           {t("demo.headingLine2")}
@@ -83,12 +83,12 @@ const DemoCTA = () => {
 
         <div
           ref={ref}
-          className="relative flex items-center rounded-3xl px-6 sm:px-10 mb-12 overflow-hidden"
+          className="relative flex items-center rounded-2xl sm:rounded-3xl px-3 sm:px-6 md:px-10 mb-10 sm:mb-12 overflow-hidden max-w-full"
           style={{ background: "#111111", boxShadow: "inset 0 2px 30px rgba(0,0,0,0.7), inset 0 -2px 15px rgba(0,0,0,0.5), 0 0 80px rgba(0,255,136,0.06), 0 4px 40px rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0,255,136,0.08) 0%, transparent 70%)" }} />
-          <div className="flex items-center relative z-10 mr-1" style={{ height: 300 }}>
-            <span className="text-[130px] sm:text-[150px] font-bold font-display leading-none select-none text-[#00FF88]" style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>$</span>
+          <div className="flex items-center relative z-10 mr-1 h-[200px]">
+            <span className="text-[60px] sm:text-[100px] md:text-[150px] font-bold font-display leading-none select-none text-[#00FF88]" style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>$</span>
           </div>
           <div className="flex items-center relative z-10">
             {isVisible
@@ -98,11 +98,11 @@ const DemoCTA = () => {
                     <SlotReel target={digit} delay={i * 250} />
                   </div>
                 ))
-              : targets.map((_, i) => <div key={i} style={{ width: 120, height: 300 }} />)}
+              : targets.map((_, i) => <div key={i} className="w-[44px] sm:w-[80px] md:w-[120px] h-[200px]" />)}
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 mb-12 text-base" style={{ color: "#CCCCCC" }}>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-10 mb-10 sm:mb-12 text-sm sm:text-base" style={{ color: "#CCCCCC" }}>
           <div className="flex items-center gap-2.5">
             <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#00FF88" }}>
               <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -117,7 +117,7 @@ const DemoCTA = () => {
           </div>
         </div>
 
-        <button className="inline-flex items-center px-10 py-3.5 font-semibold text-base rounded-xl transition-transform duration-200 hover:scale-[1.02]" style={{ background: "#00FF88", color: "#0A0A0A", boxShadow: "0 0 30px rgba(0,255,136,0.35)" }}>
+        <button className="inline-flex items-center px-8 sm:px-10 py-3.5 font-semibold text-sm sm:text-base rounded-xl transition-transform duration-200 hover:scale-[1.02]" style={{ background: "#00FF88", color: "#0A0A0A", boxShadow: "0 0 30px rgba(0,255,136,0.35)" }}>
           {t("demo.cta")}
         </button>
       </div>
