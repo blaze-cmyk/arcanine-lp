@@ -26,8 +26,8 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
 
   return (
     <div className="relative overflow-hidden" style={{ width: 120, height: containerH }}>
-      <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to bottom, #0B0B0E 20%, transparent 100%)" }} />
-      <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to top, #0B0B0E 20%, transparent 100%)" }} />
+      <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to bottom, #111111 20%, transparent 100%)" }} />
+      <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 90, background: "linear-gradient(to top, #111111 20%, transparent 100%)" }} />
       <div
         className="flex flex-col items-center absolute left-0 right-0"
         style={{
@@ -37,14 +37,14 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
       >
         {strip.map((d, i) => {
           const distFromTarget = phase === "done" ? Math.abs(i - targetIndex) : -1;
-          let colorClass = "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-30";
+          let colorClass = "text-[#00FF88] opacity-30";
           if (phase === "done") {
-            if (distFromTarget === 0) colorClass = "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-100";
-            else if (distFromTarget === 1) colorClass = "text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] opacity-40";
+            if (distFromTarget === 0) colorClass = "text-[#00FF88] opacity-100";
+            else if (distFromTarget === 1) colorClass = "text-[#00FF88] opacity-40";
           }
           return (
             <div key={i} className="flex items-center justify-center shrink-0" style={{ height: digitHeight }}>
-              <span className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`}>{d}</span>
+              <span className={`text-[130px] sm:text-[150px] font-bold font-display leading-none select-none transition-all duration-500 ${colorClass}`} style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>{d}</span>
             </div>
           );
         })}
@@ -73,9 +73,9 @@ const DemoCTA = () => {
   const targets = [1, 0, 0, 0, 0];
 
   return (
-    <section id="demo" className="py-20 sm:py-28 px-4 sm:px-6">
+    <section id="demo" className="py-20 sm:py-28 px-4 sm:px-6" style={{ background: "#0A0A0A" }}>
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-        <h2 className="text-[3.75rem] font-bold tracking-[-0.02em] leading-[1] mb-16 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #fff 22.5%, rgba(255,255,255,0.7) 100%)' }}>
+        <h2 className="text-[3.75rem] font-bold tracking-[-0.02em] leading-[1] mb-16 text-white">
           {t("demo.heading")}
           <br />
           {t("demo.headingLine2")}
@@ -84,11 +84,11 @@ const DemoCTA = () => {
         <div
           ref={ref}
           className="relative flex items-center rounded-3xl px-6 sm:px-10 mb-12 overflow-hidden"
-          style={{ background: "#0B0B0E", boxShadow: "inset 0 2px 30px rgba(0,0,0,0.7), inset 0 -2px 15px rgba(0,0,0,0.5), 0 0 80px rgba(200,140,40,0.05), 0 4px 40px rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.06)" }}
+          style={{ background: "#111111", boxShadow: "inset 0 2px 30px rgba(0,0,0,0.7), inset 0 -2px 15px rgba(0,0,0,0.5), 0 0 80px rgba(0,255,136,0.06), 0 4px 40px rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(200,140,40,0.08) 0%, transparent 70%)" }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0,255,136,0.08) 0%, transparent 70%)" }} />
           <div className="flex items-center relative z-10 mr-1" style={{ height: 300 }}>
-            <span className="text-[130px] sm:text-[150px] font-bold font-display leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12]">$</span>
+            <span className="text-[130px] sm:text-[150px] font-bold font-display leading-none select-none text-[#00FF88]" style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>$</span>
           </div>
           <div className="flex items-center relative z-10">
             {isVisible
@@ -102,22 +102,22 @@ const DemoCTA = () => {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 mb-12 text-base text-muted-foreground">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 mb-12 text-base" style={{ color: "#CCCCCC" }}>
           <div className="flex items-center gap-2.5">
-            <div className="w-5 h-5 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center flex-shrink-0">
-              <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#00FF88" }}>
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
             {t("demo.bullet1")}
           </div>
           <div className="flex items-center gap-2.5">
-            <div className="w-5 h-5 rounded-full bg-[hsl(var(--profit))] flex items-center justify-center flex-shrink-0">
-              <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#00FF88" }}>
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
             {t("demo.bullet2")}
           </div>
         </div>
 
-        <button className="inline-flex items-center px-10 py-3.5 bg-gradient-accent text-primary-foreground font-semibold text-base rounded-xl glow-orange transition-colors duration-200">
+        <button className="inline-flex items-center px-10 py-3.5 font-semibold text-base rounded-xl transition-transform duration-200 hover:scale-[1.02]" style={{ background: "#00FF88", color: "#0A0A0A", boxShadow: "0 0 30px rgba(0,255,136,0.35)" }}>
           {t("demo.cta")}
         </button>
       </div>
