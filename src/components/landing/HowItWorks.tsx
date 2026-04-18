@@ -131,10 +131,10 @@ const HowItWorks = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(255,106,0,0.04) 0%, transparent 70%)" }} />
       <div className="max-w-6xl mx-auto relative">
         <div
-          className="text-center mb-16 transition-all duration-700"
+          className="text-left mb-16 transition-all duration-700"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}
         >
-          <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--success))" }}>
+          <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "#00E676" }}>
             {t("howItWorks.eyebrow")}
           </p>
           <h2
@@ -143,7 +143,7 @@ const HowItWorks = () => {
           >
             {t("howItWorks.heading")}
           </h2>
-          <p className="text-muted-foreground text-lg max-w-lg mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
             {t("howItWorks.subheading")}
           </p>
         </div>
