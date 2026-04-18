@@ -143,7 +143,7 @@ const HowItWorks = () => {
           >
             {t("howItWorks.heading")}
           </h2>
-          <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
+          <p className="text-foreground/80 text-lg max-w-lg leading-relaxed">
             {t("howItWorks.subheading")}
           </p>
         </div>
