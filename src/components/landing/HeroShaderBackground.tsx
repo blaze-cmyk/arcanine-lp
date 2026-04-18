@@ -215,9 +215,8 @@ const HeroShaderBackground = () => {
           ariaLabel: "Animated hero background",
           production: false,
           interactivity: { mouse: { disableMobile: true } },
-          // @ts-expect-error - data is a supported runtime option
           data: SCENE_JSON,
-        })
+        } as any)
           .then((s: any) => {
             scene = s;
           })
