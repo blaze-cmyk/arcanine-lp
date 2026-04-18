@@ -43,7 +43,7 @@ const AnimatedNumber = ({ value, prefix, suffix, trigger, duration = 2000 }: { v
   const formatted = value >= 1000 ? display.toLocaleString("en-US") : String(display);
 
   return (
-    <span className="text-5xl sm:text-6xl md:text-7xl font-bold font-display leading-none tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-[#E8A94A] via-[#D4892A] to-[#A05E12] select-none tabular-nums">
+    <span className="text-5xl sm:text-6xl md:text-7xl font-bold font-display leading-none tracking-tight text-[#00FF88] select-none tabular-nums" style={{ textShadow: "0 0 40px rgba(0,255,136,0.35)" }}>
       {prefix}{formatted}{suffix}
     </span>
   );
@@ -53,26 +53,26 @@ const ReviewCard = ({ review, visible, delay }: { review: (typeof REVIEWS)[0]; v
   <div
     className="relative rounded-2xl p-6 overflow-hidden group transition-all duration-700"
     style={{
-      background: "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.008) 100%)",
+      background: "#111111",
       border: "1px solid rgba(255,255,255,0.06)",
       opacity: visible ? 1 : 0,
       transform: visible ? "translateY(0)" : "translateY(24px)",
       transitionDelay: `${delay}ms`,
     }}
   >
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(232,169,74,0.04) 0%, transparent 70%)" }} />
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(0,255,136,0.05) 0%, transparent 70%)" }} />
     <div className="flex gap-0.5 mb-3">
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={14} className={i < review.rating ? "text-[#E8A94A] fill-[#E8A94A]" : "text-muted-foreground/20"} />
+        <Star key={i} size={14} className={i < review.rating ? "text-[#00FF88] fill-[#00FF88]" : "text-muted-foreground/20"} />
       ))}
     </div>
-    <p className="text-sm text-muted-foreground leading-relaxed mb-4">"{review.text}"</p>
+    <p className="text-sm text-[#CCCCCC] leading-relaxed mb-4">"{review.text}"</p>
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2.5">
         <div className="w-8 h-8 rounded-full flex items-center justify-center text-base" style={{ background: "rgba(255,255,255,0.05)" }}>{review.avatar}</div>
-        <span className="text-sm font-medium text-foreground/80">{review.name}</span>
+        <span className="text-sm font-medium text-white">{review.name}</span>
       </div>
-      <span className="text-xs font-display tabular-nums font-semibold text-profit">{review.profit}</span>
+      <span className="text-xs font-display tabular-nums font-semibold text-[#00FF88]">{review.profit}</span>
     </div>
   </div>
 );
