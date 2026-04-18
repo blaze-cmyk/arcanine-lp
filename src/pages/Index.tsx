@@ -4,7 +4,7 @@ import LiveMarkets from "@/components/landing/LiveMarkets";
 
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
-import FairnessLogic from "@/components/landing/FairnessLogic";
+
 import Stats from "@/components/landing/Stats";
 import DemoCTA from "@/components/landing/DemoCTA";
 import HowItWorks from "@/components/landing/HowItWorks";
@@ -37,7 +37,7 @@ const Index = () => (
     </ScrollRevealWrapper>
     <SectionDivider />
     <HowItWorks />
-    <FairnessLogic />
+    
     <Stats />
     <SectionDivider />
     <FAQ />
