@@ -85,7 +85,17 @@ const HowItWorks = () => {
       title: t("howItWorks.step2Title"),
       description: t("howItWorks.step2Desc"),
       visual: (
-        <div className="relative w-full h-[220px] flex items-center justify-center">
+        <div className="relative w-full h-[220px] flex items-center justify-center overflow-hidden rounded-xl">
+          {/* Background video */}
+          <video
+            src={howItWorksBg}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60 pointer-events-none" />
           {/* Card 2 — Down (back, tilted right) */}
           <div
             className="absolute w-[150px] rounded-xl overflow-hidden"
