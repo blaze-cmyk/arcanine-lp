@@ -197,19 +197,29 @@ const HowItWorks = () => {
       description: t("howItWorks.step3Desc"),
       visual: (
         <div className="relative w-full h-[220px] flex items-center justify-center px-2">
+          {/* Ambient liquid glow */}
           <div
-            className="w-full max-w-[260px] rounded-xl overflow-hidden"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background: "hsl(var(--background) / 0.85)",
-              border: "1px solid hsl(var(--border) / 0.6)",
-              boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)",
+              background:
+                "radial-gradient(circle at 80% 30%, hsl(var(--primary) / 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 70%, hsl(var(--profit) / 0.08) 0%, transparent 50%)",
+            }}
+          />
+          <div
+            className="relative w-full max-w-[280px] rounded-2xl overflow-hidden backdrop-blur-xl"
+            style={{
+              background:
+                "linear-gradient(145deg, hsl(var(--card) / 0.85) 0%, hsl(var(--card) / 0.6) 100%)",
+              border: "1px solid hsl(var(--border) / 0.5)",
+              boxShadow:
+                "0 20px 50px -12px rgba(0,0,0,0.6), inset 0 1px 0 hsl(var(--foreground) / 0.05)",
             }}
           >
             {/* Header tabs */}
             <div className="flex items-center justify-between px-3 py-2 border-b border-border/40">
               <div className="flex items-center gap-1.5 relative">
                 <span className="text-[11px] font-bold text-foreground">Trades</span>
-                <span className="text-[10px] font-semibold" style={{ color: "hsl(var(--profit))" }}>3</span>
+                <span className="text-[10px] font-semibold" style={{ color: "hsl(var(--profit))" }}>2</span>
                 <span className="absolute -bottom-2 left-0 right-0 h-[2px]" style={{ background: "hsl(var(--profit))" }} />
               </div>
               <div className="flex items-center gap-1 text-muted-foreground">
@@ -219,42 +229,76 @@ const HowItWorks = () => {
                 <span className="text-[10px]">0</span>
               </div>
             </div>
-            {/* Trade rows */}
-            {[
-              { investment: "250", profit: "+225.00" },
-              { investment: "500", profit: "+450.00" },
-              { investment: "1000", profit: "+900.00" },
-            ].map((trade, idx) => (
-              <div
-                key={idx}
-                className="px-3 py-2"
-                style={{ borderTop: idx > 0 ? "1px solid hsl(var(--border) / 0.3)" : "none" }}
-              >
-                <div className="flex items-center justify-between mb-0.5">
-                  <div className="flex items-center gap-1.5">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="3">
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                    <img src={btcIcon} alt="" className="w-3.5 h-3.5 rounded-full object-contain" />
-                    <span className="text-[10px] font-bold text-foreground">BTC/USDT</span>
-                  </div>
-                  <span className="text-[9px] font-display tabular-nums text-muted-foreground">00:01:00</span>
+
+            {/* Date header */}
+            <div className="flex items-center justify-center gap-2 px-3 py-1.5 border-b border-border/30">
+              <span className="text-[9px] font-semibold tracking-wider uppercase text-muted-foreground">17 April</span>
+              <span className="text-[9px] font-bold" style={{ color: "hsl(var(--profit))" }}>2</span>
+            </div>
+
+            {/* Trade 1 — expanded */}
+            <div className="px-3 py-2 border-b border-border/30">
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-1.5">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="3">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                  <img src={btcIcon} alt="" className="w-3.5 h-3.5 rounded-full object-contain" />
+                  <span className="text-[10px] font-bold text-foreground">BTC/USDT</span>
                 </div>
-                <div className="flex items-center justify-between pl-[18px]">
-                  <div className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-full flex items-center justify-center" style={{ background: "hsl(var(--loss))" }}>
-                      <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
-                        <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
-                      </svg>
-                    </span>
-                    <span className="text-[10px] font-display tabular-nums text-foreground">{trade.investment} $</span>
-                  </div>
-                  <span className="text-[10px] font-bold font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>
-                    {trade.profit} $
+                <span className="text-[9px] font-display tabular-nums text-muted-foreground">00:01:40</span>
+              </div>
+              <div className="flex items-center justify-between pl-[18px] mb-1.5">
+                <div className="flex items-center gap-1">
+                  <span className="w-3 h-3 rounded-full flex items-center justify-center" style={{ background: "hsl(var(--profit))" }}>
+                    <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
+                      <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
+                    </svg>
                   </span>
+                  <span className="text-[10px] font-display tabular-nums text-foreground">100 $</span>
+                </div>
+                <span className="text-[10px] font-bold font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>
+                  +90.00 $
+                </span>
+              </div>
+              <div className="pl-[18px] space-y-0.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] text-muted-foreground">Entry price</span>
+                  <span className="text-[10px] font-display tabular-nums text-foreground font-semibold">67,432.00</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] text-muted-foreground">LTP</span>
+                  <span className="text-[10px] font-display tabular-nums font-semibold" style={{ color: "hsl(var(--profit))" }}>67,454.53</span>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Trade 2 — collapsed */}
+            <div className="px-3 py-2">
+              <div className="flex items-center justify-between mb-0.5">
+                <div className="flex items-center gap-1.5">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="3">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                  <img src={btcIcon} alt="" className="w-3.5 h-3.5 rounded-full object-contain" />
+                  <span className="text-[10px] font-bold text-foreground">BTC/USDT</span>
+                </div>
+                <span className="text-[9px] font-display tabular-nums text-muted-foreground">00:01:40</span>
+              </div>
+              <div className="flex items-center justify-between pl-[18px]">
+                <div className="flex items-center gap-1">
+                  <span className="w-3 h-3 rounded-full flex items-center justify-center" style={{ background: "hsl(var(--profit))" }}>
+                    <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4">
+                      <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
+                    </svg>
+                  </span>
+                  <span className="text-[10px] font-display tabular-nums text-foreground">100 $</span>
+                </div>
+                <span className="text-[10px] font-bold font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>
+                  +72.50 $
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       ),
