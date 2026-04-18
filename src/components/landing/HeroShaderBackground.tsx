@@ -266,5 +266,6 @@ const HeroShaderBackground = () => {
       />
     </div>
   );
+};
 
 export default HeroShaderBackground;
