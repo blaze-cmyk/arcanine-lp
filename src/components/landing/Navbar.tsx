@@ -73,9 +73,17 @@ const Navbar = () => {
             </button>
           </div>
 
-          <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <button className="px-3 py-1.5 text-xs font-medium text-foreground bg-card border border-border rounded-lg">
+              {t("nav.logIn")}
+            </button>
+            <button className="px-3 py-1.5 text-xs font-semibold text-primary-foreground bg-primary rounded-lg">
+              {t("nav.signUp")}
+            </button>
+            <button className="text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
         {mobileOpen && (
