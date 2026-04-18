@@ -134,7 +134,7 @@ const HowItWorks = () => {
           className="text-center mb-16 transition-all duration-700"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}
         >
-          <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-4">
+          <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(var(--success))" }}>
             {t("howItWorks.eyebrow")}
           </p>
           <h2
@@ -142,8 +142,6 @@ const HowItWorks = () => {
             style={{ backgroundImage: "linear-gradient(180deg, hsl(var(--foreground)) 22.5%, hsl(var(--foreground) / 0.7) 100%)" }}
           >
             {t("howItWorks.heading")}
-            <br />
-            {t("howItWorks.headingLine2")}
           </h2>
           <p className="text-muted-foreground text-lg max-w-lg mx-auto leading-relaxed">
             {t("howItWorks.subheading")}
