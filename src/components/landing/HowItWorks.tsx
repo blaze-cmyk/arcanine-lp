@@ -36,31 +36,43 @@ const HowItWorks = () => {
             className="w-full rounded-xl overflow-hidden"
             style={{ background: "hsl(var(--background) / 0.6)", border: "1px solid hsl(var(--border) / 0.5)" }}
           >
+            <div
+              className="grid items-center px-3 py-2 text-[9px] font-semibold tracking-wider uppercase text-muted-foreground"
+              style={{ gridTemplateColumns: "1.6fr 1fr 0.8fr 0.8fr", borderBottom: "1px solid hsl(var(--border) / 0.3)" }}
+            >
+              <span>Market</span>
+              <span className="text-right">LTP</span>
+              <span className="text-right">1m</span>
+              <span className="text-right">5m</span>
+            </div>
             {[
-              { name: "EUR/USD", flags: ["🇪🇺", "🇺🇸"], change: "+1.19%", profit: "93%" },
-              { name: "BTC/USDT", flags: ["₿"], change: "+2.80%", profit: "92%" },
-              { name: "XAU/USD", flags: ["🥇", "🇺🇸"], change: "+0.45%", profit: "88%" },
-            ].map((row, idx) => (
+              { name: "BTC/USDT", sub: "Bitcoin", icon: btcIcon, ltp: "$77,047", change: "+2.76%", p1: "92%", p5: "94%", selected: true },
+              { name: "ETH/USDT", sub: "Ethereum", icon: ethIcon, ltp: "$2,406", change: "+3.00%", p1: "88%", p5: "90%", selected: false },
+              { name: "SOL/USDT", sub: "Solana", icon: solIcon, ltp: "$88.50", change: "+0.40%", p1: "93%", p5: "95%", selected: false },
+            ].map((row) => (
               <div
                 key={row.name}
-                className="flex items-center justify-between px-3 py-2.5"
-                style={{ borderTop: idx === 0 ? "none" : "1px solid hsl(var(--border) / 0.3)" }}
+                className="grid items-center px-3 py-2"
+                style={{
+                  gridTemplateColumns: "1.6fr 1fr 0.8fr 0.8fr",
+                  background: row.selected ? "hsl(var(--profit) / 0.08)" : "transparent",
+                  borderTop: "1px solid hsl(var(--border) / 0.2)",
+                  borderLeft: row.selected ? "2px solid hsl(var(--profit))" : "2px solid transparent",
+                }}
               >
-                <div className="flex items-center gap-2">
-                  <span className="text-base leading-none">{row.flags.join("")}</span>
-                  <span className="text-xs font-semibold text-foreground">{row.name}</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <img src={row.icon} alt="" className="w-5 h-5 rounded-full object-contain shrink-0" />
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] font-bold text-foreground leading-tight truncate">{row.name}</span>
+                    <span className="text-[9px] text-muted-foreground leading-tight truncate">{row.sub}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-[11px] font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>
-                    ↑ {row.change}
-                  </span>
-                  <span
-                    className="text-[11px] font-bold font-display tabular-nums px-1.5 py-0.5 rounded"
-                    style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)" }}
-                  >
-                    {row.profit}
-                  </span>
+                <div className="flex flex-col items-end">
+                  <span className="text-[10px] font-bold font-display tabular-nums text-foreground leading-tight">{row.ltp}</span>
+                  <span className="text-[9px] font-display tabular-nums leading-tight" style={{ color: "hsl(var(--profit))" }}>{row.change}</span>
                 </div>
+                <span className="text-[11px] font-bold text-right font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>{row.p1}</span>
+                <span className="text-[11px] font-bold text-right font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>{row.p5}</span>
               </div>
             ))}
           </div>
