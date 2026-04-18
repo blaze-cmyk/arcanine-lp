@@ -37,12 +37,12 @@ const HowItWorks = () => {
             style={{ background: "hsl(var(--background) / 0.6)", border: "1px solid hsl(var(--border) / 0.5)" }}
           >
             <div
-              className="grid items-center px-3 py-2 text-[9px] font-semibold tracking-wider uppercase text-muted-foreground"
-              style={{ gridTemplateColumns: "1.6fr 1fr 0.8fr 0.8fr", borderBottom: "1px solid hsl(var(--border) / 0.3)" }}
+              className="grid items-center gap-2 px-3 py-2 text-[9px] font-semibold tracking-wider uppercase text-muted-foreground"
+              style={{ gridTemplateColumns: "1.5fr 1fr 1fr 0.8fr", borderBottom: "1px solid hsl(var(--border) / 0.3)" }}
             >
               <span>Market</span>
               <span className="text-right">LTP</span>
-              <span className="text-right">1m</span>
+              <span className="text-right whitespace-nowrap">Profit +1m</span>
               <span className="text-right">5m</span>
             </div>
             {[
