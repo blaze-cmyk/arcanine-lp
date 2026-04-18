@@ -7,7 +7,7 @@ const Hero = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
+    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0 px-4 sm:px-6">
 
       {/* Animated WebGL hero background — full-bleed */}
       <div className="pointer-events-none z-0 absolute top-0 left-1/2 -translate-x-1/2 w-screen h-[100vh] overflow-hidden">
