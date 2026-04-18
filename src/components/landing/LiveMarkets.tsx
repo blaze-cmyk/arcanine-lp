@@ -559,7 +559,7 @@ const LiveMarkets = () => {
         <div className="relative">
           <div
             ref={scrollerRef}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide"
             style={{ scrollbarWidth: "none" }}
           >
             {ASSETS.map((asset) => (
