@@ -150,7 +150,7 @@ const GlobalMarketsVisual = () => {
           return (
             <div
               key={asset.symbol}
-              className="grid grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-2 rounded-lg px-3 py-1.5 transition-all duration-300"
+              className="grid grid-cols-[1.3fr_1fr_0.9fr_0.7fr_0.5fr] sm:grid-cols-[1.6fr_1fr_0.9fr_0.85fr_0.55fr] items-center gap-1.5 sm:gap-2 rounded-lg px-2 sm:px-3 py-1.5 transition-all duration-300"
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
               style={{
@@ -160,17 +160,17 @@ const GlobalMarketsVisual = () => {
             >
 
               {/* Market */}
-              <div className="flex items-center gap-2.5 min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
                 {asset.whiteBg ? (
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <img src={asset.icon} alt={asset.name} className="w-5 h-5 object-contain" loading="lazy" />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <img src={asset.icon} alt={asset.name} className="w-4 h-4 sm:w-5 sm:h-5 object-contain" loading="lazy" />
                   </div>
                 ) : (
-                  <img src={asset.icon} alt={asset.name} className="w-8 h-8 rounded-full object-contain flex-shrink-0" loading="lazy" />
+                  <img src={asset.icon} alt={asset.name} className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-contain flex-shrink-0" loading="lazy" />
                 )}
                 <div className="min-w-0">
-                  <div className="text-[12px] font-semibold text-foreground leading-tight whitespace-nowrap">{asset.symbol}</div>
-                  <div className="text-[10px] text-muted-foreground leading-tight truncate">{asset.name}</div>
+                  <div className="text-[11px] sm:text-[12px] font-semibold text-foreground leading-tight truncate">{asset.symbol}</div>
+                  <div className="text-[10px] text-muted-foreground leading-tight truncate hidden sm:block">{asset.name}</div>
                 </div>
               </div>
 
