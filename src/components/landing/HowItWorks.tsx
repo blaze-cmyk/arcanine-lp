@@ -28,30 +28,38 @@ const HowItWorks = () => {
       title: t("howItWorks.step1Title"),
       description: t("howItWorks.step1Desc"),
       visual: (
-        <div className="relative w-full h-[200px] flex items-center justify-center">
-          <div className="relative">
-            <div
-              className="rounded-2xl px-8 py-5 text-center"
-              style={{
-                background: "linear-gradient(135deg, hsl(var(--primary) / 0.12) 0%, hsl(var(--card)) 100%)",
-                border: "1px solid hsl(var(--border) / 0.6)",
-              }}
-            >
-              <span className="text-muted-foreground text-xs tracking-wider uppercase block mb-2">{t("howItWorks.amount")}</span>
-              <span className="font-display tabular-nums text-3xl font-bold text-foreground">$250</span>
-            </div>
-            <div
-              className="absolute -top-3 -right-6 rounded-full px-3 py-1 text-xs font-semibold"
-              style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
-            >
-              x2.4
-            </div>
-            <div
-              className="absolute -bottom-3 -left-4 rounded-lg px-3 py-1.5 text-xs font-medium"
-              style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border) / 0.5)", color: "hsl(var(--muted-foreground))" }}
-            >
-              {t("howItWorks.min")}
-            </div>
+        <div className="relative w-full h-[200px] flex items-center justify-center px-2">
+          <div
+            className="w-full rounded-xl overflow-hidden"
+            style={{ background: "hsl(var(--background) / 0.6)", border: "1px solid hsl(var(--border) / 0.5)" }}
+          >
+            {[
+              { name: "EUR/USD", flags: ["🇪🇺", "🇺🇸"], change: "+1.19%", profit: "93%" },
+              { name: "BTC/USDT", flags: ["₿"], change: "+2.80%", profit: "92%" },
+              { name: "XAU/USD", flags: ["🥇", "🇺🇸"], change: "+0.45%", profit: "88%" },
+            ].map((row, idx) => (
+              <div
+                key={row.name}
+                className="flex items-center justify-between px-3 py-2.5"
+                style={{ borderTop: idx === 0 ? "none" : "1px solid hsl(var(--border) / 0.3)" }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-base leading-none">{row.flags.join("")}</span>
+                  <span className="text-xs font-semibold text-foreground">{row.name}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[11px] font-display tabular-nums" style={{ color: "hsl(var(--profit))" }}>
+                    ↑ {row.change}
+                  </span>
+                  <span
+                    className="text-[11px] font-bold font-display tabular-nums px-1.5 py-0.5 rounded"
+                    style={{ color: "hsl(var(--primary))", background: "hsl(var(--primary) / 0.1)" }}
+                  >
+                    {row.profit}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       ),
