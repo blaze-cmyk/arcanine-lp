@@ -197,9 +197,6 @@ const HeroShaderBackground = () => {
   useEffect(() => {
     let scene: any = null;
     let cancelled = false;
-    const isMobile =
-      typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
-
     const start = () => {
       loadUnicornStudio()
         .then(() => {
@@ -208,9 +205,9 @@ const HeroShaderBackground = () => {
           if (!US?.addScene) return;
           US.addScene({
             element: containerRef.current,
-            fps: isMobile ? 30 : 60,
+            fps: 60,
             scale: 1,
-            dpi: isMobile ? 1 : 1.25,
+            dpi: 1.5,
             projectId: SCENE_JSON.id,
             lazyLoad: false,
             fixed: false,
