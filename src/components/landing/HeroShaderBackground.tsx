@@ -59,7 +59,10 @@ vec4 blend(vec4 c1, vec4 c2, vec4 c3, float m, float edge){
 
 void main(){
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  float t = 0.18 * u_time;
+
+  // Slow horizontal sway (left ↔ right ↔ left)
+  float t = 0.08 * u_time;
+  float sway = sin(u_time * 0.25) * 0.6;
 
   float ns = 0.0008 + 0.004 * u_scale;
   uv -= 0.5;
@@ -67,21 +70,20 @@ void main(){
   uv /= u_pixelRatio;
   uv += 0.5;
 
-  float n1 = noise(uv * 1.0 + t);
-  float n2 = noise(uv * 2.0 - t * 0.8);
-  float ang = n1 * 6.28318;
-  uv.x += 4.0 * u_distortion * n2 * cos(ang);
-  uv.y += 4.0 * u_distortion * n2 * sin(ang);
+  uv.x += sway;
 
-  for (float i = 1.0; i <= 8.0; i++){
-    uv.x += u_swirl / i * cos(t + i * 1.5 * uv.y);
-    uv.y += u_swirl / i * cos(t + i * 1.0 * uv.x);
+  float n1 = noise(uv * 0.9 + vec2(t, 0.0));
+  float n2 = noise(uv * 1.6 + vec2(-t * 0.6, t * 0.2));
+  uv.x += 3.0 * u_distortion * n2 * cos(n1 * 6.28318);
+  uv.y += 1.5 * u_distortion * n2 * sin(n1 * 6.28318);
+
+  for (float i = 1.0; i <= 5.0; i++){
+    uv.x += u_swirl / i * cos(t + i * 1.2 * uv.y);
+    uv.y += (u_swirl * 0.4) / i * cos(t * 0.8 + i * 0.8 * uv.x);
   }
 
-  float sh = 0.5 + 0.5 * sin(uv.x * 1.2) * cos(uv.y * 1.2);
-  float mixer = sh;
-
-  vec4 col = blend(u_color1, u_color2, u_color3, mixer, 1.0 - clamp(u_softness, 0.0, 1.0));
+  float sh = 0.5 + 0.5 * sin(uv.x * 1.1) * cos(uv.y * 1.0);
+  vec4 col = blend(u_color1, u_color2, u_color3, sh, 1.0 - clamp(u_softness, 0.0, 1.0));
   fragColor = vec4(col.rgb, col.a);
 }
 `;
@@ -163,13 +165,13 @@ const HeroShaderBackground = () => {
       gl.uniform1f(u.time, t);
       gl.uniform1f(u.pr, Math.min(window.devicePixelRatio || 1, 2));
       gl.uniform2f(u.res, canvas.width, canvas.height);
-      // Brand greens + deep black
-      gl.uniform4f(u.c1, 0.0,  0.04, 0.02, 1.0);     // near-black background
+      // Single dominant green tone — solid color with dark fade
+      gl.uniform4f(u.c1, 0.0,  0.05, 0.03, 1.0);     // dark edge
       gl.uniform4f(u.c2, 0.0,  1.0,  0.533, 1.0);    // #00FF88
-      gl.uniform4f(u.c3, 0.2,  1.0,  0.667, 1.0);    // #33FFAA highlight
-      gl.uniform1f(u.sc, 1.6);
-      gl.uniform1f(u.dist, 0.18);
-      gl.uniform1f(u.sw, 0.55);
+      gl.uniform4f(u.c3, 0.0,  1.0,  0.533, 1.0);    // same #00FF88 (mono)
+      gl.uniform1f(u.sc, 1.4);
+      gl.uniform1f(u.dist, 0.12);
+      gl.uniform1f(u.sw, 0.35);
       gl.uniform1f(u.sf, 1.0);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       raf = requestAnimationFrame(render);
