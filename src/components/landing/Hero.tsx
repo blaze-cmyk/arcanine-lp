@@ -43,7 +43,7 @@ const Hero = () => {
       </div>
 
       {/* Dark gradient below dashboard (does not overlap image) */}
-      <div className="relative z-10 w-full h-10 sm:h-20 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+      <div className="relative z-10 w-full h-4 sm:h-20 bg-gradient-to-b from-transparent to-background pointer-events-none" />
 
     </section>
   );
