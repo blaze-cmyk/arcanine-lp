@@ -7,6 +7,14 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-28 sm:pt-32 pb-0">
 
+      {/* Animated 3D glow background */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="hero-blob hero-blob-1" />
+        <div className="hero-blob hero-blob-2" />
+        <div className="hero-blob hero-blob-3" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+      </div>
+
       {/* Noise texture */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-[0.025] mix-blend-overlay">
         <svg width="100%" height="100%">
