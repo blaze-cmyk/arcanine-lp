@@ -54,7 +54,7 @@ const Features = () => {
             return (
               <div
                 key={index}
-                className={`relative rounded-2xl overflow-hidden flex flex-col h-[340px] ${
+                className={`relative rounded-2xl overflow-hidden flex flex-col min-h-[340px] md:h-[380px] ${
                   isSmall ? "md:col-span-2" : "md:col-span-3"
                 }`}
                 style={{
