@@ -1,98 +1,62 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Custom WebGL "neon silk" shader.
- * Recreates the reference image: glossy diagonal silk folds in neon green
- * with cyan highlights, flowing from bottom-left to top-right.
+ * Silk Background — direct port of the Framer "Silk_Background" component.
+ * Animated WebGL shader: flowing silk waves. Tuned with neon green color
+ * and a diagonal rotation so motion reads from bottom-left → top-right.
  */
 
 const VERT = `
-attribute vec2 a_pos;
-void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+attribute vec2 position;
+varying vec2 vUv;
+void main() {
+  vUv = position * 0.5 + 0.5;
+  gl_Position = vec4(position, 0.0, 1.0);
+}
 `;
 
 const FRAG = `
 precision highp float;
-uniform vec2 u_res;
-uniform float u_time;
+varying vec2 vUv;
+uniform float uTime;
+uniform vec3  uColor;
+uniform float uSpeed;
+uniform float uScale;
+uniform float uRotation;
+uniform float uNoiseIntensity;
 
-float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-float noise(vec2 p){
-  vec2 i = floor(p), f = fract(p);
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
-  vec2 u = f * f * (3.0 - 2.0 * f);
-  return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-}
-float fbm(vec2 p){
-  float v = 0.0, a = 0.5;
-  for (int i = 0; i < 6; i++){
-    v += a * noise(p);
-    p = p * 2.03 + vec2(11.1, 7.3);
-    a *= 0.5;
-  }
-  return v;
+const float e = 2.71828182845904523536;
+
+float noise(vec2 texCoord) {
+  float G = e;
+  vec2  r = (G * sin(G * texCoord));
+  return fract(r.x * r.y * (1.0 + texCoord.x));
 }
 
-void main(){
-  // Aspect-corrected coords centered on screen
-  vec2 p = (gl_FragCoord.xy - 0.5 * u_res.xy) / u_res.y;
+vec2 rotateUvs(vec2 uv, float angle) {
+  float c = cos(angle);
+  float s = sin(angle);
+  mat2  rot = mat2(c, -s, s, c);
+  return rot * uv;
+}
 
-  // Diagonal axes: flow direction = bottom-left -> top-right
-  vec2 dir  = normalize(vec2(1.0, 1.0));         // along the flow
-  vec2 perp = vec2(-dir.y, dir.x);               // across the folds
+void main() {
+  float rnd     = noise(gl_FragCoord.xy);
+  vec2  uv      = rotateUvs(vUv * uScale, uRotation);
+  vec2  tex     = uv * uScale;
+  float tOffset = uSpeed * uTime;
 
-  float along  = dot(p, dir);
-  float across = dot(p, perp);
+  tex.y += 0.03 * sin(8.0 * tex.x - tOffset);
 
-  float t = u_time * 0.22;
+  float pattern = 0.6 +
+    0.4 * sin(5.0 * (tex.x + tex.y +
+                     cos(3.0 * tex.x + 5.0 * tex.y) +
+                     0.02 * tOffset) +
+              sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
 
-  // Two layers of warp give the "fabric folding" feel
-  float w1 = fbm(vec2(along * 1.4 + t, across * 2.0 - t * 0.5));
-  float w2 = fbm(vec2(across * 1.6 - t * 0.7, along * 0.9 + t * 0.4));
-  float a = across + (w1 - 0.5) * 1.4 + (w2 - 0.5) * 0.7;
-
-  // Silk highlights: stacked sines along the cross-axis, slowly drifting
-  float bands =
-      sin(a * 5.5  + along * 1.2 + t * 1.4) * 0.55 +
-      sin(a * 10.0 - along * 0.6 - t * 1.0) * 0.30 +
-      sin(a * 17.0 + along * 0.3 + t * 1.9) * 0.15;
-
-  // Sharpen into thin glossy strands
-  float strand = pow(smoothstep(0.25, 1.0, 0.5 + 0.5 * bands), 2.4);
-
-  // Base fabric: deep emerald with darker hollows between folds
-  vec3 deepBlack = vec3(0.0, 0.015, 0.01);
-  vec3 emerald   = vec3(0.0, 0.32, 0.18);
-  float fold = smoothstep(0.0, 1.0, 0.5 + 0.5 * sin(a * 2.4 + along * 0.6 + t * 0.6));
-  vec3 fabric = mix(deepBlack, emerald, fold * 0.85);
-
-  // Highlight color: neon green with occasional cyan accents (like the ref image)
-  vec3 neon = vec3(0.0, 1.0, 0.45);              // #00FF73-ish
-  vec3 cyan = vec3(0.0, 0.95, 0.85);             // teal accent
-  float cyanMix = smoothstep(0.4, 0.95,
-      fbm(vec2(along * 0.9 - t * 0.4, across * 1.3 + t * 0.25)));
-  vec3 highlight = mix(neon, cyan, cyanMix * 0.55);
-
-  vec3 col = fabric + highlight * strand * 1.2;
-
-  // Specular pop on the brightest crests
-  col += highlight * pow(strand, 5.0) * 0.7;
-
-  // Vignette: darker corners, brighter center area for depth
-  float v = smoothstep(1.35, 0.15, length(p));
-  col *= mix(0.45, 1.05, v);
-
-  // Crush blacks slightly so the dark folds read as deep black
-  col = max(col - 0.01, 0.0);
-
-  // Subtle grain
-  float g = (hash(gl_FragCoord.xy + u_time) - 0.5) * 0.035;
-  col += g;
-
-  gl_FragColor = vec4(col, 1.0);
+  vec4 col = vec4(uColor, 1.0) * vec4(pattern) - rnd / 15.0 * uNoiseIntensity;
+  col.a = 1.0;
+  gl_FragColor = col;
 }
 `;
 
@@ -101,10 +65,24 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
   gl.shaderSource(sh, src);
   gl.compileShader(sh);
   if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
-    console.warn("Shader compile error", gl.getShaderInfoLog(sh));
+    console.warn("Silk shader compile error", gl.getShaderInfoLog(sh));
   }
   return sh;
 }
+function link(gl: WebGLRenderingContext, vs: string, fs: string) {
+  const p = gl.createProgram()!;
+  gl.attachShader(p, compile(gl, gl.VERTEX_SHADER, vs));
+  gl.attachShader(p, compile(gl, gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(p);
+  return p;
+}
+
+// Tuned for the brand: neon green silk flowing bottom-left → top-right
+const COLOR: [number, number, number] = [0.0, 1.0, 0.45]; // ~#00FF73
+const SPEED = 2.4;
+const SCALE = 1.1;
+const ROTATION_DEG = 45; // diagonal flow
+const NOISE = 1.4;
 
 const HeroShaderBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -112,18 +90,10 @@ const HeroShaderBackground = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
-    const gl = canvas.getContext("webgl", {
-      antialias: false,
-      alpha: true,
-      premultipliedAlpha: false,
-    });
+    const gl = canvas.getContext("webgl", { antialias: true });
     if (!gl) return;
 
-    const prog = gl.createProgram()!;
-    gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog);
+    const prog = link(gl, VERT, FRAG);
     gl.useProgram(prog);
 
     const buf = gl.createBuffer();
@@ -133,19 +103,23 @@ const HeroShaderBackground = () => {
       new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
       gl.STATIC_DRAW
     );
-    const aPos = gl.getAttribLocation(prog, "a_pos");
+    const aPos = gl.getAttribLocation(prog, "position");
     gl.enableVertexAttribArray(aPos);
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-    const uRes = gl.getUniformLocation(prog, "u_res");
-    const uTime = gl.getUniformLocation(prog, "u_time");
+    const uTime = gl.getUniformLocation(prog, "uTime");
+    const uColor = gl.getUniformLocation(prog, "uColor");
+    const uSpeed = gl.getUniformLocation(prog, "uSpeed");
+    const uScale = gl.getUniformLocation(prog, "uScale");
+    const uRotation = gl.getUniformLocation(prog, "uRotation");
+    const uNoise = gl.getUniformLocation(prog, "uNoiseIntensity");
 
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const resize = () => {
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
-      const W = Math.max(2, Math.floor(w * dpr));
-      const H = Math.max(2, Math.floor(h * dpr));
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const W = Math.max(1, Math.floor(parent.clientWidth * dpr));
+      const H = Math.max(1, Math.floor(parent.clientHeight * dpr));
       if (canvas.width !== W || canvas.height !== H) {
         canvas.width = W;
         canvas.height = H;
@@ -154,18 +128,25 @@ const HeroShaderBackground = () => {
     };
     resize();
     const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+    if (canvas.parentElement) ro.observe(canvas.parentElement);
 
+    const start = performance.now();
     let raf = 0;
     let running = true;
-    const start = performance.now();
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     const render = () => {
       if (!running) return;
       const t = (performance.now() - start) / 1000;
-      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.useProgram(prog);
       gl.uniform1f(uTime, reduced ? 0 : t);
+      gl.uniform3f(uColor, COLOR[0], COLOR[1], COLOR[2]);
+      gl.uniform1f(uSpeed, SPEED);
+      gl.uniform1f(uScale, SCALE);
+      gl.uniform1f(uRotation, (ROTATION_DEG * Math.PI) / 180);
+      gl.uniform1f(uNoise, NOISE);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       raf = requestAnimationFrame(render);
     };
@@ -187,24 +168,22 @@ const HeroShaderBackground = () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      gl.deleteProgram(prog);
+      gl.deleteBuffer(buf);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full" aria-hidden="true">
-      {/* Deep black base behind the canvas */}
+    <div className="absolute inset-0 w-full h-full overflow-hidden" aria-hidden="true">
       <div className="absolute inset-0" style={{ background: "#050807" }} />
-
-      {/* The animated silk shader */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
-
-      {/* Soft edge vignette to deepen corners */}
+      {/* Subtle vignette to deepen edges */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(120% 80% at 50% 45%, transparent 55%, rgba(0,8,5,0.65) 100%)",
+            "radial-gradient(120% 80% at 50% 45%, transparent 55%, rgba(0,8,5,0.6) 100%)",
         }}
       />
     </div>
