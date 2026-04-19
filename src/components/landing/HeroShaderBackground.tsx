@@ -77,12 +77,13 @@ function link(gl: WebGLRenderingContext, vs: string, fs: string) {
   return p;
 }
 
-// Tuned for the brand: neon green silk flowing bottom-left → top-right
-const COLOR: [number, number, number] = [0.0, 1.0, 0.45]; // ~#00FF73
-const SPEED = 2.4;
-const SCALE = 1.1;
+// Tuned for the brand: neon green silk flowing bottom-left → top-right.
+// Darker base color so highlights pop against deep black, matching the reference image.
+const COLOR: [number, number, number] = [0.0, 0.55, 0.25];
+const SPEED = 1.8;
+const SCALE = 1.2;
 const ROTATION_DEG = 45; // diagonal flow
-const NOISE = 1.4;
+const NOISE = 1.5;
 
 const HeroShaderBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
