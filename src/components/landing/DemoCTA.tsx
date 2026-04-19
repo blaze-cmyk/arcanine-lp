@@ -18,14 +18,14 @@ const SlotReel = ({ target, delay }: { target: number; delay: number }) => {
     return digits;
   }, [target]);
 
-  const digitHeight = 90;
+  const digitHeight = 200;
   const targetIndex = strip.length - 2;
   const totalTravel = targetIndex * digitHeight;
   const containerH = 200;
   const centerOffset = (containerH - digitHeight) / 2;
 
   return (
-    <div className="relative overflow-hidden w-[44px] sm:w-[80px] md:w-[120px]" style={{ height: containerH }}>
+    <div className="relative overflow-hidden w-[50px] sm:w-[90px] md:w-[130px]" style={{ height: containerH }}>
       <div className="absolute inset-x-0 top-0 z-20 pointer-events-none" style={{ height: 60, background: "linear-gradient(to bottom, #111111 20%, transparent 100%)" }} />
       <div className="absolute inset-x-0 bottom-0 z-20 pointer-events-none" style={{ height: 60, background: "linear-gradient(to top, #111111 20%, transparent 100%)" }} />
       <div
