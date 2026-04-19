@@ -1,244 +1,190 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Unicorn Studio scene embed — renders the exact JSON scene
- * (purple/green gradient + FBM noise + blur + retro screen + SDF strip).
- * Loads the official Unicorn Studio runtime once and mounts the scene JSON.
+ * Custom WebGL fragment shader — flowing neon-green "silk" waves
+ * moving diagonally from bottom-left to top-right.
+ * No external runtime; ~2KB of GLSL.
  */
 
-const SCENE_JSON = {
-  history: [
-    {
-      breakpoints: [],
-      visible: true,
-      aspectRatio: 1,
-      userDownsample: 0.25,
-      layerType: "effect",
-      type: "gradient",
-      usesPingPong: false,
-      speed: 0,
-      trackMouse: 0,
-      trackAxes: "xy",
-      mouseMomentum: 0,
-      texture: false,
-      animating: false,
-      isMask: 0,
-      data: { downSample: 0.5, depth: false, uniforms: {}, isBackground: true },
-      id: "effect",
-    },
-    {
-      breakpoints: [
-        { min: 992, max: null, name: "Desktop", props: { top: 0.5, width: 450 } },
-        { name: "Mobile", max: 575, props: { width: 594, top: 0.803127962085308 }, min: 0 },
-      ],
-      visible: true,
-      locked: false,
-      aspectRatio: 1.7843137254901962,
-      layerName: "",
-      userDownsample: 0.25,
-      isElement: true,
-      opacity: 1,
-      effects: [],
-      displace: 0,
-      trackMouse: 0,
-      anchorPoint: "center",
-      mouseMomentum: 0,
-      blendMode: "NORMAL",
-      bgDisplace: 0,
-      mask: 0,
-      maskBackground: { type: "Vec3", _x: 0, _y: 0, _z: 0 },
-      maskAlpha: 0,
-      maskDepth: 0,
-      dispersion: 0,
-      axisTilt: 0,
-      states: { appear: [], scroll: [], hover: [] },
-      layerType: "image",
-      imageLoaded: false,
-      width: 450,
-      widthMode: "fixed",
-      height: 252.1978021978022,
-      heightMode: "auto",
-      left: 0.5,
-      leftMode: "relative",
-      top: 0.5,
-      topMode: "relative",
-      rotation: 0,
-      trackAxes: "xy",
-      fitToCanvas: 1,
-      src: "https://assets.unicorn.studio/images/89f3MApYUBOB8HvPPd4bMxtGFXh1/u2813459499_dark_black_background_with_purple_and_green_gradi_6ca36148-36ce-463f-83f6-e2f29c75875a_3.png",
-      naturalWidth: 1456,
-      naturalHeight: 816,
-      data: { uniforms: {} },
-      id: "image",
-    },
-    {
-      breakpoints: [
-        { max: null, min: 992, name: "Desktop", props: { pos: { type: "Vec2", _x: 0.5, _y: 0.73 }, frequency: 1 } },
-        { max: 991, name: "Tablet", props: { frequency: 2, pos: { type: "Vec2", _x: 0.5, _y: 0.7 } }, min: 576 },
-        { max: 575, props: { frequency: 2.5 }, name: "Mobile", min: 0 },
-      ],
-      visible: true,
-      aspectRatio: 1,
-      userDownsample: 0.25,
-      layerType: "effect",
-      type: "fbm",
-      usesPingPong: false,
-      speed: 0.33,
-      trackMouse: 0,
-      trackAxes: "xy",
-      mouseMomentum: 0.07,
-      texture: false,
-      animating: true,
-      isMask: 0,
-      data: {
-        depth: false,
-        uniforms: {
-          frequency: { name: "uFrequency", type: "1f", value: 0.2 },
-          pos: { name: "uPos", type: "2f", value: { type: "Vec2", _x: 0.5, _y: 0.5 } },
-        },
-        isBackground: false,
-      },
-      id: "effect1",
-    },
-    {
-      breakpoints: [
-        { max: null, name: "Desktop", props: { amount: 1 }, min: 992 },
-        { props: { amount: 2 }, min: 576, name: "Tablet", max: 991 },
-        { min: 0, name: "Mobile", props: { amount: 2.5 }, max: 575 },
-      ],
-      visible: true,
-      aspectRatio: 1,
-      userDownsample: 1,
-      layerType: "effect",
-      type: "blur",
-      usesPingPong: false,
-      trackMouse: 0,
-      trackAxes: "xy",
-      mouseMomentum: 0,
-      texture: false,
-      animating: false,
-      isMask: 0,
-      data: {
-        downSample: 0.25,
-        depth: false,
-        uniforms: { amount: { name: "uAmount", type: "1f", value: 0.2 } },
-        isBackground: false,
-        passes: [
-          { prop: "vertical", value: 1, downSample: 0.25 },
-          { prop: "vertical", value: 2, downSample: 0.5 },
-          { prop: "vertical", value: 3, downSample: 0.5 },
-        ],
-      },
-      id: "effect2",
-    },
-    {
-      breakpoints: [],
-      visible: true,
-      aspectRatio: 1,
-      userDownsample: 1,
-      layerType: "effect",
-      type: "retro_screen",
-      usesPingPong: false,
-      speed: 0.25,
-      trackMouse: 0,
-      trackAxes: "xy",
-      mouseMomentum: 0,
-      texture: false,
-      animating: false,
-      isMask: 0,
-      data: { depth: false, uniforms: {}, isBackground: false },
-      id: "effect3",
-    },
-    {
-      breakpoints: [],
-      visible: true,
-      aspectRatio: 1,
-      userDownsample: 1,
-      layerType: "effect",
-      type: "sdf_strip",
-      usesPingPong: false,
-      speed: 0.95,
-      trackMouseMove: 0,
-      mouseMomentum: 0,
-      trackMouse: 0,
-      texture: false,
-      animating: true,
-      isMask: 0,
-      data: { depth: false, uniforms: {}, isBackground: false },
-      id: "effect4",
-    },
-  ],
-  options: { name: "Homepage Hero - Responsive", fps: 60, dpi: 1, scale: 1, includeLogo: false, isProduction: false },
-  version: "1.4.33",
-  id: "SnypTBESEkizfvlXVILU",
-};
+const VERT = `
+attribute vec2 a_pos;
+void main() {
+  gl_Position = vec4(a_pos, 0.0, 1.0);
+}
+`;
 
-const SCRIPT_SRC = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.33/dist/unicornStudio.umd.js";
+const FRAG = `
+precision highp float;
+uniform vec2 u_res;
+uniform float u_time;
 
-let scriptPromise: Promise<void> | null = null;
-function loadUnicornStudio(): Promise<void> {
-  if (scriptPromise) return scriptPromise;
-  scriptPromise = new Promise((resolve, reject) => {
-    if (typeof window === "undefined") return resolve();
-    if ((window as any).UnicornStudio) return resolve();
-    const s = document.createElement("script");
-    s.src = SCRIPT_SRC;
-    s.async = true;
-    s.onload = () => resolve();
-    s.onerror = () => reject(new Error("Failed to load UnicornStudio"));
-    document.head.appendChild(s);
-  });
-  return scriptPromise;
+// hash + value noise
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  float a = hash(i);
+  float b = hash(i + vec2(1.0, 0.0));
+  float c = hash(i + vec2(0.0, 1.0));
+  float d = hash(i + vec2(1.0, 1.0));
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+float fbm(vec2 p){
+  float v = 0.0, a = 0.5;
+  for(int i = 0; i < 5; i++){
+    v += a * noise(p);
+    p *= 2.02;
+    a *= 0.5;
+  }
+  return v;
+}
+
+void main(){
+  vec2 uv = gl_FragCoord.xy / u_res.xy;
+  // aspect-correct + center
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_res.xy) / u_res.y;
+
+  // Diagonal axis: bottom-left -> top-right.
+  // dir is the flow direction; perp is across the bands.
+  vec2 dir  = normalize(vec2(1.0, 1.0));
+  vec2 perp = vec2(-dir.y, dir.x);
+
+  // Coordinates in (along-flow, across-flow)
+  float along  = dot(p, dir);
+  float across = dot(p, perp);
+
+  // Animate flow: bands slide along diagonal
+  float t = u_time * 0.18;
+
+  // Warp the across-axis with fbm so bands ripple like silk
+  float warp = fbm(vec2(along * 1.6 + t * 1.2, across * 2.2 - t * 0.6));
+  float warp2 = fbm(vec2(across * 1.4 - t * 0.8, along * 1.1 + t * 0.4));
+  float a = across + (warp - 0.5) * 1.1 + (warp2 - 0.5) * 0.6;
+
+  // Multiple sine bands → wavy silk highlights
+  float bands =
+      sin(a * 6.0 + along * 1.5 + t * 1.5) * 0.55 +
+      sin(a * 11.0 - along * 0.8 - t * 1.1) * 0.30 +
+      sin(a * 18.0 + along * 0.4 + t * 2.2) * 0.15;
+
+  // Sharpen highlights into thin silky strands
+  float highlight = pow(smoothstep(0.2, 1.0, 0.5 + 0.5 * bands), 2.6);
+
+  // Base dark green wash that fades toward edges
+  float vign = smoothstep(1.25, 0.2, length(p));
+  vec3 baseGreen = mix(vec3(0.0, 0.02, 0.01), vec3(0.0, 0.18, 0.09), vign * 0.6);
+
+  // Neon green + cyan accents picked up by highlight
+  vec3 neon  = vec3(0.0, 1.0, 0.53);              // #00FF88
+  vec3 cyan  = vec3(0.0, 0.85, 0.78);             // teal accent
+  float cyanMix = smoothstep(0.4, 0.95, fbm(vec2(along * 0.9 - t * 0.5, across * 1.3 + t * 0.3)));
+  vec3 strand = mix(neon, cyan, cyanMix * 0.55);
+
+  vec3 col = baseGreen + strand * highlight * 1.15;
+
+  // Soft bloom-ish lift in the brightest spots
+  col += strand * pow(highlight, 4.0) * 0.6;
+
+  // Deep black corners
+  col *= mix(0.55, 1.05, vign);
+
+  // Subtle film grain
+  float g = (hash(gl_FragCoord.xy + u_time) - 0.5) * 0.04;
+  col += g;
+
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+function compile(gl: WebGLRenderingContext, type: number, src: string) {
+  const sh = gl.createShader(type)!;
+  gl.shaderSource(sh, src);
+  gl.compileShader(sh);
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+    console.warn("Shader compile error", gl.getShaderInfoLog(sh));
+  }
+  return sh;
 }
 
 const HeroShaderBackground = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    let scene: any = null;
-    let cancelled = false;
-    const start = () => {
-      loadUnicornStudio()
-        .then(() => {
-          if (cancelled || !containerRef.current) return;
-          const US = (window as any).UnicornStudio;
-          if (!US?.addScene) return;
-          US.addScene({
-            element: containerRef.current,
-            fps: 60,
-            scale: 1,
-            dpi: 1.5,
-            projectId: SCENE_JSON.id,
-            lazyLoad: false,
-            fixed: false,
-            altText: "Animated hero background",
-            ariaLabel: "Animated hero background",
-            production: false,
-            interactivity: { mouse: { disableMobile: true } },
-            data: SCENE_JSON,
-          } as any)
-            .then((s: any) => {
-              scene = s;
-            })
-            .catch(() => {});
-        })
-        .catch(() => {});
-    };
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    // Defer heavy WebGL init until the browser is idle so it doesn't block first paint
-    const ric: any = (window as any).requestIdleCallback;
-    const handle = ric
-      ? ric(start, { timeout: 1500 })
-      : window.setTimeout(start, 200);
+    const gl = canvas.getContext("webgl", { antialias: false, alpha: true, premultipliedAlpha: false });
+    if (!gl) return;
+
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    // Fullscreen quad
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW
+    );
+    const aPos = gl.getAttribLocation(prog, "a_pos");
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    const uRes = gl.getUniformLocation(prog, "u_res");
+    const uTime = gl.getUniformLocation(prog, "u_time");
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      const W = Math.max(2, Math.floor(w * dpr));
+      const H = Math.max(2, Math.floor(h * dpr));
+      if (canvas.width !== W || canvas.height !== H) {
+        canvas.width = W;
+        canvas.height = H;
+        gl.viewport(0, 0, W, H);
+      }
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    let raf = 0;
+    let running = true;
+    const start = performance.now();
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    const render = () => {
+      if (!running) return;
+      const t = (performance.now() - start) / 1000;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, reduced ? 0 : t);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      raf = requestAnimationFrame(render);
+    };
+    render();
+
+    const onVis = () => {
+      if (document.hidden) {
+        running = false;
+        cancelAnimationFrame(raf);
+      } else if (!running) {
+        running = true;
+        render();
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
 
     return () => {
-      cancelled = true;
-      const cic: any = (window as any).cancelIdleCallback;
-      if (ric && cic) cic(handle);
-      else clearTimeout(handle);
-      try {
-        scene?.destroy?.();
-      } catch {}
+      running = false;
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, []);
 
@@ -247,31 +193,24 @@ const HeroShaderBackground = () => {
       {/* Deep black base */}
       <div className="absolute inset-0" style={{ background: "#0A0A0A" }} />
 
-      {/* Unicorn scene, hue-shifted purple → neon green */}
-      <div
-        ref={containerRef}
-        className="absolute inset-0 w-full h-full"
-        style={{
-          display: "block",
-          filter: "hue-rotate(-150deg) saturate(1.45) brightness(1.05)",
-        }}
-      />
+      {/* Custom WebGL silk shader */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
 
-      {/* Neon green glow tint + signature #00FF88 wash */}
+      {/* Extra neon green wash for brand consistency */}
       <div
         className="absolute inset-0 pointer-events-none mix-blend-screen"
         style={{
           background:
-            "radial-gradient(60% 50% at 70% 60%, rgba(0,255,136,0.18) 0%, rgba(0,255,136,0) 70%), radial-gradient(40% 35% at 20% 80%, rgba(0,200,170,0.14) 0%, rgba(0,200,170,0) 70%)",
+            "radial-gradient(55% 45% at 75% 30%, rgba(0,255,136,0.18) 0%, rgba(0,255,136,0) 70%), radial-gradient(45% 40% at 15% 85%, rgba(0,200,170,0.16) 0%, rgba(0,200,170,0) 70%)",
         }}
       />
 
-      {/* Subtle dark green vignette to deepen edges */}
+      {/* Edge vignette to deepen corners */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(120% 80% at 50% 40%, transparent 50%, rgba(10,30,20,0.55) 100%)",
+            "radial-gradient(120% 80% at 50% 40%, transparent 55%, rgba(5,15,10,0.65) 100%)",
         }}
       />
     </div>
